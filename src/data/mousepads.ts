@@ -9,7 +9,7 @@ export const mousepads: Mousepad[] = [
         name: "Zero Soft",
         series: "Zero",
 
-        category: "control",
+        category: "balanced-control",
         surface: "cloth",
         base: "poron",
         softness: "soft",
@@ -25,12 +25,12 @@ export const mousepads: Mousepad[] = [
         ],
 
         feel: {
-            speed: 6,
-            control: 9,
-            stoppingPower: 8.5,
-            staticFriction: 7.5,
-            dynamicFriction: 6.5,
-            microAdjustments: 8.5,
+            speed: 6.8,
+            control: 8.2,
+            stoppingPower: 8,
+            staticFriction: 6.8,
+            dynamicFriction: 6.9,
+            microAdjustments: 8.3,
             ratingConfidence: "community",
         },
 
@@ -113,7 +113,7 @@ export const mousepads: Mousepad[] = [
         name: "Hyperion Soft",
         series: "Hyperion",
 
-        category: "balanced-control",
+        category: "balanced-speed",
         surface: "cloth",
         base: "poron",
         softness: "soft",
@@ -143,12 +143,12 @@ export const mousepads: Mousepad[] = [
         ],
 
         feel: {
-            speed: 6.5,
-            control: 8,
-            stoppingPower: 7.5,
-            staticFriction: 6.5,
-            dynamicFriction: 7,
-            microAdjustments: 8.5,
+            speed: 7.2,
+            control: 7.8,
+            stoppingPower: 7.4,
+            staticFriction: 6.4,
+            dynamicFriction: 7.4,
+            microAdjustments: 8.6,
             ratingConfidence: "community",
         },
 

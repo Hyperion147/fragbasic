@@ -1,5 +1,3 @@
-// app/compare/artisan-zero-soft-vs-pulsar-lgg-hyperion-soft/page.tsx
-
 import { CompareHero } from "@/components/compare/compare-hero"
 import { ProductFaceoff } from "@/components/compare/product-faceoff"
 import { FeelMap } from "@/components/compare/feel-map"
@@ -7,6 +5,8 @@ import { SpecRows } from "@/components/compare/spec-rows"
 import { BuyRecommendation } from "@/components/compare/buy-recommendation"
 import { VerdictPanel } from "@/components/compare/verdict-panel"
 import { getMousepadBySlug } from "@/lib/mousepads"
+import { CompareFeelRadar } from "@/components/compare/compare-feel-radar"
+import { SpeedControlPosition } from "@/components/compare/speed-control-position"
 
 export default function Page() {
   const zero = getMousepadBySlug("artisan-zero-soft")
@@ -20,6 +20,10 @@ export default function Page() {
 
       <div className="mx-auto max-w-7xl space-y-6 px-4 py-6 md:px-8">
         <ProductFaceoff left={zero} right={hyperion} />
+
+        <CompareFeelRadar left={zero} right={hyperion} />
+
+        <SpeedControlPosition left={zero} right={hyperion} />
 
         <FeelMap left={zero} right={hyperion} />
 
