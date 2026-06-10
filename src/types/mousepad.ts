@@ -1,8 +1,10 @@
 export type MousepadCategory =
-  | "speed"
-  | "balanced"
+  | "mud"
   | "control"
-  | "mudpad"
+  | "balanced-control"
+  | "balanced-speed"
+  | "speed"
+  | "glass"
 
 export type MousepadSurface =
   | "cloth"
@@ -14,15 +16,18 @@ export type MousepadBase =
   | "poron"
   | "rubber"
   | "silicone"
-  | "other"
+  | "polyurethane"
+  | "unknown"
 
 export type MousepadSoftness =
   | "xsoft"
   | "soft"
   | "mid"
   | "firm"
+  | "hard"
+  | "unknown"
 
-export type GameType =
+export type MousepadGame =
   | "valorant"
   | "cs2"
   | "apex"
@@ -30,34 +35,61 @@ export type GameType =
   | "fortnite"
   | "general-fps"
 
-export type ClimateRating =
-  | "poor"
-  | "average"
-  | "good"
-  | "excellent"
+export type AimStyle =
+  | "micro-adjustments"
+  | "flicking"
+  | "tracking"
+  | "switching"
+
+export type Sensitivity =
+  | "low"
+  | "medium"
+  | "high"
+
+export type RatingConfidence =
+  | "official"
+  | "community"
+  | "personal-tested"
+  | "estimated"
+
+export type IndiaAvailability =
+  | "available"
+  | "limited"
+  | "import-only"
+  | "unavailable"
+  | "unknown"
 
 export interface MousepadSize {
   label: string
   width: number
   height: number
-  thickness: number
+  thickness?: number
   unit: "mm"
 }
 
-export interface MousepadFriction {
-  staticFriction: number // initial movement resistance
-  dynamicFriction: number // glide speed
-  stoppingPower: number // ability to stop precisely
-  control: number
+export interface MousepadFeelRating {
   speed: number
+  control: number
+  stoppingPower: number
+  staticFriction: number
+  dynamicFriction: number
+  microAdjustments: number
+  ratingConfidence: RatingConfidence
 }
 
-export interface MousepadDurability {
-  coating: "none" | "light" | "noticeable" | "unknown"
-  humidityResistance: ClimateRating
-  dustResistance: ClimateRating
-  wearResistance: ClimateRating
+export interface MousepadEnvironment {
+  humidityResistance: number
+  sweatResistance: number
+  dustHairResistance: number
   washable: boolean
+  notes?: string
+}
+
+export interface MousepadTexture {
+  feel: "smooth" | "slightly-textured" | "textured" | "rough"
+  skinComfort: number
+  sleeveFriendly: boolean
+  noiseLevel: "quiet" | "medium" | "loud"
 }
 
 export interface MousepadPrice {
@@ -66,22 +98,35 @@ export interface MousepadPrice {
   eur?: number
 }
 
+export interface MousepadAvailability {
+  global: boolean
+  india: IndiaAvailability
+  stores?: string[]
+  notes?: string
+}
+
 export interface MousepadPersonalNotes {
   owned: boolean
   tested: boolean
   testingDuration?: string
-  mainGamesTested?: GameType[]
-  notes: string
-  pros: string[]
-  cons: string[]
+  mainGamesTested?: MousepadGame[]
+  notes?: string
+  pros?: string[]
+  cons?: string[]
+}
+
+export interface MousepadSource {
+  label: string
+  type: "official" | "store" | "reddit" | "review" | "personal"
+  url?: string
 }
 
 export interface Mousepad {
   id: string
   slug: string
 
-  name: string
   brand: string
+  name: string
   series?: string
 
   category: MousepadCategory
@@ -91,28 +136,20 @@ export interface Mousepad {
 
   sizes: MousepadSize[]
 
-  friction: MousepadFriction
-  durability: MousepadDurability
-
-  texture: {
-    feel: "smooth" | "slightly-textured" | "rough"
-    skinComfort: number
-    armSleeveFriendly: boolean
-  }
+  feel: MousepadFeelRating
+  environment: MousepadEnvironment
+  texture: MousepadTexture
 
   recommendedFor: {
-    games: GameType[]
-    aimStyle: ("tracking" | "flicking" | "micro-adjustments")[]
-    sensitivity: ("low" | "medium" | "high")[]
+    games: MousepadGame[]
+    aimStyles: AimStyle[]
+    sensitivity: Sensitivity[]
   }
+
+  avoidIf?: string[]
 
   price: MousepadPrice
-
-  availability: {
-    global: boolean
-    india: boolean
-    notes?: string
-  }
+  availability: MousepadAvailability
 
   images: {
     main: string
@@ -122,11 +159,15 @@ export interface Mousepad {
   personal: MousepadPersonalNotes
 
   affiliate?: {
-    amazon?: string
     official?: string
+    amazon?: string
+    waimers?: string
+    genesispc?: string
     maxgaming?: string
-    mechanicalkeyboards?: string
+    other?: string
   }
+
+  sources: MousepadSource[]
 
   createdAt: string
   updatedAt: string
