@@ -16,13 +16,57 @@ export const mousepads: Mousepad[] = [
 
         sizes: [
             {
+                label: "M",
+                width: 310,
+                height: 240,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
+                label: "L",
+                width: 420,
+                height: 330,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
                 label: "XL",
                 width: 490,
                 height: 420,
                 thickness: 4,
                 unit: "mm",
             },
+            {
+                label: "XXL",
+                width: 500,
+                height: 490,
+                thickness: 4,
+                unit: "mm",
+            },
         ],
+
+        visuals: {
+            defaultColorway: "black",
+
+            colorways: [
+                {
+                    name: "Black",
+                    slug: "black",
+                    primary: "oklch(0.18 0.01 260)",
+                    secondary: "oklch(0.25 0.01 260)",
+                    accent: "oklch(0.72 0.02 260)",
+                    available: true,
+                },
+                {
+                    name: "Orange",
+                    slug: "orange",
+                    primary: "oklch(0.68 0.18 45)",
+                    secondary: "oklch(0.50 0.12 45)",
+                    accent: "oklch(0.92 0.05 60)",
+                    available: true,
+                },
+            ],
+        },
 
         feel: {
             speed: 6.8,
@@ -142,6 +186,23 @@ export const mousepads: Mousepad[] = [
             },
         ],
 
+        visuals: {
+            defaultColorway: "hyperion-red",
+
+            colorways: [
+                {
+                    name: "Hyperion Red",
+                    slug: "hyperion-red",
+
+                    primary: "oklch(0.62 0.20 25)",
+                    secondary: "oklch(0.34 0.10 20)",
+                    accent: "oklch(0.90 0.04 20)",
+
+                    available: true,
+                },
+            ],
+        },
+
         feel: {
             speed: 7.2,
             control: 7.8,
@@ -234,290 +295,6 @@ export const mousepads: Mousepad[] = [
                 label: "MousepadReview Reddit discussion",
                 type: "reddit",
                 url: "https://www.reddit.com/r/MousepadReview/comments/1skpxvf/artisan_zero_vs_pulsar_hyperion/",
-            },
-        ],
-
-        createdAt: "2026-06-10",
-        updatedAt: "2026-06-10",
-    },
-
-    {
-        id: "artisan-type-99-soft",
-        slug: "artisan-type-99-soft",
-
-        brand: "Artisan",
-        name: "Type-99 Soft",
-        series: "Type-99",
-
-        category: "mud",
-        surface: "cloth",
-        base: "poron",
-        softness: "soft",
-
-        sizes: [
-            {
-                label: "XL",
-                width: 490,
-                height: 420,
-                thickness: 4,
-                unit: "mm",
-            },
-        ],
-
-        feel: {
-            speed: 4,
-            control: 9.5,
-            stoppingPower: 9.5,
-            staticFriction: 8.5,
-            dynamicFriction: 4.5,
-            microAdjustments: 7.5,
-            ratingConfidence: "official",
-        },
-
-        environment: {
-            humidityResistance: 7,
-            sweatResistance: 7,
-            dustHairResistance: 6,
-            washable: true,
-            notes: "Positioned as a very high stopping-power tactical FPS pad.",
-        },
-
-        texture: {
-            feel: "smooth",
-            skinComfort: 8,
-            sleeveFriendly: true,
-            noiseLevel: "quiet",
-        },
-
-        recommendedFor: {
-            games: ["valorant", "cs2"],
-            aimStyles: ["micro-adjustments", "flicking"],
-            sensitivity: ["low", "medium"],
-        },
-
-        avoidIf: [
-            "You play tracking-heavy games",
-            "You want fast dynamic glide",
-            "You dislike slow control pads",
-        ],
-
-        price: {
-            usd: 65,
-            inr: 6000,
-        },
-
-        availability: {
-            global: true,
-            india: "limited",
-            stores: ["GenesisPC", "import sellers"],
-        },
-
-        images: {
-            main: "/mousepads/artisan-type-99-soft/main.webp",
-        },
-
-        personal: {
-            owned: false,
-            tested: false,
-            notes: "High priority for Valorant/CS2 testing.",
-        },
-
-        sources: [
-            {
-                label: "Artisan official selection guide",
-                type: "official",
-                url: "https://artisan-jp.com/global/selection-guide",
-            },
-        ],
-
-        createdAt: "2026-06-10",
-        updatedAt: "2026-06-10",
-    },
-
-    {
-        id: "lgg-saturn-pro-soft",
-        slug: "lgg-saturn-pro-soft",
-
-        brand: "Lethal Gaming Gear",
-        name: "Saturn Pro Soft",
-        series: "Saturn Pro",
-
-        category: "control",
-        surface: "cloth",
-        base: "poron",
-        softness: "soft",
-
-        sizes: [
-            {
-                label: "XL",
-                width: 490,
-                height: 410,
-                thickness: 4,
-                unit: "mm",
-            },
-        ],
-
-        feel: {
-            speed: 5.5,
-            control: 9,
-            stoppingPower: 8.5,
-            staticFriction: 7.5,
-            dynamicFriction: 6,
-            microAdjustments: 8,
-            ratingConfidence: "community",
-        },
-
-        environment: {
-            humidityResistance: 6,
-            sweatResistance: 6,
-            dustHairResistance: 7,
-            washable: true,
-            notes: "Community impressions vary; some users report a sticky or inconsistent feel in certain conditions.",
-        },
-
-        texture: {
-            feel: "smooth",
-            skinComfort: 8,
-            sleeveFriendly: true,
-            noiseLevel: "quiet",
-        },
-
-        recommendedFor: {
-            games: ["valorant", "cs2", "general-fps"],
-            aimStyles: ["micro-adjustments", "flicking"],
-            sensitivity: ["low", "medium"],
-        },
-
-        avoidIf: [
-            "You live in very humid conditions and dislike slow pads",
-            "You want a faster balanced pad",
-        ],
-
-        price: {
-            usd: 50,
-            inr: 6000,
-        },
-
-        availability: {
-            global: true,
-            india: "import-only",
-            stores: ["MaxGaming", "import sellers"],
-        },
-
-        images: {
-            main: "/mousepads/lgg-saturn-pro-soft/main.webp",
-        },
-
-        personal: {
-            owned: false,
-            tested: false,
-            notes: "Important comparison target against Artisan Zero and Type-99.",
-        },
-
-        sources: [
-            {
-                label: "LGG mousepads catalog",
-                type: "official",
-                url: "https://lethal.gg/collections/mousepads-1",
-            },
-        ],
-
-        createdAt: "2026-06-10",
-        updatedAt: "2026-06-10",
-    },
-
-    {
-        id: "xraypad-aqua-control-zero",
-        slug: "xraypad-aqua-control-zero",
-
-        brand: "Xraypad",
-        name: "Aqua Control Zero",
-        series: "Aqua Control",
-
-        category: "control",
-        surface: "cloth",
-        base: "rubber",
-        softness: "firm",
-
-        sizes: [
-            {
-                label: "450x400",
-                width: 450,
-                height: 400,
-                thickness: 4,
-                unit: "mm",
-            },
-            {
-                label: "500x500",
-                width: 500,
-                height: 500,
-                thickness: 4,
-                unit: "mm",
-            },
-        ],
-
-        feel: {
-            speed: 5.5,
-            control: 8.5,
-            stoppingPower: 8.5,
-            staticFriction: 7.5,
-            dynamicFriction: 5.5,
-            microAdjustments: 8,
-            ratingConfidence: "official",
-        },
-
-        environment: {
-            humidityResistance: 8.5,
-            sweatResistance: 8,
-            dustHairResistance: 7,
-            washable: true,
-            notes: "Listed as suitable for sweaty hands and humid weather.",
-        },
-
-        texture: {
-            feel: "textured",
-            skinComfort: 7,
-            sleeveFriendly: true,
-            noiseLevel: "medium",
-        },
-
-        recommendedFor: {
-            games: ["valorant", "cs2", "general-fps"],
-            aimStyles: ["micro-adjustments", "flicking"],
-            sensitivity: ["low", "medium"],
-        },
-
-        avoidIf: [
-            "You want a plush Poron base",
-            "You want a very smooth surface",
-        ],
-
-        price: {
-            inr: 2500,
-        },
-
-        availability: {
-            global: true,
-            india: "available",
-            stores: ["GenesisPC", "Amazon India"],
-            notes: "One of the better India-available control options.",
-        },
-
-        images: {
-            main: "/mousepads/xraypad-aqua-control-zero/main.webp",
-        },
-
-        personal: {
-            owned: false,
-            tested: false,
-            notes: "Very important for India-focused recommendations.",
-        },
-
-        sources: [
-            {
-                label: "GenesisPC product page",
-                type: "store",
-                url: "https://www.genesispc.in/products/x-raypad-aqua-control-zero-slow-control",
             },
         ],
 

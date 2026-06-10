@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import type { Mousepad } from "@/types/mousepad"
+import { getDefaultColorway } from "@/lib/mousepads"
 
 export function ProductFaceoff({
   left,
@@ -21,9 +22,17 @@ export function ProductFaceoff({
 }
 
 function PadCard({ pad }: { pad: Mousepad }) {
+  const colorway =
+  getDefaultColorway(pad)
+
   return (
     <Card className="overflow-hidden border-border bg-card">
-      <div className="aspect-[16/9] border-b border-border bg-secondary" />
+      <div
+  className="aspect-[16/9] border-b border-border"
+  style={{
+    backgroundColor: colorway.primary,
+  }}
+/>
 
       <div className="space-y-5 p-5">
         <div>

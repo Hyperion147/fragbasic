@@ -120,6 +120,19 @@ export interface MousepadSource {
   type: "official" | "store" | "reddit" | "review" | "personal"
   url?: string
 }
+export interface MousepadColorway {
+  name: string
+  slug: string
+  primary: string
+  secondary?: string
+  accent?: string
+  image?: string
+  available: boolean
+}
+export interface MousepadVisuals {
+  defaultColorway: string
+  colorways: MousepadColorway[]
+}
 
 export interface Mousepad {
   id: string
@@ -150,6 +163,8 @@ export interface Mousepad {
 
   price: MousepadPrice
   availability: MousepadAvailability
+
+  visuals: MousepadVisuals
 
   images: {
     main: string
