@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Search, Menu } from "lucide-react"
+import { Menu } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -39,11 +39,6 @@ export function SiteNavbar() {
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
-          <Button variant="outline" size="sm" className="gap-2">
-            <Search className="size-4" />
-            Search
-          </Button>
-
           <Button size="sm" asChild>
             <Link href="/compare">Compare pads</Link>
           </Button>

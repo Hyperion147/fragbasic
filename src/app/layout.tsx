@@ -3,6 +3,7 @@ import "./globals.css";
 import { Inter, Lora, Roboto_Mono } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { SiteNavbar } from "@/components/navbar";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,6 +27,7 @@ export default function RootLayout({
       className={cn("h-full", "antialiased", inter.variable, lora.variable, robotoMono.variable)}
     >
       <body className="min-h-full flex flex-col">
+        <Analytics />
         <SiteNavbar />
         {children}</body>
     </html>

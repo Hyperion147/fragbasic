@@ -118,11 +118,11 @@ export const mousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/artisan/zero-black.webp",
+            main: "/mousepads/artisan/zero-dai-dai-orange.webp",
             gallery: [
                 "/mousepads/artisan/zero-black-close.jpg",
                 "/mousepads/artisan/zero-black-fold.webp",
-                "/mousepads/artisan/zero-dai-dai-orange.webp",
+                "/mousepads/artisan/zero-black.webp",
             ],
         },
 
