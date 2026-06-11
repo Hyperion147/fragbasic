@@ -18,7 +18,7 @@ export default function Page() {
     <main className="min-h-screen bg-background text-foreground">
       <CompareHero left={zero} right={hyperion} />
 
-      <div className="mx-auto max-w-7xl space-y-6 px-4 py-6 md:px-8">
+      <div className="mx-auto max-w-7xl space-y-6 px-4 py-8 md:px-8 md:py-10">
         <ProductFaceoff left={zero} right={hyperion} />
 
         <CompareFeelRadar left={zero} right={hyperion} />

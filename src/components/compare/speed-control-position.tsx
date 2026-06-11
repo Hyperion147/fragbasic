@@ -1,5 +1,3 @@
-// components/compare/speed-control-position.tsx
-
 import { Card } from "@/components/ui/card"
 import type { Mousepad } from "@/types/mousepad"
 
@@ -27,15 +25,19 @@ export function SpeedControlPosition({ left, right }: Props) {
         <h2 className="text-2xl font-semibold tracking-tight">
           Where they sit on the glide scale
         </h2>
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
+          This makes the speed score easier to interpret by placing each pad on
+          a practical spectrum from mud-control to speed/glass behavior.
+        </p>
       </div>
 
       <div className="space-y-12">
         <div className="relative">
-          <div className="grid h-12 grid-cols-5 overflow-hidden rounded-xl border border-border bg-background">
+          <div className="grid h-14 grid-cols-5 overflow-hidden rounded-2xl border border-border bg-[linear-gradient(90deg,oklch(0.26_0.02_220),oklch(0.31_0.03_220),oklch(0.35_0.04_220),oklch(0.41_0.05_220),oklch(0.47_0.06_220))]">
             {zones.map((zone) => (
               <div
                 key={zone.label}
-                className="flex items-center justify-center border-r border-border text-center text-[11px] text-muted-foreground last:border-r-0 md:text-xs"
+                className="flex items-center justify-center border-r border-border/60 px-2 text-center text-[11px] text-muted-foreground last:border-r-0 md:text-xs"
               >
                 {zone.label}
               </div>
@@ -85,9 +87,9 @@ function PadMarker({
       ].join(" ")}
       style={{ left: `${position}%` }}
     >
-      <div className="h-7 w-px bg-primary" />
+      <div className="h-8 w-px bg-primary" />
 
-      <div className="rounded-full border border-border bg-card px-3 py-1 shadow-sm">
+      <div className="rounded-full border border-border bg-card px-3 py-1.5 shadow-md shadow-black/10">
         <p className="whitespace-nowrap text-xs font-medium">
           {brand} {label}
         </p>
@@ -104,7 +106,7 @@ function PositionSummary({
   position: number
 }) {
   return (
-    <div className="rounded-xl border border-border bg-background p-4">
+    <div className="rounded-2xl border border-border bg-background p-4">
       <div className="flex items-center justify-between gap-4">
         <div>
           <p className="text-sm font-medium">

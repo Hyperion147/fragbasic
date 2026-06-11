@@ -118,7 +118,12 @@ export const mousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/artisan-zero-soft/main.webp",
+            main: "/mousepads/artisan/zero-black.webp",
+            gallery: [
+                "/mousepads/artisan/zero-black-close.jpg",
+                "/mousepads/artisan/zero-black-fold.webp",
+                "/mousepads/artisan/zero-dai-dai-orange.webp",
+            ],
         },
 
         personal: {
@@ -253,7 +258,12 @@ export const mousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/pulsar-lgg-hyperion-soft/main.webp",
+            main: "/mousepads/lgg/hyperion-black.jpg",
+            gallery: [
+                "/mousepads/lgg/hyperion-blue.jpg",
+                "/mousepads/lgg/hyperion-blue-xxl.jpg",
+                "/mousepads/lgg/hyperion-black-xxl.jpg",
+            ],
         },
 
         personal: {

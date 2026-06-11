@@ -1,3 +1,5 @@
+import { ArrowRight } from "lucide-react"
+
 import { Card } from "@/components/ui/card"
 import type { Mousepad } from "@/types/mousepad"
 
@@ -23,6 +25,42 @@ export function VerdictPanel({
         giving more freedom for micro-corrections, the Hyperion is easier to
         recommend than a slower Saturn-style pad.
       </p>
+
+      <div className="mt-8 grid gap-4 md:grid-cols-2">
+        <TakeawayCard
+          label="Safest recommendation"
+          value={`${left.brand} ${left.name}`}
+          body="Best when your aim style depends on strong stopping power and a more locked-in control feel."
+        />
+        <TakeawayCard
+          label="Most adaptable recommendation"
+          value={`${right.brand} ${right.name}`}
+          body="Best when you want easier corrections, more glide freedom, and a better bridge between tac FPS and tracking."
+        />
+      </div>
     </Card>
+  )
+}
+
+function TakeawayCard({
+  label,
+  value,
+  body,
+}: {
+  label: string
+  value: string
+  body: string
+}) {
+  return (
+    <div className="rounded-3xl border border-border bg-background/70 p-5">
+      <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+        {label}
+      </p>
+      <div className="mt-3 flex items-start justify-between gap-3">
+        <p className="text-lg font-semibold text-foreground">{value}</p>
+        <ArrowRight className="mt-1 size-4 text-primary" />
+      </div>
+      <p className="mt-3 text-sm leading-6 text-muted-foreground">{body}</p>
+    </div>
   )
 }

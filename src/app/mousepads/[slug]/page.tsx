@@ -4,16 +4,14 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import {
-    getAllMousepads,
-    getDefaultColorway,
-    getMousepadBySlug,
-} from "@/lib/mousepads";
+import { getAllMousepads, getMousepadBySlug } from "@/lib/mousepads";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MousepadFeelChart } from "@/components/mousepads/mousepad-feel-chart";
 import { MousepadSpecGrid } from "@/components/mousepads/mousepad-spec-grid";
+import { MousepadImageGallery } from "@/components/mousepads/mousepad-image-gallery";
+import type { Mousepad } from "@/types/mousepad";
 
 type PageProps = {
     params: Promise<{
@@ -33,8 +31,6 @@ export async function generateMetadata({ params }: PageProps) {
     if (!pad) {
         notFound();
     }
-    const colorway = getDefaultColorway(pad);
-
     if (!pad) {
         return {
             title: "Mousepad not found",
@@ -53,15 +49,15 @@ export default async function MousepadPage({ params }: PageProps) {
 
     if (!pad) notFound();
 
-    const colorway = getDefaultColorway(pad)
+    const galleryImages = [pad.images.main, ...(pad.images.gallery ?? [])];
 
     return (
         <main className="min-h-screen bg-background text-foreground">
             <section className="border-b border-border">
-                <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 md:grid-cols-[1.1fr_0.9fr] md:px-8 md:py-20">
+                <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 md:grid-cols-[1.1fr_0.9fr] md:px-8">
                     <div>
                         <div className="mb-5 flex flex-wrap gap-2">
-                            <Badge variant="secondary">{pad.category}</Badge>
+                            <Badge className="text-black">{pad.category}</Badge>
                             <Badge variant="outline">{pad.softness}</Badge>
                             <Badge variant="outline">{pad.surface}</Badge>
                             <Badge variant="outline">{pad.base}</Badge>
@@ -93,17 +89,7 @@ export default async function MousepadPage({ params }: PageProps) {
                                 <Link href="/mousepads">Browse all pads</Link>
                             </Button>
                         </div>
-                    </div>
-
-                    <Card className="overflow-hidden border-border bg-card">
-                        <div
-                            className="aspect-[16/10] border-b border-border"
-                            style={{
-                                backgroundColor: colorway.primary,
-                            }}
-                        />
-
-                        <div className="grid grid-cols-3 gap-2 p-4">
+                        <div className="mt-5 grid grid-cols-3 gap-2">
                             <HeroStat label="Speed" value={pad.feel.speed} />
                             <HeroStat
                                 label="Control"
@@ -114,6 +100,14 @@ export default async function MousepadPage({ params }: PageProps) {
                                 value={pad.feel.stoppingPower}
                             />
                         </div>
+                    </div>
+
+                    <Card className="overflow-hidden border-border bg-card p-5">
+                        <MousepadImageGallery
+                            brand={pad.brand}
+                            name={pad.name}
+                            images={galleryImages}
+                        />
                     </Card>
                 </div>
             </section>
@@ -143,14 +137,14 @@ function HeroStat({ label, value }: { label: string; value: number }) {
     );
 }
 
-function RecommendationCard({ pad }: { pad: any }) {
+function RecommendationCard({ pad }: { pad: Mousepad }) {
     return (
         <Card className="border-border bg-card p-5">
             <p className="text-sm text-muted-foreground">Best for</p>
 
             <div className="mt-4 flex flex-wrap gap-2">
                 {pad.recommendedFor.games.map((game: string) => (
-                    <Badge key={game} variant="secondary">
+                    <Badge key={game} className="text-black">
                         {formatValue(game)}
                     </Badge>
                 ))}
@@ -179,7 +173,7 @@ function RecommendationCard({ pad }: { pad: any }) {
     );
 }
 
-function AvailabilityCard({ pad }: { pad: any }) {
+function AvailabilityCard({ pad }: { pad: Mousepad }) {
     return (
         <Card className="border-border bg-card p-5">
             <p className="text-sm text-muted-foreground">Availability</p>
@@ -206,7 +200,7 @@ function AvailabilityCard({ pad }: { pad: any }) {
     );
 }
 
-function PersonalNotes({ pad }: { pad: any }) {
+function PersonalNotes({ pad }: { pad: Mousepad }) {
     return (
         <Card className="border-border bg-card p-5 md:p-6">
             <p className="text-sm text-muted-foreground">Personal notes</p>

@@ -93,9 +93,9 @@ export function SpecRows({ left, right }: Props) {
     },
     {
       label: "Estimated India price",
-      left: left.price.inr ? `₹${left.price.inr.toLocaleString("en-IN")}` : "N/A",
+      left: left.price.inr ? `Rs ${left.price.inr.toLocaleString("en-IN")}` : "N/A",
       right: right.price.inr
-        ? `₹${right.price.inr.toLocaleString("en-IN")}`
+        ? `Rs ${right.price.inr.toLocaleString("en-IN")}`
         : "N/A",
     },
     {
@@ -113,13 +113,29 @@ export function SpecRows({ left, right }: Props) {
         <h2 className="mt-1 text-2xl font-semibold tracking-tight">
           Specs that actually matter
         </h2>
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
+          The goal here is not to dump every spec, but to show the details that
+          change how the pad feels, wears, and fits a competitive setup.
+        </p>
+      </div>
+
+      <div className="hidden grid-cols-[220px_1fr_1fr] gap-6 border-b border-border bg-background/50 px-5 py-4 md:grid">
+        <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+          Attribute
+        </div>
+        <div className="text-sm font-medium text-foreground">
+          {left.brand} {left.name}
+        </div>
+        <div className="text-sm font-medium text-foreground">
+          {right.brand} {right.name}
+        </div>
       </div>
 
       <div className="divide-y divide-border">
         {rows.map((row) => (
           <div
             key={row.label}
-            className="grid gap-3 p-4 md:grid-cols-[220px_1fr_1fr] md:gap-6 md:p-5"
+            className="grid gap-3 p-4 md:grid-cols-[220px_1fr_1fr] md:items-start md:gap-6 md:p-5"
           >
             <div>
               <p className="text-sm font-medium">{row.label}</p>
@@ -130,15 +146,8 @@ export function SpecRows({ left, right }: Props) {
               ) : null}
             </div>
 
-            <SpecValue
-              name={`${left.brand} ${left.name}`}
-              value={row.left}
-            />
-
-            <SpecValue
-              name={`${right.brand} ${right.name}`}
-              value={row.right}
-            />
+            <SpecValue name={`${left.brand} ${left.name}`} value={row.left} />
+            <SpecValue name={`${right.brand} ${right.name}`} value={row.right} />
           </div>
         ))}
       </div>
@@ -154,9 +163,9 @@ function SpecValue({
   value: string | number
 }) {
   return (
-    <div className="rounded-xl border border-border bg-background p-3">
+    <div className="rounded-2xl border border-border bg-background/80 p-4">
       <p className="mb-1 text-xs text-muted-foreground md:hidden">{name}</p>
-      <p className="text-sm font-medium">{value}</p>
+      <p className="text-sm font-medium text-foreground">{value}</p>
     </div>
   )
 }
@@ -177,5 +186,5 @@ function formatSize(size?: {
 }) {
   if (!size) return "Unknown"
 
-  return `${size.label} · ${size.width} × ${size.height}${size.unit}`
+  return `${size.label} - ${size.width} x ${size.height}${size.unit}`
 }
