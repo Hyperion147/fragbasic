@@ -114,11 +114,11 @@ export const mousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/artisan/zero-dai-dai-orange.webp",
+            main: "/mousepads/artisan/zero-dai-dai-orange.png",
             gallery: [
-                "/mousepads/artisan/zero-black-close.jpg",
-                "/mousepads/artisan/zero-black-fold.webp",
-                "/mousepads/artisan/zero-black.webp",
+                "/mousepads/artisan/zero-black-close.png",
+                "/mousepads/artisan/zero-black-fold.png",
+                "/mousepads/artisan/zero-black.png",
             ],
         },
 
@@ -256,11 +256,11 @@ export const mousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/lgg/hyperion-black.jpg",
+            main: "/mousepads/lgg/hyperion-blue.png",
             gallery: [
-                "/mousepads/lgg/hyperion-blue.jpg",
-                "/mousepads/lgg/hyperion-blue-xxl.jpg",
-                "/mousepads/lgg/hyperion-black-xxl.jpg",
+                "/mousepads/lgg/hyperion-black.png",
+                "/mousepads/lgg/hyperion-blue-xxl.png",
+                "/mousepads/lgg/hyperion-black-xxl.png",
             ],
         },
 
@@ -437,11 +437,11 @@ export const mousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/artisan/type-99-matcha.webp",
+            main: "/mousepads/artisan/type99-matcha.png",
             gallery: [
-                "/mousepads/artisan/type-99-black.webp",
-                "/mousepads/artisan/type-99-gray.webp",
-                "/mousepads/artisan/type-99-matcha-close.webp",
+                "/mousepads/artisan/type99-black.png",
+                "/mousepads/artisan/type99-black-close.jpg",
+                "/mousepads/artisan/type99-matcha-close.webp",
             ],
         },
 
@@ -603,11 +603,9 @@ export const mousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/lgg/saturn-pro-black.webp",
+            main: "/mousepads/lgg/saturn-red.png",
             gallery: [
-                "/mousepads/lgg/saturn-pro-red.webp",
-                "/mousepads/lgg/saturn-pro-blue.webp",
-                "/mousepads/lgg/saturn-pro-black-xxl.webp",
+                "/mousepads/lgg/saturn-black.png",
             ],
         },
 

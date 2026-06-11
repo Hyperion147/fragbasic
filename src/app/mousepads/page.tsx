@@ -59,7 +59,7 @@ export default function MousepadsPage({ pad }: { pad: Mousepad }) {
                                         alt={pad.images.main}
                                         width={500}
                                         height={500}
-                                        className="object-contain hover:scale-125 transition-all duration-300"
+                                        className="object-contain hover:scale-105 transition-all duration-300"
                                     />
                                 </div>
 
