@@ -40,13 +40,13 @@ export const lggMousepads: Mousepad[] = [
         ],
 
         visuals: {
-            defaultColorway: "black",
+            defaultColorway: "midnight",
 
             colorways: [
                 {
-                    name: "Midnight",
+                    name: "Midnight Slate",
                     slug: "midnight",
-                    color: "#576490",
+                    color: "#53647E",
                     available: true,
                 },
                 {
@@ -229,13 +229,13 @@ export const lggMousepads: Mousepad[] = [
         ],
 
         visuals: {
-            defaultColorway: "#84060e",
+            defaultColorway: "red",
 
             colorways: [
                 {
-                    name: "Red",
+                    name: "Radiant Ruby",
                     slug: "red",
-                    color: "#8F2633",
+                    color: "#8B2436",
                     available: true,
                 },
                 {
@@ -429,7 +429,7 @@ export const lggMousepads: Mousepad[] = [
                 {
                     name: "Red",
                     slug: "red",
-                    color: "#8F2633",
+                    color: "#8C2433",
                     available: true,
                 },
                 {
@@ -611,7 +611,7 @@ export const lggMousepads: Mousepad[] = [
                 {
                     name: "Dark Grey",
                     slug: "dark-grey",
-                    color: "#3A3A3A",
+                    color: "#4A484B",
                     available: true,
                 },
                 {

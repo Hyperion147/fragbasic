@@ -40,7 +40,7 @@ export function SiteNavbar() {
 
         <div className="hidden items-center gap-2 md:flex">
           <Button size="sm" asChild>
-            <Link href="/compare">Compare pads</Link>
+            <Link href="/compare/universal">Compare pads</Link>
           </Button>
         </div>
 
@@ -81,7 +81,7 @@ export function SiteNavbar() {
                 </nav>
 
                 <Button className="w-full" asChild>
-                  <Link href="/compare">Compare pads</Link>
+                  <Link href="/compare/universal">Compare pads</Link>
                 </Button>
               </div>
             </SheetContent>

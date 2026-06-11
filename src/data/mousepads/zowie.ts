@@ -31,7 +31,7 @@ export const zowieMousepads: Mousepad[] = [
             {
                 name: "Black",
                 slug: "black",
-                color: "#171717",
+                color: "#1A1A1A",
                 available: true,
             },
         ],
@@ -506,7 +506,7 @@ export const zowieMousepads: Mousepad[] = [
             {
                 name: "Rouge II",
                 slug: "rouge",
-                color: "#9F3440",
+                color: "#B32031",
                 available: true,
             },
         ],

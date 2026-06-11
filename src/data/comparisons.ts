@@ -1,13 +1,13 @@
-export type ComparisonStatus = "published" | "draft";
+export type ComparisonStatus = "published" | "draft"
 
 export interface MousepadComparison {
-  slug: string;
-  title: string;
-  leftSlug: string;
-  rightSlug: string;
-  excerpt: string;
-  status: ComparisonStatus;
-  tags: string[];
+  slug: string
+  title: string
+  leftSlug: string
+  rightSlug: string
+  excerpt: string
+  status: ComparisonStatus
+  tags: string[]
 }
 
 export const comparisons: MousepadComparison[] = [
@@ -17,9 +17,9 @@ export const comparisons: MousepadComparison[] = [
     leftSlug: "artisan-zero-soft",
     rightSlug: "pulsar-lgg-hyperion-soft",
     excerpt:
-      "A close balanced-control versus balanced-speed matchup for players choosing between safer tac FPS control and easier glide freedom.",
+      "A balanced-control benchmark compared with a smoother, slightly faster modern all-rounder.",
     status: "published",
-    tags: ["Control", "Balanced", "Tac FPS", "Artisan", "Pulsar"],
+    tags: ["Popular", "Balanced", "Tac FPS", "Artisan", "Pulsar"],
   },
   {
     slug: "artisan-zero-soft-vs-lgg-saturn-pro-soft",
@@ -27,9 +27,9 @@ export const comparisons: MousepadComparison[] = [
     leftSlug: "artisan-zero-soft",
     rightSlug: "lgg-saturn-pro-soft",
     excerpt:
-      "Two premium control-first pads with different textures, humidity behavior, and micro-adjustment freedom.",
+      "Two of the safest premium control recommendations compared across glide, stopping power, and consistency.",
     status: "published",
-    tags: ["Control", "Tac FPS", "Artisan", "LGG"],
+    tags: ["Popular", "Control", "Tac FPS", "Artisan", "LGG"],
   },
   {
     slug: "artisan-zero-soft-vs-artisan-type-99-soft",
@@ -37,29 +37,9 @@ export const comparisons: MousepadComparison[] = [
     leftSlug: "artisan-zero-soft",
     rightSlug: "artisan-type-99-soft",
     excerpt:
-      "A classic balanced-control recommendation against Artisan's more dedicated slow-control option with heavier stopping power.",
+      "Artisan's balanced-control staple compared with its slower, more planted control option.",
     status: "published",
-    tags: ["Control", "Tac FPS", "Artisan"],
-  },
-  {
-    slug: "artisan-zero-soft-vs-artisan-hayate-otsu-soft",
-    title: "Artisan Zero Soft vs Artisan Hayate Otsu Soft",
-    leftSlug: "artisan-zero-soft",
-    rightSlug: "artisan-hayate-otsu-soft",
-    excerpt:
-      "A strong control baseline versus an all-rounder that trades some stopping power for more speed and micro-correction freedom.",
-    status: "published",
-    tags: ["Balanced", "Control", "Artisan", "Tac FPS", "Tracking"],
-  },
-  {
-    slug: "artisan-zero-soft-vs-artisan-hien-soft",
-    title: "Artisan Zero Soft vs Artisan Hien Soft",
-    leftSlug: "artisan-zero-soft",
-    rightSlug: "artisan-hien-soft",
-    excerpt:
-      "A direct comparison between safe tac FPS control and a more textured balanced-speed glide with stronger tracking bias.",
-    status: "published",
-    tags: ["Control", "Speed", "Artisan", "Tac FPS", "Tracking"],
+    tags: ["Popular", "Control", "Artisan", "Tac FPS"],
   },
   {
     slug: "artisan-hayate-otsu-soft-vs-artisan-hien-soft",
@@ -67,19 +47,9 @@ export const comparisons: MousepadComparison[] = [
     leftSlug: "artisan-hayate-otsu-soft",
     rightSlug: "artisan-hien-soft",
     excerpt:
-      "Two fast Artisan favorites separated by texture, stopping power, and how loose they feel during tracking and corrections.",
+      "Two fast Artisan favorites compared by texture, stopping power, and tracking freedom.",
     status: "published",
-    tags: ["Balanced", "Speed", "Tracking", "Artisan"],
-  },
-  {
-    slug: "artisan-hayate-otsu-soft-vs-lgg-venus-pro-soft",
-    title: "Artisan Hayate Otsu Soft vs LGG Venus Pro Soft",
-    leftSlug: "artisan-hayate-otsu-soft",
-    rightSlug: "lgg-venus-pro-soft",
-    excerpt:
-      "A premium cloth all-rounder versus LGG's hybrid-leaning balanced-speed pad for players chasing versatile FPS performance.",
-    status: "published",
-    tags: ["Balanced", "Tracking", "Artisan", "LGG"],
+    tags: ["Popular", "Speed", "Tracking", "Artisan"],
   },
   {
     slug: "artisan-raiden-soft-vs-lgg-neptune-pro-soft",
@@ -87,19 +57,9 @@ export const comparisons: MousepadComparison[] = [
     leftSlug: "artisan-raiden-soft",
     rightSlug: "lgg-neptune-pro-soft",
     excerpt:
-      "A speed-focused cloth duel for players who want maximum glide, low friction, and tracking-first aim feel without moving to glass.",
+      "A high-speed cloth matchup for players chasing low friction and tracking-first aim feel.",
     status: "published",
-    tags: ["Speed", "Tracking", "Artisan", "LGG"],
-  },
-  {
-    slug: "lgg-saturn-pro-soft-vs-lgg-jupiter-pro-soft",
-    title: "LGG Saturn Pro Soft vs LGG Jupiter Pro Soft",
-    leftSlug: "lgg-saturn-pro-soft",
-    rightSlug: "lgg-jupiter-pro-soft",
-    excerpt:
-      "A control-versus-mud comparison inside LGG's lineup, focused on how much stopping power and freedom you want for tac FPS.",
-    status: "published",
-    tags: ["Control", "Tac FPS", "LGG"],
+    tags: ["Popular", "Speed", "Tracking", "Artisan", "LGG"],
   },
   {
     slug: "lgg-saturn-pro-soft-vs-artisan-type-99-soft",
@@ -107,29 +67,9 @@ export const comparisons: MousepadComparison[] = [
     leftSlug: "lgg-saturn-pro-soft",
     rightSlug: "artisan-type-99-soft",
     excerpt:
-      "Two premium control pads with different humidity behavior, texture, and stopping-power ceilings for tactical shooters.",
+      "Two premium control pads compared for stopping power, consistency, and tactical FPS precision.",
     status: "published",
-    tags: ["Control", "Tac FPS", "LGG", "Artisan"],
-  },
-  {
-    slug: "lgg-saturn-pro-soft-vs-pulsar-lgg-hyperion-soft",
-    title: "LGG Saturn Pro Soft vs Pulsar x LGG Hyperion Soft",
-    leftSlug: "lgg-saturn-pro-soft",
-    rightSlug: "pulsar-lgg-hyperion-soft",
-    excerpt:
-      "A slower control pad against a more modern balanced-speed option for players deciding between planted aim and looser corrections.",
-    status: "published",
-    tags: ["Control", "Balanced", "LGG", "Pulsar", "Tac FPS"],
-  },
-  {
-    slug: "lgg-venus-pro-soft-vs-lgg-neptune-pro-soft",
-    title: "LGG Venus Pro Soft vs LGG Neptune Pro Soft",
-    leftSlug: "lgg-venus-pro-soft",
-    rightSlug: "lgg-neptune-pro-soft",
-    excerpt:
-      "LGG's versatile balanced-speed hybrid compared with its faster cloth speed pad for players who want more control or more glide.",
-    status: "published",
-    tags: ["Balanced", "Speed", "Tracking", "LGG"],
+    tags: ["Popular", "Control", "Tac FPS", "LGG", "Artisan"],
   },
   {
     slug: "zowie-g-sr-iii-vs-lgg-saturn-pro-soft",
@@ -137,28 +77,18 @@ export const comparisons: MousepadComparison[] = [
     leftSlug: "zowie-g-sr-iii",
     rightSlug: "lgg-saturn-pro-soft",
     excerpt:
-        "A classic esports control feel compared against a premium Poron-base control pad.",
+      "A classic esports control pad compared with a modern premium Poron-base control option.",
     status: "published",
-    tags: ["Control", "Tac FPS", "Zowie", "LGG"],
-},
-{
+    tags: ["Popular", "Control", "Tac FPS", "Zowie", "LGG"],
+  },
+  {
     slug: "zowie-g-sr-se-gris-vs-artisan-zero-soft",
     title: "Zowie G-SR-SE Gris vs Artisan Zero Soft",
     leftSlug: "zowie-g-sr-se-gris",
     rightSlug: "artisan-zero-soft",
     excerpt:
-        "A mainstream balanced-control esports pad compared with one of the safest premium Artisan recommendations.",
+      "A mainstream balanced-control esports pad compared with one of the safest premium Artisan picks.",
     status: "published",
-    tags: ["Balanced", "Control", "Zowie", "Artisan"],
-},
-{
-    slug: "zowie-g-sr-iii-vs-artisan-type-99-soft",
-    title: "Zowie G-SR III vs Artisan Type-99 Soft",
-    leftSlug: "zowie-g-sr-iii",
-    rightSlug: "artisan-type-99-soft",
-    excerpt:
-        "Two slow-control pads focused on stopping power, precision, and tactical FPS consistency.",
-    status: "published",
-    tags: ["Control", "Stopping Power", "Tac FPS", "Zowie", "Artisan"],
-},
-];
+    tags: ["Popular", "Balanced", "Control", "Zowie", "Artisan"],
+  },
+]

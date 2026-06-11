@@ -47,7 +47,7 @@ export const artisanMousepads: Mousepad[] = [
         ],
 
         visuals: {
-            defaultColorway: "black",
+            defaultColorway: "orange",
 
             colorways: [
                 {
@@ -59,7 +59,7 @@ export const artisanMousepads: Mousepad[] = [
                 {
                     name: "Dai-dai Orange",
                     slug: "orange",
-                    color: "#F7931E",
+                    color: "#EE9858",
                     available: true,
                 },
             ],
@@ -222,13 +222,13 @@ export const artisanMousepads: Mousepad[] = [
                 {
                     name: "Coffee Brown",
                     slug: "coffee-brown",
-                    color: "#271300",
+                    color: "#352524",
                     available: true,
                 },
                 {
                     name: "Dai-Dai Orange",
                     slug: "dai-dai-orange",
-                    color: "#F7931E",
+                    color: "#EE9858",
                     available: true,
                 },
             ],
@@ -404,7 +404,7 @@ export const artisanMousepads: Mousepad[] = [
         ],
 
         visuals: {
-            defaultColorway: "black",
+            defaultColorway: "wine-red",
 
             colorways: [
                 {
@@ -416,7 +416,7 @@ export const artisanMousepads: Mousepad[] = [
                 {
                     name: "Wine Red",
                     slug: "wine-red",
-                    color: "#7B2431",
+                    color: "#B22B32",
                     available: true,
                 },
             ],
@@ -611,7 +611,7 @@ export const artisanMousepads: Mousepad[] = [
                 {
                     name: "Wine Red",
                     slug: "wine-red",
-                    color: "#7C2230",
+                    color: "#A72A33",
                     available: true,
                 },
                 {
