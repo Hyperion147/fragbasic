@@ -17,8 +17,7 @@ export function ColorwaySelector({
             key={colorway.slug}
             className="size-6 rounded-full border border-border"
             style={{
-              backgroundColor:
-                colorway.primary,
+              backgroundColor: colorway.color,
             }}
             title={colorway.name}
           />

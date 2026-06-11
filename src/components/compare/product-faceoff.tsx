@@ -3,7 +3,7 @@ import Image from "next/image"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import type { Mousepad } from "@/types/mousepad"
-import { getDefaultColorway } from "@/lib/mousepads"
+import { getColorwayBySlug } from "@/lib/mousepads"
 
 export function ProductFaceoff({
   left,
@@ -24,16 +24,16 @@ export function ProductFaceoff({
 }
 
 function PadCard({ pad }: { pad: Mousepad }) {
-  const colorway = getDefaultColorway(pad)
+  const colorway = getColorwayBySlug(
+    pad,
+    pad.slug === "artisan-zero-soft" ? "orange" : "midnight"
+  )
   const title = `${pad.brand} ${pad.name}`
 
   return (
-    <Card className="overflow-hidden border-border bg-card/95 shadow-lg shadow-black/10">
+    <Card className="overflow-hidden border-border bg-card/95 shadow-lg shadow-black/10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.15),transparent_45%)]">
       <div
-        className="relative aspect-[16/10] border-b border-border bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.15),transparent_45%)]"
-        style={{
-          backgroundColor: colorway.primary,
-        }}
+        className="relative aspect-video border-b border-border"
       >
         <Image
           src={pad.images.main}

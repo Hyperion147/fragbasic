@@ -13,6 +13,10 @@ import {
 } from "@/components/evilcharts/charts/radar-chart";
 
 import { Card } from "@/components/ui/card";
+import {
+    getFeaturedColorwaySlug,
+    getMousepadChartColors,
+} from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
 
 type Props = {
@@ -20,6 +24,10 @@ type Props = {
 };
 
 export function MousepadFeelChart({ pad }: Props) {
+    const chartColors = getMousepadChartColors(
+        pad,
+        getFeaturedColorwaySlug(pad)
+    );
     const data = [
         {
             metric: "Speed",
@@ -51,7 +59,7 @@ export function MousepadFeelChart({ pad }: Props) {
         value: {
             label: pad.name,
             colors: {
-                light: ["var(--chart-right)"],
+                light: [chartColors.stroke],
             },
         },
     };
@@ -87,6 +95,10 @@ export function MousepadFeelChart({ pad }: Props) {
                     dataKey="value"
                     variant="filled"
                     fillOpacity={0.24}
+                    radarProps={{
+                        fill: chartColors.fill,
+                        stroke: chartColors.stroke,
+                    }}
                     isClickable
                 >
                     <Dot variant="colored-border" />

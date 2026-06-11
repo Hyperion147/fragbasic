@@ -12,6 +12,7 @@ import {
 } from "@/components/evilcharts/charts/radar-chart";
 
 import { Card } from "@/components/ui/card";
+import { getMousepadChartColors } from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
 
 type Props = {
@@ -20,6 +21,8 @@ type Props = {
 };
 
 export function CompareFeelRadar({ left, right }: Props) {
+    const leftChartColors = getMousepadChartColors(left, "orange");
+    const rightChartColors = getMousepadChartColors(right, "midnight");
     const data = [
         {
             metric: "Speed",
@@ -57,57 +60,57 @@ export function CompareFeelRadar({ left, right }: Props) {
         left: {
             label: left.name,
             colors: {
-                light: ["var(--chart-left)"],
+                light: [leftChartColors.stroke],
             },
         },
 
         right: {
             label: right.name,
             colors: {
-                light: ["var(--chart-right)"],
+                light: [rightChartColors.stroke],
             },
         },
     };
 
     return (
-        <Card className="border-border bg-card p-5 md:p-6">
-            <div className="mb-6">
-                <p className="text-sm text-muted-foreground">
-                    Radar comparison
-                </p>
-                <h2 className="text-2xl font-semibold tracking-tight">
-                    Feel profile overlap
-                </h2>
-            </div>
+        <EvilRadarChart
+            data={data}
+            config={chartConfig}
+            className="mx-auto aspect-square max-h-100 bg-card/90 pb-8"
+            chartProps={{
+                outerRadius: "72%",
+            }}
+        >
+            <PolarGrid gridType="circle" />
+            <PolarAngleAxis dataKey="metric" />
+            <Legend isClickable />
+            <Tooltip variant="frosted-glass" />
 
-            <EvilRadarChart
-                data={data}
-                config={chartConfig}
-                className="mx-auto aspect-square max-h-[460px]"
-                chartProps={{
-                    outerRadius: "72%",
+            <Radar
+                dataKey="left"
+                variant="filled"
+                fillOpacity={0.25}
+                radarProps={{
+                    fill: leftChartColors.fill,
+                    stroke: leftChartColors.stroke,
                 }}
+                isClickable
             >
-                <PolarGrid gridType="circle" />
-                <PolarAngleAxis dataKey="metric" />
-                <Legend isClickable />
-                <Tooltip variant="frosted-glass" />
+                <Dot variant="colored-border" />
+                <ActiveDot variant="default" />
+            </Radar>
 
-                <Radar
-                    dataKey="left"
-                    variant="filled"
-                    fillOpacity={0.22}
-                    isClickable
-                >
-                    <Dot variant="colored-border" />
-                    <ActiveDot variant="default" />
-                </Radar>
-
-                <Radar dataKey="right" variant="lines" isClickable>
-                    <Dot variant="colored-border" />
-                    <ActiveDot variant="default" />
-                </Radar>
-            </EvilRadarChart>
-        </Card>
+            <Radar
+                dataKey="right"
+                variant="lines"
+                radarProps={{
+                    stroke: rightChartColors.stroke,
+                }}
+                isClickable
+            >
+                <Dot variant="colored-border" />
+                <ActiveDot variant="default" />
+            </Radar>
+        </EvilRadarChart>
     );
 }

@@ -16,9 +16,7 @@ export function getDefaultColorway(
     return {
       name: "Default",
       slug: "default",
-      primary: "oklch(0.22 0.01 260)",
-      secondary: "oklch(0.28 0.01 260)",
-      accent: "oklch(0.74 0.16 145)",
+      color: "#4b5563",
       available: true,
     }
   }
@@ -28,4 +26,41 @@ export function getDefaultColorway(
       (colorway) => colorway.slug === mousepad.visuals.defaultColorway
     ) ?? mousepad.visuals.colorways[0]
   )
+}
+
+export function getColorwayBySlug(mousepad: Mousepad | undefined, slug?: string) {
+  if (!mousepad?.visuals?.colorways?.length) {
+    return getDefaultColorway(mousepad)
+  }
+
+  if (!slug) {
+    return getDefaultColorway(mousepad)
+  }
+
+  return (
+    mousepad.visuals.colorways.find((colorway) => colorway.slug === slug) ??
+    getDefaultColorway(mousepad)
+  )
+}
+
+export function getFeaturedColorwaySlug(mousepad?: Mousepad) {
+  if (!mousepad) return undefined
+
+  if (mousepad.slug === "artisan-zero-soft") return "orange"
+  if (mousepad.slug === "pulsar-lgg-hyperion-soft") return "midnight"
+
+  return mousepad.visuals.defaultColorway
+}
+
+export function getMousepadChartColors(
+  mousepad?: Mousepad,
+  colorwaySlug?: string
+) {
+  const colorway = getColorwayBySlug(mousepad, colorwaySlug)
+
+  return {
+    solid: colorway.color,
+    fill: colorway.color,
+    stroke: colorway.color,
+  }
 }

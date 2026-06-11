@@ -52,17 +52,13 @@ export const mousepads: Mousepad[] = [
                 {
                     name: "Black",
                     slug: "black",
-                    primary: "oklch(0.18 0.01 260)",
-                    secondary: "oklch(0.25 0.01 260)",
-                    accent: "oklch(0.72 0.02 260)",
+                    color: "#1c1c1c",
                     available: true,
                 },
                 {
-                    name: "Orange",
+                    name: "Dai-dai Orange",
                     slug: "orange",
-                    primary: "oklch(0.68 0.18 45)",
-                    secondary: "oklch(0.50 0.12 45)",
-                    accent: "oklch(0.92 0.05 60)",
+                    color: "#F7931E",
                     available: true,
                 },
             ],
@@ -79,7 +75,7 @@ export const mousepads: Mousepad[] = [
         },
 
         environment: {
-            humidityResistance: 7,
+            humidityResistance: 9,
             sweatResistance: 7,
             dustHairResistance: 5,
             washable: true,
@@ -192,17 +188,19 @@ export const mousepads: Mousepad[] = [
         ],
 
         visuals: {
-            defaultColorway: "hyperion-red",
+            defaultColorway: "black",
 
             colorways: [
                 {
-                    name: "Hyperion Red",
-                    slug: "hyperion-red",
-
-                    primary: "oklch(0.62 0.20 25)",
-                    secondary: "oklch(0.34 0.10 20)",
-                    accent: "oklch(0.90 0.04 20)",
-
+                    name: "Midnight",
+                    slug: "midnight",
+                    color: "#576490",
+                    available: true,
+                },
+                {
+                    name: "Black",
+                    slug: "black",
+                    color: "#2b2b2b",
                     available: true,
                 },
             ],
@@ -311,4 +309,351 @@ export const mousepads: Mousepad[] = [
         createdAt: "2026-06-10",
         updatedAt: "2026-06-10",
     },
+
+    {
+        id: "artisan-type-99-soft",
+        slug: "artisan-type-99-soft",
+
+        brand: "Artisan",
+        name: "Type-99 Soft",
+        series: "Type-99",
+
+        category: "control",
+        surface: "cloth",
+        base: "poron",
+        softness: "soft",
+
+        sizes: [
+            {
+                label: "S",
+                width: 240,
+                height: 210,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
+                label: "M",
+                width: 310,
+                height: 240,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
+                label: "L",
+                width: 420,
+                height: 330,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
+                label: "XL",
+                width: 490,
+                height: 420,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
+                label: "XXL",
+                width: 500,
+                height: 490,
+                thickness: 4,
+                unit: "mm",
+            },
+        ],
+
+        visuals: {
+            defaultColorway: "matcha",
+
+            colorways: [
+                {
+                    name: "Matcha",
+                    slug: "matcha",
+                    color: "#9BA66D",
+                    available: true,
+                },
+                {
+                    name: "Black",
+                    slug: "black",
+                    color: "#1c1c1c",
+                    available: true,
+                },
+                {
+                    name: "Gray",
+                    slug: "gray",
+                    color: "#7E817A",
+                    available: true,
+                },
+            ],
+        },
+
+        feel: {
+            speed: 4.4,
+            control: 9.4,
+            stoppingPower: 9.5,
+            staticFriction: 8.4,
+            dynamicFriction: 4.8,
+            microAdjustments: 7.5,
+            ratingConfidence: "official",
+        },
+
+        environment: {
+            humidityResistance: 9,
+            sweatResistance: 8.5,
+            dustHairResistance: 7,
+            washable: true,
+            notes: "Official and retailer descriptions position Type-99 as a low-speed, high-stopping-power control pad with fast-drying fabric aimed at reducing humidity and sweat effects.",
+        },
+
+        texture: {
+            feel: "smooth",
+            skinComfort: 8.5,
+            sleeveFriendly: true,
+            noiseLevel: "quiet",
+        },
+
+        recommendedFor: {
+            games: ["valorant", "cs2", "general-fps"],
+            aimStyles: ["micro-adjustments", "flicking"],
+            sensitivity: ["low", "medium"],
+        },
+
+        avoidIf: [
+            "You want a fast or balanced-speed glide",
+            "You play tracking-heavy games like Apex most of the time",
+            "You dislike high static friction",
+            "You prefer something closer to Artisan Zero or Hyperion speed",
+        ],
+
+        price: {
+            usd: 65,
+            inr: 6099,
+        },
+
+        availability: {
+            global: true,
+            india: "limited",
+            stores: ["GenesisPC", "import sellers"],
+            notes: "GenesisPC has listed Type-99 in India around ₹6,099, but color and hardness availability can vary.",
+        },
+
+        images: {
+            main: "/mousepads/artisan/type-99-matcha.webp",
+            gallery: [
+                "/mousepads/artisan/type-99-black.webp",
+                "/mousepads/artisan/type-99-gray.webp",
+                "/mousepads/artisan/type-99-matcha-close.webp",
+            ],
+        },
+
+        personal: {
+            owned: false,
+            tested: false,
+            notes: "Needs personal testing. Expected to be noticeably slower than Artisan Zero and Hyperion, with much higher stopping power.",
+            pros: [
+                "Very strong stopping power",
+                "Smooth control surface",
+                "Better humidity-focused positioning than many traditional cloth control pads",
+                "Great candidate for Valorant and CS2 low-sens players",
+            ],
+            cons: [
+                "Likely too slow for tracking-heavy games",
+                "Expensive",
+                "Limited India availability",
+                "May feel restrictive if you prefer balanced pads",
+            ],
+        },
+
+        sources: [
+            {
+                label: "Artisan official Type-99 page",
+                type: "official",
+                url: "https://artisan-jp.com/global/fx-type99",
+            },
+            {
+                label: "JPGamingUSA Type-99 listing",
+                type: "store",
+                url: "https://jpgamingusa.com/products/artisan-fx-type-99-mousepad",
+            },
+            {
+                label: "GenesisPC India Type-99 listing",
+                type: "store",
+                url: "https://www.genesispc.in/products/artisan-fx-type-99-gaming-mousepad",
+            },
+            {
+                label: "Ausmodshop Type-99 listing",
+                type: "store",
+                url: "https://ausmodshop.com/products/artisan-fx-type-99-matcha-green",
+            },
+        ],
+
+        createdAt: "2026-06-11",
+        updatedAt: "2026-06-11",
+    },
+
+    {
+        id: "lgg-saturn-pro-soft",
+        slug: "lgg-saturn-pro-soft",
+
+        brand: "Lethal Gaming Gear",
+        name: "Saturn Pro Soft",
+        series: "Saturn Pro",
+
+        category: "control",
+        surface: "cloth",
+        base: "poron",
+        softness: "soft",
+
+        sizes: [
+            {
+                label: "XL",
+                width: 490,
+                height: 420,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
+                label: "XL SQ",
+                width: 500,
+                height: 500,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
+                label: "XXL",
+                width: 1000,
+                height: 500,
+                thickness: 4,
+                unit: "mm",
+            },
+        ],
+
+        visuals: {
+            defaultColorway: "black",
+
+            colorways: [
+                {
+                    name: "Black",
+                    slug: "black",
+                    color: "#202020",
+                    available: true,
+                },
+                {
+                    name: "Red",
+                    slug: "red",
+                    color: "#8F2633",
+                    available: true,
+                },
+                {
+                    name: "Blue",
+                    slug: "blue",
+                    color: "#315C9D",
+                    available: true,
+                },
+            ],
+        },
+
+        feel: {
+            speed: 5.4,
+            control: 8.8,
+            stoppingPower: 8.7,
+            staticFriction: 7.7,
+            dynamicFriction: 5.8,
+            microAdjustments: 8,
+            ratingConfidence: "community",
+        },
+
+        environment: {
+            humidityResistance: 7,
+            sweatResistance: 7,
+            dustHairResistance: 7,
+            washable: true,
+            notes: "Official catalog copy positions Saturn Pro as a slow/control pad with controlled glide and easy micro-adjustments. Some community impressions vary depending on humidity, skin contact, and break-in.",
+        },
+
+        texture: {
+            feel: "slightly-textured",
+            skinComfort: 8,
+            sleeveFriendly: true,
+            noiseLevel: "quiet",
+        },
+
+        recommendedFor: {
+            games: ["valorant", "cs2", "general-fps"],
+            aimStyles: ["micro-adjustments", "flicking"],
+            sensitivity: ["low", "medium"],
+        },
+
+        avoidIf: [
+            "You want a balanced-speed pad like Hyperion",
+            "You want faster dynamic glide for tracking-heavy games",
+            "You dislike slower controlled pads",
+            "You live in humid conditions and are sensitive to sticky-feeling cloth pads",
+        ],
+
+        price: {
+            usd: 54.95,
+            inr: 6500,
+        },
+
+        availability: {
+            global: true,
+            india: "import-only",
+            stores: ["Lethal Gaming Gear", "MaxGaming", "import sellers"],
+            notes: "Usually easier to buy globally than locally in India. India pricing depends heavily on import route and stock.",
+        },
+
+        images: {
+            main: "/mousepads/lgg/saturn-pro-black.webp",
+            gallery: [
+                "/mousepads/lgg/saturn-pro-red.webp",
+                "/mousepads/lgg/saturn-pro-blue.webp",
+                "/mousepads/lgg/saturn-pro-black-xxl.webp",
+            ],
+        },
+
+        personal: {
+            owned: false,
+            tested: false,
+            notes: "Needs personal testing. Expected to sit slower than Artisan Zero and Hyperion, with stronger control and stopping power.",
+            pros: [
+                "Strong controlled glide",
+                "Good stopping power",
+                "Smooth enough for micro-adjustments",
+                "Premium base and stitched edges",
+            ],
+            cons: [
+                "Slower than balanced pads",
+                "May feel sticky or inconsistent for some users in humidity",
+                "Import-heavy availability in India",
+                "Less versatile for tracking-heavy games",
+            ],
+        },
+
+        sources: [
+            {
+                label: "LGG Saturn Pro Soft official page",
+                type: "official",
+                url: "https://lethal.gg/products/es-saturn-pro-gaming-mousepad-soft",
+            },
+            {
+                label: "LGG mousepads catalog",
+                type: "official",
+                url: "https://lethal.gg/collections/mousepads-1",
+            },
+            {
+                label: "Ausmodshop Saturn Pro listing",
+                type: "store",
+                url: "https://ausmodshop.com/products/lethal-gaming-gear-saturn-pro",
+            },
+            {
+                label: "Amazon Saturn Pro XLSQ listing",
+                type: "store",
+                url: "https://www.amazon.com/Lethal-Gaming-Gear-Saturn-Xsoft/dp/B0DG8JPCMT",
+            },
+        ],
+
+        createdAt: "2026-06-11",
+        updatedAt: "2026-06-11",
+    },
+    
 ];

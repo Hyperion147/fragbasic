@@ -123,9 +123,7 @@ export interface MousepadSource {
 export interface MousepadColorway {
   name: string
   slug: string
-  primary: string
-  secondary?: string
-  accent?: string
+  color: string
   image?: string
   available: boolean
 }

@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card"
+import { getMousepadChartColors } from "@/lib/mousepads"
 import type { Mousepad } from "@/types/mousepad"
 
 const rows = [
@@ -17,6 +18,9 @@ export function FeelMap({
   left: Mousepad
   right: Mousepad
 }) {
+  const leftColors = getMousepadChartColors(left, "orange")
+  const rightColors = getMousepadChartColors(right, "midnight")
+
   return (
     <Card className="border-border bg-card p-5 md:p-6">
       <div className="mb-6">
@@ -32,8 +36,8 @@ export function FeelMap({
       </div>
 
       <div className="mb-6 grid gap-3 rounded-3xl border border-border bg-background/60 p-4 sm:grid-cols-2">
-        <LegendChip color="bg-[var(--chart-left)]" label={left.name} />
-        <LegendChip color="bg-[var(--chart-right)]" label={right.name} />
+        <LegendChip color={leftColors.solid} label={left.name} />
+        <LegendChip color={rightColors.solid} label={right.name} />
       </div>
 
       <div className="space-y-6">
@@ -47,8 +51,8 @@ export function FeelMap({
             </div>
 
             <div className="grid grid-cols-2 gap-2">
-              <Meter value={left.feel[key]} align="right" color="var(--chart-left)" />
-              <Meter value={right.feel[key]} align="left" color="var(--chart-right)" />
+              <Meter value={left.feel[key]} align="right" color={leftColors.solid} />
+              <Meter value={right.feel[key]} align="left" color={rightColors.solid} />
             </div>
 
             <div className="mt-2 grid grid-cols-2 text-xs text-muted-foreground">
@@ -84,7 +88,10 @@ function Meter({
 function LegendChip({ color, label }: { color: string; label: string }) {
   return (
     <div className="flex items-center gap-3 rounded-2xl border border-border bg-card/70 px-4 py-3">
-      <span className={`size-3 rounded-full ${color}`} />
+      <span
+        className="size-3 rounded-full"
+        style={{ backgroundColor: color }}
+      />
       <span className="text-sm font-medium text-foreground">{label}</span>
     </div>
   )
