@@ -131,4 +131,34 @@ export const comparisons: MousepadComparison[] = [
     status: "published",
     tags: ["Balanced", "Speed", "Tracking", "LGG"],
   },
+  {
+    slug: "zowie-g-sr-iii-vs-lgg-saturn-pro-soft",
+    title: "Zowie G-SR III vs LGG Saturn Pro Soft",
+    leftSlug: "zowie-g-sr-iii",
+    rightSlug: "lgg-saturn-pro-soft",
+    excerpt:
+        "A classic esports control feel compared against a premium Poron-base control pad.",
+    status: "published",
+    tags: ["Control", "Tac FPS", "Zowie", "LGG"],
+},
+{
+    slug: "zowie-g-sr-se-gris-vs-artisan-zero-soft",
+    title: "Zowie G-SR-SE Gris vs Artisan Zero Soft",
+    leftSlug: "zowie-g-sr-se-gris",
+    rightSlug: "artisan-zero-soft",
+    excerpt:
+        "A mainstream balanced-control esports pad compared with one of the safest premium Artisan recommendations.",
+    status: "published",
+    tags: ["Balanced", "Control", "Zowie", "Artisan"],
+},
+{
+    slug: "zowie-g-sr-iii-vs-artisan-type-99-soft",
+    title: "Zowie G-SR III vs Artisan Type-99 Soft",
+    leftSlug: "zowie-g-sr-iii",
+    rightSlug: "artisan-type-99-soft",
+    excerpt:
+        "Two slow-control pads focused on stopping power, precision, and tactical FPS consistency.",
+    status: "published",
+    tags: ["Control", "Stopping Power", "Tac FPS", "Zowie", "Artisan"],
+},
 ];

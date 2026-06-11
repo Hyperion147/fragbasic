@@ -3,6 +3,8 @@ import {
   type MousepadComparison,
 } from "@/data/comparisons";
 
+const comparisonCompanyTags = new Set(["Artisan", "LGG", "Pulsar"]);
+
 export function getAllComparisons() {
   return comparisons;
 }
@@ -30,7 +32,11 @@ export function getRelatedComparisons(mousepadSlug: string) {
 export function getComparisonTagOptions(
   entries: MousepadComparison[] = comparisons
 ) {
-  return Array.from(new Set(entries.flatMap((comparison) => comparison.tags))).sort(
-    (left, right) => left.localeCompare(right)
-  );
+  return Array.from(
+    new Set(
+      entries
+        .flatMap((comparison) => comparison.tags)
+        .filter((tag) => !comparisonCompanyTags.has(tag))
+    )
+  ).sort((left, right) => left.localeCompare(right));
 }

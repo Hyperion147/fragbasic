@@ -39,12 +39,6 @@ export default function CompareIndexPage() {
             <h1 className="mt-5 text-5xl font-semibold tracking-tight md:text-7xl">
               Find the matchup that actually answers your buying question.
             </h1>
-
-            <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
-              Browse every available comparison, then filter by tags like
-              Control, Speed, Tracking, or Tac FPS to get to the matchup you
-              actually care about.
-            </p>
           </div>
         </div>
       </section>

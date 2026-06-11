@@ -1,4 +1,4 @@
-import { mousepads } from "@/data/mousepads";
+import { mousepads } from "@/data/mousepads/mousepads";
 import type {
   IndiaAvailability,
   Mousepad,
