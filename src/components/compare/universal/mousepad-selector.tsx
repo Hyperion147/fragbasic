@@ -86,18 +86,7 @@ export function MousepadSelector({
             className="pl-10"
           />
         </div>
-
-        <div className="flex items-center justify-between gap-3 rounded-3xl border border-border bg-background/75 px-4 py-3">
-          <p className="text-sm text-muted-foreground">
-            {selectedSlugs.length}/{maxSelected} selected
-          </p>
-          <Badge variant="outline">
-            {hasReachedLimit
-              ? "Selection limit reached"
-              : `${availableMousepads.length} addable result${availableMousepads.length === 1 ? "" : "s"}`}
-          </Badge>
-        </div>
-
+        
         <div className="grid gap-3 md:grid-cols-2">
           {availableMousepads.map((mousepad) => {
             const colorway = getDefaultColorway(mousepad);

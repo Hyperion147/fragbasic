@@ -41,19 +41,9 @@ export function MultiPositionChart({ mousepads }: Props) {
       </CardHeader>
 
       <CardContent className="space-y-6">
-        <div className="overflow-hidden rounded-3xl border border-border bg-background/60">
-          <div className="grid grid-cols-6 border-b border-border bg-[linear-gradient(90deg,oklch(0.24_0.01_230),oklch(0.27_0.01_230),oklch(0.31_0.02_230),oklch(0.35_0.02_230),oklch(0.39_0.03_230),oklch(0.43_0.03_230))]">
-            {zones.map((zone) => (
-              <div
-                key={zone.label}
-                className="px-2 py-3 text-center text-[11px] uppercase tracking-[0.16em] text-muted-foreground md:text-xs"
-              >
-                {zone.label}
-              </div>
-            ))}
-          </div>
+        <div className="overflow-hidden rounded-3xl bg-background/60">
 
-          <div className="space-y-3 p-4">
+          <div className="space-y-3">
             {mousepads.map((mousepad) => {
               const position = getMousepadSpeedControlPosition(mousepad);
               const color = getDefaultColorway(mousepad).color;
