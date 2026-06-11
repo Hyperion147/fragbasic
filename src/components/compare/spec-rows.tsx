@@ -119,7 +119,7 @@ export function SpecRows({ left, right }: Props) {
         </p>
       </div>
 
-      <div className="hidden grid-cols-[220px_1fr_1fr] gap-6 border-b border-border bg-background/50 px-5 py-4 md:grid">
+      <div className="hidden grid-cols-[220px_1fr_1fr] gap-6 p-5 md:grid border-b-2">
         <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
           Attribute
         </div>
@@ -135,7 +135,7 @@ export function SpecRows({ left, right }: Props) {
         {rows.map((row) => (
           <div
             key={row.label}
-            className="grid gap-3 p-4 md:grid-cols-[220px_1fr_1fr] md:items-start md:gap-6 md:p-5"
+            className="grid gap-3 p-5 md:grid-cols-[220px_1fr_1fr] md:items-start md:gap-6"
           >
             <div>
               <p className="text-sm font-medium">{row.label}</p>
@@ -163,7 +163,7 @@ function SpecValue({
   value: string | number
 }) {
   return (
-    <div className="rounded-2xl border border-border bg-background/80 p-4">
+    <div>
       <p className="mb-1 text-xs text-muted-foreground md:hidden">{name}</p>
       <p className="text-sm font-medium text-foreground">{value}</p>
     </div>

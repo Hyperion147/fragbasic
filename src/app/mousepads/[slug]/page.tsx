@@ -1,5 +1,3 @@
-// app/mousepads/[slug]/page.tsx
-
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
