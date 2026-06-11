@@ -15,18 +15,18 @@ export const comparisons: ComparisonEntry[] = [
     leftSlug: "artisan-zero-soft",
     rightSlug: "pulsar-lgg-hyperion-soft",
     excerpt:
-      "A control-first benchmark against a smoother modern alternative for players who want more freedom in micro-corrections.",
+      "Two of the most talked-about balanced FPS mousepads compared across speed, control, stopping power, and micro-adjustment freedom.",
     status: "published",
     tags: ["Valorant", "CS2", "Control", "Balanced"],
   },
   {
-    slug: "artisan-zero-soft-vs-lgg-saturn-pro-soft",
-    title: "Artisan Zero Soft vs LGG Saturn Pro Soft",
-    leftSlug: "artisan-zero-soft",
-    rightSlug: "lgg-saturn-pro-soft",
+    slug: "lgg-saturn-pro-soft-vs-artisan-type-99-soft",
+    title: "LGG Saturn Pro Soft vs Artisan Type-99 Soft ",
+    leftSlug: "lgg-saturn-pro-soft",
+    rightSlug: "artisan-type-99-soft",
     excerpt:
-      "A closer look at classic control versus a slower, more planted Saturn-style experience.",
-    status: "planned",
+      "Two premium control pads with very different approaches to speed, stopping power, and overall aim feel.",
+    status: "published",
     tags: ["Control", "Stopping Power", "Tac FPS"],
   },
   {

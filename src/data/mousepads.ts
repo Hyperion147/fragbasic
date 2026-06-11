@@ -154,7 +154,7 @@ export const mousepads: Mousepad[] = [
         id: "pulsar-lgg-hyperion-soft",
         slug: "pulsar-lgg-hyperion-soft",
 
-        brand: "Pulsar x Lethal Gaming Gear",
+        brand: "Pulsar x LGG",
         name: "Hyperion Soft",
         series: "Hyperion",
 
@@ -494,7 +494,7 @@ export const mousepads: Mousepad[] = [
         id: "lgg-saturn-pro-soft",
         slug: "lgg-saturn-pro-soft",
 
-        brand: "Lethal Gaming Gear",
+        brand: "LGG",
         name: "Saturn Pro Soft",
         series: "Saturn Pro",
 
