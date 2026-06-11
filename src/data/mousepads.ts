@@ -528,19 +528,19 @@ export const mousepads: Mousepad[] = [
         ],
 
         visuals: {
-            defaultColorway: "black",
+            defaultColorway: "#84060e",
 
             colorways: [
-                {
-                    name: "Black",
-                    slug: "black",
-                    color: "#202020",
-                    available: true,
-                },
                 {
                     name: "Red",
                     slug: "red",
                     color: "#8F2633",
+                    available: true,
+                },
+                {
+                    name: "Black",
+                    slug: "black",
+                    color: "#202020",
                     available: true,
                 },
                 {
@@ -606,6 +606,7 @@ export const mousepads: Mousepad[] = [
             main: "/mousepads/lgg/saturn-red.png",
             gallery: [
                 "/mousepads/lgg/saturn-black.png",
+                "/mousepads/lgg/saturn-blue.png",
             ],
         },
 
