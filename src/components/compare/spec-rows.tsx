@@ -99,7 +99,7 @@ export function SpecRows({ left, right }: Props) {
         : "N/A",
     },
     {
-      label: "Confidence",
+      label: "Source",
       left: formatValue(left.feel.ratingConfidence),
       right: formatValue(right.feel.ratingConfidence),
       note: "Personal-tested data should be trusted more than community estimates.",

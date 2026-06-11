@@ -1,187 +1,188 @@
 export type MousepadCategory =
-  | "mud"
-  | "control"
-  | "balanced-control"
-  | "balanced-speed"
-  | "speed"
-  | "glass"
+    | "mud"
+    | "control"
+    | "balanced-control"
+    | "balanced-speed"
+    | "speed"
+    | "glass";
 
-export type MousepadSurface =
-  | "cloth"
-  | "hybrid"
-  | "glass"
-  | "hard"
+export type MousepadSurface = "cloth" | "hybrid" | "glass" | "hard";
 
 export type MousepadBase =
-  | "poron"
-  | "rubber"
-  | "silicone"
-  | "polyurethane"
-  | "unknown"
+    | "poron"
+    | "rubber"
+    | "silicone"
+    | "polyurethane"
+    | "unknown";
 
 export type MousepadSoftness =
-  | "xsoft"
-  | "soft"
-  | "mid"
-  | "firm"
-  | "hard"
-  | "unknown"
+    | "xsoft"
+    | "soft"
+    | "mid"
+    | "firm"
+    | "hard"
+    | "unknown";
 
 export type MousepadGame =
-  | "valorant"
-  | "cs2"
-  | "apex"
-  | "overwatch"
-  | "fortnite"
-  | "general-fps"
+    | "valorant"
+    | "cs2"
+    | "apex"
+    | "overwatch"
+    | "fortnite"
+    | "general-fps";
 
 export type AimStyle =
-  | "micro-adjustments"
-  | "flicking"
-  | "tracking"
-  | "switching"
+    | "micro-adjustments"
+    | "flicking"
+    | "tracking"
+    | "switching";
 
-export type Sensitivity =
-  | "low"
-  | "medium"
-  | "high"
+export type Sensitivity = "low" | "medium" | "high";
 
 export type RatingConfidence =
-  | "official"
-  | "community"
-  | "personal-tested"
-  | "estimated"
+    | "official"
+    | "community"
+    | "personal-tested"
+    | "estimated";
 
 export type IndiaAvailability =
-  | "available"
-  | "limited"
-  | "import-only"
-  | "unavailable"
-  | "unknown"
+    | "available"
+    | "limited"
+    | "import-only"
+    | "unavailable"
+    | "unknown";
 
 export interface MousepadSize {
-  label: string
-  width: number
-  height: number
-  thickness?: number
-  unit: "mm"
+    label: string;
+    width: number;
+    height: number;
+    thickness?: number;
+    unit: "mm";
 }
 
 export interface MousepadFeelRating {
-  speed: number
-  control: number
-  stoppingPower: number
-  staticFriction: number
-  dynamicFriction: number
-  microAdjustments: number
-  ratingConfidence: RatingConfidence
+    speed: number;
+    control: number;
+    stoppingPower: number;
+    staticFriction: number;
+    dynamicFriction: number;
+    microAdjustments: number;
+    ratingConfidence: RatingConfidence;
 }
 
 export interface MousepadEnvironment {
-  humidityResistance: number
-  sweatResistance: number
-  dustHairResistance: number
-  washable: boolean
-  notes?: string
+    humidityResistance: number;
+    sweatResistance: number;
+    dustHairResistance: number;
+    washable: boolean;
+    notes?: string;
 }
 
 export interface MousepadTexture {
-  feel: "smooth" | "slightly-textured" | "textured" | "rough"
-  skinComfort: number
-  sleeveFriendly: boolean
-  noiseLevel: "quiet" | "medium" | "loud"
+    feel: "smooth" | "slightly-textured" | "textured" | "rough";
+    skinComfort: number;
+    sleeveFriendly: boolean;
+    noiseLevel: "quiet" | "medium" | "loud";
 }
 
 export interface MousepadPrice {
-  usd?: number
-  inr?: number
-  eur?: number
+    usd?: number;
+    inr?: number;
+    eur?: number;
 }
 
 export interface MousepadAvailability {
-  global: boolean
-  india: IndiaAvailability
-  stores?: string[]
-  notes?: string
+    global: boolean;
+    india: IndiaAvailability;
+    stores?: string[];
+    notes?: string;
 }
 
 export interface MousepadPersonalNotes {
-  owned: boolean
-  tested: boolean
-  testingDuration?: string
-  mainGamesTested?: MousepadGame[]
-  notes?: string
-  pros?: string[]
-  cons?: string[]
+    owned: boolean;
+    tested: boolean;
+    testingDuration?: string;
+    mainGamesTested?: MousepadGame[];
+    notes?: string;
+    pros?: string[];
+    cons?: string[];
 }
 
 export interface MousepadSource {
-  label: string
-  type: "official" | "store" | "reddit" | "review" | "personal"
-  url?: string
+    label: string;
+    type: "official" | "store" | "reddit" | "review" | "personal";
+    url?: string;
 }
 export interface MousepadColorway {
-  name: string
-  slug: string
-  color: string
-  image?: string
-  available: boolean
+    name: string;
+    slug: string;
+    color: string;
+    image?: string;
+    available: boolean;
 }
 export interface MousepadVisuals {
-  defaultColorway: string
-  colorways: MousepadColorway[]
+    defaultColorway: string;
+    colorways: MousepadColorway[];
 }
 
 export interface Mousepad {
-  id: string
-  slug: string
+    id: string;
+    slug: string;
 
-  brand: string
-  name: string
-  series?: string
+    brand: string;
+    name: string;
+    series?: string;
 
-  category: MousepadCategory
-  surface: MousepadSurface
-  base: MousepadBase
-  softness: MousepadSoftness
+    category: MousepadCategory;
+    surface: MousepadSurface;
+    base: MousepadBase;
+    softness: MousepadSoftness;
 
-  sizes: MousepadSize[]
+    communityConsensus: {
+        summary: string;
+        commonComparisons: string[];
+        strengths: string[];
+        weaknesses: string[];
+        communityQuotes?: string[]
+    };
 
-  feel: MousepadFeelRating
-  environment: MousepadEnvironment
-  texture: MousepadTexture
+    sizes: MousepadSize[];
 
-  recommendedFor: {
-    games: MousepadGame[]
-    aimStyles: AimStyle[]
-    sensitivity: Sensitivity[]
-  }
+    feel: MousepadFeelRating;
+    environment: MousepadEnvironment;
+    texture: MousepadTexture;
 
-  avoidIf?: string[]
+    recommendedFor: {
+        games: MousepadGame[];
+        aimStyles: AimStyle[];
+        sensitivity: Sensitivity[];
+    };
 
-  price: MousepadPrice
-  availability: MousepadAvailability
+    avoidIf?: string[];
 
-  visuals: MousepadVisuals
+    price: MousepadPrice;
+    availability: MousepadAvailability;
 
-  images: {
-    main: string
-    gallery?: string[]
-  }
+    visuals: MousepadVisuals;
 
-  personal: MousepadPersonalNotes
+    images: {
+        main: string;
+        gallery?: string[];
+    };
 
-  affiliate?: {
-    official?: string
-    amazon?: string
-    waimers?: string
-    genesispc?: string
-    maxgaming?: string
-    other?: string
-  }
+    personal: MousepadPersonalNotes;
 
-  sources: MousepadSource[]
+    affiliate?: {
+        official?: string;
+        amazon?: string;
+        waimers?: string;
+        genesispc?: string;
+        maxgaming?: string;
+        other?: string;
+    };
 
-  createdAt: string
-  updatedAt: string
+    sources: MousepadSource[];
+
+    createdAt: string;
+    updatedAt: string;
 }

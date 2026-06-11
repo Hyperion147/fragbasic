@@ -138,6 +138,32 @@ export const mousepads: Mousepad[] = [
             ],
         },
 
+        communityConsensus: {
+            summary:
+                "Often considered the safest Artisan recommendation. Most players describe it as a balanced-control pad with strong stopping power while remaining fast enough for modern FPS.",
+
+            commonComparisons: [
+                "LGG Saturn Pro",
+                "Pulsar Hyperion",
+                "Type-99",
+                "QcK Heavy",
+            ],
+
+            strengths: [
+                "Excellent balance of speed and control",
+                "Works for almost every FPS title",
+                "Very consistent glide",
+                "Great for tac FPS",
+                "Easy recommendation for first Artisan pad",
+            ],
+
+            weaknesses: [
+                "Collects hair and dust",
+                "Not as fast as Hien or Raiden",
+                "Not as much stopping power as Type-99",
+            ],
+        },
+
         sources: [
             {
                 label: "Artisan official selection guide",
@@ -151,19 +177,26 @@ export const mousepads: Mousepad[] = [
     },
 
     {
-        id: "pulsar-lgg-hyperion-soft",
-        slug: "pulsar-lgg-hyperion-soft",
+        id: "artisan-raiden-soft",
+        slug: "artisan-raiden-soft",
 
-        brand: "Pulsar x LGG",
-        name: "Hyperion Soft",
-        series: "Hyperion",
+        brand: "Artisan",
+        name: "Raiden Soft",
+        series: "Raiden",
 
-        category: "balanced-speed",
+        category: "speed",
         surface: "cloth",
         base: "poron",
         softness: "soft",
 
         sizes: [
+            {
+                label: "L",
+                width: 420,
+                height: 330,
+                thickness: 4,
+                unit: "mm",
+            },
             {
                 label: "XL",
                 width: 490,
@@ -172,16 +205,196 @@ export const mousepads: Mousepad[] = [
                 unit: "mm",
             },
             {
-                label: "XL SQ",
+                label: "XXL",
                 width: 500,
-                height: 500,
+                height: 490,
+                thickness: 4,
+                unit: "mm",
+            },
+        ],
+
+        visuals: {
+            defaultColorway: "coffee-brown",
+
+            colorways: [
+                {
+                    name: "Coffee Brown",
+                    slug: "coffee-brown",
+                    color: "#271300",
+                    available: true,
+                },
+                {
+                    name: "Dai-Dai Orange",
+                    slug: "dai-dai-orange",
+                    color: "#F7931E",
+                    available: true,
+                },
+            ],
+        },
+
+        feel: {
+            speed: 9.2,
+            control: 5.2,
+            stoppingPower: 5.4,
+            staticFriction: 4.1,
+            dynamicFriction: 9.3,
+            microAdjustments: 9.4,
+            ratingConfidence: "community",
+        },
+
+        environment: {
+            humidityResistance: 8,
+            sweatResistance: 8,
+            dustHairResistance: 7,
+            washable: true,
+            notes: "Raiden is Artisan's high-speed cloth surface. It is known for very low initial friction and smooth glide, while Soft adds more stopping power and forgiveness than Mid.",
+        },
+
+        communityConsensus: {
+            summary:
+                "The fastest mainstream Artisan cloth pad. Extremely smooth and low-friction, often described as the closest thing to a hard pad while still being cloth.",
+
+            commonComparisons: ["Hien", "Hayate Otsu", "Glass pads"],
+
+            strengths: [
+                "Extremely smooth glide",
+                "Fantastic for tracking",
+                "Very low friction",
+                "Excellent comfort",
+            ],
+
+            weaknesses: [
+                "Limited stopping power",
+                "Can feel uncontrollable for tac FPS",
+                "Historically associated with sensor issues on older mice",
+            ],
+        },
+
+        texture: {
+            feel: "smooth",
+            skinComfort: 9,
+            sleeveFriendly: true,
+            noiseLevel: "quiet",
+        },
+
+        recommendedFor: {
+            games: ["apex", "overwatch", "fortnite", "general-fps"],
+            aimStyles: ["tracking", "switching", "micro-adjustments"],
+            sensitivity: ["low", "medium", "high"],
+        },
+
+        avoidIf: [
+            "You mainly play Valorant or CS2 and rely heavily on stopping power",
+            "You want a slow control pad",
+            "You over-flick often and need the pad to help you stop",
+            "You dislike very fast cloth surfaces",
+        ],
+
+        price: {
+            usd: 64.99,
+            inr: 5700,
+        },
+
+        availability: {
+            global: true,
+            india: "limited",
+            stores: ["GenesisPC", "MaxGaming", "JPGamingUSA", "import sellers"],
+            notes: "Available globally through specialty stores. In India, GenesisPC has listed Raiden variants around ₹5,699, but stock, size, and hardness vary.",
+        },
+
+        images: {
+            main: "/mousepads/artisan/raiden-black.png",
+            gallery: [
+                "/mousepads/artisan/raiden-orange.png",
+                "/mousepads/artisan/raiden-black-fold.png",
+                "/mousepads/artisan/raiden-orange-fold.png",
+            ],
+        },
+
+        personal: {
+            owned: false,
+            tested: false,
+            notes: "Needs personal testing. Expected to be much faster than Zero, Type-99, Saturn Pro, and Hyperion. Soft should be the safest Raiden variant for people who want speed without going fully uncontrolled.",
+            pros: [
+                "Extremely smooth glide",
+                "Very low static friction",
+                "Excellent for tracking-heavy games",
+                "Great micro-adjustment freedom",
+                "Soft base adds some stopping power compared to Mid",
+            ],
+            cons: [
+                "Not ideal if you need strong stopping power",
+                "Can feel too fast for tactical FPS players",
+                "Expensive",
+                "Limited India availability",
+                "Less forgiving than balanced-control pads",
+            ],
+        },
+
+        sources: [
+            {
+                label: "Artisan NINJA FX Raiden official page",
+                type: "official",
+                url: "https://artisan-jp.com/global/fx-raiden",
+            },
+            {
+                label: "JPGamingUSA Raiden listing",
+                type: "store",
+                url: "https://jpgamingusa.com/products/artisan-fx-raiden-mousepad",
+            },
+            {
+                label: "GenesisPC India Raiden listing",
+                type: "store",
+                url: "https://www.genesispc.in/products/artisan-fx-raiden",
+            },
+            {
+                label: "MaxGaming Raiden listing",
+                type: "store",
+                url: "https://www.maxgaming.com/en/mousepads/mousepad-fx-raiden-xsoft-xxl-daidai-orange",
+            },
+            {
+                label: "MousepadReview Raiden Soft overview",
+                type: "reddit",
+                url: "https://www.reddit.com/r/MousepadReview/comments/1c61fz9/artisan_raiden_soft_a_brief_overview/",
+            },
+        ],
+
+        createdAt: "2026-06-11",
+        updatedAt: "2026-06-11",
+    },
+
+    {
+        id: "artisan-hayate-otsu-soft",
+        slug: "artisan-hayate-otsu-soft",
+
+        brand: "Artisan",
+        name: "Hayate Otsu V2 Soft",
+        series: "Hayate Otsu V2",
+
+        category: "balanced-speed",
+        surface: "cloth",
+        base: "poron",
+        softness: "soft",
+
+        sizes: [
+            {
+                label: "L",
+                width: 420,
+                height: 330,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
+                label: "XL",
+                width: 490,
+                height: 420,
                 thickness: 4,
                 unit: "mm",
             },
             {
                 label: "XXL",
-                width: 1000,
-                height: 500,
+                width: 500,
+                height: 490,
                 thickness: 4,
                 unit: "mm",
             },
@@ -192,122 +405,364 @@ export const mousepads: Mousepad[] = [
 
             colorways: [
                 {
-                    name: "Midnight",
-                    slug: "midnight",
-                    color: "#576490",
+                    name: "Black",
+                    slug: "black",
+                    color: "#1e1e1e",
                     available: true,
                 },
                 {
-                    name: "Black",
-                    slug: "black",
-                    color: "#2b2b2b",
+                    name: "Wine Red",
+                    slug: "wine-red",
+                    color: "#7B2431",
                     available: true,
                 },
             ],
         },
 
         feel: {
-            speed: 7.2,
-            control: 7.8,
-            stoppingPower: 7.4,
-            staticFriction: 6.4,
-            dynamicFriction: 7.4,
-            microAdjustments: 8.6,
+            speed: 7.8,
+            control: 7.3,
+            stoppingPower: 7.5,
+            staticFriction: 5.9,
+            dynamicFriction: 7.9,
+            microAdjustments: 9.1,
             ratingConfidence: "community",
         },
 
         environment: {
-            humidityResistance: 7,
-            sweatResistance: 7,
+            humidityResistance: 8,
+            sweatResistance: 8,
             dustHairResistance: 7,
             washable: true,
-            notes: "Official listings position it as a medium/control pad with a smooth but lightly textured polyester surface. Community impressions generally place it around Artisan Zero/Saturn territory, but slightly smoother/faster than traditional control pads.",
+            notes: "Hayate Otsu V2 is positioned as Artisan's balanced speed-and-stopping-power surface. It is generally faster than Zero while still retaining more stopping power than pure speed pads.",
+        },
+
+        communityConsensus: {
+            summary:
+                "Often described as the best all-round Artisan pad. Faster than Zero, smoother than Hien, and still retains enough control for tactical shooters.",
+
+            commonComparisons: ["Hien", "Zero", "Raiden"],
+
+            strengths: [
+                "Excellent micro-adjustments",
+                "Very versatile",
+                "Great balance of speed and stopping power",
+                "Works for both tracking and tac FPS",
+            ],
+
+            weaknesses: [
+                "More expensive than competitors",
+                "Not as much control as Zero",
+                "Not as much speed as Raiden",
+            ],
         },
 
         texture: {
             feel: "slightly-textured",
             skinComfort: 8,
             sleeveFriendly: true,
-            noiseLevel: "quiet",
+            noiseLevel: "medium",
         },
 
         recommendedFor: {
-            games: ["valorant", "cs2", "general-fps", "apex"],
-            aimStyles: ["micro-adjustments", "flicking", "tracking"],
+            games: ["valorant", "cs2", "apex", "overwatch", "general-fps"],
+            aimStyles: [
+                "tracking",
+                "micro-adjustments",
+                "flicking",
+                "switching",
+            ],
             sensitivity: ["low", "medium"],
         },
 
         avoidIf: [
-            "You want a very slow mudpad",
-            "You want maximum stopping power like Type-99",
-            "You want a very fast Hien-style glide",
+            "You want a slow control pad",
+            "You rely heavily on high stopping power for tac FPS",
+            "You dislike slightly textured cloth surfaces",
+            "You want something as fast as Raiden",
         ],
 
         price: {
-            usd: 49.95,
+            usd: 64.99,
+            inr: 6699,
+        },
+
+        availability: {
+            global: true,
+            india: "limited",
+            stores: ["GenesisPC", "JPGamingUSA", "MaxGaming", "import sellers"],
+            notes: "GenesisPC has listed Hayate Otsu V2 XL around ₹6,699 in India, but color, hardness, and size availability vary.",
+        },
+
+        images: {
+            main: "/mousepads/artisan/hayate-otsu-v2-red.png",
+            gallery: [
+                "/mousepads/artisan/hayate-otsu-v2-black.png",
+                "/mousepads/artisan/hayate-otsu-v2-red-fold.png",
+                "/mousepads/artisan/hayate-otsu-v2-black-fold.png",
+            ],
+        },
+
+        personal: {
+            owned: false,
+            tested: false,
+            notes: "Needs personal testing. Expected to sit between Zero and Hien: faster than Zero, more controlled than Hien, and more versatile than Raiden.",
+            pros: [
+                "Excellent speed-control balance",
+                "Strong micro-adjustment freedom",
+                "More stopping power than Hien or Raiden",
+                "Versatile across tac FPS and tracking games",
+                "Premium Artisan build quality",
+            ],
+            cons: [
+                "Less stopping power than Zero or Type-99",
+                "Can feel too quick for players who want planted control",
+                "Expensive",
+                "Limited India availability",
+            ],
+        },
+
+        sources: [
+            {
+                label: "Artisan Selection Guide",
+                type: "official",
+                url: "https://artisan-jp.com/global/selection-guide",
+            },
+            {
+                label: "GenesisPC Hayate Otsu V2 listing",
+                type: "store",
+                url: "https://www.genesispc.in/products/artisan-fx-hayate-otsu-v2-gaming-mousepad",
+            },
+            {
+                label: "JPGamingUSA Hayate Otsu V2 listing",
+                type: "store",
+                url: "https://jpgamingusa.com/products/artisan-fx-hayate-otsu-v2-mousepad",
+            },
+            {
+                label: "MousepadReview Artisan experience thread",
+                type: "reddit",
+                url: "https://www.reddit.com/r/MousepadReview/comments/1evlter/my_experience_with_artisan_mousepads_hayate_otsu/",
+            },
+        ],
+
+        createdAt: "2026-06-11",
+        updatedAt: "2026-06-11",
+    },
+
+    {
+        id: "artisan-hien-soft",
+        slug: "artisan-hien-soft",
+
+        brand: "Artisan",
+        name: "Hien Soft",
+        series: "Hien",
+
+        category: "balanced-speed",
+        surface: "cloth",
+        base: "poron",
+        softness: "soft",
+
+        sizes: [
+            {
+                label: "S",
+                width: 240,
+                height: 210,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
+                label: "M",
+                width: 310,
+                height: 240,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
+                label: "L",
+                width: 420,
+                height: 330,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
+                label: "XL",
+                width: 490,
+                height: 420,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
+                label: "XXL",
+                width: 500,
+                height: 490,
+                thickness: 4,
+                unit: "mm",
+            },
+        ],
+
+        visuals: {
+            defaultColorway: "wine-red",
+
+            colorways: [
+                {
+                    name: "Wine Red",
+                    slug: "wine-red",
+                    color: "#7C2230",
+                    available: true,
+                },
+                {
+                    name: "Black",
+                    slug: "black",
+                    color: "#1d1d1d",
+                    available: true,
+                },
+                {
+                    name: "Navy Blue",
+                    slug: "navy-blue",
+                    color: "#304E7A",
+                    available: true,
+                },
+            ],
+        },
+
+        feel: {
+            speed: 8.2,
+            control: 6.6,
+            stoppingPower: 7.1,
+            staticFriction: 5.4,
+            dynamicFriction: 8.3,
+            microAdjustments: 8.7,
+            ratingConfidence: "community",
+        },
+
+        environment: {
+            humidityResistance: 8.5,
+            sweatResistance: 8,
+            dustHairResistance: 7.5,
+            washable: true,
+            notes: "Hien is known for a rougher, more textured surface with fast glide and strong surface feedback. It is usually considered very durable and relatively consistent in different conditions.",
+        },
+
+        communityConsensus: {
+            summary:
+                "One of the most iconic speed-oriented cloth pads ever made. Known for its rough texture, fast glide, and excellent tracking performance.",
+
+            commonComparisons: [
+                "Hayate Otsu",
+                "Raiden",
+                "Zero",
+                "Razer Strider",
+            ],
+
+            strengths: [
+                "Excellent tracking performance",
+                "Low static friction",
+                "Very durable",
+                "Fast and responsive",
+            ],
+
+            weaknesses: [
+                "Rough texture",
+                "Can feel too fast for Valorant players",
+                "Less stopping power than Zero",
+            ],
+        },
+
+        texture: {
+            feel: "rough",
+            skinComfort: 6,
+            sleeveFriendly: true,
+            noiseLevel: "medium",
+        },
+
+        recommendedFor: {
+            games: ["apex", "overwatch", "fortnite", "general-fps"],
+            aimStyles: ["tracking", "switching", "micro-adjustments"],
+            sensitivity: ["low", "medium", "high"],
+        },
+
+        avoidIf: [
+            "You mainly play Valorant or CS2 and want strong stopping power",
+            "You dislike rough or abrasive surfaces",
+            "You want a smoother pad like Zero, Type-99, or Raiden",
+            "You want a slow controlled glide",
+        ],
+
+        price: {
+            usd: 54.99,
             inr: 5499,
         },
 
         availability: {
             global: true,
             india: "limited",
-            stores: ["CtrlShiftStore", "import sellers"],
-            notes: "Seen in India around ₹5,499–₹5,999, but stock may be limited or sold out.",
+            stores: [
+                "GenesisPC",
+                "JPGamingUSA",
+                "Amazon India",
+                "import sellers",
+            ],
+            notes: "GenesisPC has listed Hien variants around ₹5,499 in India. Availability depends on hardness, size, and color.",
         },
 
         images: {
-            main: "/mousepads/lgg/hyperion-blue.png",
+            main: "/mousepads/artisan/hien-red.png",
             gallery: [
-                "/mousepads/lgg/hyperion-black.png",
-                "/mousepads/lgg/hyperion-blue-xxl.png",
-                "/mousepads/lgg/hyperion-black-xxl.png",
+                "/mousepads/artisan/hien-blue.png",
+                "/mousepads/artisan/hien-red-fold.png",
+                "/mousepads/artisan/hien-blue-fold.png",
             ],
         },
 
         personal: {
-            owned: true,
-            tested: true,
-            testingDuration: "Add your exact testing duration",
-            mainGamesTested: ["valorant", "cs2"],
-            notes: "From personal experience, this feels more comparable to Artisan Zero than LGG Saturn Pro. Keep this as your own verdict, while community/official positioning still describes it as a medium-control pad with Saturn-like similarities.",
+            owned: false,
+            tested: false,
+            notes: "Needs personal testing. Expected to be faster and rougher than Hayate Otsu, with stronger feedback and better tracking freedom than Zero.",
             pros: [
-                "Balanced control-speed feel",
-                "Good micro-adjustment freedom",
-                "Smoother than rougher control pads",
-                "Works well for tactical FPS without feeling too muddy",
+                "Fast glide with strong surface feedback",
+                "Great for tracking and target switching",
+                "Very durable reputation",
+                "Works across many FPS games",
+                "Less muddy than slower control pads",
             ],
             cons: [
-                "Not as slow as true control/mud pads",
-                "Limited India availability",
-                "Needs more long-term durability testing",
+                "Rough texture is not for everyone",
+                "Less stopping power than Zero, Type-99, or Saturn Pro",
+                "Can feel too fast for pure tac FPS players",
+                "Expensive",
             ],
         },
 
         sources: [
             {
-                label: "Pulsar official product page",
+                label: "Artisan NINJA FX Hien official page",
                 type: "official",
-                url: "https://eu.pulsar.gg/products/pulsar-x-lgg-hyperion-gaming-mousepad-soft",
+                url: "https://artisan-jp.com/global/fx-hien",
             },
             {
-                label: "Lethal Gaming Gear product page",
+                label: "Artisan Selection Guide",
                 type: "official",
-                url: "https://lethal.gg/products/es-hyperion-pro-gaming-mousepad-soft",
+                url: "https://artisan-jp.com/global/selection-guide",
             },
             {
-                label: "CtrlShiftStore India listing",
+                label: "GenesisPC Hien listing",
                 type: "store",
-                url: "https://ctrlshiftstore.com/products/pulsar-x-lgg-hyperion-gaming-mousepad",
+                url: "https://www.genesispc.in/products/artisan-fx-hien-gaming-mousepad",
             },
             {
-                label: "MousepadReview Reddit discussion",
-                type: "reddit",
-                url: "https://www.reddit.com/r/MousepadReview/comments/1skpxvf/artisan_zero_vs_pulsar_hyperion/",
+                label: "JPGamingUSA Hien listing",
+                type: "store",
+                url: "https://jpgamingusa.com/products/artisan-fx-hien-mousepad",
+            },
+            {
+                label: "Amazon India Hien listing",
+                type: "store",
+                url: "https://www.amazon.in/Artisan-Hien-Wine-FX-HI-SF-XL-R-Japan/dp/B07F5TMZZC",
             },
         ],
 
-        createdAt: "2026-06-10",
-        updatedAt: "2026-06-10",
+        createdAt: "2026-06-11",
+        updatedAt: "2026-06-11",
     },
 
     {
@@ -404,6 +859,26 @@ export const mousepads: Mousepad[] = [
             notes: "Official and retailer descriptions position Type-99 as a low-speed, high-stopping-power control pad with fast-drying fabric aimed at reducing humidity and sweat effects.",
         },
 
+        communityConsensus: {
+            summary:
+                "The modern Artisan control pad. Usually recommended for players who want more stopping power than Zero while maintaining Artisan quality.",
+
+            commonComparisons: ["Saturn Pro", "Zero", "QcK Heavy", "EM-C"],
+
+            strengths: [
+                "Very high stopping power",
+                "Strong control",
+                "Excellent for Valorant and CS2",
+                "More planted feeling than Zero",
+            ],
+
+            weaknesses: [
+                "Too slow for some players",
+                "Tracking feels restricted compared to Zero",
+                "Less versatile across genres",
+            ],
+        },
+
         texture: {
             feel: "smooth",
             skinComfort: 8.5,
@@ -491,6 +966,194 @@ export const mousepads: Mousepad[] = [
     },
 
     {
+        id: "pulsar-lgg-hyperion-soft",
+        slug: "pulsar-lgg-hyperion-soft",
+
+        brand: "Pulsar x LGG",
+        name: "Hyperion Soft",
+        series: "Hyperion",
+
+        category: "balanced-speed",
+        surface: "cloth",
+        base: "poron",
+        softness: "soft",
+
+        sizes: [
+            {
+                label: "XL",
+                width: 490,
+                height: 420,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
+                label: "XL SQ",
+                width: 500,
+                height: 500,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
+                label: "XXL",
+                width: 1000,
+                height: 500,
+                thickness: 4,
+                unit: "mm",
+            },
+        ],
+
+        visuals: {
+            defaultColorway: "black",
+
+            colorways: [
+                {
+                    name: "Midnight",
+                    slug: "midnight",
+                    color: "#576490",
+                    available: true,
+                },
+                {
+                    name: "Black",
+                    slug: "black",
+                    color: "#2b2b2b",
+                    available: true,
+                },
+            ],
+        },
+
+        feel: {
+            speed: 7.2,
+            control: 7.8,
+            stoppingPower: 7.4,
+            staticFriction: 6.4,
+            dynamicFriction: 7.4,
+            microAdjustments: 8.6,
+            ratingConfidence: "community",
+        },
+
+        environment: {
+            humidityResistance: 7,
+            sweatResistance: 7,
+            dustHairResistance: 7,
+            washable: true,
+            notes: "Official listings position it as a medium/control pad with a smooth but lightly textured polyester surface. Community impressions generally place it around Artisan Zero/Saturn territory, but slightly smoother/faster than traditional control pads.",
+        },
+
+        communityConsensus: {
+            summary:
+                "A balanced all-rounder that feels like a smoother, slightly faster Artisan Zero. Most users describe it as a safe recommendation because it performs well across tactical and tracking-focused FPS games without strongly favoring either style.",
+
+            commonComparisons: [
+                "Artisan Zero",
+                "LGG Saturn Pro",
+                "Hayate Otsu",
+                "EM-C",
+            ],
+
+            strengths: [
+                "Very balanced speed-to-control ratio",
+                "Excellent micro-adjustment freedom",
+                "Smooth and comfortable surface",
+                "Works across Valorant, CS2, Apex and Overwatch",
+                "Easy transition from control pads",
+                "Premium build quality",
+            ],
+
+            weaknesses: [
+                "Doesn't excel at any single category",
+                "Less stopping power than Saturn Pro or Type-99",
+                "Less texture feedback than Zero",
+                "Long-term durability is still largely unknown",
+            ],
+        },
+
+        texture: {
+            feel: "slightly-textured",
+            skinComfort: 8,
+            sleeveFriendly: true,
+            noiseLevel: "quiet",
+        },
+
+        recommendedFor: {
+            games: ["valorant", "cs2", "general-fps", "apex"],
+            aimStyles: ["micro-adjustments", "flicking", "tracking"],
+            sensitivity: ["low", "medium"],
+        },
+
+        avoidIf: [
+            "You want a very slow mudpad",
+            "You want maximum stopping power like Type-99",
+            "You want a very fast Hien-style glide",
+        ],
+
+        price: {
+            usd: 49.95,
+            inr: 5499,
+        },
+
+        availability: {
+            global: true,
+            india: "limited",
+            stores: ["CtrlShiftStore", "import sellers"],
+            notes: "Seen in India around ₹5,499–₹5,999, but stock may be limited or sold out.",
+        },
+
+        images: {
+            main: "/mousepads/lgg/hyperion-blue.png",
+            gallery: [
+                "/mousepads/lgg/hyperion-black.png",
+                "/mousepads/lgg/hyperion-blue-xxl.png",
+                "/mousepads/lgg/hyperion-black-xxl.png",
+            ],
+        },
+
+        personal: {
+            owned: true,
+            tested: true,
+            testingDuration: "Add your exact testing duration",
+            mainGamesTested: ["valorant", "cs2"],
+            notes: "From personal experience, this feels more comparable to Artisan Zero than LGG Saturn Pro. Keep this as your own verdict, while community/official positioning still describes it as a medium-control pad with Saturn-like similarities.",
+            pros: [
+                "Balanced control-speed feel",
+                "Good micro-adjustment freedom",
+                "Smoother than rougher control pads",
+                "Works well for tactical FPS without feeling too muddy",
+            ],
+            cons: [
+                "Not as slow as true control/mud pads",
+                "Limited India availability",
+                "Needs more long-term durability testing",
+            ],
+        },
+
+        sources: [
+            {
+                label: "Pulsar official product page",
+                type: "official",
+                url: "https://eu.pulsar.gg/products/pulsar-x-lgg-hyperion-gaming-mousepad-soft",
+            },
+            {
+                label: "Lethal Gaming Gear product page",
+                type: "official",
+                url: "https://lethal.gg/products/es-hyperion-pro-gaming-mousepad-soft",
+            },
+            {
+                label: "CtrlShiftStore India listing",
+                type: "store",
+                url: "https://ctrlshiftstore.com/products/pulsar-x-lgg-hyperion-gaming-mousepad",
+            },
+            {
+                label: "MousepadReview Reddit discussion",
+                type: "reddit",
+                url: "https://www.reddit.com/r/MousepadReview/comments/1skpxvf/artisan_zero_vs_pulsar_hyperion/",
+            },
+        ],
+
+        createdAt: "2026-06-10",
+        updatedAt: "2026-06-10",
+    },
+
+    {
         id: "lgg-saturn-pro-soft",
         slug: "lgg-saturn-pro-soft",
 
@@ -568,6 +1231,35 @@ export const mousepads: Mousepad[] = [
             dustHairResistance: 7,
             washable: true,
             notes: "Official catalog copy positions Saturn Pro as a slow/control pad with controlled glide and easy micro-adjustments. Some community impressions vary depending on humidity, skin contact, and break-in.",
+        },
+
+        communityConsensus: {
+            summary:
+                "One of the most recommended control pads in the enthusiast community. It offers strong stopping power and control while remaining versatile enough for tracking-heavy games, making it a favorite among tactical FPS players.",
+
+            commonComparisons: [
+                "Artisan Zero",
+                "Type-99",
+                "EM-C",
+                "QcK Heavy",
+                "Hyperion",
+            ],
+
+            strengths: [
+                "Excellent stopping power",
+                "Strong control without feeling muddy",
+                "Premium build quality",
+                "Great for Valorant and CS2",
+                "Very consistent and predictable glide",
+                "Good beginner-to-endgame recommendation",
+            ],
+
+            weaknesses: [
+                "Can feel slower than expected",
+                "Higher static friction than some competitors",
+                "Can feel sticky for some users depending on humidity",
+                "Not ideal for players seeking maximum speed",
+            ],
         },
 
         texture: {
@@ -654,5 +1346,4 @@ export const mousepads: Mousepad[] = [
         createdAt: "2026-06-11",
         updatedAt: "2026-06-11",
     },
-    
 ];
