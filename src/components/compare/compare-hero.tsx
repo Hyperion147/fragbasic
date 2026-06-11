@@ -1,6 +1,11 @@
-import { ArrowRightLeft, ArrowUpDown } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import {
+    getCompareHeroBody,
+    getComparisonHighlights,
+    getCompareVerdictRows,
+} from "@/lib/compare";
 import type { Mousepad } from "@/types/mousepad";
 
 type Props = {
@@ -9,6 +14,9 @@ type Props = {
 };
 
 export function CompareHero({ left, right }: Props) {
+    const highlights = getComparisonHighlights(left, right);
+    const verdictRows = getCompareVerdictRows(left, right);
+
     return (
         <section className="border-b border-border bg-[radial-gradient(circle_at_top_left,oklch(0.28_0.05_215/0.45),transparent_32%),linear-gradient(180deg,oklch(0.23_0.02_224),oklch(0.21_0.02_224))]">
             <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 md:grid-cols-[1.2fr_0.8fr] md:px-8 md:py-20">
@@ -29,24 +37,17 @@ export function CompareHero({ left, right }: Props) {
                     </h1>
 
                     <p className="max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
-                        A control-first classic against a smoother
-                        balanced-control pad. The real question is whether you
-                        want maximum stopping power or easier micro-adjustments.
+                        {getCompareHeroBody(left, right)}
                     </p>
 
                     <div className="grid gap-3 sm:grid-cols-3">
-                        <HighlightCard
-                            label="Best for raw control"
-                            value={`${left.brand} ${left.name}`}
-                        />
-                        <HighlightCard
-                            label="Best for micro-corrections"
-                            value={`${right.brand} ${right.name}`}
-                        />
-                        <HighlightCard
-                            label="Closest matchup type"
-                            value="Tac FPS vs hybrid control"
-                        />
+                        {highlights.map((item) => (
+                            <HighlightCard
+                                key={item.label}
+                                label={item.label}
+                                value={item.value}
+                            />
+                        ))}
                     </div>
                 </div>
 
@@ -59,16 +60,13 @@ export function CompareHero({ left, right }: Props) {
                     </h2>
 
                     <div className="mt-5 space-y-4">
-                        <VerdictRow label="More control" value={left.name} />
-                        <VerdictRow
-                            label="Better micro-adjustments"
-                            value={right.name}
-                        />
-                        <VerdictRow
-                            label="Safer tac FPS pick"
-                            value={left.name}
-                        />
-                        <VerdictRow label="More versatile" value={right.name} />
+                        {verdictRows.map((row) => (
+                            <VerdictRow
+                                key={row.label}
+                                label={row.label}
+                                value={row.value}
+                            />
+                        ))}
                     </div>
                 </div>
             </div>

@@ -1,5 +1,8 @@
 import { Card } from "@/components/ui/card"
-import { getMousepadChartColors } from "@/lib/mousepads"
+import {
+  getFeaturedColorwaySlug,
+  getMousepadChartColors,
+} from "@/lib/mousepads"
 import type { Mousepad } from "@/types/mousepad"
 
 const rows = [
@@ -18,8 +21,11 @@ export function FeelMap({
   left: Mousepad
   right: Mousepad
 }) {
-  const leftColors = getMousepadChartColors(left, "orange")
-  const rightColors = getMousepadChartColors(right, "midnight")
+  const leftColors = getMousepadChartColors(left, getFeaturedColorwaySlug(left))
+  const rightColors = getMousepadChartColors(
+    right,
+    getFeaturedColorwaySlug(right)
+  )
 
   return (
     <Card className="border-border bg-card p-5 md:p-6">

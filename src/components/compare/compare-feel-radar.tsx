@@ -11,8 +11,10 @@ import {
     ActiveDot,
 } from "@/components/evilcharts/charts/radar-chart";
 
-import { Card } from "@/components/ui/card";
-import { getMousepadChartColors } from "@/lib/mousepads";
+import {
+    getFeaturedColorwaySlug,
+    getMousepadChartColors,
+} from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
 
 type Props = {
@@ -21,8 +23,11 @@ type Props = {
 };
 
 export function CompareFeelRadar({ left, right }: Props) {
-    const leftChartColors = getMousepadChartColors(left, "orange");
-    const rightChartColors = getMousepadChartColors(right, "midnight");
+    const leftChartColors = getMousepadChartColors(left, getFeaturedColorwaySlug(left));
+    const rightChartColors = getMousepadChartColors(
+        right,
+        getFeaturedColorwaySlug(right)
+    );
     const data = [
         {
             metric: "Speed",

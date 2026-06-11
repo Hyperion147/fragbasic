@@ -1,6 +1,7 @@
 import { Check } from "lucide-react"
 
 import { Card } from "@/components/ui/card"
+import { getBuyRecommendation } from "@/lib/compare"
 import type { Mousepad } from "@/types/mousepad"
 
 export function BuyRecommendation({
@@ -10,6 +11,9 @@ export function BuyRecommendation({
   left: Mousepad
   right: Mousepad
 }) {
+  const leftItems = getBuyRecommendation(left, right)
+  const rightItems = getBuyRecommendation(right, left)
+
   return (
     <section className="space-y-4">
       <div>
@@ -22,24 +26,14 @@ export function BuyRecommendation({
       <div className="grid gap-4 md:grid-cols-2">
         <RecommendationCard
           title={left.name}
-          subtitle="Choose this if you want the more planted, safer control feel."
-          items={[
-            "You want stronger stopping power.",
-            "You mostly play Valorant or CS2.",
-            "You prefer a safer control pad.",
-            "You do not mind a more textured surface.",
-          ]}
+          subtitle="Choose this if its feel priorities match your aim style more closely."
+          items={leftItems}
         />
 
         <RecommendationCard
           title={right.name}
-          subtitle="Choose this if you want control with easier movement and correction."
-          items={[
-            "You want easier micro-adjustments.",
-            "You want control without feeling muddy.",
-            "You play both tac FPS and tracking games.",
-            "You want something closer to Zero than Saturn Pro.",
-          ]}
+          subtitle="Choose this if its glide profile fits the way you want to move."
+          items={rightItems}
         />
       </div>
     </section>

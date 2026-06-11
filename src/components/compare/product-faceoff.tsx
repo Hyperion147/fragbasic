@@ -3,7 +3,12 @@ import Image from "next/image"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import type { Mousepad } from "@/types/mousepad"
-import { getColorwayBySlug } from "@/lib/mousepads"
+import {
+  getColorwayBySlug,
+  formatMousepadValue,
+  getFeaturedColorwaySlug,
+} from "@/lib/mousepads"
+import { getPadUseCaseSummary as getComparePadUseCaseSummary } from "@/lib/compare"
 
 export function ProductFaceoff({
   left,
@@ -26,7 +31,7 @@ export function ProductFaceoff({
 function PadCard({ pad }: { pad: Mousepad }) {
   const colorway = getColorwayBySlug(
     pad,
-    pad.slug === "artisan-zero-soft" ? "orange" : "midnight"
+    getFeaturedColorwaySlug(pad)
   )
   const title = `${pad.brand} ${pad.name}`
 
@@ -34,6 +39,9 @@ function PadCard({ pad }: { pad: Mousepad }) {
     <Card className="overflow-hidden border-border bg-card/95 shadow-lg shadow-black/10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.15),transparent_45%)]">
       <div
         className="relative aspect-video border-b border-border"
+        style={{
+          background: `radial-gradient(circle at top, ${colorway.color}22, transparent 55%)`,
+        }}
       >
         <Image
           src={pad.images.main}
@@ -49,15 +57,15 @@ function PadCard({ pad }: { pad: Mousepad }) {
           <p className="text-sm text-muted-foreground">{pad.brand}</p>
           <h2 className="text-2xl font-semibold tracking-tight">{pad.name}</h2>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            {getPadSummary(pad)}
+            {getComparePadUseCaseSummary(pad)}
           </p>
         </div>
 
         <div className="flex flex-wrap gap-2">
-          <Badge className="text-black">{pad.category}</Badge>
-          <Badge variant="secondary">{pad.softness}</Badge>
-          <Badge variant="outline">{pad.surface}</Badge>
-          <Badge variant="outline">{pad.base}</Badge>
+          <Badge className="text-black">{formatMousepadValue(pad.category)}</Badge>
+          <Badge variant="secondary">{formatMousepadValue(pad.softness)}</Badge>
+          <Badge variant="outline">{formatMousepadValue(pad.surface)}</Badge>
+          <Badge variant="outline">{formatMousepadValue(pad.base)}</Badge>
         </div>
 
         <div className="grid grid-cols-3 gap-2">
@@ -67,7 +75,7 @@ function PadCard({ pad }: { pad: Mousepad }) {
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
-          <DetailPill label="Texture" value={formatValue(pad.texture.feel)} />
+          <DetailPill label="Texture" value={formatMousepadValue(pad.texture.feel)} />
           <DetailPill
             label="Humidity"
             value={`${pad.environment.humidityResistance}/10`}
@@ -94,23 +102,4 @@ function DetailPill({ label, value }: { label: string; value: string }) {
       <p className="mt-1 text-sm font-medium text-foreground">{value}</p>
     </div>
   )
-}
-
-function getPadSummary(pad: Mousepad) {
-  if (pad.category === "balanced-control") {
-    return "A classic control-leaning cloth pad with strong stopping power and dependable tac FPS stability."
-  }
-
-  if (pad.category === "balanced-speed") {
-    return "A smoother, more flexible glide that keeps control without feeling overly slow or muddy."
-  }
-
-  return "A competition-focused option tuned for consistent glide, control, and comfort."
-}
-
-function formatValue(value: string) {
-  return value
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ")
 }
