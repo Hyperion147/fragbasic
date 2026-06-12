@@ -380,7 +380,7 @@ export const lggMousepads: Mousepad[] = [
         id: "lgg-neptune-pro-soft",
         slug: "lgg-neptune-pro-soft",
 
-        brand: "Lethal Gaming Gear",
+        brand: "LGG",
         name: "Neptune Pro Soft",
         series: "Neptune Pro",
 
@@ -569,7 +569,7 @@ export const lggMousepads: Mousepad[] = [
         id: "lgg-jupiter-pro-soft",
         slug: "lgg-jupiter-pro-soft",
 
-        brand: "Lethal Gaming Gear",
+        brand: "LGG",
         name: "Jupiter Pro Soft",
         series: "Jupiter Pro",
 

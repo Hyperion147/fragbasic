@@ -10,6 +10,7 @@ import {
 
 const navItems = [
   { label: "Mousepads", href: "/mousepads" },
+  { label: "Brands", href: "/brands/artisan" },
   { label: "Compare", href: "/compare" },
   { label: "Guides", href: "/guides" },
   { label: "Setup", href: "/setup" },

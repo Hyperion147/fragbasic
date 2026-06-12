@@ -10,13 +10,19 @@ import {
 } from "lucide-react"
 
 import { getRelatedComparisons } from "@/lib/comparisons"
-import { getAllMousepads, getMousepadBySlug } from "@/lib/mousepads"
+import { getBrandSlugFromMousepad } from "@/lib/brands"
+import {
+  getAllMousepads,
+  getMousepadBySlug,
+  getSimilarMousepads,
+} from "@/lib/mousepads"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { MousepadFeelChart } from "@/components/mousepads/mousepad-feel-chart"
 import { MousepadSpecGrid } from "@/components/mousepads/mousepad-spec-grid"
 import { MousepadImageGallery } from "@/components/mousepads/mousepad-image-gallery"
+import { SimilarMousepads } from "@/components/mousepads/similar-mousepads"
 import type { Mousepad } from "@/types/mousepad"
 
 type PageProps = {
@@ -52,6 +58,11 @@ export default async function MousepadPage({ params }: PageProps) {
   if (!pad) notFound()
 
   const relatedComparisons = getRelatedComparisons(pad.slug)
+  const brandSlug = getBrandSlugFromMousepad(pad)
+  const similarMousepads = getSimilarMousepads(pad, {
+    excludeSameBrand: true,
+    limit: 3,
+  })
   const publishedComparison = relatedComparisons.find(
     (comparison) => comparison.status === "published"
   )
@@ -114,6 +125,12 @@ export default async function MousepadPage({ params }: PageProps) {
               <Button variant="outline" asChild>
                 <Link href="/mousepads">Browse all pads</Link>
               </Button>
+
+              {brandSlug ? (
+                <Button variant="secondary" asChild>
+                  <Link href={`/brands/${brandSlug}`}>Visit brand</Link>
+                </Button>
+              ) : null}
             </div>
           </div>
 
@@ -145,6 +162,7 @@ export default async function MousepadPage({ params }: PageProps) {
             comparisonSlug={publishedComparison?.slug}
             relatedCount={relatedComparisons.length}
           />
+          <SimilarMousepads source={pad} mousepads={similarMousepads} />
         </aside>
       </div>
     </main>
