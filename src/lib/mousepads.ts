@@ -36,7 +36,13 @@ export interface SimilarMousepadOptions {
   limit?: number;
 }
 
-const companyOrder = ["Artisan", "LGG", "Zowie"] as const;
+const companyOrder = [
+  "Artisan",
+  "LGG",
+  "SteelSeries",
+  "Xraypad",
+  "Zowie",
+] as const;
 
 const categoryOrder: MousepadCategory[] = [
   "mud",

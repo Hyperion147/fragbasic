@@ -26,7 +26,7 @@ export function SiteNavbar() {
           </div>
 
           <div className="leading-none">
-            <p className="text-sm font-semibold tracking-tight">Fragpunk</p>
+            <p className="text-sm font-semibold tracking-tight">FragBasic</p>
             <p className="text-xs text-muted-foreground">FPS gear lab</p>
           </div>
         </Link>
@@ -61,7 +61,7 @@ export function SiteNavbar() {
                   </div>
 
                   <div>
-                    <p className="text-sm font-semibold">Fragpunk</p>
+                    <p className="text-sm font-semibold">FragBasic</p>
                     <p className="text-xs text-muted-foreground">
                       FPS gear lab
                     </p>

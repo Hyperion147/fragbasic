@@ -18,6 +18,14 @@ export const brandConfig = {
     slug: "lgg",
     name: "LGG",
   },
+  steelseries: {
+    slug: "steelseries",
+    name: "SteelSeries",
+  },
+  xraypad: {
+    slug: "xraypad",
+    name: "Xraypad",
+  },
   zowie: {
     slug: "zowie",
     name: "Zowie",
