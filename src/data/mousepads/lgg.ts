@@ -137,11 +137,6 @@ export const lggMousepads: Mousepad[] = [
 
         images: {
             main: "/mousepads/lgg/hyperion-blue.png",
-            gallery: [
-                "/mousepads/lgg/hyperion-black.png",
-                "/mousepads/lgg/hyperion-blue-xxl.png",
-                "/mousepads/lgg/hyperion-black-xxl.png",
-            ],
         },
 
         personal: {
@@ -333,10 +328,6 @@ export const lggMousepads: Mousepad[] = [
 
         images: {
             main: "/mousepads/lgg/saturn-red.png",
-            gallery: [
-                "/mousepads/lgg/saturn-black.png",
-                "/mousepads/lgg/saturn-blue.png",
-            ],
         },
 
         personal: {
@@ -377,188 +368,6 @@ export const lggMousepads: Mousepad[] = [
                 label: "Amazon Saturn Pro XLSQ listing",
                 type: "store",
                 url: "https://www.amazon.com/Lethal-Gaming-Gear-Saturn-Xsoft/dp/B0DG8JPCMT",
-            },
-        ],
-
-        createdAt: "2026-06-11",
-        updatedAt: "2026-06-11",
-    },
-
-    // Venus Pro
-    {
-        id: "lgg-venus-pro-soft",
-        slug: "lgg-venus-pro-soft",
-
-        brand: "Lethal Gaming Gear",
-        name: "Venus Pro Soft",
-        series: "Venus Pro",
-
-        category: "balanced-speed",
-        surface: "hybrid",
-        base: "poron",
-        softness: "soft",
-
-        sizes: [
-            {
-                label: "XL",
-                width: 490,
-                height: 420,
-                thickness: 4,
-                unit: "mm",
-            },
-            {
-                label: "XL SQ",
-                width: 500,
-                height: 500,
-                thickness: 4,
-                unit: "mm",
-            },
-            {
-                label: "XXL",
-                width: 1000,
-                height: 500,
-                thickness: 4,
-                unit: "mm",
-            },
-        ],
-
-        visuals: {
-            defaultColorway: "red",
-
-            colorways: [
-                {
-                    name: "Red",
-                    slug: "red",
-                    color: "#8C2433",
-                    available: true,
-                },
-                {
-                    name: "Black",
-                    slug: "black",
-                    color: "#202020",
-                    available: true,
-                },
-            ],
-        },
-
-        feel: {
-            speed: 7.7,
-            control: 7.2,
-            stoppingPower: 7,
-            staticFriction: 5.8,
-            dynamicFriction: 7.8,
-            microAdjustments: 8.8,
-            ratingConfidence: "community",
-        },
-
-        environment: {
-            humidityResistance: 8,
-            sweatResistance: 8,
-            dustHairResistance: 7,
-            washable: true,
-            notes: "Venus Pro is commonly treated as LGG's faster balanced/hybrid option. It is usually compared to pads like Hayate Otsu and Hien rather than Saturn Pro.",
-        },
-
-        communityConsensus: {
-            summary:
-                "Often described as LGG's answer to pads like the Hayate Otsu. Community impressions generally place it between balanced and speed-focused, with strong micro-adjustment freedom and better stopping power than most speed pads.",
-
-            commonComparisons: [
-                "Artisan Hayate Otsu",
-                "Artisan Hien",
-                "Pulsar Hyperion",
-                "LGG Saturn Pro",
-                "Artisan Zero",
-            ],
-
-            strengths: [
-                "Excellent speed-control balance",
-                "Very strong micro-adjustments",
-                "Good tracking performance",
-                "More stopping power than pure speed pads",
-                "Works across multiple FPS genres",
-            ],
-
-            weaknesses: [
-                "Less control than Saturn Pro or Zero",
-                "Can feel too quick for tac FPS specialists",
-                "Textured surface is not for everyone",
-                "Less stopping power than dedicated control pads",
-            ],
-        },
-
-        texture: {
-            feel: "textured",
-            skinComfort: 7,
-            sleeveFriendly: true,
-            noiseLevel: "medium",
-        },
-
-        recommendedFor: {
-            games: ["apex", "overwatch", "fortnite", "general-fps", "valorant"],
-            aimStyles: ["tracking", "switching", "micro-adjustments"],
-            sensitivity: ["low", "medium", "high"],
-        },
-
-        avoidIf: [
-            "You want a slow control pad",
-            "You dislike textured hybrid surfaces",
-            "You mainly play tac FPS and rely heavily on stopping power",
-        ],
-
-        price: {
-            usd: 54.95,
-            inr: 6500,
-        },
-
-        availability: {
-            global: true,
-            india: "import-only",
-            stores: ["Lethal Gaming Gear", "MaxGaming", "import sellers"],
-            notes: "Usually import-only for India. Pricing depends heavily on shipping and availability.",
-        },
-
-        images: {
-            main: "/mousepads/lgg/venus-pro-red.webp",
-            gallery: [
-                "/mousepads/lgg/venus-pro-black.webp",
-                "/mousepads/lgg/venus-pro-red-xxl.webp",
-                "/mousepads/lgg/venus-pro-surface.webp",
-            ],
-        },
-
-        personal: {
-            owned: false,
-            tested: false,
-            notes: "Needs personal testing. Expected to sit faster than Saturn Pro and closer to Hayate Otsu / Hien territory.",
-            pros: [
-                "Fast balanced glide",
-                "Good micro-adjustment freedom",
-                "Useful for tracking-heavy games",
-                "More controlled than pure speed pads",
-            ],
-            cons: [
-                "Less stopping power than Saturn Pro",
-                "Textured surface may not suit everyone",
-                "Import-heavy availability in India",
-            ],
-        },
-
-        sources: [
-            {
-                label: "LGG mousepads catalog",
-                type: "official",
-                url: "https://lethal.gg/collections/mousepads-1",
-            },
-            {
-                label: "Lethal Gaming Gear official store",
-                type: "official",
-                url: "https://lethal.gg/",
-            },
-            {
-                label: "MousepadReview community discussion",
-                type: "reddit",
-                url: "https://www.reddit.com/r/MousepadReview/",
             },
         ],
 
@@ -706,12 +515,7 @@ export const lggMousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/lgg/neptune-pro-dark-grey.webp",
-            gallery: [
-                "/mousepads/lgg/neptune-pro-jet-black.webp",
-                "/mousepads/lgg/neptune-pro-dark-grey-xl-sq.webp",
-                "/mousepads/lgg/neptune-pro-surface.webp",
-            ],
+            main: "/mousepads/lgg/neptune-pro.png",
         },
 
         personal: {
@@ -895,11 +699,7 @@ export const lggMousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/lgg/jupiter-pro-black.webp",
-            gallery: [
-                "/mousepads/lgg/jupiter-pro-black-close.webp",
-                "/mousepads/lgg/jupiter-pro-black-xl.webp",
-            ],
+            main: "/mousepads/lgg/jupiter-pro.png",
         },
 
         personal: {

@@ -116,11 +116,6 @@ export const artisanMousepads: Mousepad[] = [
 
         images: {
             main: "/mousepads/artisan/zero-dai-dai-orange.png",
-            gallery: [
-                "/mousepads/artisan/zero-black-close.png",
-                "/mousepads/artisan/zero-black-fold.png",
-                "/mousepads/artisan/zero-black.png",
-            ],
         },
 
         personal: {
@@ -306,11 +301,6 @@ export const artisanMousepads: Mousepad[] = [
 
         images: {
             main: "/mousepads/artisan/raiden-black.png",
-            gallery: [
-                "/mousepads/artisan/raiden-orange.png",
-                "/mousepads/artisan/raiden-black-fold.png",
-                "/mousepads/artisan/raiden-orange-fold.png",
-            ],
         },
 
         personal: {
@@ -499,11 +489,6 @@ export const artisanMousepads: Mousepad[] = [
 
         images: {
             main: "/mousepads/artisan/hayate-otsu-v2-red.png",
-            gallery: [
-                "/mousepads/artisan/hayate-otsu-v2-black.png",
-                "/mousepads/artisan/hayate-otsu-v2-red-fold.png",
-                "/mousepads/artisan/hayate-otsu-v2-black-fold.png",
-            ],
         },
 
         personal: {
@@ -711,11 +696,6 @@ export const artisanMousepads: Mousepad[] = [
 
         images: {
             main: "/mousepads/artisan/hien-red.png",
-            gallery: [
-                "/mousepads/artisan/hien-blue.png",
-                "/mousepads/artisan/hien-red-fold.png",
-                "/mousepads/artisan/hien-blue-fold.png",
-            ],
         },
 
         personal: {
@@ -918,11 +898,6 @@ export const artisanMousepads: Mousepad[] = [
 
         images: {
             main: "/mousepads/artisan/type99-matcha.png",
-            gallery: [
-                "/mousepads/artisan/type99-black.png",
-                "/mousepads/artisan/type99-black-close.jpg",
-                "/mousepads/artisan/type99-matcha-close.webp",
-            ],
         },
 
         personal: {

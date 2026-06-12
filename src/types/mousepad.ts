@@ -167,7 +167,6 @@ export interface Mousepad {
 
     images: {
         main: string;
-        gallery?: string[];
     };
 
     personal: MousepadPersonalNotes;

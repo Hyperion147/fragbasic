@@ -88,12 +88,7 @@ export const zowieMousepads: Mousepad[] = [
     },
 
     images: {
-        main: "/mousepads/zowie/g-sr-iii-black.webp",
-        gallery: [
-            "/mousepads/zowie/g-sr-iii-surface.webp",
-            "/mousepads/zowie/g-sr-iii-edge.webp",
-            "/mousepads/zowie/g-sr-iii-base.webp",
-        ],
+        main: "/mousepads/zowie/gsr-3.png",
     },
 
     personal: {
@@ -252,11 +247,7 @@ export const zowieMousepads: Mousepad[] = [
     },
 
     images: {
-        main: "/mousepads/zowie/h-sr-iii-black.webp",
-        gallery: [
-            "/mousepads/zowie/h-sr-iii-surface.webp",
-            "/mousepads/zowie/h-sr-iii-edge.webp",
-        ],
+        main: "/mousepads/zowie/hsr-3.png",
     },
 
     personal: {
@@ -405,11 +396,7 @@ export const zowieMousepads: Mousepad[] = [
     },
 
     images: {
-        main: "/mousepads/zowie/g-sr-se-gris.webp",
-        gallery: [
-            "/mousepads/zowie/g-sr-se-gris-surface.webp",
-            "/mousepads/zowie/g-sr-se-gris-base.webp",
-        ],
+        main: "/mousepads/zowie/gsr-se-gris.png",
     },
 
     personal: {
@@ -562,11 +549,7 @@ export const zowieMousepads: Mousepad[] = [
     },
 
     images: {
-        main: "/mousepads/zowie/g-sr-se-rouge-ii.webp",
-        gallery: [
-            "/mousepads/zowie/g-sr-se-rouge-ii-surface.webp",
-            "/mousepads/zowie/g-sr-se-rouge-ii-base.webp",
-        ],
+        main: "/mousepads/zowie/gsr-se-rouge-2.png",
     },
 
     personal: {
@@ -714,11 +697,7 @@ export const zowieMousepads: Mousepad[] = [
     },
 
     images: {
-        main: "/mousepads/zowie/g-sr-se-bi.webp",
-        gallery: [
-            "/mousepads/zowie/g-sr-se-bi-surface.webp",
-            "/mousepads/zowie/g-sr-se-bi-base.webp",
-        ],
+        main: "/mousepads/zowie/gsr-se-3.png",
     },
 
     personal: {

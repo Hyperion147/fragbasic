@@ -51,7 +51,6 @@ export default async function MousepadPage({ params }: PageProps) {
 
   if (!pad) notFound()
 
-  const galleryImages = [pad.images.main, ...(pad.images.gallery ?? [])]
   const relatedComparisons = getRelatedComparisons(pad.slug)
   const publishedComparison = relatedComparisons.find(
     (comparison) => comparison.status === "published"
@@ -122,7 +121,7 @@ export default async function MousepadPage({ params }: PageProps) {
             <MousepadImageGallery
               brand={pad.brand}
               name={pad.name}
-              images={galleryImages}
+              image={pad.images.main}
             />
           </Card>
         </div>

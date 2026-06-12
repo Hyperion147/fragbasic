@@ -31,7 +31,7 @@ export interface FilterOption<T extends string> {
   value: T;
 }
 
-const companyOrder = ["Artisan", "LGG"] as const;
+const companyOrder = ["Artisan", "LGG", "Zowie"] as const;
 
 const categoryOrder: MousepadCategory[] = [
   "mud",
