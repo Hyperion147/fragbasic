@@ -12,6 +12,8 @@ import {
   type MousepadFilters as MousepadFilterState,
 } from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
+import { SearchX, RotateCcw } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   mousepads: Mousepad[];
@@ -28,6 +30,8 @@ export function MousepadBrowser({
     getDefaultMousepadFilters()
   );
 
+  const handleReset = () => setFilters(getDefaultMousepadFilters());
+
   const filteredMousepads = filterMousepads(mousepads, filters);
 
   return (
@@ -38,7 +42,7 @@ export function MousepadBrowser({
         resultCount={filteredMousepads.length}
         value={filters}
         onChange={setFilters}
-        onReset={() => setFilters(getDefaultMousepadFilters())}
+        onReset={handleReset}
       />
 
       {filteredMousepads.length > 0 ? (
@@ -48,13 +52,20 @@ export function MousepadBrowser({
           ))}
         </div>
       ) : (
-        <div className="rounded-4xl border border-dashed border-border bg-card/70 px-6 py-10 text-center">
-          <p className="text-lg font-semibold text-foreground">
-            No mousepads match these filters.
-          </p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Try different filters or clear the current selection.
-          </p>
+        <div className="rounded-4xl border border-dashed border-border bg-card/70 px-6 py-12 text-center">
+          <div className="mx-auto max-w-xs space-y-4">
+            <SearchX className="mx-auto size-10 text-muted-foreground" />
+            <p className="text-xl font-semibold text-foreground">
+              No mousepads match these filters
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Try adjusting the Company or Speed / Control filters, or start fresh.
+            </p>
+            <Button variant="outline" onClick={handleReset}>
+              <RotateCcw className="size-4" />
+              Clear all filters
+            </Button>
+          </div>
         </div>
       )}
     </div>

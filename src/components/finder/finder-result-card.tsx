@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Bookmark } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import {
     formatMousepadValue,
     getMousepadFullName,
@@ -16,9 +17,12 @@ import type { Mousepad } from "@/types/mousepad";
 type Props = {
     result: FinderResult;
     rank: number;
+    isSaved?: boolean;
+    onToggleSave?: (slug: string) => void;
+    canSaveMore?: boolean;
 };
 
-export function FinderResultCard({ result, rank }: Props) {
+export function FinderResultCard({ result, rank, isSaved, onToggleSave, canSaveMore = true }: Props) {
     const { mousepad, score, reasons } = result;
     const matchPercentage = Math.round(score);
     const explanation =
@@ -84,7 +88,27 @@ export function FinderResultCard({ result, rank }: Props) {
                 </div>
 
                 <div className="flex flex-col items-start gap-8 md:items-end">
-                    <MatchRing value={matchPercentage} />
+                    <div className="flex items-center gap-1">
+                        <MatchRing value={matchPercentage} />
+                        {onToggleSave && (
+                            <button
+                                disabled={!isSaved && !canSaveMore}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    onToggleSave(mousepad.slug);
+                                }}
+                                className="ml-1 rounded-full p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                                aria-label={isSaved ? "Remove from saved pads" : "Save this pad"}
+                            >
+                                <Bookmark 
+                                    className={cn(
+                                        "size-4", 
+                                        isSaved && "fill-violet-400 text-violet-400"
+                                    )} 
+                                />
+                            </button>
+                        )}
+                    </div>
                     <Link
                         href={`/mousepads/${mousepad.slug}`}
                         className="inline-flex items-center gap-2 text-sm font-medium text-foreground transition-colors hover:text-violet-200"

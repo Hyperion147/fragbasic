@@ -1,6 +1,6 @@
 "use client";
 
-import { useDeferredValue, useMemo, useRef } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 
 import { FinderForm, type FinderFormValue } from "@/components/finder/finder-form";
 import { FinderResults } from "@/components/finder/finder-results";
@@ -11,17 +11,18 @@ import {
 import { recommendMousepads } from "@/lib/finder/recommendMousepads";
 import type { FinderInput } from "@/lib/finder/types";
 import type { Mousepad } from "@/types/mousepad";
-import { useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Bookmark, X } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
     formatMousepadValue,
     getMousepadFullName,
 } from "@/lib/mousepads";
+import { MousepadCard } from "@/components/mousepads/mousepad-card";
 
 type Props = {
     mousepads: Mousepad[];
@@ -33,13 +34,52 @@ const defaultFormValue: FinderFormValue = {
     desiredFeel: "slightly-more-control",
     texturePreference: "balanced",
     humidityConcern: false,
-    perGameSens: {},
 };
 
 export function MousepadFinder({ mousepads }: Props) {
     const [value, setValue] = useState<FinderFormValue>(defaultFormValue);
     const resultsRef = useRef<HTMLDivElement | null>(null);
     const deferredInput = useDeferredValue(value);
+
+    // Saved pads via localStorage
+    const [savedSlugs, setSavedSlugs] = useState<string[]>([]);
+    const [activeTab, setActiveTab] = useState<'results' | 'saved'>('results');
+
+    useEffect(() => {
+        const stored = localStorage.getItem('fragbasic_saved_pads');
+        if (stored) {
+            try {
+                setSavedSlugs(JSON.parse(stored));
+            } catch {}
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('fragbasic_saved_pads', JSON.stringify(savedSlugs));
+    }, [savedSlugs]);
+
+    const savedSet = useMemo(() => new Set(savedSlugs), [savedSlugs]);
+
+    const toggleSave = (slug: string) => {
+        setSavedSlugs((prev) => {
+            if (prev.includes(slug)) {
+                return prev.filter((s) => s !== slug);
+            }
+            if (prev.length >= maxSaved) {
+                return prev;
+            }
+            return [...prev, slug];
+        });
+    };
+
+    const savedMousepads = useMemo(
+        () => mousepads.filter((p) => savedSet.has(p.slug)),
+        [mousepads, savedSet]
+    );
+
+    const maxSaved = 4;
+    const canSaveMore = savedSlugs.length < maxSaved;
+    const hasGames = value.games.length > 0;
 
     const finderInput = useMemo<FinderInput>(
         () => ({
@@ -73,20 +113,10 @@ export function MousepadFinder({ mousepads }: Props) {
                     <FinderForm
                         value={value}
                         onToggleGame={(game) =>
-                            setValue((current) => {
-                                const newGames = toggleGameSelection(current.games, game);
-                                const newPer = { ...(current.perGameSens || {}) };
-                                Object.keys(newPer).forEach((k) => {
-                                    if (!newGames.includes(k)) {
-                                        delete newPer[k];
-                                    }
-                                });
-                                return {
-                                    ...current,
-                                    games: newGames,
-                                    perGameSens: newPer,
-                                };
-                            })
+                            setValue((current) => ({
+                                ...current,
+                                games: toggleGameSelection(current.games, game),
+                            }))
                         }
                         onSensitivityChange={(sensitivityBand) =>
                             setValue((current) => ({
@@ -112,20 +142,6 @@ export function MousepadFinder({ mousepads }: Props) {
                                 humidityConcern: !current.humidityConcern,
                             }))
                         }
-                        onUpdatePerGameSens={(game, sens) =>
-                            setValue((current) => {
-                                const nextSens = { ...(current.perGameSens || {}) };
-                                if (sens === undefined || Number.isNaN(sens)) {
-                                    delete nextSens[game];
-                                } else {
-                                    nextSens[game] = sens;
-                                }
-                                return {
-                                    ...current,
-                                    perGameSens: nextSens,
-                                };
-                            })
-                        }
                         onSubmit={() =>
                             resultsRef.current?.scrollIntoView({
                                 behavior: "smooth",
@@ -136,20 +152,67 @@ export function MousepadFinder({ mousepads }: Props) {
                 </div>
 
                 <div ref={resultsRef} className="relative">
-                    <div
-                        className={cn(
-                            value.games.length === 0 && "blur-sm opacity-40 pointer-events-none"
-                        )}
-                    >
-                        <FinderResults results={value.games.length > 0 ? topResults : []} />
-                    </div>
-                    {value.games.length === 0 && (
-                        <div className="absolute inset-0 z-10 flex items-center justify-center">
-                            <p className="text-center text-base font-medium text-muted-foreground">
-                                select atleast 1 game to see results
-                            </p>
-                        </div>
-                    )}
+                    <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'results' | 'saved')} className="w-full">
+                        <TabsList className="grid w-full grid-cols-2 mb-4 rounded-none">
+                            <TabsTrigger value="results" className="rounded-none">Results</TabsTrigger>
+                            <TabsTrigger value="saved" className="rounded-none">
+                                Saved pads ({savedSlugs.length}/{maxSaved})
+                            </TabsTrigger>
+                        </TabsList>
+
+                        <TabsContent value="results" className="mt-0">
+                            <FinderResults 
+                                results={hasGames ? topResults : []} 
+                                onToggleSave={toggleSave}
+                                isSaved={(slug) => savedSet.has(slug)}
+                                gamesSelected={hasGames}
+                                canSaveMore={canSaveMore}
+                            />
+                        </TabsContent>
+
+                        <TabsContent value="saved" className="mt-0">
+                            {savedMousepads.length > 0 ? (
+                                <div>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        {savedMousepads.map((pad) => (
+                                            <div key={pad.slug} className="relative">
+                                                <MousepadCard pad={pad} />
+                                                <Button
+                                                    size="icon"
+                                                    variant="destructive"
+                                                    className="absolute top-2 right-2 h-6 w-6 rounded-full z-10"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        e.stopPropagation();
+                                                        toggleSave(pad.slug);
+                                                    }}
+                                                >
+                                                    <X className="h-3 w-3" />
+                                                </Button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    {savedSlugs.length >= maxSaved && (
+                                        <p className="text-center text-xs text-muted-foreground pt-2">
+                                            Max 4 pads saved. Remove one to add more.
+                                        </p>
+                                    )}
+                                </div>
+                            ) : (
+                                <Card className="p-8 text-center border-dashed">
+                                    <div className="mx-auto max-w-xs space-y-3">
+                                        <div className="mx-auto flex size-12 items-center justify-center rounded-2xl border border-border bg-background/60">
+                                            <Bookmark className="size-6 text-muted-foreground" />
+                                        </div>
+                                        <h3 className="text-xl font-semibold tracking-tight">No saved pads yet</h3>
+                                        <p className="text-sm leading-6 text-muted-foreground">
+                                            Click the bookmark icon on any recommendation in the Results tab to build your personal collection.
+                                        </p>
+                                    </div>
+                                </Card>
+                            )}
+                        </TabsContent>
+                    </Tabs>
                 </div>
             </div>
 

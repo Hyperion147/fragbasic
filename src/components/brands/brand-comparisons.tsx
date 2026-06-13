@@ -41,14 +41,14 @@ export function BrandComparisons({ comparisons, brandName }: Props) {
       ) : (
         <Card className="border-border bg-card">
           <CardHeader>
-            <CardTitle className="text-xl tracking-tight">
+            <CardTitle className="text-xl tracking-tight flex items-center gap-2">
               No published comparisons yet
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
               This brand does not have a published comparison entry yet, but
-              the mousepads are still available in the broader compare tools.
+              the mousepads are still available in the broader compare tools and browser.
             </p>
           </CardContent>
         </Card>

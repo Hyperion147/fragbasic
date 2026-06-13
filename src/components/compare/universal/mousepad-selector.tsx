@@ -128,10 +128,12 @@ export function MousepadSelector({
 
         {availableMousepads.length === 0 ? (
           <div className="rounded-3xl border border-dashed border-border bg-background/70 px-5 py-8 text-center">
-            <p className="font-medium text-foreground">No matching mousepads</p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Try a different search term or remove one of the selected pads.
-            </p>
+            <div className="mx-auto max-w-[220px] space-y-2">
+              <p className="font-medium text-foreground">No matching mousepads</p>
+              <p className="text-sm text-muted-foreground">
+                Try a different search term or remove one of the selected pads to see more options.
+              </p>
+            </div>
           </div>
         ) : null}
       </CardContent>

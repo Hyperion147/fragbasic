@@ -6,7 +6,6 @@ import { FinderOptionCard } from "@/components/finder/finder-option-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 export type FinderSensitivityBand = "low" | "medium" | "high";
@@ -23,7 +22,6 @@ export type FinderFormValue = {
     desiredFeel: FinderDesiredStep;
     texturePreference: "smooth" | "balanced" | "textured" | "no-preference";
     humidityConcern: boolean;
-    perGameSens?: Record<string, number>; // optional cm/360 per selected game
 };
 
 type Props = {
@@ -34,7 +32,6 @@ type Props = {
     onTextureChange: (value: FinderFormValue["texturePreference"]) => void;
     onHumidityChange: () => void;
     onSubmit: () => void;
-    onUpdatePerGameSens: (game: string, sens: number | undefined) => void;
 };
 
 const gameOptions: Array<{
@@ -102,7 +99,6 @@ export function FinderForm({
     onTextureChange,
     onHumidityChange,
     onSubmit,
-    onUpdatePerGameSens,
 }: Props) {
     return (
         <Card className="border-border bg-card/90 p-8 shadow-xl shadow-black/10">
@@ -134,61 +130,6 @@ export function FinderForm({
                             );
                         })}
                     </div>
-
-                    {value.games.length > 0 && (
-                        <div className="mt-4 space-y-3">
-                            <p className="text-sm font-medium text-muted-foreground">
-                                Sensitivity per game (cm/360) — optional
-                            </p>
-                            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                                {value.games.map((game) => {
-                                    const current = value.perGameSens?.[game];
-                                    return (
-                                        <div
-                                            key={game}
-                                            className="flex items-center gap-2"
-                                        >
-                                            <span className="w-24 shrink-0 text-sm text-foreground/90">
-                                                {game}
-                                            </span>
-                                            <Input
-                                                type="number"
-                                                inputMode="decimal"
-                                                placeholder="4"
-                                                className="h-9 w-full text-sm"
-                                                value={current ?? ""}
-                                                onChange={(e) => {
-                                                    const raw = e.target.value;
-                                                    if (raw === "") {
-                                                        onUpdatePerGameSens(
-                                                            game,
-                                                            undefined,
-                                                        );
-                                                    } else {
-                                                        const parsed =
-                                                            parseFloat(raw);
-                                                        onUpdatePerGameSens(
-                                                            game,
-                                                            isNaN(parsed)
-                                                                ? undefined
-                                                                : parsed,
-                                                        );
-                                                    }
-                                                }}
-                                            />
-                                            <span className="text-xs text-muted-foreground shrink-0">
-                                                cm/360
-                                            </span>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                            <p className="text-[10px] text-muted-foreground/70">
-                                Enter your personal sensitivity for each game if
-                                you want to track it.
-                            </p>
-                        </div>
-                    )}
 
                     <div className="text-xl text-muted-foreground">
                         Select your sensitivity

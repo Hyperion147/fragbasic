@@ -1,6 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronRight, Database, ScanSearch, SlidersHorizontal } from "lucide-react";
+import {
+    ChevronRight,
+    Database,
+    ScanSearch,
+    SlidersHorizontal,
+} from "lucide-react";
 
 import { MousepadFinder } from "@/components/finder/mousepad-finder";
 import { SiteSection } from "@/components/SiteSection";
@@ -42,7 +47,10 @@ export default function MousepadFinderPage() {
                     <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
                         <div className="space-y-8">
                             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <Link href="/" className="transition-colors hover:text-foreground">
+                                <Link
+                                    href="/"
+                                    className="transition-colors hover:text-foreground"
+                                >
                                     Home
                                 </Link>
                                 <ChevronRight className="size-4" />
@@ -58,8 +66,12 @@ export default function MousepadFinderPage() {
 
                             <div className="max-w-3xl">
                                 <div className="flex flex-wrap gap-2">
-                                    <Badge className="text-black">Mousepad Finder</Badge>
-                                    <Badge variant="outline">{mousepads.length} pads indexed</Badge>
+                                    <Badge className="text-black">
+                                        Mousepad Finder
+                                    </Badge>
+                                    <Badge variant="outline">
+                                        {mousepads.length} pads indexed
+                                    </Badge>
                                 </div>
 
                                 <h1 className="mt-5 text-5xl font-semibold tracking-tight md:text-7xl">
@@ -67,36 +79,14 @@ export default function MousepadFinderPage() {
                                 </h1>
 
                                 <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
-                                    Answer a few questions and we&apos;ll find the
-                                    mousepads that best match your playstyle.
+                                    Answer a few questions and we&apos;ll find
+                                    the mousepads that best match your
+                                    playstyle.
                                 </p>
-                            </div>
-
-                            <div className="grid gap-4 md:grid-cols-3">
-                                {heroFeatures.map((feature) => {
-                                    const Icon = feature.icon;
-
-                                    return (
-                                        <Card
-                                            key={feature.title}
-                                            className="border-border bg-card/70 p-6 shadow-lg shadow-black/5"
-                                        >
-                                            <div className="flex size-10 items-center justify-center rounded-2xl border border-border bg-background/70">
-                                                <Icon className="size-4 text-foreground" />
-                                            </div>
-                                            <h2 className="mt-4 text-lg font-semibold tracking-tight">
-                                                {feature.title}
-                                            </h2>
-                                            <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                                                {feature.body}
-                                            </p>
-                                        </Card>
-                                    );
-                                })}
                             </div>
                         </div>
 
-                        <Card className="relative min-h-[320px] overflow-hidden border-border bg-card/80 p-0 shadow-2xl shadow-black/15">
+                        <Card className="relative overflow-hidden border-border bg-card/80 p-0 shadow-2xl shadow-black/15">
                             <Image
                                 src="/hero-bg.png"
                                 alt="Mousepad stack visual"
