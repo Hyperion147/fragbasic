@@ -121,7 +121,7 @@ export const xraypadMousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/xraypad/ac-plus-black.webp",
+            main: "/mousepads/xraypad/aqua-control-plus.png",
         },
 
         personal: {
@@ -293,7 +293,7 @@ export const xraypadMousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/xraypad/ac-zero-black.webp",
+            main: "/mousepads/xraypad/aqua-control-zero.png",
         },
 
         personal: {
@@ -490,7 +490,7 @@ export const xraypadMousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/xraypad/ac-ii-black.webp",
+            main: "/mousepads/xraypad/aqua-control-2.webp",
         },
 
         personal: {
@@ -688,7 +688,7 @@ export const xraypadMousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/xraypad/equate-plus-v2-black.webp",
+            main: "/mousepads/xraypad/eq-plus-v2.png",
         },
 
         personal: {
@@ -866,7 +866,7 @@ export const xraypadMousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/xraypad/ac-pro-neon.webp",
+            main: "/mousepads/xraypad/aqua-control-pro.png",
         },
 
         personal: {

@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import {
     ArrowRight,
     CheckCircle2,
+    ChevronsRight,
     CircleDot,
     Crosshair,
     Gamepad2,
@@ -19,6 +20,7 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { getAllMousepads, getMousepadFullName } from "@/lib/mousepads";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
@@ -86,6 +88,26 @@ const gearCategories = [
 
 const games = ["Valorant", "CS2", "Apex", "More"] as const;
 const preferences = ["More Control", "Balanced", "More Speed"] as const;
+const gameIcons = {
+    Valorant: "/games-icon/valo-icon.png",
+    CS2: "/games-icon/cs2-icon.png",
+    Apex: "/games-icon/apex-icon.png",
+    More: "/games-icon/more-icon.png",
+} as const;
+const preferenceIcons = {
+    "More Control": "/games-icon/stability.png",
+    Balanced: "/games-icon/cruise-control.png",
+    "More Speed": "/games-icon/speedometer.png",
+} as const;
+const finderResultImages: Record<string, string> = {
+    "Artisan Zero": "/mousepads/artisan/zero-dai-dai-orange.png",
+    "Saturn Pro": "/mousepads/lgg/saturn-blue.png",
+    "LGG Neptune": "/mousepads/lgg/neptune-pro.png",
+    Raiden: "/mousepads/artisan/raiden-orange.png",
+    Hyperion: "/mousepads/lgg/hyperion-blue-xxl.png",
+    "Hayate Otsu": "/mousepads/artisan/hayate-otsu-v2-red-fold.png",
+} as const;
+const finderMousepads = getAllMousepads();
 const visualSpectrumPads = [
     { name: "QcK", color: "#75d66d" },
     { name: "G-SR-SE\nGris", color: "#58c37a" },
@@ -385,15 +407,17 @@ function FinderPanel({
 }) {
     return (
         <section className="grid gap-5 rounded-lg border border-border bg-card/40 p-5 lg:grid-cols-[1.05fr_1fr_1fr_1.2fr]">
-            <div>
-                <h2 className="text-2xl font-semibold tracking-normal">
-                    Not sure what to choose?
-                </h2>
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    Answer a few quick questions and get mousepads that fit your
-                    playstyle.
-                </p>
-                <Button className="mt-6" asChild>
+            <div className="flex justify-between flex-col">
+                <div>
+                    <h2 className="text-3xl font-semibold tracking-normal">
+                        Not sure what to choose?
+                    </h2>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                        Answer a few quick questions and get mousepads that fit
+                        your playstyle.
+                    </p>
+                </div>
+                <Button asChild className="w-fit">
                     <Link href="/compare/universal">
                         Find your mousepad
                         <ArrowRight className="size-4" />
@@ -407,6 +431,7 @@ function FinderPanel({
                         key={game}
                         active={activeGame === game}
                         label={game}
+                        iconSrc={gameIcons[game]}
                         onClick={() => onGameChange(game)}
                     />
                 ))}
@@ -418,26 +443,45 @@ function FinderPanel({
                         key={preference}
                         active={activePreference === preference}
                         label={preference}
+                        iconSrc={preferenceIcons[preference]}
                         onClick={() => onPreferenceChange(preference)}
                     />
                 ))}
             </FinderStep>
 
-            <FinderStep label="Step 3" title="Get recommendations">
-                <div className="grid grid-cols-3 gap-2">
+            <FinderStep label="Step 3">
+                <div className="grid grid-cols-3 gap-4">
                     {results.map((result, index) => (
                         <motion.div
                             key={result}
                             layout
-                            className="rounded-lg border border-border bg-background/75 p-3"
+                            className="overflow-hidden rounded-lg border border-border bg-background/75"
                         >
-                            <div className="h-12 rounded-md bg-gradient-to-br from-zinc-800 to-black" />
-                            <p className="mt-2 truncate text-xs font-medium">
-                                {result}
-                            </p>
-                            <p className="text-[11px] text-emerald-400">
-                                {95 - index * 3}% match
-                            </p>
+                            <Link
+                                href={getFinderResultHref(result)}
+                                className="block p-2"
+                            >
+                                <div className="relative h-14 overflow-hidden">
+                                    {finderResultImages[result] ? (
+                                        <Image
+                                            src={finderResultImages[result]}
+                                            alt=""
+                                            fill
+                                            quality={35}
+                                            className="object-cover opacity-90"
+                                        />
+                                    ) : (
+                                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.08),transparent_45%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.2))]" />
+                                    )}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+                                </div>
+                                <p className="mt-2 truncate text-xs font-medium">
+                                    {result}
+                                </p>
+                                <p className="text-[11px] text-emerald-400">
+                                    {95 - index * 3}% match
+                                </p>
+                            </Link>
                         </motion.div>
                     ))}
                 </div>
@@ -452,18 +496,19 @@ function FinderStep({
     children,
 }: {
     label: string;
-    title: string;
+    title?: string;
     children: React.ReactNode;
 }) {
     return (
-        <div>
+        <div className="relative">
             <Badge variant="outline" className="rounded-md text-[10px]">
                 {label}
             </Badge>
+            <ChevronsRight className="absolute top-20 right-20" />
             <h3 className="mt-4 text-base font-semibold tracking-normal">
                 {title}
             </h3>
-            <div className="mt-4 flex flex-wrap gap-2">{children}</div>
+            <div className="mt-4 flex flex-wrap gap-4">{children}</div>
         </div>
     );
 }
@@ -471,26 +516,110 @@ function FinderStep({
 function FinderButton({
     active,
     label,
+    iconSrc,
     onClick,
 }: {
     active: boolean;
     label: string;
+    iconSrc: string;
     onClick: () => void;
 }) {
     return (
         <button
             type="button"
             onClick={onClick}
-            className={cn(
-                "rounded-full border px-3 py-2 text-xs transition-colors",
-                active
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-border bg-background/75 text-muted-foreground hover:text-foreground",
-            )}
+            className="group flex flex-col items-center gap-2 text-center"
         >
-            {label}
+            <span
+                className={cn(
+                    "flex size-14 items-center justify-center rounded-full border bg-background/70 transition-all duration-200",
+                    active
+                        ? "border-primary/70 bg-primary/10 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]"
+                        : "border-border text-muted-foreground hover:border-foreground/25 hover:bg-background",
+                )}
+            >
+                <Image
+                    src={iconSrc}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className={cn(
+                        "h-7 w-7 object-contain opacity-80 transition-opacity duration-200 invert",
+                        active ? "opacity-100" : "group-hover:opacity-95",
+                    )}
+                />
+            </span>
+            <span
+                className={cn(
+                    "text-[11px] leading-none text-muted-foreground transition-colors",
+                    active ? "text-foreground" : "group-hover:text-foreground",
+                )}
+            >
+                {label}
+            </span>
         </button>
     );
+}
+
+function getFinderResultHref(result: string) {
+    const normalizedResult = normalizeFinderMousepadLabel(result);
+    const exactMatch = finderMousepads.find((mousepad) =>
+        getFinderAliases(mousepad).some(
+            (alias) =>
+                normalizeFinderMousepadLabel(alias) === normalizedResult,
+        ),
+    );
+
+    if (exactMatch) {
+        return `/mousepads/${exactMatch.slug}`;
+    }
+
+    const partialMatch = finderMousepads.find((mousepad) =>
+        getFinderAliases(mousepad).some((alias) => {
+            const normalizedAlias = normalizeFinderMousepadLabel(alias);
+
+            return (
+                normalizedAlias.includes(normalizedResult) ||
+                normalizedResult.includes(normalizedAlias)
+            );
+        }),
+    );
+
+    return partialMatch ? `/mousepads/${partialMatch.slug}` : "/mousepads";
+}
+
+function getFinderAliases(mousepad: (typeof finderMousepads)[number]) {
+    const series = mousepad.series;
+    const fullName = getMousepadFullName(mousepad);
+
+    return [
+        series,
+        mousepad.name,
+        fullName,
+        mousepad.name.replace(/\s+soft$/i, ""),
+        mousepad.name.replace(/\s+pro(?:\s+soft)?$/i, ""),
+        series?.replace(/\s+v\d+$/i, ""),
+        fullName.replace(/\s+soft$/i, ""),
+        fullName.replace(/\s+pro(?:\s+soft)?$/i, ""),
+        mousepad.name.replace(/aqua control/gi, "ac"),
+        series?.replace(/aqua control/gi, "ac"),
+        fullName.replace(/aqua control/gi, "ac"),
+    ].filter(isNonEmptyString);
+}
+
+function normalizeFinderMousepadLabel(value: string) {
+    return value
+        .toLowerCase()
+        .replace(/x\s+/g, " ")
+        .replace(/v\d+/g, " ")
+        .replace(/\bsoft\b/g, " ")
+        .replace(/[^\w\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+function isNonEmptyString(value: string | undefined): value is string {
+    return typeof value === "string" && value.length > 0;
 }
 
 function BrandsPanel({ brands }: { brands: BrandPreview[] }) {
@@ -509,7 +638,6 @@ function BrandsPanel({ brands }: { brands: BrandPreview[] }) {
 
     return (
         <section className="relative overflow-hidden rounded-lg border border-border bg-card/40 p-5">
-            
             <div className="relative">
                 <SectionHeader
                     title="All Brands"
@@ -609,7 +737,7 @@ function WhyPanel() {
     return (
         <section className="grid overflow-hidden rounded-lg border border-border bg-card/40 md:grid-cols-[0.7fr_1fr]">
             <div className="relative min-h-106 bg-gradient-to-br from-zinc-900 via-neutral-950 to-stone-900">
-                <Image src="/why-this-exist.png" alt="why-this-exist" fill  />
+                <Image src="/why-this-exist.png" alt="why-this-exist" fill />
             </div>
             <div className="p-8 justify-center h-full flex flex-col">
                 <p className="text-sm uppercase tracking-[0.18em] text-muted-foreground">

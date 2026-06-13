@@ -25,7 +25,7 @@ const brandLinks = Object.values(brandConfig).map((brand) => ({
 const directNavItems = [
     { label: "Compare", href: "/compare" },
     { label: "Guides", href: "/guides" },
-    { label: "Setup", href: "/setup" },
+    { label: "Finder", href: "/compare/universal" },
 ];
 
 const mobileNavItems = [
