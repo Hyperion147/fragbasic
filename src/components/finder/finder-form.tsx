@@ -1,22 +1,12 @@
 "use client";
 
-import type { LucideIcon } from "lucide-react";
-import {
-    Activity,
-    CircleHelp,
-    Crosshair,
-    Droplets,
-    Shield,
-    Sparkles,
-    Swords,
-    Target,
-    Zap,
-} from "lucide-react";
+import { Droplets } from "lucide-react";
 
 import { FinderOptionCard } from "@/components/finder/finder-option-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 export type FinderSensitivityBand = "low" | "medium" | "high";
@@ -31,17 +21,9 @@ export type FinderFormValue = {
     games: string[];
     sensitivityBand: FinderSensitivityBand;
     desiredFeel: FinderDesiredStep;
-    previousPadFeel:
-        | "muddy"
-        | "controlled"
-        | "balanced"
-        | "fast"
-        | "too-fast"
-        | "rough"
-        | "smooth"
-        | "unknown";
     texturePreference: "smooth" | "balanced" | "textured" | "no-preference";
     humidityConcern: boolean;
+    perGameSens?: Record<string, number>; // optional cm/360 per selected game
 };
 
 type Props = {
@@ -49,24 +31,24 @@ type Props = {
     onToggleGame: (game: string) => void;
     onSensitivityChange: (sensitivity: FinderSensitivityBand) => void;
     onDesiredFeelChange: (value: FinderDesiredStep) => void;
-    onPreviousFeelChange: (value: FinderFormValue["previousPadFeel"]) => void;
     onTextureChange: (value: FinderFormValue["texturePreference"]) => void;
     onHumidityChange: () => void;
     onSubmit: () => void;
+    onUpdatePerGameSens: (game: string, sens: number | undefined) => void;
 };
 
 const gameOptions: Array<{
     title: string;
-    icon: LucideIcon;
+    iconSrc?: string;
 }> = [
-    { title: "Valorant", icon: Target },
-    { title: "CS2", icon: Crosshair },
-    { title: "Apex", icon: Zap },
-    { title: "Overwatch 2", icon: Activity },
-    { title: "The Finals", icon: Sparkles },
-    { title: "Fortnite", icon: Swords },
-    { title: "Rainbow Six Siege", icon: Shield },
-    { title: "Other", icon: CircleHelp },
+    { title: "Valorant", iconSrc: "/games-icon/valo-icon.png" },
+    { title: "CS2", iconSrc: "/games-icon/cs2-icon.png" },
+    { title: "Apex", iconSrc: "/games-icon/apex-icon.png" },
+    { title: "Overwatch 2" },
+    { title: "The Finals" },
+    { title: "Fortnite" },
+    { title: "Rainbow Six Siege" },
+    { title: "Other", iconSrc: "/games-icon/more-icon.png" },
 ];
 
 const sensitivityOptions: Array<{
@@ -74,9 +56,21 @@ const sensitivityOptions: Array<{
     display: string;
     body: string;
 }> = [
-    { title: "low", display: "Low", body: "< 30 cm/360" },
-    { title: "medium", display: "Medium", body: "30-45 cm/360" },
-    { title: "high", display: "High", body: "> 45 cm/360" },
+    {
+        title: "low",
+        display: "High Sensitivity",
+        body: "< 30 cm/360 (wrist aiming, precise micro)",
+    },
+    {
+        title: "medium",
+        display: "Medium / Balanced",
+        body: "30-45 cm/360 (recommended for most players)",
+    },
+    {
+        title: "high",
+        display: "Low Sensitivity",
+        body: "> 45 cm/360 (arm aiming, large tracking)",
+    },
 ];
 
 const desiredSteps: Array<{
@@ -88,20 +82,6 @@ const desiredSteps: Array<{
     { value: "same", title: "Balanced" },
     { value: "slightly-faster", title: "Slightly Faster" },
     { value: "much-faster", title: "Much Faster" },
-];
-
-const previousFeelOptions: Array<{
-    title: string;
-    value: FinderFormValue["previousPadFeel"];
-}> = [
-    { title: "Muddy / Slow", value: "muddy" },
-    { title: "Controlled", value: "controlled" },
-    { title: "Balanced", value: "balanced" },
-    { title: "Fast", value: "fast" },
-    { title: "Too Fast", value: "too-fast" },
-    { title: "Rough / Abrasive", value: "rough" },
-    { title: "Smooth", value: "smooth" },
-    { title: "Not sure", value: "unknown" },
 ];
 
 const textureOptions: Array<{
@@ -119,21 +99,24 @@ export function FinderForm({
     onToggleGame,
     onSensitivityChange,
     onDesiredFeelChange,
-    onPreviousFeelChange,
     onTextureChange,
     onHumidityChange,
     onSubmit,
+    onUpdatePerGameSens,
 }: Props) {
     return (
-        <Card className="border-border bg-card/90 p-6 shadow-xl shadow-black/10">
-            <div className="space-y-8">
+        <Card className="border-border bg-card/90 p-8 shadow-xl shadow-black/10">
+            <div className="space-y-12">
                 <section className="space-y-4">
                     <SectionHeading
                         badge="1. Your Playstyle"
                         title="Tell us about the games you play"
                     />
+                    <p className="text-sm text-muted-foreground">
+                        Primary games. Select up to 3.
+                    </p>
 
-                    <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
                         {gameOptions.map((option) => {
                             const selected = value.games.includes(option.title);
                             const disabled =
@@ -145,34 +128,91 @@ export function FinderForm({
                                     active={selected}
                                     disabled={disabled}
                                     title={option.title}
-                                    icon={option.icon}
+                                    iconSrc={option.iconSrc}
                                     onClick={() => onToggleGame(option.title)}
                                 />
                             );
                         })}
                     </div>
 
-                    <p className="text-xs text-muted-foreground">
-                        Primary games. Select up to 3.
-                    </p>
+                    {value.games.length > 0 && (
+                        <div className="mt-4 space-y-3">
+                            <p className="text-sm font-medium text-muted-foreground">
+                                Sensitivity per game (cm/360) — optional
+                            </p>
+                            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                                {value.games.map((game) => {
+                                    const current = value.perGameSens?.[game];
+                                    return (
+                                        <div
+                                            key={game}
+                                            className="flex items-center gap-2"
+                                        >
+                                            <span className="w-24 shrink-0 text-sm text-foreground/90">
+                                                {game}
+                                            </span>
+                                            <Input
+                                                type="number"
+                                                inputMode="decimal"
+                                                placeholder="4"
+                                                className="h-9 w-full text-sm"
+                                                value={current ?? ""}
+                                                onChange={(e) => {
+                                                    const raw = e.target.value;
+                                                    if (raw === "") {
+                                                        onUpdatePerGameSens(
+                                                            game,
+                                                            undefined,
+                                                        );
+                                                    } else {
+                                                        const parsed =
+                                                            parseFloat(raw);
+                                                        onUpdatePerGameSens(
+                                                            game,
+                                                            isNaN(parsed)
+                                                                ? undefined
+                                                                : parsed,
+                                                        );
+                                                    }
+                                                }}
+                                            />
+                                            <span className="text-xs text-muted-foreground shrink-0">
+                                                cm/360
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            <p className="text-[10px] text-muted-foreground/70">
+                                Enter your personal sensitivity for each game if
+                                you want to track it.
+                            </p>
+                        </div>
+                    )}
 
-                    <div className="grid gap-3 md:grid-cols-3">
+                    <div className="text-xl text-muted-foreground">
+                        Select your sensitivity
+                    </div>
+
+                    <div className="grid gap-4 md:grid-cols-3">
                         {sensitivityOptions.map((option) => (
                             <button
                                 key={option.title}
                                 type="button"
-                                onClick={() => onSensitivityChange(option.title)}
+                                onClick={() =>
+                                    onSensitivityChange(option.title)
+                                }
                                 className={cn(
-                                    "rounded-2xl border px-4 py-4 text-left transition-all",
+                                    "rounded-3xl border p-6 text-left transition-all",
                                     value.sensitivityBand === option.title
-                                        ? "border-violet-400/55 bg-violet-400/10"
-                                        : "border-border bg-background/55 hover:border-foreground/15"
+                                        ? "border-violet-400/60 bg-violet-400/10"
+                                        : "border-border bg-background/60 hover:border-foreground/20",
                                 )}
                             >
-                                <p className="text-sm font-medium text-foreground">
+                                <p className="text-base font-semibold text-foreground">
                                     {option.display}
                                 </p>
-                                <p className="mt-1 text-xs text-muted-foreground">
+                                <p className="mt-1.5 text-sm text-muted-foreground">
                                     {option.body}
                                 </p>
                             </button>
@@ -180,37 +220,47 @@ export function FinderForm({
                     </div>
                 </section>
 
-                <section className="space-y-4">
+                <section className="space-y-6">
                     <SectionHeading
                         badge="2. Your Preferences"
                         title="How do you want your mousepad to feel?"
                     />
 
-                    <div className="rounded-2xl border border-border bg-background/55 p-4">
-                        <div className="relative px-2 pt-1">
-                            <div className="absolute top-4 left-4 right-4 h-px bg-border" />
-                            <div className="relative grid grid-cols-5 gap-2">
+                    <div className="rounded-3xl border border-border bg-background/60 p-6">
+                        <p className="mb-4 text-sm font-medium text-muted-foreground">
+                            Desired glide feel
+                        </p>
+                        <div className="relative">
+                            <div className="absolute top-2 left-0 right-0 h-0.5 bg-border" />
+                            <div className="relative grid grid-cols-5 gap-1">
                                 {desiredSteps.map((step) => (
                                     <button
                                         key={step.value}
                                         type="button"
-                                        onClick={() => onDesiredFeelChange(step.value)}
+                                        onClick={() =>
+                                            onDesiredFeelChange(step.value)
+                                        }
                                         className="flex flex-col items-center gap-3 text-center"
                                     >
                                         <span
                                             className={cn(
-                                                "relative z-10 size-3 rounded-full border bg-background transition-all",
+                                                "relative z-10 flex size-5 items-center justify-center rounded-full border-2 bg-background transition-all",
                                                 value.desiredFeel === step.value
-                                                    ? "border-violet-300 bg-violet-300 shadow-[0_0_0_4px_rgba(167,139,250,0.12)]"
-                                                    : "border-border"
+                                                    ? "border-violet-400 bg-violet-400"
+                                                    : "border-border",
                                             )}
-                                        />
+                                        >
+                                            {value.desiredFeel ===
+                                                step.value && (
+                                                <span className="size-2 rounded-full bg-white" />
+                                            )}
+                                        </span>
                                         <span
                                             className={cn(
-                                                "text-[11px] leading-4 text-muted-foreground",
+                                                "text-xs leading-tight font-medium",
                                                 value.desiredFeel === step.value
                                                     ? "text-foreground"
-                                                    : ""
+                                                    : "text-muted-foreground",
                                             )}
                                         >
                                             {step.title}
@@ -222,29 +272,18 @@ export function FinderForm({
                     </div>
 
                     <ChipGroup
-                        label="Previous mousepad feel"
-                        options={previousFeelOptions}
-                        activeValue={value.previousPadFeel}
-                        onChange={(nextValue) =>
-                            onPreviousFeelChange(
-                                nextValue as FinderFormValue["previousPadFeel"]
-                            )
-                        }
-                    />
-
-                    <ChipGroup
                         label="Texture preference"
                         options={textureOptions}
                         activeValue={value.texturePreference}
                         onChange={(nextValue) =>
                             onTextureChange(
-                                nextValue as FinderFormValue["texturePreference"]
+                                nextValue as FinderFormValue["texturePreference"],
                             )
                         }
                     />
                 </section>
 
-                <section className="space-y-4">
+                <section className="space-y-6">
                     <SectionHeading
                         badge="3. Environment"
                         title="Any conditions we should factor in?"
@@ -254,59 +293,41 @@ export function FinderForm({
                         type="button"
                         onClick={onHumidityChange}
                         className={cn(
-                            "w-full rounded-2xl border p-5 text-left transition-all",
+                            "w-full rounded-3xl border p-7 text-left transition-all",
                             value.humidityConcern
-                                ? "border-violet-400/55 bg-violet-400/10"
-                                : "border-border bg-background/55 hover:border-foreground/15"
+                                ? "border-violet-400/60 bg-violet-400/10"
+                                : "border-border bg-background/60 hover:border-foreground/20",
                         )}
                     >
-                        <div className="flex items-start gap-4">
+                        <div className="flex items-start gap-5">
                             <span
                                 className={cn(
-                                    "mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-2xl border",
+                                    "mt-1 flex size-12 shrink-0 items-center justify-center rounded-2xl border",
                                     value.humidityConcern
-                                        ? "border-violet-400/40 bg-violet-400/12 text-violet-100"
-                                        : "border-border bg-background/75 text-foreground/82"
+                                        ? "border-violet-400/50 bg-violet-400/15 text-violet-200"
+                                        : "border-border bg-background/80 text-foreground/85",
                                 )}
                             >
-                                <Droplets className="size-4" />
+                                <Droplets className="size-5" />
                             </span>
                             <span>
-                                <span className="block text-sm font-medium text-foreground">
+                                <span className="block text-lg font-semibold text-foreground">
                                     High humidity environment
                                 </span>
                                 <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-                                    I play in a very humid or sweaty environment.
+                                    I play in a very humid or sweaty
+                                    environment.
                                 </span>
                             </span>
                         </div>
                     </button>
                 </section>
-
-                <div className="space-y-3 pt-2">
-                    <Button
-                        type="button"
-                        className="h-12 w-full rounded-2xl"
-                        onClick={onSubmit}
-                    >
-                        Find My Mousepads
-                    </Button>
-                    <p className="text-center text-xs text-muted-foreground">
-                        Takes 2 seconds · 100% free
-                    </p>
-                </div>
             </div>
         </Card>
     );
 }
 
-function SectionHeading({
-    badge,
-    title,
-}: {
-    badge: string;
-    title: string;
-}) {
+function SectionHeading({ badge, title }: { badge: string; title: string }) {
     return (
         <div className="space-y-2">
             <Badge variant="outline" className="rounded-md text-[10px]">
@@ -331,17 +352,17 @@ function ChipGroup({
     return (
         <div className="space-y-3">
             <p className="text-sm font-medium text-foreground">{label}</p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
                 {options.map((option) => (
                     <button
                         key={option.value}
                         type="button"
                         onClick={() => onChange(option.value)}
                         className={cn(
-                            "rounded-full border px-3 py-2 text-xs transition-all",
+                            "rounded-full border px-4 py-2.5 text-sm transition-all",
                             activeValue === option.value
                                 ? "border-violet-400/55 bg-violet-400/10 text-foreground"
-                                : "border-border bg-background/55 text-muted-foreground hover:border-foreground/15 hover:text-foreground"
+                                : "border-border bg-background/55 text-muted-foreground hover:border-foreground/15 hover:text-foreground",
                         )}
                     >
                         {option.title}

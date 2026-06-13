@@ -28,6 +28,8 @@ export const gameProfiles: Record<GameProfileId, GameProfile> = {
     stoppingPowerWeight: 1.3,
     consistencyWeight: 1.25,
     labels: ["Valorant", "CS2", "tactical FPS"],
+    // Note: Tactical FPS players (per Gamingsmart, RJN, prosettings, Voltaic data) often use 35-60+ cm/360 (lower sens)
+    // → bias toward control/stopping pads. Adjust your sensitivityBand in the finder accordingly.
   },
   tracking: {
     id: "tracking",
@@ -39,6 +41,7 @@ export const gameProfiles: Record<GameProfileId, GameProfile> = {
     stoppingPowerWeight: 0.75,
     consistencyWeight: 1,
     labels: ["Apex", "Overwatch", "The Finals", "tracking"],
+    // Tracking/arena games: common 20-50 cm/360 (higher sens for flicks/tracking). Faster pads often preferred.
   },
   mixed: {
     id: "mixed",

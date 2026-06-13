@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card"
+import { formatSize, formatValue } from "@/lib/utils/format"
 import type { Mousepad } from "@/types/mousepad"
 
 type Props = {
@@ -170,21 +171,3 @@ function SpecValue({
   )
 }
 
-function formatValue(value: string) {
-  return value
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ")
-}
-
-function formatSize(size?: {
-  label: string
-  width: number
-  height: number
-  thickness?: number
-  unit: "mm"
-}) {
-  if (!size) return "Unknown"
-
-  return `${size.label} - ${size.width} x ${size.height}${size.unit}`
-}

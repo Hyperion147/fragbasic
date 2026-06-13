@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import { formatValue } from "@/lib/utils/format";
 import type { Mousepad } from "@/types/mousepad";
 
 export function MousepadSpecGrid({ pad }: { pad: Mousepad }) {
@@ -47,11 +48,4 @@ export function MousepadSpecGrid({ pad }: { pad: Mousepad }) {
             ) : null}
         </Card>
     );
-}
-
-function formatValue(value: string) {
-    return value
-        .split("-")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
 }

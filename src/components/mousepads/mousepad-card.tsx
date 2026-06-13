@@ -13,7 +13,7 @@ import type { Mousepad } from "@/types/mousepad";
 export function MousepadCard({ pad }: { pad: Mousepad }) {
   return (
     <Link href={`/mousepads/${pad.slug}`} className="h-full">
-      <Card className="group h-full border-border bg-card/95 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/45 hover:shadow-lg hover:shadow-black/10">
+      <Card className="group h-full border-border bg-card/95 p-5 transition-all duration-200 hover:border-primary/45 hover:shadow-lg hover:shadow-black/10">
         <div className="flex flex-wrap gap-2">
           <Badge className="text-black">{formatMousepadValue(pad.category)}</Badge>
           <Badge variant="outline">{formatMousepadValue(pad.surface)}</Badge>
@@ -29,7 +29,7 @@ export function MousepadCard({ pad }: { pad: Mousepad }) {
           </h2>
         </div>
 
-        <div className="relative aspect-[4/3] rounded-3xl border border-border bg-[radial-gradient(circle_at_top,oklch(0.98_0.01_95/0.82),transparent_55%),linear-gradient(180deg,oklch(0.96_0.01_95/0.78),oklch(0.93_0.01_95/0.72))]">
+        <div className="relative aspect-4/3 rounded-3xl border border-border bg-card">
           <Image
             src={pad.images.main}
             alt={getMousepadFullName(pad)}

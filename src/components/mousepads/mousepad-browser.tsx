@@ -8,6 +8,7 @@ import {
   filterMousepads,
   getDefaultMousepadFilters,
   type FilterOption,
+  type MousepadCategory,
   type MousepadFilters as MousepadFilterState,
 } from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
@@ -15,11 +16,13 @@ import type { Mousepad } from "@/types/mousepad";
 type Props = {
   mousepads: Mousepad[];
   brands: FilterOption<string>[];
+  categories: FilterOption<MousepadCategory>[];
 };
 
 export function MousepadBrowser({
   mousepads,
   brands,
+  categories,
 }: Props) {
   const [filters, setFilters] = useState<MousepadFilterState>(
     getDefaultMousepadFilters()
@@ -31,6 +34,7 @@ export function MousepadBrowser({
     <div className="space-y-6">
       <MousepadFilters
         brands={brands}
+        categories={categories}
         resultCount={filteredMousepads.length}
         value={filters}
         onChange={setFilters}
@@ -49,7 +53,7 @@ export function MousepadBrowser({
             No mousepads match these filters.
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
-            Try the other company or clear the current filter.
+            Try different filters or clear the current selection.
           </p>
         </div>
       )}

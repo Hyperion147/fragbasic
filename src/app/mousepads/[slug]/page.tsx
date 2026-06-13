@@ -16,6 +16,7 @@ import {
   getMousepadBySlug,
   getSimilarMousepads,
 } from "@/lib/mousepads"
+import { formatPrice, formatValue } from "@/lib/utils/format"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -69,101 +70,105 @@ export default async function MousepadPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <section className="border-b border-border bg-[radial-gradient(circle_at_top_left,oklch(0.28_0.05_215_/_0.38),transparent_35%),linear-gradient(180deg,oklch(0.22_0.02_224),oklch(0.21_0.02_224))]">
-        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 md:grid-cols-[1.05fr_0.95fr] md:px-8 md:py-16">
-          <div className="space-y-6">
-            <div className="flex flex-wrap gap-2">
-              <Badge className="text-black">{formatValue(pad.category)}</Badge>
-              <Badge variant="outline">{formatValue(pad.softness)}</Badge>
-              <Badge variant="outline">{formatValue(pad.surface)}</Badge>
-              <Badge variant="outline">{formatValue(pad.base)} base</Badge>
-            </div>
+      <section className="border-b border-border bg-background">
+        <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+          <div className="mx-auto max-w-7xl grid gap-8 md:grid-cols-[1.05fr_0.95fr]">
+            <div className="space-y-6">
+              <div className="flex flex-wrap gap-2">
+                <Badge className="text-black">{formatValue(pad.category)}</Badge>
+                <Badge variant="outline">{formatValue(pad.softness)}</Badge>
+                <Badge variant="outline">{formatValue(pad.surface)}</Badge>
+                <Badge variant="outline">{formatValue(pad.base)} base</Badge>
+              </div>
 
-            <div>
-              <p className="text-sm uppercase tracking-[0.18em] text-muted-foreground">
-                {pad.brand}
-              </p>
+              <div>
+                <p className="text-sm uppercase tracking-[0.18em] text-muted-foreground">
+                  {pad.brand}
+                </p>
 
-              <h1 className="mt-3 max-w-4xl text-5xl font-semibold tracking-tight md:text-7xl">
-                {pad.name}
-              </h1>
+                <h1 className="mt-3 max-w-4xl text-5xl font-semibold tracking-tight md:text-7xl">
+                  {pad.name}
+                </h1>
 
-              <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
-                {getHeroSummary(pad)}
-              </p>
-            </div>
+                <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
+                  {getHeroSummary(pad)}
+                </p>
+              </div>
 
-            <div className="grid gap-3 sm:grid-cols-3">
-              <HeroStat label="Speed" value={pad.feel.speed} />
-              <HeroStat label="Control" value={pad.feel.control} />
-              <HeroStat label="Stopping" value={pad.feel.stoppingPower} />
-            </div>
+              <div className="grid gap-3 sm:grid-cols-3">
+                <HeroStat label="Speed" value={pad.feel.speed} />
+                <HeroStat label="Control" value={pad.feel.control} />
+                <HeroStat label="Stopping" value={pad.feel.stoppingPower} />
+              </div>
 
-            <div className="grid gap-3 sm:grid-cols-3">
-              <HighlightCard
-                label="Best for"
-                value={pad.recommendedFor.games.map(formatValue).join(", ")}
-              />
-              <HighlightCard
-                label="Humidity fit"
-                value={`${pad.environment.humidityResistance}/10 resistance`}
-              />
-              <HighlightCard
-                label="India price"
-                value={formatPrice(pad.price.inr)}
-              />
-            </div>
+              <div className="grid gap-3 sm:grid-cols-3">
+                <HighlightCard
+                  label="Best for"
+                  value={pad.recommendedFor.games.map(formatValue).join(", ")}
+                />
+                <HighlightCard
+                  label="Humidity fit"
+                  value={`${pad.environment.humidityResistance}/10 resistance`}
+                />
+                <HighlightCard
+                  label="India price"
+                  value={formatPrice(pad.price.inr)}
+                />
+              </div>
 
-            <div className="flex flex-wrap gap-3">
-              <Button asChild>
-                <Link href={publishedComparison ? `/compare/${publishedComparison.slug}` : "/compare"}>
-                  {publishedComparison ? "Read comparison" : "Browse comparisons"}
-                  <ArrowRight className="size-4" />
-                </Link>
-              </Button>
-
-              <Button variant="outline" asChild>
-                <Link href="/mousepads">Browse all pads</Link>
-              </Button>
-
-              {brandSlug ? (
-                <Button variant="secondary" asChild>
-                  <Link href={`/brands/${brandSlug}`}>Visit brand</Link>
+              <div className="flex flex-wrap gap-3">
+                <Button asChild>
+                  <Link href={publishedComparison ? `/mousepads/compare/${publishedComparison.slug}` : "/mousepads/compare"}>
+                    {publishedComparison ? "Read comparison" : "Browse comparisons"}
+                    <ArrowRight className="size-4" />
+                  </Link>
                 </Button>
-              ) : null}
-            </div>
-          </div>
 
-          <Card className="overflow-hidden border-border bg-card/95 p-5 shadow-lg shadow-black/10">
-            <MousepadImageGallery
-              brand={pad.brand}
-              name={pad.name}
-              image={pad.images.main}
-            />
-          </Card>
+                <Button variant="outline" asChild>
+                  <Link href="/mousepads">Browse all pads</Link>
+                </Button>
+
+                {brandSlug ? (
+                  <Button variant="secondary" asChild>
+                    <Link href={`/mousepads/brands/${brandSlug}`}>Visit brand</Link>
+                  </Button>
+                ) : null}
+              </div>
+            </div>
+
+            <Card className="overflow-hidden border-border bg-card/95 p-5 shadow-lg shadow-black/10">
+              <MousepadImageGallery
+                brand={pad.brand}
+                name={pad.name}
+                image={pad.images.main}
+              />
+            </Card>
+          </div>
         </div>
       </section>
 
-      <div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 md:grid-cols-[1fr_360px] md:px-8 md:py-10">
-        <div className="space-y-6">
-          <MousepadFeelChart pad={pad} />
-          <MousepadSpecGrid pad={pad} />
-          <SurfaceAndUseCard pad={pad} />
-          <PersonalNotes pad={pad} />
-          <SourcesCard pad={pad} />
-        </div>
+      <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+        <div className="mx-auto max-w-7xl grid gap-6 md:grid-cols-[1fr_360px]">
+          <div className="space-y-6">
+            <MousepadFeelChart pad={pad} />
+            <MousepadSpecGrid pad={pad} />
+            <SurfaceAndUseCard pad={pad} />
+            <PersonalNotes pad={pad} />
+            <SourcesCard pad={pad} />
+          </div>
 
-        <aside className="space-y-6">
-          <RecommendationCard pad={pad} />
-          <AvailabilityCard pad={pad} />
-          <ColorwaysCard pad={pad} />
-          <CompareLinksCard
-            pad={pad}
-            comparisonSlug={publishedComparison?.slug}
-            relatedCount={relatedComparisons.length}
-          />
-          <SimilarMousepads source={pad} mousepads={similarMousepads} />
-        </aside>
+          <aside className="space-y-6">
+            <RecommendationCard pad={pad} />
+            <AvailabilityCard pad={pad} />
+            <ColorwaysCard pad={pad} />
+            <CompareLinksCard
+              pad={pad}
+              comparisonSlug={publishedComparison?.slug}
+              relatedCount={relatedComparisons.length}
+            />
+            <SimilarMousepads source={pad} mousepads={similarMousepads} />
+          </aside>
+        </div>
       </div>
     </main>
   )
@@ -329,7 +334,7 @@ function CompareLinksCard({
 
       <div className="mt-5 flex flex-wrap gap-3">
         <Button asChild className="w-full">
-          <Link href={comparisonSlug ? `/compare/${comparisonSlug}` : "/compare"}>
+          <Link href={comparisonSlug ? `/mousepads/compare/${comparisonSlug}` : "/mousepads/compare"}>
             {comparisonSlug ? "Open related comparison" : "Visit compare hub"}
           </Link>
         </Button>
@@ -474,17 +479,3 @@ function getHeroSummary(pad: Mousepad) {
   return `${pad.brand} ${pad.name} is a ${formatValue(pad.category)} pad built for ${games}. It balances ${pad.feel.control}/10 control, ${pad.feel.speed}/10 speed, and ${pad.feel.stoppingPower}/10 stopping power for players who care about gear feel, not just marketing labels.`
 }
 
-function formatValue(value: string) {
-  return value
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ")
-}
-
-function formatPrice(price?: number) {
-  if (!price) {
-    return "Price unknown"
-  }
-
-  return `Rs ${price.toLocaleString("en-IN")}`
-}

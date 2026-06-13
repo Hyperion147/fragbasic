@@ -29,8 +29,8 @@ export function BrandOverview({
   totalPads,
 }: Props) {
   return (
-    <section className="border-b border-border bg-[radial-gradient(circle_at_top_left,oklch(0.28_0.05_215/0.38),transparent_35%),linear-gradient(180deg,oklch(0.22_0.02_224),oklch(0.21_0.02_224))]">
-      <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
+    <section className="border-b border-border bg-background">
+      <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
         <div className="max-w-4xl">
           <div className="flex flex-wrap gap-2">
             <Badge className="text-black">{brand.name}</Badge>

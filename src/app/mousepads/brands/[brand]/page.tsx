@@ -73,7 +73,8 @@ export default async function BrandPage({ params }: PageProps) {
         totalPads={overview.mousepads.length}
       />
 
-      <div className="mx-auto max-w-7xl space-y-8 px-4 py-8 md:px-8 md:py-10">
+      <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+        <div className="mx-auto max-w-7xl space-y-8">
         <BrandBestPicks
           control={bestPicks.control}
           speed={bestPicks.speed}
@@ -100,6 +101,7 @@ export default async function BrandPage({ params }: PageProps) {
 
         <BrandSpeedOrder mousepads={orderedMousepads} />
         <BrandComparisons comparisons={comparisons} brandName={brandName} />
+        </div>
       </div>
     </main>
   );

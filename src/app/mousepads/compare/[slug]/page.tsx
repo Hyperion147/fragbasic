@@ -58,7 +58,7 @@ export default async function ComparePage({ params }: PageProps) {
     <main className="min-h-screen bg-background text-foreground">
       <CompareHero left={left} right={right} />
 
-      <div className="mx-auto max-w-7xl space-y-6 px-4 py-8 md:px-8 md:py-10">
+      <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10 space-y-6">
         <ProductFaceoff left={left} right={right} />
         <CompareFeelRadar left={left} right={right} />
         <SpeedControlPosition left={left} right={right} />

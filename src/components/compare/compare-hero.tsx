@@ -18,8 +18,9 @@ export function CompareHero({ left, right }: Props) {
     const verdictRows = getCompareVerdictRows(left, right);
 
     return (
-        <section className="border-b border-border bg-[radial-gradient(circle_at_top_left,oklch(0.28_0.05_215/0.45),transparent_32%),linear-gradient(180deg,oklch(0.23_0.02_224),oklch(0.21_0.02_224))]">
-            <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 md:grid-cols-[1.2fr_0.8fr] md:px-8 md:py-20">
+        <section className="border-b border-border bg-background">
+            <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+              <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-[1.2fr_0.8fr]">
                 <div className="space-y-6">
                     <div className="flex flex-wrap gap-2">
                         <Badge>Mousepad comparison</Badge>
@@ -69,6 +70,7 @@ export function CompareHero({ left, right }: Props) {
                         ))}
                     </div>
                 </div>
+              </div>
             </div>
         </section>
     );

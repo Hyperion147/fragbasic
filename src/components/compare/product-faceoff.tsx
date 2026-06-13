@@ -36,7 +36,7 @@ function PadCard({ pad }: { pad: Mousepad }) {
   const title = `${pad.brand} ${pad.name}`
 
   return (
-    <Card className="overflow-hidden border-border bg-card/95 shadow-lg shadow-black/10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.15),transparent_45%)]">
+    <Card className="overflow-hidden border-border bg-card/95 shadow-lg shadow-black/10">
       <div
         className="relative aspect-video border-b border-border"
         style={{

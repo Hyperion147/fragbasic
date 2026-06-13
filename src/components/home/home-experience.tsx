@@ -61,28 +61,24 @@ const gearCategories = [
         countLabel: "Tracked products",
         href: "/mousepads",
         icon: Target,
-        tone: "from-zinc-950 via-zinc-900 to-neutral-800",
     },
     {
         title: "Mice",
         countLabel: "Coming soon",
         href: "/mousepads",
         icon: Mouse,
-        tone: "from-neutral-950 via-zinc-900 to-stone-800",
     },
     {
         title: "Keyboards",
         countLabel: "Coming soon",
         href: "/mousepads",
         icon: Keyboard,
-        tone: "from-zinc-950 via-neutral-900 to-slate-800",
     },
     {
         title: "Monitors",
         countLabel: "Coming soon",
         href: "/mousepads",
         icon: Monitor,
-        tone: "from-neutral-950 via-stone-950 to-zinc-800",
     },
 ] as const;
 
@@ -171,7 +167,7 @@ export function HomeExperience({
         <main className="min-h-screen bg-background text-foreground">
             <Hero mousepadCount={mousepadCount} brandCount={brandCount} />
 
-            <div className="w-full space-y-4 px-4 py-4 md:px-6 lg:px-8">
+            <div className="w-full space-y-12 px-4 py-12 md:space-y-16 md:px-6 md:py-16 lg:px-8 xl:px-10">
                 <RevealSection delay={0.08}>
                     <GearGrid mousepadCount={mousepadCount} />
                 </RevealSection>
@@ -272,7 +268,7 @@ function Hero({
                         Competitive gaming gear database
                     </Badge>
 
-                    <h1 className="mt-6 max-w-3xl text-5xl font-semibold leading-[1.05] tracking-normal text-foreground md:text-7xl">
+                    <h1 className="mt-6 max-w-3xl text-5xl font-semibold leading-[1.05] tracking-tighter text-foreground md:text-7xl">
                         Find the gear that matches how you play.
                     </h1>
 
@@ -283,7 +279,7 @@ function Hero({
 
                     <div className="mt-8 flex flex-wrap gap-3">
                         <Button size="lg" asChild>
-                            <Link href="/compare/universal">
+                            <Link href="/mousepads/compare/universal">
                                 Compare Gear
                                 <ArrowRight className="size-4" />
                             </Link>
@@ -340,7 +336,7 @@ function Metric({
 
 function GearGrid({ mousepadCount }: { mousepadCount: number }) {
     return (
-        <section className="grid gap-3 md:grid-cols-4">
+        <section className="grid gap-4 md:gap-6 md:grid-cols-4">
             {gearCategories.map((item) => {
                 const Icon = item.icon;
                 const countLabel =
@@ -352,21 +348,17 @@ function GearGrid({ mousepadCount }: { mousepadCount: number }) {
                     <div key={item.title}>
                         <Link
                             href={item.href}
-                            className={cn(
-                                "group relative block min-h-56 overflow-hidden rounded-lg border border-border bg-gradient-to-br p-6",
-                                item.tone,
-                            )}
+                            className="group relative block min-h-56 overflow-hidden rounded-2xl border border-border bg-card p-7 md:p-8"
                         >
-                            <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(circle_at_20%_20%,white_1px,transparent_1px)] [background-size:6px_6px]" />
                             <Icon className="absolute right-6 bottom-6 size-28 text-white/10 transition-transform duration-300 group-hover:scale-110" />
                             <div className="relative">
-                                <h2 className="text-2xl font-semibold tracking-normal">
+                                <h2 className="text-2xl font-semibold tracking-tight">
                                     {item.title}
                                 </h2>
-                                <p className="mt-2 text-sm text-muted-foreground">
+                                <p className="mt-3 text-sm text-muted-foreground">
                                     {countLabel}
                                 </p>
-                                <p className="mt-6 inline-flex items-center gap-2 text-sm">
+                                <p className="mt-8 inline-flex items-center gap-2 text-sm font-medium">
                                     Explore
                                     <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                                 </p>
@@ -385,25 +377,25 @@ function PopularComparisons({
     comparisons: ComparisonPreview[];
 }) {
     return (
-        <section className="rounded-lg border border-border bg-card/40 p-4">
+        <section className="rounded-2xl border border-border bg-card/40 p-6 md:p-8">
             <SectionHeader
                 title="Popular Comparisons"
-                href="/compare"
+                href="/mousepads/compare"
                 action="View all comparisons"
             />
-            <div className="mt-3 grid gap-3 md:grid-cols-3">
+            <div className="mt-6 grid gap-4 md:gap-6 md:grid-cols-3">
                 {comparisons.map((comparison) => (
                     <Link
                         key={comparison.slug}
-                        href={`/compare/${comparison.slug}`}
-                        className="group grid min-h-36 grid-cols-[1fr_auto_1fr] overflow-hidden rounded-lg border border-border bg-background/65 transition-colors hover:border-primary/55"
+                        href={`/mousepads/compare/${comparison.slug}`}
+                        className="group grid min-h-[148px] grid-cols-[1fr_auto_1fr] overflow-hidden rounded-xl border border-border bg-background/70 transition-colors hover:border-primary/55"
                     >
                         <CompareSide
                             name={comparison.leftName}
                             color={comparison.leftColor}
                         />
-                        <div className="z-10 flex items-center justify-center px-3">
-                            <span className="rounded-full border border-border bg-background px-3 py-2 text-xs font-semibold">
+                        <div className="z-10 flex items-center justify-center px-4">
+                            <span className="rounded-full border border-border bg-background px-4 py-2 text-xs font-semibold tracking-[0.5px]">
                                 VS
                             </span>
                         </div>
@@ -412,12 +404,12 @@ function PopularComparisons({
                             color={comparison.rightColor}
                             align="right"
                         />
-                        <div className="col-span-3 flex gap-2 px-4 pb-3">
+                        <div className="col-span-3 flex gap-2 px-5 pb-5">
                             {comparison.tags.map((tag) => (
                                 <Badge
                                     key={tag}
                                     variant="outline"
-                                    className="rounded-md text-[10px]"
+                                    className="rounded-md text-[10px] tracking-[0.5px]"
                                 >
                                     {tag}
                                 </Badge>
@@ -442,7 +434,7 @@ function CompareSide({
     return (
         <div
             className={cn(
-                "relative flex items-center p-5 text-base font-semibold",
+                "relative flex items-center p-6 text-base font-semibold",
                 align === "right" ? "justify-end text-right" : "",
             )}
         >
@@ -471,19 +463,19 @@ function FinderPanel({
     onPreferenceChange: (preference: (typeof preferences)[number]) => void;
 }) {
     return (
-        <section className="grid gap-5 rounded-lg border border-border bg-card/40 p-5 lg:grid-cols-[1.05fr_1fr_1fr_1.2fr]">
+        <section className="grid gap-6 rounded-2xl border border-border bg-card/40 p-6 md:p-8 lg:grid-cols-[1.05fr_1fr_1fr_1.2fr]">
             <div className="flex justify-between flex-col">
                 <div>
-                    <h2 className="text-3xl font-semibold tracking-normal">
+                    <h2 className="text-3xl font-semibold tracking-tight">
                         Not sure what to choose?
                     </h2>
-                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    <p className="mt-3 text-base leading-relaxed text-muted-foreground">
                         Answer a few quick questions and get mousepads that fit
                         your playstyle.
                     </p>
                 </div>
-                <Button asChild className="w-fit">
-                    <Link href="/compare/universal">
+                <Button asChild className="w-fit mt-6">
+                    <Link href="/mousepads/compare/universal">
                         Find your mousepad
                         <ArrowRight className="size-4" />
                     </Link>
@@ -515,18 +507,18 @@ function FinderPanel({
             </FinderStep>
 
             <FinderStep label="Step 3">
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-3 md:gap-4">
                     {results.map((result, index) => (
                         <motion.div
                             key={result}
                             layout
-                            className="overflow-hidden rounded-lg border border-border bg-background/75"
+                            className="overflow-hidden rounded-xl border border-border bg-background/75"
                         >
                             <Link
                                 href={getFinderResultHref(result)}
-                                className="block p-2"
+                                className="block p-3"
                             >
-                                <div className="relative h-14 overflow-hidden">
+                                <div className="relative h-16 overflow-hidden rounded-lg">
                                     {finderResultImages[result] ? (
                                         <Image
                                             src={finderResultImages[result]}
@@ -536,15 +528,12 @@ function FinderPanel({
                                             sizes="(max-width: 768px) 30vw, 96px"
                                             className="object-cover opacity-90"
                                         />
-                                    ) : (
-                                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.08),transparent_45%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.2))]" />
-                                    )}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+                                    ) : null}
                                 </div>
-                                <p className="mt-2 truncate text-xs font-medium">
+                                <p className="mt-3 truncate text-sm font-medium">
                                     {result}
                                 </p>
-                                <p className="text-[11px] text-emerald-400">
+                                <p className="text-[11px] text-emerald-400 mt-0.5">
                                     {95 - index * 3}% match
                                 </p>
                             </Link>
@@ -567,14 +556,16 @@ function FinderStep({
 }) {
     return (
         <div className="relative">
-            <Badge variant="outline" className="rounded-md text-[10px]">
+            <Badge variant="outline" className="rounded-md text-[10px] tracking-[0.5px]">
                 {label}
             </Badge>
             <ChevronsRight className="absolute top-20 right-20" />
-            <h3 className="mt-4 text-base font-semibold tracking-normal">
-                {title}
-            </h3>
-            <div className="mt-4 flex flex-wrap gap-4">{children}</div>
+            {title && (
+                <h3 className="mt-5 text-base font-semibold tracking-tight">
+                    {title}
+                </h3>
+            )}
+            <div className="mt-5 flex flex-wrap gap-3">{children}</div>
         </div>
     );
 }
@@ -598,7 +589,7 @@ function FinderButton({
         >
             <span
                 className={cn(
-                    "flex size-14 items-center justify-center rounded-full border bg-background/70 transition-all duration-200",
+                    "flex size-16 items-center justify-center rounded-full border bg-background/70 transition-all duration-200",
                     active
                         ? "border-primary/70 bg-primary/10 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]"
                         : "border-border text-muted-foreground hover:border-foreground/25 hover:bg-background",
@@ -607,10 +598,10 @@ function FinderButton({
                 <Image
                     src={iconSrc}
                     alt=""
-                    width={40}
-                    height={40}
+                    width={44}
+                    height={44}
                     className={cn(
-                        "h-7 w-7 object-contain opacity-80 transition-opacity duration-200 invert",
+                        "h-8 w-8 object-contain opacity-80 transition-opacity duration-200 invert",
                         active ? "opacity-100" : "group-hover:opacity-95",
                     )}
                 />
@@ -694,7 +685,7 @@ function BrandsPanel({ brands }: { brands: BrandPreview[] }) {
             slug: brand.slug,
             name: brand.name,
             countLabel: `${brand.count} products`,
-            href: `/brands/${brand.slug}`,
+            href: `/mousepads/brands/${brand.slug}`,
             logoSrc:
                 brandLogoMap[brand.slug as keyof typeof brandLogoMap] ?? "",
             logoAlt: `${brand.name} logo`,
@@ -703,21 +694,21 @@ function BrandsPanel({ brands }: { brands: BrandPreview[] }) {
     ].filter((brand) => brand.logoSrc);
 
     return (
-        <section className="relative overflow-hidden rounded-lg border border-border bg-card/40 p-5">
+        <section className="relative overflow-hidden rounded-2xl border border-border bg-card/40 p-6 md:p-8">
             <div className="relative">
                 <SectionHeader
                     title="All Brands"
-                    href="/brands/artisan"
+                    href="/mousepads/brands/artisan"
                     action="View brands"
                 />
-                <div className="mt-5 grid gap-2 md:grid-cols-3 xl:grid-cols-6">
+                <div className="mt-6 grid gap-4 md:gap-5 md:grid-cols-3 xl:grid-cols-6">
                     {brandEntries.map((brand) => (
                         <Link
                             key={brand.slug}
                             href={brand.href}
-                            className="group px-3 py-4 text-center"
+                            className="group px-4 py-5 text-center"
                         >
-                            <div className="relative flex h-14 items-center justify-center">
+                            <div className="relative flex h-16 items-center justify-center">
                                 <Image
                                     src={brand.logoSrc}
                                     alt={brand.logoAlt}
@@ -727,7 +718,7 @@ function BrandsPanel({ brands }: { brands: BrandPreview[] }) {
                                     style={{ width: "auto", height: "auto" }}
                                 />
                             </div>
-                            <p className="mt-8 text-xs text-muted-foreground transition-colors group-hover:text-foreground/72">
+                            <p className="mt-6 text-sm text-muted-foreground transition-colors group-hover:text-foreground/72">
                                 {brand.countLabel}
                             </p>
                         </Link>
@@ -740,18 +731,18 @@ function BrandsPanel({ brands }: { brands: BrandPreview[] }) {
 
 function SpectrumPanel() {
     return (
-        <section className="overflow-hidden rounded-lg border border-border bg-card/40 p-5">
+        <section className="overflow-hidden rounded-2xl border border-border bg-card/40 p-6 md:p-8">
             <SectionHeader
                 title="The Speed-Control Spectrum"
                 href="/mousepads"
                 action="Explore all mousepads"
             />
 
-            <div className="mt-7 overflow-x-auto pb-2">
-                <div className="relative min-w-[980px] px-3 pt-3 pb-3">
-                    <div className="absolute top-[19px] right-3 left-3 h-0.5 rounded-full bg-gradient-to-r from-lime-300 via-cyan-300 via-45% via-blue-400 via-65% via-violet-500 via-78% via-pink-500 to-orange-400 shadow-[0_0_18px_rgba(99,224,173,0.45)]" />
+            <div className="mt-8 overflow-x-auto pb-2">
+                <div className="relative min-w-[980px] px-4 pt-4 pb-4">
+                    <div className="absolute top-[22px] right-4 left-4 h-0.5 rounded-full bg-gradient-to-r from-lime-300 via-cyan-300 via-45% via-blue-400 via-65% via-violet-500 via-78% via-pink-500 to-orange-400 shadow-[0_0_18px_rgba(99,224,173,0.45)]" />
 
-                    <div className="flex w-full items-start gap-5 w-full">
+                    <div className="flex w-full items-start gap-6 w-full">
                         <div className="flex justify-between w-full">
                             {visualSpectrumPads.map((pad) => (
                                 <div
@@ -762,23 +753,23 @@ function SpectrumPanel() {
                                         className="relative z-10 size-4 rounded-full border-2 border-background ring-2 ring-white/35 shadow-[0_0_16px_rgba(255,255,255,0.22)]"
                                         style={{ backgroundColor: pad.color }}
                                     />
-                                    <span className="mt-5 whitespace-pre-line text-center text-sm font-medium leading-5 text-foreground/88">
+                                    <span className="mt-6 whitespace-pre-line text-center text-sm font-medium leading-5 text-foreground/88">
                                         {pad.name}
                                     </span>
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <div className="flex w-full items-end justify-between">
+                    <div className="flex w-full items-end justify-between pt-2">
                         <div className="text-left">
-                            <p className="text-sm font-bold uppercase tracking-[0.14em]">
+                            <p className="text-sm font-semibold uppercase tracking-[0.16em]">
                                 Control
                             </p>
-                            <p className="mt-1 text-xs text-muted-foreground">
+                            <p className="mt-1.5 text-sm text-muted-foreground">
                                 More stopping power
                             </p>
                         </div>
-                        <div className="flex justify-center pt-3">
+                        <div className="flex justify-center">
                             <Button variant="outline" asChild>
                                 <Link href="/mousepads">
                                     Show all mousepads
@@ -786,10 +777,10 @@ function SpectrumPanel() {
                             </Button>
                         </div>
                         <div className="text-right">
-                            <p className="text-sm font-bold uppercase tracking-[0.14em]">
+                            <p className="text-sm font-semibold uppercase tracking-[0.16em]">
                                 Speed
                             </p>
-                            <p className="mt-1 text-xs text-muted-foreground">
+                            <p className="mt-1.5 text-sm text-muted-foreground">
                                 More glide
                             </p>
                         </div>
@@ -802,8 +793,8 @@ function SpectrumPanel() {
 
 function WhyPanel() {
     return (
-        <section className="grid overflow-hidden rounded-lg border border-border bg-card/40 md:grid-cols-[0.7fr_1fr]">
-            <div className="relative min-h-106 bg-gradient-to-br from-zinc-900 via-neutral-950 to-stone-900">
+        <section className="grid overflow-hidden rounded-2xl border border-border bg-card/40 md:grid-cols-[0.68fr_1fr]">
+            <div className="relative min-h-[420px] bg-card">
                 <Image
                     src="/why-this-exist.png"
                     alt="why-this-exist"
@@ -811,19 +802,19 @@ function WhyPanel() {
                     sizes="(max-width: 768px) 100vw, 45vw"
                 />
             </div>
-            <div className="p-8 justify-center h-full flex flex-col">
-                <p className="text-sm uppercase tracking-[0.18em] text-muted-foreground">
+            <div className="p-8 md:p-10 flex flex-col justify-center h-full">
+                <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">
                     Why this exists
                 </p>
-                <h2 className="mt-2 text-5xl font-semibold tracking-normal">
+                <h2 className="mt-3 text-5xl font-semibold tracking-tight">
                     Real data. Real experience.
                 </h2>
-                <p className="mt-4 max-w-xl text-2xl leading-8 text-muted-foreground">
+                <p className="mt-5 max-w-xl text-2xl leading-relaxed text-muted-foreground">
                     I have spent years testing gear, reading forums, and
                     learning what actually matters in game. This site is built
                     to make that knowledge easy to find and actually useful.
                 </p>
-                <div className="mt-6 flex flex-wrap gap-4 text-sm text-muted-foreground">
+                <div className="mt-8 flex flex-wrap gap-5 text-sm text-muted-foreground">
                     <Metric icon={Sparkles} label="Tested by me" />
                     <Metric icon={Gamepad2} label="Community insights" />
                     <Metric icon={SlidersHorizontal} label="Always updating" />
@@ -844,8 +835,8 @@ function SectionHeader({
 }) {
     return (
         <div className="flex items-center justify-between gap-4">
-            <h2 className="text-2xl font-semibold tracking-normal">{title}</h2>
-            <Button variant="ghost" size="sm" asChild>
+            <h2 className="text-3xl font-semibold tracking-tight">{title}</h2>
+            <Button variant="ghost" size="sm" asChild className="text-sm">
                 <Link href={href}>
                     {action}
                     <ArrowRight className="size-4" />

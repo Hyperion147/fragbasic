@@ -8,6 +8,7 @@ import {
     getMousepadFullName,
 } from "@/lib/mousepads";
 import { getPadUseCaseSummary } from "@/lib/compare";
+import { formatSize } from "@/lib/utils/format";
 import type { Mousepad } from "@/types/mousepad";
 
 type Props = {
@@ -203,16 +204,3 @@ function DetailPill({ label, value }: { label: string; value: string }) {
     );
 }
 
-function formatSize(size?: {
-    label: string;
-    width: number;
-    height: number;
-    thickness?: number;
-    unit: "mm";
-}) {
-    if (!size) {
-        return "Unknown";
-    }
-
-    return `${size.label} - ${size.width} x ${size.height}${size.unit}`;
-}

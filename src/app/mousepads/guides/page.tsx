@@ -21,8 +21,8 @@ const guidePreviews = [
 export default function GuidesPage() {
     return (
         <main className="min-h-screen bg-background text-foreground">
-            <section className="border-b border-border bg-[radial-gradient(circle_at_top_left,oklch(0.28_0.05_215/0.38),transparent_35%),linear-gradient(180deg,oklch(0.22_0.02_224),oklch(0.21_0.02_224))]">
-                <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
+            <section className="border-b border-border bg-background">
+                <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
                     <div className="max-w-4xl">
                         <div className="flex flex-wrap gap-2">
                             <Badge className="text-black">Guides</Badge>
@@ -45,14 +45,14 @@ export default function GuidesPage() {
                                 <Link href="/mousepads">Browse mousepads</Link>
                             </Button>
                             <Button variant="outline" asChild>
-                                <Link href="/compare">Read comparisons</Link>
+                                <Link href="/mousepads/compare">Read comparisons</Link>
                             </Button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-10">
+            <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
                 <div className="grid gap-4 md:grid-cols-3">
                     {guidePreviews.map((guide) => (
                         <article

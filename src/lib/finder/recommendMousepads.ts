@@ -7,7 +7,6 @@ import type {
   FinderInput,
   FinderResult,
   MatchLabel,
-  PreviousPadFeel,
   TexturePreference,
 } from "@/lib/finder/types";
 import { getMousepadFullName } from "@/lib/mousepads";
@@ -21,6 +20,8 @@ const scoringWeights = {
   // Game overlap catches explicit product recommendations in the database.
   gameFit: 16,
   // Sensitivity nudges speed/control without overriding game intent.
+  // Updated per web research (see mapSensitivityBandToFinderValue and gameProfiles for sources: Gamingsmart, RJN, Aimlabs, prosettings, guides).
+  // Low sens (arm, high cm) → speed bias; high sens (wrist, low cm) → control bias; medium balanced.
   sensitivityFit: 12,
   // Texture is important, but usually secondary to speed/control.
   textureFit: 10,
@@ -91,29 +92,22 @@ function applyPreferenceAdjustments(
   input: FinderInput
 ): TargetProfile {
   const desiredAdjustment = getDesiredFeelAdjustment(input.desiredFeel);
-  const previousAdjustment = getPreviousFeelAdjustment(
-    input.previousPadFeel ?? "unknown",
-    input.desiredFeel
-  );
   const sensitivityAdjustment = getSensitivityAdjustment(input.sensitivity);
 
   return {
     speed: clampRating(
       target.speed +
         desiredAdjustment.speed +
-        previousAdjustment.speed +
         sensitivityAdjustment.speed
     ),
     control: clampRating(
       target.control +
         desiredAdjustment.control +
-        previousAdjustment.control +
         sensitivityAdjustment.control
     ),
     stoppingPower: clampRating(
       target.stoppingPower +
         desiredAdjustment.stoppingPower +
-        previousAdjustment.stoppingPower +
         sensitivityAdjustment.stoppingPower
     ),
   };
@@ -163,6 +157,12 @@ function scoreSensitivityFit(
   mousepad: Mousepad,
   sensitivity: FinderInput["sensitivity"]
 ) {
+  // Sensitivity scoring bias, updated per web research (Gamingsmart, RJN, Aimlabs/Voltaic cm/360 charts,
+  // prosettings, various FPS sens guides):
+  // Low sens players (high cm/360, arm aiming): need faster glide for large rotations/flicks + micro for precision.
+  // High sens players (low cm/360, wrist): need more control/stopping for small precise movements.
+  // Medium: balanced around common 35-45cm "sweet spot" (many sources recommend as versatile starting point).
+  // This is a secondary nudge (weight 12) on top of core feelFit + gameProfile (which already bias per tac vs tracking).
   if (sensitivity === "low") {
     return (
       (normalizeRating(mousepad.feel.speed) * 0.65 +
@@ -189,21 +189,12 @@ function scoreSensitivityFit(
 
 function scoreTextureFit(mousepad: Mousepad, input: FinderInput) {
   const preference = input.texturePreference ?? "no-preference";
-  const previousFeel = input.previousPadFeel ?? "unknown";
   const preferenceScore = getTexturePreferenceScore(
     mousepad.texture,
     preference
   );
-  const previousFeelScore = getPreviousTextureScore(
-    mousepad.texture,
-    previousFeel
-  );
 
-  return (
-    ((preferenceScore * 0.65 + previousFeelScore * 0.35) /
-      10) *
-    scoringWeights.textureFit
-  );
+  return (preferenceScore / 10) * scoringWeights.textureFit;
 }
 
 function scoreEnvironmentFit(mousepad: Mousepad, humidityConcern?: boolean) {
@@ -294,7 +285,7 @@ function getRecommendationTradeoffs(
   }
 
   if (
-    (input.previousPadFeel === "rough" || input.texturePreference === "smooth") &&
+    input.texturePreference === "smooth" &&
     (mousepad.texture.feel === "textured" || mousepad.texture.feel === "rough")
   ) {
     tradeoffs.push("Texture may feel more abrasive than preferred.");
@@ -333,30 +324,6 @@ function getDesiredFeelAdjustment(desiredFeel: DesiredFeel): TargetProfile {
   }
 }
 
-function getPreviousFeelAdjustment(
-  previousPadFeel: PreviousPadFeel,
-  desiredFeel: DesiredFeel
-): TargetProfile {
-  switch (previousPadFeel) {
-    case "muddy":
-      return desiredFeel === "more-control"
-        ? { speed: -0.2, control: 0.4, stoppingPower: 0.4 }
-        : { speed: 0.7, control: -0.4, stoppingPower: -0.3 };
-    case "too-fast":
-      return { speed: -1, control: 0.9, stoppingPower: 0.9 };
-    case "fast":
-      return { speed: 0.4, control: -0.2, stoppingPower: -0.2 };
-    case "controlled":
-      return { speed: -0.2, control: 0.3, stoppingPower: 0.3 };
-    case "balanced":
-    case "rough":
-    case "smooth":
-    case "unknown":
-    default:
-      return { speed: 0, control: 0, stoppingPower: 0 };
-  }
-}
-
 function getSensitivityAdjustment(
   sensitivity: FinderInput["sensitivity"]
 ): TargetProfile {
@@ -390,27 +357,6 @@ function getTexturePreferenceScore(
   }
 
   return texture.feel === "textured" || texture.feel === "rough" ? 9 : 5.5;
-}
-
-function getPreviousTextureScore(
-  texture: MousepadTexture,
-  previousPadFeel: PreviousPadFeel
-) {
-  if (previousPadFeel === "rough") {
-    return texture.feel === "smooth" || texture.feel === "slightly-textured"
-      ? 9
-      : 4;
-  }
-
-  if (previousPadFeel === "smooth") {
-    return texture.feel === "smooth"
-      ? 9
-      : texture.feel === "slightly-textured"
-        ? 7
-        : 4;
-  }
-
-  return 7.5;
 }
 
 function getEnvironmentConsistency(mousepad: Mousepad) {
