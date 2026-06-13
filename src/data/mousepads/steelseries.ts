@@ -101,7 +101,7 @@ export const steelseriesMousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/steelseries/qck-heavy-black.webp",
+            main: "/mousepads/steelseries/qck-heavy.webp",
         },
 
         personal: {
@@ -277,7 +277,7 @@ export const steelseriesMousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/steelseries/qck-performance-control-black.webp",
+            main: "/mousepads/steelseries/qck-control.webp",
         },
 
         personal: {
@@ -458,7 +458,7 @@ export const steelseriesMousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/steelseries/qck-performance-balance-black.webp",
+            main: "/mousepads/steelseries/qck-balance.png",
         },
 
         personal: {
@@ -636,7 +636,7 @@ export const steelseriesMousepads: Mousepad[] = [
         },
 
         images: {
-            main: "/mousepads/steelseries/qck-performance-speed-black.webp",
+            main: "/mousepads/steelseries/qck-speed.png",
         },
 
         personal: {
