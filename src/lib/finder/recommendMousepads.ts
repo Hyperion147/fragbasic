@@ -36,9 +36,14 @@ type TargetProfile = {
   stoppingPower: number;
 };
 
+type RecommendMousepadsOptions = {
+  limit?: number;
+};
+
 export function recommendMousepads(
   input: FinderInput,
-  mousepads: Mousepad[]
+  mousepads: Mousepad[],
+  options: RecommendMousepadsOptions = {}
 ): FinderResult[] {
   const gameProfile = getCombinedGameProfile(input.games);
   const target = applyPreferenceAdjustments(
@@ -78,7 +83,7 @@ export function recommendMousepads(
         getMousepadFullName(right.mousepad)
       );
     })
-    .slice(0, DEFAULT_RESULT_LIMIT);
+    .slice(0, options.limit ?? DEFAULT_RESULT_LIMIT);
 }
 
 function applyPreferenceAdjustments(

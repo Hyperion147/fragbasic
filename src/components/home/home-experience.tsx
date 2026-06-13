@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import {
     ArrowRight,
     CheckCircle2,
@@ -172,20 +172,61 @@ export function HomeExperience({
             <Hero mousepadCount={mousepadCount} brandCount={brandCount} />
 
             <div className="w-full space-y-4 px-4 py-4 md:px-6 lg:px-8">
-                <GearGrid mousepadCount={mousepadCount} />
-                <PopularComparisons comparisons={comparisons} />
-                <FinderPanel
-                    activeGame={activeGame}
-                    activePreference={activePreference}
-                    results={finderResults}
-                    onGameChange={setActiveGame}
-                    onPreferenceChange={setActivePreference}
-                />
-                <BrandsPanel brands={brands} />
-                <SpectrumPanel />
-                <WhyPanel />
+                <RevealSection delay={0.08}>
+                    <GearGrid mousepadCount={mousepadCount} />
+                </RevealSection>
+                <RevealSection delay={0.14}>
+                    <PopularComparisons comparisons={comparisons} />
+                </RevealSection>
+                <RevealSection delay={0.2}>
+                    <FinderPanel
+                        activeGame={activeGame}
+                        activePreference={activePreference}
+                        results={finderResults}
+                        onGameChange={setActiveGame}
+                        onPreferenceChange={setActivePreference}
+                    />
+                </RevealSection>
+                <RevealSection delay={0.26}>
+                    <BrandsPanel brands={brands} />
+                </RevealSection>
+                <RevealSection delay={0.32}>
+                    <SpectrumPanel />
+                </RevealSection>
+                <RevealSection delay={0.38}>
+                    <WhyPanel />
+                </RevealSection>
             </div>
         </main>
+    );
+}
+
+function RevealSection({
+    children,
+    delay = 0,
+}: {
+    children: React.ReactNode;
+    delay?: number;
+}) {
+    const reduceMotion = useReducedMotion();
+
+    if (reduceMotion) {
+        return children;
+    }
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: -12, filter: "blur(14px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{
+                duration: 1,
+                delay,
+                ease: [0.22, 1, 0.36, 1],
+            }}
+        >
+            {children}
+        </motion.div>
     );
 }
 
@@ -196,8 +237,31 @@ function Hero({
     mousepadCount: number;
     brandCount: number;
 }) {
+    const reduceMotion = useReducedMotion();
+
     return (
-        <section className="relative overflow-hidden border-b border-border bg-background">
+        <motion.section
+            className="relative overflow-hidden border-b border-border bg-background"
+            initial={
+                reduceMotion
+                    ? false
+                    : { opacity: 0, y: -12, filter: "blur(14px)" }
+            }
+            whileInView={
+                reduceMotion
+                    ? undefined
+                    : { opacity: 1, y: 0, filter: "blur(0px)" }
+            }
+            viewport={reduceMotion ? undefined : { once: false, amount: 0.35 }}
+            transition={
+                reduceMotion
+                    ? undefined
+                    : {
+                          duration: 0.65,
+                          ease: [0.22, 1, 0.36, 1],
+                      }
+            }
+        >
             <div className="relative z-10 grid min-h-130 w-full gap-8 md:grid-cols-[0.92fr_1.08fr]">
                 <div className="flex flex-col justify-center ml-20 py-24 md:py-40 px-4 md:px-6 lg:px-8">
                     <Badge
@@ -251,10 +315,11 @@ function Hero({
                         alt="hero-bg"
                         width="1080"
                         height="1920"
+                        loading="eager"
                     />
                 </div>
             </div>
-        </section>
+        </motion.section>
     );
 }
 
@@ -468,6 +533,7 @@ function FinderPanel({
                                             alt=""
                                             fill
                                             quality={35}
+                                            sizes="(max-width: 768px) 30vw, 96px"
                                             className="object-cover opacity-90"
                                         />
                                     ) : (
@@ -657,7 +723,8 @@ function BrandsPanel({ brands }: { brands: BrandPreview[] }) {
                                     alt={brand.logoAlt}
                                     width={260}
                                     height={88}
-                                    className="w-auto object-contain brightness-[1.08] contrast-[1.02] invert"
+                                    className="h-auto w-auto object-contain brightness-[1.08] contrast-[1.02] invert"
+                                    style={{ width: "auto", height: "auto" }}
                                 />
                             </div>
                             <p className="mt-8 text-xs text-muted-foreground transition-colors group-hover:text-foreground/72">
@@ -737,7 +804,12 @@ function WhyPanel() {
     return (
         <section className="grid overflow-hidden rounded-lg border border-border bg-card/40 md:grid-cols-[0.7fr_1fr]">
             <div className="relative min-h-106 bg-gradient-to-br from-zinc-900 via-neutral-950 to-stone-900">
-                <Image src="/why-this-exist.png" alt="why-this-exist" fill />
+                <Image
+                    src="/why-this-exist.png"
+                    alt="why-this-exist"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 45vw"
+                />
             </div>
             <div className="p-8 justify-center h-full flex flex-col">
                 <p className="text-sm uppercase tracking-[0.18em] text-muted-foreground">
