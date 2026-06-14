@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Copy, Scale, ShieldCheck, SlidersHorizontal } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -38,22 +38,27 @@ const MAX_SELECTED = 3;
 export function UniversalCompare({ allMousepads }: Props) {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const padsParam = searchParams.get("pads");
+
+  const urlSelectedSlugs = useMemo(() => {
+    if (!padsParam) {
+      return [];
+    }
+
+    return padsParam
+      .split(",")
+      .map((slug) => slug.trim())
+      .filter(Boolean)
+      .slice(0, MAX_SELECTED)
+      .filter((slug) => getMousepadBySlug(slug));
+  }, [padsParam]);
 
   const [query, setQuery] = useState("");
-  const [selectedSlugs, setSelectedSlugs] = useState<string[]>(() => {
-    // Initialize from URL if present (enables shareable links)
-    const padsParam = searchParams.get("pads");
-    if (padsParam) {
-      const fromUrl = padsParam
-        .split(",")
-        .map((s) => s.trim())
-        .filter(Boolean)
-        .slice(0, MAX_SELECTED)
-        .filter((slug) => getMousepadBySlug(slug));
-      if (fromUrl.length > 0) return fromUrl;
-    }
-    return DEFAULT_SELECTED_SLUGS.filter((slug) => getMousepadBySlug(slug));
-  });
+  const [selectedSlugs, setSelectedSlugs] = useState<string[]>(
+    urlSelectedSlugs.length > 0
+      ? urlSelectedSlugs
+      : DEFAULT_SELECTED_SLUGS.filter((slug) => getMousepadBySlug(slug))
+  );
 
   const selectedMousepads = useMemo(
     () =>
@@ -65,35 +70,45 @@ export function UniversalCompare({ allMousepads }: Props) {
 
   const canCompare = selectedMousepads.length >= 2;
 
-  // Keep URL in sync so the current selection is shareable
-  const updateUrl = (slugs: string[]) => {
+  useEffect(() => {
+    if (urlSelectedSlugs.join(",") === selectedSlugs.join(",")) {
+      return;
+    }
+
     const params = new URLSearchParams(searchParams.toString());
-    if (slugs.length > 0) {
-      params.set("pads", slugs.join(","));
+
+    if (selectedSlugs.length > 0) {
+      params.set("pads", selectedSlugs.join(","));
     } else {
       params.delete("pads");
     }
-    router.replace(`?${params.toString()}`, { scroll: false });
-  };
+
+    const nextQuery = params.toString();
+    router.replace(nextQuery ? `?${nextQuery}` : "?", { scroll: false });
+  }, [router, searchParams, selectedSlugs, urlSelectedSlugs]);
+
+  useEffect(() => {
+    if (urlSelectedSlugs.length === 0) {
+      return;
+    }
+
+    if (urlSelectedSlugs.join(",") !== selectedSlugs.join(",")) {
+      setSelectedSlugs(urlSelectedSlugs);
+    }
+  }, [selectedSlugs, urlSelectedSlugs]);
 
   function handleAdd(mousepad: Mousepad) {
     setSelectedSlugs((current) => {
       if (current.includes(mousepad.slug) || current.length >= MAX_SELECTED) {
         return current;
       }
-      const next = [...current, mousepad.slug];
-      updateUrl(next);
-      return next;
+      return [...current, mousepad.slug];
     });
     setQuery("");
   }
 
   function handleRemove(slug: string) {
-    setSelectedSlugs((current) => {
-      const next = current.filter((item) => item !== slug);
-      updateUrl(next);
-      return next;
-    });
+    setSelectedSlugs((current) => current.filter((item) => item !== slug));
   }
 
   // Copy current page URL (now contains the exact selection)
@@ -131,7 +146,6 @@ export function UniversalCompare({ allMousepads }: Props) {
                 variant="ghost"
                 onClick={() => {
                   setSelectedSlugs([]);
-                  updateUrl([]);
                 }}
               >
                 Clear set
@@ -213,7 +227,6 @@ export function UniversalCompare({ allMousepads }: Props) {
                     onClick={() => {
                       const valid = preset.slugs.filter((s) => getMousepadBySlug(s));
                       setSelectedSlugs(valid);
-                      updateUrl(valid);
                     }}
                   >
                     {preset.label}
