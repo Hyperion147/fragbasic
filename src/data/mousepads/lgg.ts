@@ -246,19 +246,19 @@ export const lggMousepads: Mousepad[] = [
         },
 
         feel: {
-            speed: 5.4,
-            control: 8.8,
-            stoppingPower: 8.7,
-            staticFriction: 7.7,
-            dynamicFriction: 5.8,
-            microAdjustments: 8,
+            speed: 5.3,
+            control: 8.5,
+            stoppingPower: 8.4,
+            staticFriction: 7.4,
+            dynamicFriction: 6.0,
+            microAdjustments: 8.4,
             ratingConfidence: "community",
         },
 
         environment: {
-            humidityResistance: 7,
-            sweatResistance: 7,
-            dustHairResistance: 7,
+            humidityResistance: 7.2,
+            sweatResistance: 7.2,
+            dustHairResistance: 6.8,
             washable: true,
             notes: "Official catalog copy positions Saturn Pro as a slow/control pad with controlled glide and easy micro-adjustments. Some community impressions vary depending on humidity, skin contact, and break-in.",
         },

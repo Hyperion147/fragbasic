@@ -815,19 +815,19 @@ export const artisanMousepads: Mousepad[] = [
         },
 
         feel: {
-            speed: 4.4,
-            control: 9.4,
-            stoppingPower: 9.5,
-            staticFriction: 8.4,
-            dynamicFriction: 4.8,
-            microAdjustments: 7.5,
+            speed: 4.1,
+            control: 9.1,
+            stoppingPower: 9.3,
+            staticFriction: 8.6,
+            dynamicFriction: 4.9,
+            microAdjustments: 6.9,
             ratingConfidence: "official",
         },
 
         environment: {
-            humidityResistance: 9,
-            sweatResistance: 8.5,
-            dustHairResistance: 7,
+            humidityResistance: 9.2,
+            sweatResistance: 8.8,
+            dustHairResistance: 6.6,
             washable: true,
             notes: "Official and retailer descriptions position Type-99 as a low-speed, high-stopping-power control pad with fast-drying fabric aimed at reducing humidity and sweat effects.",
         },
