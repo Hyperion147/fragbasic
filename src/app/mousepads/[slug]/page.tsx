@@ -89,6 +89,13 @@ export default async function MousepadPage({ params }: PageProps) {
                 <Badge className="text-black">{formatValue(pad.category)}</Badge>
                 <Badge variant="outline">{formatValue(pad.softness)}</Badge>
                 <Badge variant="outline">{formatValue(pad.surface)}</Badge>
+                {pad.category === "glass" && pad.glassSurfaceFinish ? (
+                  <Badge variant="outline" className="border-sky-300/70 bg-sky-200/10 text-sky-100">
+                    {pad.glassSurfaceFinish === "unknown"
+                      ? "Finish unknown"
+                      : `${formatValue(pad.glassSurfaceFinish)} glass`}
+                  </Badge>
+                ) : null}
                 <Badge variant="outline">{formatValue(pad.base)} base</Badge>
                 <Badge variant="outline">{pad.sources.length} sources</Badge>
               </div>
@@ -123,8 +130,14 @@ export default async function MousepadPage({ params }: PageProps) {
                   value={`${pad.environment.humidityResistance}/10 resistance`}
                 />
                 <HighlightCard
-                  label="Price in India"
-                  value={formatPrice(pad.price.inr)}
+                  label={pad.category === "glass" ? "Glass finish" : "Price in India"}
+                  value={
+                    pad.category === "glass" && pad.glassSurfaceFinish
+                      ? pad.glassSurfaceFinish === "unknown"
+                        ? "Not clearly disclosed yet"
+                        : `${formatValue(pad.glassSurfaceFinish)} surface`
+                      : formatPrice(pad.price.inr)
+                  }
                 />
               </div>
 

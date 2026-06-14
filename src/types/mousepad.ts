@@ -7,6 +7,7 @@ export type MousepadCategory =
     | "glass";
 
 export type MousepadSurface = "cloth" | "hybrid" | "glass" | "hard";
+export type GlassSurfaceFinish = "coated" | "uncoated" | "unknown";
 
 export type MousepadBase =
     | "poron"
@@ -33,6 +34,8 @@ export type MousepadGame =
 
 export type AimStyle =
     | "micro-adjustments"
+    | "precision"
+    | "hybrid"
     | "flicking"
     | "tracking"
     | "switching";
@@ -68,6 +71,13 @@ export interface MousepadFeelRating {
     dynamicFriction: number;
     microAdjustments: number;
     ratingConfidence: RatingConfidence;
+}
+
+export interface MousepadFeelVariant {
+    label: string;
+    softness: Extract<MousepadSoftness, "soft" | "firm">;
+    feel: MousepadFeelRating;
+    notes?: string;
 }
 
 export interface MousepadEnvironment {
@@ -135,6 +145,8 @@ export interface Mousepad {
 
     category: MousepadCategory;
     surface: MousepadSurface;
+    glassSurfaceFinish?: GlassSurfaceFinish;
+    glassSurfaceFinishNotes?: string;
     base: MousepadBase;
     softness: MousepadSoftness;
 
@@ -149,6 +161,7 @@ export interface Mousepad {
     sizes: MousepadSize[];
 
     feel: MousepadFeelRating;
+    feelVariants?: MousepadFeelVariant[];
     environment: MousepadEnvironment;
     texture: MousepadTexture;
 

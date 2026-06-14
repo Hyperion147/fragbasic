@@ -4,10 +4,17 @@ import type { Mousepad } from "@/types/mousepad";
 
 export function MousepadSpecGrid({ pad }: { pad: Mousepad }) {
     const size = pad.sizes[0];
+    const glassFinishValue =
+        pad.category === "glass" && pad.glassSurfaceFinish
+            ? pad.glassSurfaceFinish === "unknown"
+                ? "Unknown"
+                : formatValue(pad.glassSurfaceFinish)
+            : null;
 
     const specs = [
         ["Category", formatValue(pad.category)],
         ["Surface", formatValue(pad.surface)],
+        ...(glassFinishValue ? [["Glass finish", glassFinishValue]] : []),
         ["Base", formatValue(pad.base)],
         ["Softness", formatValue(pad.softness)],
         ["Main size", size ? `${size.width} × ${size.height}mm` : "Unknown"],
@@ -44,6 +51,12 @@ export function MousepadSpecGrid({ pad }: { pad: Mousepad }) {
             {pad.environment.notes ? (
                 <p className="mt-5 text-sm leading-6 text-muted-foreground">
                     {pad.environment.notes}
+                </p>
+            ) : null}
+
+            {pad.category === "glass" && pad.glassSurfaceFinishNotes ? (
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                    Finish note: {pad.glassSurfaceFinishNotes}
                 </p>
             ) : null}
         </Card>

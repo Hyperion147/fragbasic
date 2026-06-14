@@ -11,12 +11,27 @@ import {
 import type { Mousepad } from "@/types/mousepad";
 
 export function MousepadCard({ pad }: { pad: Mousepad }) {
+  const glassFinishLabel =
+    pad.category === "glass" && pad.glassSurfaceFinish
+      ? pad.glassSurfaceFinish === "unknown"
+        ? "Finish unknown"
+        : `${formatMousepadValue(pad.glassSurfaceFinish)} glass`
+      : null;
+
   return (
     <Link href={`/mousepads/${pad.slug}`} className="h-full">
       <Card className="group h-full border-border bg-card/95 p-5 transition-all duration-200 hover:border-primary/45 hover:shadow-lg hover:shadow-black/10">
         <div className="flex flex-wrap gap-2">
           <Badge className="text-black">{formatMousepadValue(pad.category)}</Badge>
           <Badge variant="outline">{formatMousepadValue(pad.surface)}</Badge>
+          {glassFinishLabel ? (
+            <Badge
+              variant="outline"
+              className="border-sky-300/70 bg-sky-200/10 text-sky-100"
+            >
+              {glassFinishLabel}
+            </Badge>
+          ) : null}
           <Badge variant="outline">
             {formatMousepadValue(pad.availability.india)} in India
           </Badge>

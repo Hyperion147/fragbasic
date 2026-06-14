@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card"
+import { getMousepadSpeedControlPosition } from "@/lib/mousepads"
 import type { Mousepad } from "@/types/mousepad"
 
 type Props = {
@@ -15,8 +16,8 @@ const zones = [
 ]
 
 export function SpeedControlPosition({ left, right }: Props) {
-  const leftPosition = getPositionFromSpeed(left.feel.speed)
-  const rightPosition = getPositionFromSpeed(right.feel.speed)
+  const leftPosition = getMousepadSpeedControlPosition(left)
+  const rightPosition = getMousepadSpeedControlPosition(right)
 
   return (
     <Card className="border-border bg-card p-5 md:p-6">
@@ -26,8 +27,8 @@ export function SpeedControlPosition({ left, right }: Props) {
           Where they sit on the glide scale
         </h2>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
-          This makes the speed score easier to interpret by placing each pad on
-          a practical spectrum from mud-control to speed/glass behavior.
+          This uses the same category-plus-speed logic as the rest of FragBasic,
+          so fast cloth pads and true glass pads no longer collapse into the exact same position.
         </p>
       </div>
 
@@ -124,10 +125,6 @@ function PositionSummary({
       </div>
     </div>
   )
-}
-
-function getPositionFromSpeed(speed: number) {
-  return Math.max(0, Math.min(100, speed * 10))
 }
 
 function getZoneLabel(position: number) {

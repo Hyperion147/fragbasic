@@ -6,11 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
+  ALL_FILTER_VALUE,
   type MousepadCategory,
   type MousepadFilters,
 } from "@/lib/mousepads";
 
 type Props = {
+  brands?: Array<{ label: string; value: string }>;
   categories: Array<{ label: string; value: MousepadCategory }>;
   resultCount: number;
   value: MousepadFilters;
@@ -22,6 +24,7 @@ type Props = {
 };
 
 export function MousepadFilters({
+  brands,
   categories,
   resultCount,
   value,
@@ -56,7 +59,7 @@ export function MousepadFilters({
         className={
           searchOnly
             ? "grid gap-6"
-            : "grid gap-6 lg:grid-cols-[1.2fr_1fr] lg:gap-8"
+            : "grid gap-6 lg:grid-cols-[1.2fr_1fr_1fr] lg:gap-8"
         }
       >
         <div className="space-y-3">
@@ -72,6 +75,39 @@ export function MousepadFilters({
             />
           </div>
         </div>
+
+        {!searchOnly ? (
+          <div className="space-y-3">
+            <p className="text-sm text-muted-foreground">Company</p>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                type="button"
+                size="sm"
+                variant={value.brand === ALL_FILTER_VALUE ? "default" : "outline"}
+                className={value.brand === ALL_FILTER_VALUE ? "text-black" : ""}
+                onClick={() => onChange({ ...value, brand: ALL_FILTER_VALUE })}
+              >
+                All companies
+              </Button>
+              {(brands ?? []).map((option) => {
+                const active = value.brand === option.value;
+
+                return (
+                  <Button
+                    key={option.value}
+                    type="button"
+                    size="sm"
+                    variant={active ? "default" : "outline"}
+                    className={active ? "text-black" : ""}
+                    onClick={() => onChange({ ...value, brand: option.value })}
+                  >
+                    {option.label}
+                  </Button>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
 
         {!searchOnly ? (
           <div className="space-y-3">

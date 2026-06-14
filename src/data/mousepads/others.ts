@@ -480,5 +480,182 @@ export const othersMousepads: Mousepad[] = [
         url: "https://periview.gg/2025/01/29/kurosun-shogun-jude-reviews/",
       },
     ],
-  }
+  },
+
+  // ESP Tiger Wu Xiang
+  {
+  id: "esptiger-wuxiang-pioneer",
+  slug: "esptiger-wuxiang-pioneer",
+
+  brand: "ESPTiger",
+  name: "Wu Xiang",
+  series: "Pioneer",
+
+  category: "balanced-control",
+  surface: "cloth",
+  base: "poron",
+  softness: "soft",
+
+  sizes: [
+    {
+      label: "XL",
+      width: 480,
+      height: 400,
+      thickness: 4,
+      unit: "mm",
+    },
+    {
+      label: "XXL",
+      width: 500,
+      height: 500,
+      thickness: 4,
+      unit: "mm",
+    },
+  ],
+
+  visuals: {
+    defaultColorway: "pioneer",
+    colorways: [
+      {
+        name: "Pioneer",
+        slug: "pioneer",
+        color: "#4f4033",
+        available: true,
+      },
+    ],
+  },
+
+  feel: {
+    speed: 5.9,
+    control: 7.4,
+    stoppingPower: 7.8,
+    staticFriction: 6.6,
+    dynamicFriction: 6.2,
+    microAdjustments: 8.3,
+    ratingConfidence: "community",
+  },
+
+  environment: {
+    humidityResistance: 8.5,
+    sweatResistance: 8.3,
+    dustHairResistance: 7.5,
+    washable: true,
+    notes:
+      "Performance remains relatively stable across humidity changes compared to traditional cloth surfaces. Poron base provides excellent consistency and desk adhesion.",
+  },
+
+  texture: {
+    feel: "slightly-textured",
+    skinComfort: 8,
+    sleeveFriendly: true,
+    noiseLevel: "quiet",
+  },
+
+  recommendedFor: {
+    games: [
+      "valorant",
+      "cs2",
+      "general-fps",
+    ],
+    aimStyles: [
+      "precision",
+      "hybrid",
+      "flicking",
+    ],
+    sensitivity: [
+      "medium",
+      "high",
+    ],
+  },
+
+  avoidIf: [
+    "You want a true speed pad",
+    "You mainly play tracking-heavy titles",
+    "You prefer extremely low friction surfaces",
+    "You want glass-like glide",
+  ],
+
+  price: {
+    usd: 35,
+    inr: 3000,
+  },
+
+  availability: {
+    global: true,
+    india: "available",
+    stores: [
+      "Neo Macro",
+      "ESPTiger",
+      "MaxGaming",
+    ],
+    notes:
+      "Widely available through ESPTiger partners and specialty peripheral retailers.",
+  },
+
+  images: {
+    main: "/mousepads/others/esp-wu-xiang.png",
+  },
+
+  personal: {
+    owned: false,
+    tested: false,
+    notes:
+      "Generally viewed as a premium balanced-control pad positioned between slower tac-FPS surfaces and more versatile hybrid pads. Often recommended to players who want more stopping power than a Saturn Pro while remaining easier to use than very slow mud pads.",
+    pros: [
+      "Strong stopping power",
+      "Excellent base quality",
+      "Consistent glide",
+      "Good micro-adjustment capability",
+      "Comfortable surface feel",
+      "Good balance of speed and control",
+    ],
+    cons: [
+      "Not fast enough for dedicated speed-pad users",
+      "Can feel controlled for low-sens trackers",
+      "Less widely known than Artisan or LGG options",
+    ],
+  },
+
+  communityConsensus: {
+    summary:
+      "The Wuxiang Pioneer is commonly viewed as a premium balanced-control mousepad that emphasizes stability, stopping power, and consistency without feeling muddy. It sits comfortably in the middle of the control spectrum and works especially well for tactical shooters.",
+
+    commonComparisons: [
+      "Artisan Zero Soft",
+      "LGG Saturn Pro",
+      "ESPTiger Tang Dao",
+      "Zowie G-SR-SE Rouge II",
+      "InfinityMice Control V2",
+    ],
+
+    strengths: [
+      "Balanced and predictable glide",
+      "Strong stopping power",
+      "Premium poron base",
+      "Comfortable texture",
+      "Excellent tactical FPS performance",
+    ],
+
+    weaknesses: [
+      "Not particularly fast",
+      "May feel controlled for tracking-focused players",
+      "Less available than mainstream alternatives",
+    ],
+  },
+
+  sources: [
+    {
+      label: "ESPTiger official listings",
+      type: "official",
+    },
+    {
+      label: "Neo Macro retailer listing",
+      type: "store",
+    },
+    {
+      label: "Community review by bymuii",
+      type: "review",
+    },
+  ],
+}
 ];

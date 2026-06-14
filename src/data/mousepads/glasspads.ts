@@ -12,6 +12,9 @@ export const glassMousepads: Mousepad[] = [
 
     category: "glass",
     surface: "glass",
+    glassSurfaceFinish: "unknown",
+    glassSurfaceFinishNotes:
+      "Retailer listings mention micro-texture and Japanese glass, but do not clearly confirm whether the surface is coated or fully uncoated.",
     base: "unknown",
     softness: "hard",
 
@@ -38,7 +41,7 @@ export const glassMousepads: Mousepad[] = [
     },
 
     feel: {
-      speed: 9.6,
+      speed: 9.1,
       control: 3.2,
       stoppingPower: 2.8,
       staticFriction: 2.0,
@@ -146,6 +149,9 @@ export const glassMousepads: Mousepad[] = [
 
     category: "glass",
     surface: "glass",
+    glassSurfaceFinish: "unknown",
+    glassSurfaceFinishNotes:
+      "Current product descriptions emphasize tempered glass and a balanced smooth surface, but do not clearly state a coated or uncoated finish.",
     base: "unknown",
     softness: "hard",
 
@@ -172,7 +178,7 @@ export const glassMousepads: Mousepad[] = [
     },
 
     feel: {
-      speed: 9.3,
+      speed: 8.8,
       control: 3.8,
       stoppingPower: 3.5,
       staticFriction: 2.5,
@@ -276,6 +282,9 @@ export const glassMousepads: Mousepad[] = [
 
     category: "glass",
     surface: "glass",
+    glassSurfaceFinish: "coated",
+    glassSurfaceFinishNotes:
+      "Wallhack's FAQ describes a special glass-etching process that creates a layer on the surface, which behaves like a treated or coated finish and adds more control than raw slick glass.",
     base: "unknown",
     softness: "hard",
 
@@ -308,7 +317,7 @@ export const glassMousepads: Mousepad[] = [
     },
 
     feel: {
-      speed: 9.4,
+      speed: 8.9,
       control: 4.0,
       stoppingPower: 3.8,
       staticFriction: 2.8,
@@ -419,6 +428,9 @@ export const glassMousepads: Mousepad[] = [
 
   category: "glass",
   surface: "glass",
+  glassSurfaceFinish: "uncoated",
+  glassSurfaceFinishNotes:
+    "Official Midori retailer listings explicitly describe The Return as using an uncoated glass surface for stable glide and high consistency.",
   base: "silicone",
   softness: "hard",
 

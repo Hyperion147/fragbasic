@@ -125,14 +125,14 @@ export const lggMousepads: Mousepad[] = [
 
         price: {
             usd: 49.95,
-            inr: 5499,
+            inr: 4999,
         },
 
         availability: {
             global: true,
             india: "limited",
-            stores: ["CtrlShiftStore", "import sellers"],
-            notes: "Seen in India around ₹5,499–₹5,999, but stock may be limited or sold out.",
+            stores: ["Waimers", "CtrlShiftStore", "import sellers"],
+            notes: "Local India pricing has shown up through Waimers around ₹4,999, but stock can fluctuate by color, size, and base option.",
         },
 
         images: {
@@ -173,6 +173,11 @@ export const lggMousepads: Mousepad[] = [
                 label: "CtrlShiftStore India listing",
                 type: "store",
                 url: "https://ctrlshiftstore.com/products/pulsar-x-lgg-hyperion-gaming-mousepad",
+            },
+            {
+                label: "Waimers Hyperion Pro listing",
+                type: "store",
+                url: "https://waimers.in/products/pulsar-hyperion-pro",
             },
             {
                 label: "MousepadReview Reddit discussion",
@@ -313,14 +318,14 @@ export const lggMousepads: Mousepad[] = [
 
         price: {
             usd: 54.95,
-            inr: 6500,
+            inr: 4999,
         },
 
         availability: {
             global: true,
-            india: "import-only",
-            stores: ["Lethal Gaming Gear", "MaxGaming", "import sellers"],
-            notes: "Usually easier to buy globally than locally in India. India pricing depends heavily on import route and stock.",
+            india: "limited",
+            stores: ["Waimers", "Lethal Gaming Gear", "MaxGaming", "import sellers"],
+            notes: "Waimers has listed Saturn Pro locally in India around ₹4,999, but availability appears to vary and can sell out quickly.",
         },
 
         images: {
@@ -355,6 +360,11 @@ export const lggMousepads: Mousepad[] = [
                 label: "LGG mousepads catalog",
                 type: "official",
                 url: "https://lethal.gg/collections/mousepads-1",
+            },
+            {
+                label: "Waimers Saturn Pro listing",
+                type: "store",
+                url: "https://waimers.in/",
             },
             {
                 label: "Community review by end0x00",
@@ -430,6 +440,37 @@ export const lggMousepads: Mousepad[] = [
             ratingConfidence: "community",
         },
 
+        feelVariants: [
+            {
+                label: "Soft",
+                softness: "soft",
+                feel: {
+                    speed: 8.8,
+                    control: 5.8,
+                    stoppingPower: 5.8,
+                    staticFriction: 4.5,
+                    dynamicFriction: 8.9,
+                    microAdjustments: 9.2,
+                    ratingConfidence: "community",
+                },
+                notes: "Current site baseline for Neptune Pro Soft. Faster glide and easier micro-corrections than the firmer community-reviewed version.",
+            },
+            {
+                label: "Firm",
+                softness: "firm",
+                feel: {
+                    speed: 8.0,
+                    control: 5.0,
+                    stoppingPower: 5.0,
+                    staticFriction: 4.0,
+                    dynamicFriction: 6.0,
+                    microAdjustments: 8.0,
+                    ratingConfidence: "community",
+                },
+                notes: "Based on the June 14, 2026 community review for LGG Neptune Firm base standard variant. Reported as more controlled than expected for a speed pad.",
+            },
+        ],
+
         environment: {
             humidityResistance: 8,
             sweatResistance: 8,
@@ -487,19 +528,20 @@ export const lggMousepads: Mousepad[] = [
 
         price: {
             usd: 54.99,
-            inr: 7000,
+            inr: 4999,
         },
 
         availability: {
             global: true,
-            india: "import-only",
+            india: "limited",
             stores: [
+                "Waimers",
                 "Lethal Gaming Gear",
                 "MaxGaming",
                 "Ausmodshop",
                 "import sellers",
             ],
-            notes: "Mostly import-only for India. Availability may vary by size and softness.",
+            notes: "Waimers has carried Neptune Pro locally in India around ₹4,999. Stock still appears to vary by size and softness, so treat it as limited rather than always available.",
         },
 
         images: {
@@ -540,6 +582,11 @@ export const lggMousepads: Mousepad[] = [
                 label: "Ausmodshop Neptune Pro listing",
                 type: "store",
                 url: "https://ausmodshop.com/products/lethal-gaming-gear-neptune-pro-dark-grey",
+            },
+            {
+                label: "Waimers Neptune Pro listing",
+                type: "store",
+                url: "https://waimers.in/",
             },
             {
                 label: "MousepadReview Neptune Pro review",
@@ -668,19 +715,20 @@ export const lggMousepads: Mousepad[] = [
 
         price: {
             usd: 54.95,
-            inr: 7000,
+            inr: 4499,
         },
 
         availability: {
             global: true,
-            india: "import-only",
+            india: "limited",
             stores: [
+                "Waimers",
                 "Lethal Gaming Gear",
                 "MaxGaming",
                 "Amazon",
                 "import sellers",
             ],
-            notes: "Mostly import-only for India. Availability varies by size and softness.",
+            notes: "Waimers has listed Jupiter Pro locally in India around ₹4,499. Stock still varies by size and softness, so local availability should be treated as limited.",
         },
 
         images: {
@@ -715,6 +763,11 @@ export const lggMousepads: Mousepad[] = [
                 label: "MaxGaming Jupiter Pro listing",
                 type: "store",
                 url: "https://www.maxgaming.com/en/mousepads/jupiter-pro-gaming-mousepad-xl-soft-black",
+            },
+            {
+                label: "Waimers Jupiter Pro listing",
+                type: "store",
+                url: "https://waimers.in/",
             },
             {
                 label: "MousepadReview Jupiter Pro V2 review",

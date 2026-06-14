@@ -4,6 +4,7 @@ import { MousepadBrowser } from "@/components/mousepads/mousepad-browser";
 import { SiteSection } from "@/components/SiteSection";
 import {
   getAllMousepads,
+  getMousepadBrandOptions,
   getMousepadCategoryOptions,
 } from "@/lib/mousepads";
 import { buildMetadata } from "@/lib/seo";
@@ -37,6 +38,7 @@ type MousepadsPageProps = {
 export default async function MousepadsPage({ searchParams }: MousepadsPageProps) {
     const mousepads = browseMousepads;
     const params = searchParams ? await searchParams : undefined;
+    const brands = getMousepadBrandOptions(mousepads);
     const categories = getMousepadCategoryOptions(mousepads);
     const initialCategory = categories.some(
         (option) => option.value === params?.category,
@@ -70,6 +72,7 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
                 <SiteSection>
                     <MousepadBrowser
                         mousepads={mousepads}
+                        brands={brands}
                         categories={categories}
                         initialCategory={initialCategory}
                     />

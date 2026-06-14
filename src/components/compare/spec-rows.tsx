@@ -17,6 +17,18 @@ type SpecRow = {
 export function SpecRows({ left, right }: Props) {
   const leftMainSize = left.sizes[0]
   const rightMainSize = right.sizes[0]
+  const leftGlassFinish =
+    left.category === "glass" && left.glassSurfaceFinish
+      ? left.glassSurfaceFinish === "unknown"
+        ? "Unknown"
+        : formatValue(left.glassSurfaceFinish)
+      : "N/A"
+  const rightGlassFinish =
+    right.category === "glass" && right.glassSurfaceFinish
+      ? right.glassSurfaceFinish === "unknown"
+        ? "Unknown"
+        : formatValue(right.glassSurfaceFinish)
+      : "N/A"
 
   const rows: SpecRow[] = [
     {
@@ -28,6 +40,12 @@ export function SpecRows({ left, right }: Props) {
       label: "Surface",
       left: formatValue(left.surface),
       right: formatValue(right.surface),
+    },
+    {
+      label: "Glass finish",
+      left: leftGlassFinish,
+      right: rightGlassFinish,
+      note: "Coated or treated glass usually adds a bit more texture and control than raw uncoated glass.",
     },
     {
       label: "Base",
@@ -170,4 +188,3 @@ function SpecValue({
     </div>
   )
 }
-

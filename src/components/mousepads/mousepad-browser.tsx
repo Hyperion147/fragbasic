@@ -17,6 +17,7 @@ import { getMousepadFullName } from "@/lib/mousepads";
 
 type Props = {
   mousepads: Mousepad[];
+  brands?: Array<{ label: string; value: string }>;
   categories: Array<{ label: string; value: MousepadCategory }>;
   initialCategory?: MousepadCategory;
   searchOnly?: boolean;
@@ -24,6 +25,7 @@ type Props = {
 
 export function MousepadBrowser({
   mousepads,
+  brands,
   categories,
   initialCategory,
   searchOnly = false,
@@ -60,6 +62,7 @@ export function MousepadBrowser({
   return (
     <div className="space-y-6">
       <MousepadFilters
+        brands={brands}
         categories={categories}
         resultCount={filteredMousepads.length}
         value={filters}

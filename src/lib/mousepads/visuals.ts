@@ -4,9 +4,9 @@ const speedControlAnchors: Record<MousepadCategory, number> = {
   mud: 8,
   control: 24,
   "balanced-control": 42,
-  "balanced-speed": 60,
-  speed: 79,
-  glass: 94,
+  "balanced-speed": 58,
+  speed: 69,
+  glass: 86,
 };
 
 export function getDefaultColorway(mousepad?: Mousepad): MousepadColorway {
@@ -65,7 +65,7 @@ export function getMousepadChartColors(
 
 export function getMousepadSpeedControlPosition(mousepad: Mousepad) {
   const anchor = speedControlAnchors[mousepad.category];
-  const speedOffset = (mousepad.feel.speed - 5) * 3.2;
+  const speedOffset = (mousepad.feel.speed - 5) * 2.6;
 
   return Math.max(0, Math.min(100, anchor + speedOffset));
 }
