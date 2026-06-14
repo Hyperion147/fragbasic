@@ -1,6 +1,7 @@
 import type { Mousepad } from "@/types/mousepad";
 
 export const glassMousepads: Mousepad[] = [
+  // Phantom
   {
     id: "tekkusai-phantom",
     slug: "tekkusai-phantom",
@@ -134,6 +135,7 @@ export const glassMousepads: Mousepad[] = [
     ],
   },
 
+  // Singularity
   {
     id: "tekkusai-singularity",
     slug: "tekkusai-singularity",
@@ -263,6 +265,7 @@ export const glassMousepads: Mousepad[] = [
     ],
   },
 
+  // Sp005
   {
     id: "wallhack-sp-005",
     slug: "wallhack-sp-005",
@@ -404,4 +407,184 @@ export const glassMousepads: Mousepad[] = [
       },
     ],
   },
+
+  // The Return of Midori
+  {
+  id: "midori-the-return-glass",
+  slug: "midori-the-return-glass",
+
+  brand: "Midori",
+  name: "The Return",
+  series: "Glass Edition",
+
+  category: "glass",
+  surface: "glass",
+  base: "silicone",
+  softness: "hard",
+
+  sizes: [
+    {
+      label: "XL",
+      width: 500,
+      height: 500,
+      thickness: 2.7,
+      unit: "mm",
+    },
+  ],
+
+  visuals: {
+    defaultColorway: "the-return",
+    colorways: [
+      {
+        name: "The Return",
+        slug: "the-return",
+        color: "#465246",
+        available: true,
+      },
+    ],
+  },
+
+  feel: {
+    speed: 8.6,
+    control: 4.2,
+    stoppingPower: 4.8,
+    staticFriction: 2.8,
+    dynamicFriction: 1.8,
+    microAdjustments: 9.8,
+    ratingConfidence: "community",
+  },
+
+  environment: {
+    humidityResistance: 10,
+    sweatResistance: 10,
+    dustHairResistance: 9,
+    washable: true,
+    notes:
+      "Uncoated glass surface provides exceptional consistency across temperature and humidity changes. Easily cleaned with warm soapy water.",
+  },
+
+  texture: {
+    feel: "smooth",
+    skinComfort: 9,
+    sleeveFriendly: true,
+    noiseLevel: "quiet",
+  },
+
+  recommendedFor: {
+    games: [
+      "apex",
+      "overwatch",
+      "fortnite",
+      "general-fps",
+    ],
+    aimStyles: [
+      "tracking",
+      "switching",
+    ],
+    sensitivity: ["low", "medium"],
+  },
+
+  avoidIf: [
+    "You want cloth-like stopping power",
+    "You primarily play tactical FPS and rely on friction for control",
+    "You dislike hard glass surfaces",
+    "You prefer slower glass pads",
+  ],
+
+  price: {
+    usd: 120,
+    inr: 12500,
+  },
+
+  availability: {
+    global: true,
+    india: "limited",
+    stores: [
+      "Claw Gears",
+      "Midori",
+      "MaxGaming",
+    ],
+    notes:
+      "Limited run serialized release (001/500). Availability depends on regional stock and restocks.",
+  },
+
+  images: {
+    main: "/mousepads/glasspads/midori-the-return.webp",
+  },
+
+  personal: {
+    owned: false,
+    tested: false,
+    notes:
+      "Community impressions consistently place it as a smooth, premium glass pad with strong glide and excellent comfort characteristics. Frequently described as more skin-friendly than SP-004 while maintaining comparable speed.",
+    pros: [
+      "Extremely smooth glide",
+      "Outstanding micro-adjustments",
+      "Very skin-friendly for a glass surface",
+      "Minimal humidity impact",
+      "Low debris accumulation",
+      "Premium build quality",
+      "Large 500x500 format",
+    ],
+    cons: [
+      "Hard glass surface is not for everyone",
+      "Requires good mouse control",
+      "Limited production run",
+      "Premium pricing",
+      "Less forgiving than cloth pads",
+    ],
+  },
+
+  communityConsensus: {
+    summary:
+      "The Return is a premium limited-edition glass pad that combines high glide, excellent smoothness, and unusually strong comfort characteristics. Most users view it as a fast glass surface that remains controllable through texture design rather than friction-heavy stopping power.",
+
+    commonComparisons: [
+      "Wallhack SP-004",
+      "Skypad 4.0",
+      "InfinityMice Tora",
+      "Tekkusai Phantom",
+      "Pulsar Superglide",
+    ],
+
+    strengths: [
+      "Excellent tracking performance",
+      "Effortless micro-adjustments",
+      "Very smooth surface feel",
+      "Highly resistant to humidity and sweat",
+      "Less debris buildup than many glass pads",
+      "Premium artwork and construction",
+    ],
+
+    weaknesses: [
+      "Still too fast for many tac-FPS players",
+      "Requires adaptation if coming from cloth",
+      "Limited availability",
+      "High price point",
+    ],
+  },
+
+  sources: [
+    {
+      label: "Midori official product listing",
+      type: "official",
+    },
+    {
+      label: "Claw Gears product page",
+      type: "official",
+    },
+    {
+      label: "MaxGaming product page",
+      type: "official",
+    },
+    {
+      label: "r/MousepadReview owner discussions",
+      type: "reddit",
+    },
+    {
+      label: "Community review by dc0da",
+      type: "review",
+    },
+  ],
+}
 ];

@@ -52,6 +52,7 @@ export function UniversalCompare({ allMousepads }: Props) {
       .slice(0, MAX_SELECTED)
       .filter((slug) => getMousepadBySlug(slug));
   }, [padsParam]);
+  const urlSelectedKey = urlSelectedSlugs.join(",");
 
   const [query, setQuery] = useState("");
   const [selectedSlugs, setSelectedSlugs] = useState<string[]>(
@@ -59,6 +60,7 @@ export function UniversalCompare({ allMousepads }: Props) {
       ? urlSelectedSlugs
       : DEFAULT_SELECTED_SLUGS.filter((slug) => getMousepadBySlug(slug))
   );
+  const selectedKey = selectedSlugs.join(",");
 
   const selectedMousepads = useMemo(
     () =>
@@ -71,44 +73,42 @@ export function UniversalCompare({ allMousepads }: Props) {
   const canCompare = selectedMousepads.length >= 2;
 
   useEffect(() => {
-    if (urlSelectedSlugs.join(",") === selectedSlugs.join(",")) {
+    if (urlSelectedKey.length === 0 || urlSelectedKey === selectedKey) {
       return;
     }
+    setSelectedSlugs(urlSelectedSlugs);
+  }, [selectedKey, urlSelectedKey, urlSelectedSlugs]);
 
+  function replaceUrl(slugs: string[]) {
     const params = new URLSearchParams(searchParams.toString());
 
-    if (selectedSlugs.length > 0) {
-      params.set("pads", selectedSlugs.join(","));
+    if (slugs.length > 0) {
+      params.set("pads", slugs.join(","));
     } else {
       params.delete("pads");
     }
 
     const nextQuery = params.toString();
-    router.replace(nextQuery ? `?${nextQuery}` : "?", { scroll: false });
-  }, [router, searchParams, selectedSlugs, urlSelectedSlugs]);
+    router.replace(nextQuery ? `?${nextQuery}` : "/mousepads/compare/universal", {
+      scroll: false,
+    });
+  }
 
-  useEffect(() => {
-    if (urlSelectedSlugs.length === 0) {
+  function handleAdd(mousepad: Mousepad) {
+    if (selectedSlugs.includes(mousepad.slug) || selectedSlugs.length >= MAX_SELECTED) {
       return;
     }
 
-    if (urlSelectedSlugs.join(",") !== selectedSlugs.join(",")) {
-      setSelectedSlugs(urlSelectedSlugs);
-    }
-  }, [selectedSlugs, urlSelectedSlugs]);
-
-  function handleAdd(mousepad: Mousepad) {
-    setSelectedSlugs((current) => {
-      if (current.includes(mousepad.slug) || current.length >= MAX_SELECTED) {
-        return current;
-      }
-      return [...current, mousepad.slug];
-    });
+    const next = [...selectedSlugs, mousepad.slug];
+    setSelectedSlugs(next);
+    replaceUrl(next);
     setQuery("");
   }
 
   function handleRemove(slug: string) {
-    setSelectedSlugs((current) => current.filter((item) => item !== slug));
+    const next = selectedSlugs.filter((item) => item !== slug);
+    setSelectedSlugs(next);
+    replaceUrl(next);
   }
 
   // Copy current page URL (now contains the exact selection)
@@ -146,6 +146,7 @@ export function UniversalCompare({ allMousepads }: Props) {
                 variant="ghost"
                 onClick={() => {
                   setSelectedSlugs([]);
+                  replaceUrl([]);
                 }}
               >
                 Clear set
@@ -227,6 +228,7 @@ export function UniversalCompare({ allMousepads }: Props) {
                     onClick={() => {
                       const valid = preset.slugs.filter((s) => getMousepadBySlug(s));
                       setSelectedSlugs(valid);
+                      replaceUrl(valid);
                     }}
                   >
                     {preset.label}
