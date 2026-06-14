@@ -42,47 +42,31 @@ export function MousepadFeelChart({ pad }: Props) {
 
     const data = metrics.map(({ metric, key }) => ({
         metric,
-        ...(softVariant || firmVariant
-            ? {
-                  ...(softVariant ? { soft: softVariant.feel[key] } : {}),
-                  ...(firmVariant ? { firm: firmVariant.feel[key] } : {}),
-              }
-            : {
-                  value: pad.feel[key],
-              }),
+        value: !softVariant && !firmVariant ? pad.feel[key] : undefined,
+        soft: softVariant ? softVariant.feel[key] : undefined,
+        firm: firmVariant ? firmVariant.feel[key] : undefined,
     }));
 
-    const chartConfig = softVariant || firmVariant
-        ? {
-              ...(softVariant
-                  ? {
-                        soft: {
-                            label: `${softVariant.label} variant`,
-                            colors: {
-                                light: [chartColors.stroke],
-                            },
-                        },
-                    }
-                  : {}),
-              ...(firmVariant
-                  ? {
-                        firm: {
-                            label: `${firmVariant.label} variant`,
-                            colors: {
-                                light: ["#7dd3fc"],
-                            },
-                        },
-                    }
-                  : {}),
-          }
-        : {
-              value: {
-                  label: pad.name,
-                  colors: {
-                      light: [chartColors.stroke],
-                  },
-              },
-          };
+    const chartConfig = {
+        value: {
+            label: pad.name,
+            colors: {
+                light: [chartColors.stroke],
+            },
+        },
+        soft: {
+            label: `${softVariant?.label ?? "Soft"} variant`,
+            colors: {
+                light: [chartColors.stroke],
+            },
+        },
+        firm: {
+            label: `${firmVariant?.label ?? "Firm"} variant`,
+            colors: {
+                light: ["#7dd3fc"],
+            },
+        },
+    };
 
     return (
         <Card className="border-border bg-card p-5 md:p-6">
@@ -111,7 +95,7 @@ export function MousepadFeelChart({ pad }: Props) {
                 <PolarAngleAxis dataKey="metric" />
                 <Tooltip variant="frosted-glass" />
                 {softVariant || firmVariant ? (
-                    <Legend variant="frosted-glass" />
+                    <Legend variant="rounded-square-outline" />
                 ) : null}
 
                 {softVariant ? (

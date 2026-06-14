@@ -27,8 +27,9 @@ export function SpeedControlPosition({ left, right }: Props) {
           Where they sit on the glide scale
         </h2>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
-          This uses the same category-plus-speed logic as the rest of FragBasic,
-          so fast cloth pads and true glass pads no longer collapse into the exact same position.
+          This uses the same feel-weighted logic as the rest of FragBasic, so
+          speed, control, stopping power, and friction all influence the final
+          placement.
         </p>
       </div>
 

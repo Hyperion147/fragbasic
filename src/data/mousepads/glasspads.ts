@@ -15,15 +15,15 @@ export const glassMousepads: Mousepad[] = [
     glassSurfaceFinish: "unknown",
     glassSurfaceFinishNotes:
       "Retailer listings mention micro-texture and Japanese glass, but do not clearly confirm whether the surface is coated or fully uncoated.",
-    base: "unknown",
+    base: "rubber",
     softness: "hard",
 
     sizes: [
       {
         label: "XL",
-        width: 490,
-        height: 420,
-        thickness: 5,
+        width: 500,
+        height: 450,
+        thickness: 2.5,
         unit: "mm",
       },
     ],
@@ -41,12 +41,12 @@ export const glassMousepads: Mousepad[] = [
     },
 
     feel: {
-      speed: 9.1,
-      control: 3.2,
-      stoppingPower: 2.8,
+      speed: 9.4,
+      control: 3.6,
+      stoppingPower: 4.2,
       staticFriction: 2.0,
-      dynamicFriction: 9.8,
-      microAdjustments: 9.3,
+      dynamicFriction: 1.6,
+      microAdjustments: 9.4,
       ratingConfidence: "community",
     },
 
@@ -55,13 +55,13 @@ export const glassMousepads: Mousepad[] = [
       sweatResistance: 10,
       dustHairResistance: 9,
       washable: true,
-      notes: "Glass pads offer near-perfect consistency regardless of conditions. Requires specific mouse skates (usually glass or dot skates) for best results.",
+      notes: "Glass pads offer near-perfect consistency regardless of conditions. Phantom's micro-textured surface adds a bit more feedback and stopping than raw slick glass, while still working well with sleeves. Requires specific mouse skates for best results.",
     },
 
     texture: {
-      feel: "smooth",
-      skinComfort: 3,
-      sleeveFriendly: false,
+      feel: "slightly-textured",
+      skinComfort: 4,
+      sleeveFriendly: true,
       noiseLevel: "medium",
     },
 
@@ -96,14 +96,15 @@ export const glassMousepads: Mousepad[] = [
     personal: {
       owned: false,
       tested: false,
-      notes: "High-end glass option frequently discussed in speed/glass communities.",
+      notes: "High-end glass option positioned as very fast, with a lightly textured tactile feel instead of a completely slick raw-glass surface.",
       pros: [
         "Extremely fast and consistent",
         "Durable surface",
+        "More tactile than ultra-slick raw glass",
         "Excellent for tracking and large swipes",
       ],
       cons: [
-        "Very little stopping power",
+        "Still offers limited stopping power compared to cloth",
         "Requires glass-compatible skates",
         "Can feel cold/harsh on skin",
         "Expensive",
@@ -112,7 +113,7 @@ export const glassMousepads: Mousepad[] = [
 
     communityConsensus: {
       summary:
-        "Tekkusai Phantom is a fast, high-quality glass pad favored by players who have adapted to glass and want maximum glide freedom with good build.",
+        "Tekkusai Phantom is a very fast, high-quality glass pad favored by players who want maximum glide freedom with a touch of tactile feedback and more controlled stops than the slickest glass surfaces.",
       commonComparisons: ["Wallhack SP-005", "Skypad", "Artisan Raiden (for speed reference)"],
       strengths: [
         "Top-tier speed and tracking performance",
@@ -130,6 +131,7 @@ export const glassMousepads: Mousepad[] = [
       {
         label: "Tekkusai official / retailer listings",
         type: "official",
+        url: "https://ausmodshop.com/products/tekkusai-phantom-glass-mouse-pad",
       },
       {
         label: "r/MousepadReview glass pad tier lists and discussions",
@@ -152,7 +154,7 @@ export const glassMousepads: Mousepad[] = [
     glassSurfaceFinish: "unknown",
     glassSurfaceFinishNotes:
       "Current product descriptions emphasize tempered glass and a balanced smooth surface, but do not clearly state a coated or uncoated finish.",
-    base: "unknown",
+    base: "rubber",
     softness: "hard",
 
     sizes: [
@@ -160,7 +162,7 @@ export const glassMousepads: Mousepad[] = [
         label: "XL",
         width: 490,
         height: 420,
-        thickness: 5,
+        thickness: 3,
         unit: "mm",
       },
     ],
@@ -178,11 +180,11 @@ export const glassMousepads: Mousepad[] = [
     },
 
     feel: {
-      speed: 8.8,
-      control: 3.8,
-      stoppingPower: 3.5,
-      staticFriction: 2.5,
-      dynamicFriction: 9.5,
+      speed: 8.2,
+      control: 4.8,
+      stoppingPower: 4.6,
+      staticFriction: 3.1,
+      dynamicFriction: 2.5,
       microAdjustments: 9.0,
       ratingConfidence: "community",
     },
@@ -192,13 +194,13 @@ export const glassMousepads: Mousepad[] = [
       sweatResistance: 10,
       dustHairResistance: 9,
       washable: true,
-      notes: "Slightly more controlled glass surface than pure speed glass pads while retaining excellent consistency.",
+      notes: "A more balanced glass surface than pure speed options while retaining excellent consistency. Works well with sleeves, which many glass-pad users prefer for smoother arm glide.",
     },
 
     texture: {
       feel: "smooth",
-      skinComfort: 4,
-      sleeveFriendly: false,
+      skinComfort: 6,
+      sleeveFriendly: true,
       noiseLevel: "medium",
     },
 
@@ -232,9 +234,9 @@ export const glassMousepads: Mousepad[] = [
     personal: {
       owned: false,
       tested: false,
-      notes: "Slightly more forgiving glass option in the Tekkusai lineup.",
+      notes: "A slightly more forgiving glass option in the Tekkusai lineup, with a balanced smooth surface and stronger desk stability from the full-length rubber base.",
       pros: [
-        "Fast yet slightly more controllable than pure speed glass",
+        "Fast yet meaningfully more controllable than pure speed glass",
         "Excellent durability and consistency",
       ],
       cons: [
@@ -245,7 +247,7 @@ export const glassMousepads: Mousepad[] = [
 
     communityConsensus: {
       summary:
-        "Singularity offers a touch more control than the fastest glass pads while keeping the signature glass consistency and speed. Popular among players transitioning to or preferring glass.",
+        "Singularity offers a more balanced glass experience than the fastest options while keeping the signature consistency and low-friction feel. It is one of the safer transition picks for players curious about glass.",
       commonComparisons: ["Wallhack SP-005", "Tekkusai Phantom", "Skypad glass"],
       strengths: [
         "Great speed with a hint more control",
@@ -263,6 +265,7 @@ export const glassMousepads: Mousepad[] = [
       {
         label: "Tekkusai retailer and community discussions",
         type: "official",
+        url: "https://www.fumo-collection.com/en/products/tekkusai-singularity",
       },
       {
         label: "Glass mousepad reviews on r/MousepadReview",
@@ -317,11 +320,11 @@ export const glassMousepads: Mousepad[] = [
     },
 
     feel: {
-      speed: 8.9,
+      speed: 8.7,
       control: 4.0,
       stoppingPower: 3.8,
       staticFriction: 2.8,
-      dynamicFriction: 9.6,
+      dynamicFriction: 2.6,
       microAdjustments: 9.1,
       ratingConfidence: "community",
     },
@@ -331,13 +334,13 @@ export const glassMousepads: Mousepad[] = [
       sweatResistance: 10,
       dustHairResistance: 9.5,
       washable: true,
-      notes: "One of the most recommended glass pads for players new to glass. Offers excellent speed with usable control for adapted users.",
+      notes: "One of the most recommended glass pads for players new to glass. Offers excellent speed with usable control for adapted users, and works well with sleeves for comfort and consistency.",
     },
 
     texture: {
-      feel: "smooth",
-      skinComfort: 4,
-      sleeveFriendly: false,
+      feel: "slightly-textured",
+      skinComfort: 5,
+      sleeveFriendly: true,
       noiseLevel: "medium",
     },
 
@@ -371,7 +374,7 @@ export const glassMousepads: Mousepad[] = [
     personal: {
       owned: false,
       tested: false,
-      notes: "Often called the 'safest' premium glass recommendation in recent community discussions.",
+      notes: "Often called the 'safest' premium glass recommendation in recent community discussions, partly because the etched surface feels more controlled and less wild than the fastest slick-glass options.",
       pros: [
         "Excellent balance of speed and some control for glass",
         "Premium feel and build",
@@ -472,7 +475,7 @@ export const glassMousepads: Mousepad[] = [
     dustHairResistance: 9,
     washable: true,
     notes:
-      "Uncoated glass surface provides exceptional consistency across temperature and humidity changes. Easily cleaned with warm soapy water.",
+      "Uncoated glass surface provides exceptional consistency across temperature and humidity changes. Works well with sleeves and is easily cleaned with warm soapy water.",
   },
 
   texture: {

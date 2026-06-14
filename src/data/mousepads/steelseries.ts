@@ -575,7 +575,7 @@ export const steelseriesMousepads: Mousepad[] = [
             control: 6.8,
             stoppingPower: 6.6,
             staticFriction: 5.3,
-            dynamicFriction: 7.9,
+            dynamicFriction: 3.9,
             microAdjustments: 8.8,
             ratingConfidence: "community",
         },

@@ -1,12 +1,12 @@
 import type { Mousepad, MousepadCategory, MousepadColorway } from "@/types/mousepad";
 
-const speedControlAnchors: Record<MousepadCategory, number> = {
-  mud: 8,
-  control: 24,
-  "balanced-control": 42,
-  "balanced-speed": 58,
-  speed: 69,
-  glass: 86,
+const speedControlBias: Record<MousepadCategory, number> = {
+  mud: -8,
+  control: -4,
+  "balanced-control": -1,
+  "balanced-speed": 1,
+  speed: 4,
+  glass: 7,
 };
 
 export function getDefaultColorway(mousepad?: Mousepad): MousepadColorway {
@@ -64,10 +64,22 @@ export function getMousepadChartColors(
 }
 
 export function getMousepadSpeedControlPosition(mousepad: Mousepad) {
-  const anchor = speedControlAnchors[mousepad.category];
-  const speedOffset = (mousepad.feel.speed - 5) * 2.6;
+  const { speed, control, stoppingPower, staticFriction, dynamicFriction } =
+    mousepad.feel;
+  const weightedScore =
+    50 +
+    (speed - 5) * 8 -
+    (control - 5) * 5 -
+    (stoppingPower - 5) * 3.5 -
+    (staticFriction - 5) * 2.5 -
+    (dynamicFriction - 5) * 1.5 +
+    speedControlBias[mousepad.category];
 
-  return Math.max(0, Math.min(100, anchor + speedOffset));
+  // Compress the extremes so very fast glass pads and very slow mud pads
+  // separate cleanly without hard-clamping to 0 or 100 in the UI.
+  const normalizedScore = 50 + Math.tanh((weightedScore - 50) / 30) * 45;
+
+  return Math.max(0, Math.min(100, normalizedScore));
 }
 
 export function getSpeedControlZoneLabel(position: number) {

@@ -808,7 +808,7 @@ export const xraypadMousepads: Mousepad[] = [
             control: 6.4,
             stoppingPower: 6.2,
             staticFriction: 5.1,
-            dynamicFriction: 8.2,
+            dynamicFriction: 4.3,
             microAdjustments: 8.9,
             ratingConfidence: "community",
         },

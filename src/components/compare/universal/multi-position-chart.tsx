@@ -35,8 +35,9 @@ export function MultiPositionChart({ mousepads }: Props) {
           Speed-control position
         </CardTitle>
         <CardDescription>
-          Each pad gets its own lane on a shared scale. Position uses category
-          plus speed, so this reads closer to how the pad actually fits.
+          Each pad gets its own lane on a shared scale. Position uses the full
+          feel profile, so speed, control, stopping power, and friction all
+          shape where a pad lands.
         </CardDescription>
       </CardHeader>
 
@@ -113,14 +114,13 @@ export function MultiPositionChart({ mousepads }: Props) {
                     </div>
                   </div>
 
-                  <div className="rounded-2xl border border-border bg-background/70 px-4 py-3">
-                    <p className="text-xs text-muted-foreground">Readout</p>
+                  <div className="rounded-2xl border border-border bg-background/70 px-4 py-2">
                     <p className="mt-1 text-lg font-semibold text-foreground">
                       {position.toFixed(1)}
                     </p>
                     <p className="mt-1 text-xs text-muted-foreground">
                       {formatMousepadValue(mousepad.category)} / speed{" "}
-                      {mousepad.feel.speed}
+                      {mousepad.feel.speed} / control {mousepad.feel.control}
                     </p>
                   </div>
                 </div>

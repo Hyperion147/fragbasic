@@ -21,7 +21,8 @@ export function BrandSpeedOrder({ mousepads }: Props) {
         </CardTitle>
         <p className="text-sm leading-6 text-muted-foreground">
           Ordered from slower, more planted pads to faster, freer options using
-          the same category-plus-speed position logic from the compare tools.
+          the same feel-weighted position logic from the compare tools, with
+          speed, control, stopping power, and friction all factored in.
         </p>
       </CardHeader>
 
@@ -81,12 +82,11 @@ export function BrandSpeedOrder({ mousepads }: Props) {
               </div>
 
               <div className="rounded-2xl border border-border bg-card px-4 py-3">
-                <p className="text-xs text-muted-foreground">Readout</p>
                 <p className="mt-1 text-lg font-semibold text-foreground">
                   {position.toFixed(1)}
                 </p>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  {mousepad.feel.speed}/10 speed
+                  {mousepad.feel.speed}/10 speed, {mousepad.feel.control}/10 control
                 </p>
               </div>
             </div>

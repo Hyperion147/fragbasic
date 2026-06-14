@@ -10,7 +10,7 @@ export const othersMousepads: Mousepad[] = [
     name: "Shan Hai Tang Dao",
     series: "Shan Hai",
 
-    category: "balanced-control",
+    category: "control",
     surface: "cloth",
     base: "poron",
     softness: "soft",
@@ -58,12 +58,12 @@ export const othersMousepads: Mousepad[] = [
     },
 
     feel: {
-      speed: 6.7,
-      control: 8.1,
-      stoppingPower: 7.8,
-      staticFriction: 6.3,
-      dynamicFriction: 6.9,
-      microAdjustments: 8.4,
+      speed: 4.8,
+      control: 8.4,
+      stoppingPower: 5.8,
+      staticFriction: 7.0,
+      dynamicFriction: 6.1,
+      microAdjustments: 8.2,
       ratingConfidence: "community",
     },
 
@@ -72,12 +72,12 @@ export const othersMousepads: Mousepad[] = [
       sweatResistance: 8,
       dustHairResistance: 6.5,
       washable: true,
-      notes: "Shan Hai series praised for better humidity and temperature stability than many cloth pads while keeping a smooth Zero-like glide.",
+      notes: "Shan Hai series is praised for better humidity and temperature stability than many cloth pads while keeping a steady, control-oriented glide.",
     },
 
     texture: {
-      feel: "smooth",
-      skinComfort: 8.5,
+      feel: "textured",
+      skinComfort: 7.4,
       sleeveFriendly: true,
       noiseLevel: "quiet",
     },
@@ -90,7 +90,7 @@ export const othersMousepads: Mousepad[] = [
 
     avoidIf: [
       "You want a very fast speed pad",
-      "You prefer heavily textured surfaces",
+      "You prefer very smooth cloth surfaces",
       "You need maximum stopping power like dedicated mud pads",
     ],
 
@@ -113,10 +113,10 @@ export const othersMousepads: Mousepad[] = [
     personal: {
       owned: false,
       tested: false,
-      notes: "Community favorite as a more affordable and sometimes more consistent alternative to Artisan Zero. Needs personal verification for exact feel match.",
+      notes: "Community favorite in the control space, but official ESPTiger specs describe it as a coarse high-control pad rather than a smooth Zero clone. Needs personal verification for the exact in-hand feel.",
       pros: [
         "Excellent value compared to Artisan/LGG",
-        "Smooth and consistent glide",
+        "Stable and controlled glide",
         "Strong humidity resistance",
         "High quality stitching and base",
       ],
@@ -129,18 +129,18 @@ export const othersMousepads: Mousepad[] = [
 
     communityConsensus: {
       summary:
-        "Widely regarded as one of the best 'Artisan Zero-style' pads at a lower price point. Many users describe it as smoother and more consistent with better real-world humidity performance than the original Zero.",
+        "Widely regarded as a strong value control pad with good humidity stability, a coarse cloth surface, and a more planted glide than smoother hybrid-control options.",
       commonComparisons: ["Artisan Zero", "LGG Saturn Pro", "Endgame Gear EM-C"],
       strengths: [
         "Great price-to-performance ratio",
-        "Smooth consistent glide with good stopping power",
+        "Controlled glide with tactile feedback",
         "Excellent build quality and edge stitching",
         "Resistant to humidity and temperature changes",
         "Comfortable for long sessions",
       ],
       weaknesses: [
         "Not as 'premium' feeling as Artisan Poron in some opinions",
-        "Texture is very subtle (may feel too smooth for some)",
+        "Coarser surface will not suit everyone",
         "Limited official global distribution",
       ],
     },
@@ -183,7 +183,7 @@ export const othersMousepads: Mousepad[] = [
         label: "XL",
         width: 490,
         height: 420,
-        thickness: 4,
+        thickness: 3,
         unit: "mm",
       },
     ],
@@ -207,7 +207,7 @@ export const othersMousepads: Mousepad[] = [
       staticFriction: 7.2,
       dynamicFriction: 6.7,
       microAdjustments: 8.1,
-      ratingConfidence: "community",
+      ratingConfidence: "estimated",
     },
 
     environment: {
@@ -532,7 +532,7 @@ export const othersMousepads: Mousepad[] = [
     staticFriction: 6.6,
     dynamicFriction: 6.2,
     microAdjustments: 8.3,
-    ratingConfidence: "community",
+    ratingConfidence: "estimated",
   },
 
   environment: {
@@ -540,8 +540,8 @@ export const othersMousepads: Mousepad[] = [
     sweatResistance: 8.3,
     dustHairResistance: 7.5,
     washable: true,
-    notes:
-      "Performance remains relatively stable across humidity changes compared to traditional cloth surfaces. Poron base provides excellent consistency and desk adhesion.",
+      notes:
+        "Likely to remain fairly stable across humidity changes thanks to the poron-style base and premium cloth construction, but this entry still needs stronger first-party verification.",
   },
 
   texture: {
@@ -599,8 +599,8 @@ export const othersMousepads: Mousepad[] = [
   personal: {
     owned: false,
     tested: false,
-    notes:
-      "Generally viewed as a premium balanced-control pad positioned between slower tac-FPS surfaces and more versatile hybrid pads. Often recommended to players who want more stopping power than a Saturn Pro while remaining easier to use than very slow mud pads.",
+      notes:
+        "Positioned here as a premium balanced-control pad, but this profile is still low-confidence and should be treated as provisional until stronger first-party or detailed reviewer evidence is added.",
     pros: [
       "Strong stopping power",
       "Excellent base quality",
@@ -618,7 +618,7 @@ export const othersMousepads: Mousepad[] = [
 
   communityConsensus: {
     summary:
-      "The Wuxiang Pioneer is commonly viewed as a premium balanced-control mousepad that emphasizes stability, stopping power, and consistency without feeling muddy. It sits comfortably in the middle of the control spectrum and works especially well for tactical shooters.",
+      "The Wuxiang Pioneer is currently modeled as a premium balanced-control mousepad with strong stability and stopping power, but this remains one of the lower-confidence entries in the dataset pending stronger verification.",
 
     commonComparisons: [
       "Artisan Zero Soft",
