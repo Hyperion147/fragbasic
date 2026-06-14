@@ -15,6 +15,7 @@ type Props = {
   resultCount: number;
   value: MousepadFilters;
   query: string;
+  searchOnly?: boolean;
   onChange: (next: MousepadFilters) => void;
   onQueryChange: (next: string) => void;
   onReset: () => void;
@@ -25,6 +26,7 @@ export function MousepadFilters({
   resultCount,
   value,
   query,
+  searchOnly = false,
   onChange,
   onQueryChange,
   onReset,
@@ -50,7 +52,13 @@ export function MousepadFilters({
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr] lg:gap-8">
+      <div
+        className={
+          searchOnly
+            ? "grid gap-6"
+            : "grid gap-6 lg:grid-cols-[1.2fr_1fr] lg:gap-8"
+        }
+      >
         <div className="space-y-3">
           <p className="text-sm text-muted-foreground">Search</p>
           <div className="relative">
@@ -65,27 +73,29 @@ export function MousepadFilters({
           </div>
         </div>
 
-        <div className="space-y-3">
-          <p className="text-sm text-muted-foreground">Speed / Control</p>
-          <div className="flex flex-wrap gap-2">
-            {categories.map((option) => {
-              const active = value.category === option.value;
+        {!searchOnly ? (
+          <div className="space-y-3">
+            <p className="text-sm text-muted-foreground">Speed / Control</p>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((option) => {
+                const active = value.category === option.value;
 
-              return (
-                <Button
-                  key={option.value}
-                  type="button"
-                  size="sm"
-                  variant={active ? "default" : "outline"}
-                  className={active ? "text-black" : ""}
-                  onClick={() => onChange({ ...value, category: option.value })}
-                >
-                  {option.label}
-                </Button>
-              );
-            })}
+                return (
+                  <Button
+                    key={option.value}
+                    type="button"
+                    size="sm"
+                    variant={active ? "default" : "outline"}
+                    className={active ? "text-black" : ""}
+                    onClick={() => onChange({ ...value, category: option.value })}
+                  >
+                    {option.label}
+                  </Button>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </Card>
   );

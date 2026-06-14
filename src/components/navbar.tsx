@@ -33,13 +33,14 @@ const brandLinks = Object.values(brandConfig).map((brand) => ({
 }));
 
 const directNavItems = [
-    { label: "GlassPads", href: "/mousepads?category=glass" },
+    { label: "GlassPads", href: "/mousepads/glasspads" },
     { label: "Compare", href: "/mousepads/compare" },
     { label: "Brands", href: "/mousepads/brands" },
 ];
 
 const mobileNavItems = [
     { label: "All Mousepads", href: "/mousepads" },
+    { label: "GlassPads", href: "/mousepads/glasspads" },
     { label: "Universal Compare", href: "/mousepads/compare/universal" },
     { label: "Finder", href: "/mousepads/finder" },
     { label: "Compare Hub", href: "/mousepads/compare" },
@@ -264,7 +265,7 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                             className={cn(
                                 navigationMenuTriggerStyle,
                                 "px-3 py-1.5 tracking-tight",
-                                item.href === "/mousepads?category=glass"
+                                item.href === "/mousepads/glasspads"
                                     ? "text-sky-100"
                                     : "",
                                 isActivePath(pathname, item.href)
@@ -276,7 +277,7 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                 <span
                                     className={cn(
                                         item.href ===
-                                            "/mousepads?category=glass" &&
+                                            "/mousepads/glasspads" &&
                                             "glasspads-wave-link",
                                     )}
                                 >

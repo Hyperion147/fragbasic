@@ -19,12 +19,14 @@ type Props = {
   mousepads: Mousepad[];
   categories: Array<{ label: string; value: MousepadCategory }>;
   initialCategory?: MousepadCategory;
+  searchOnly?: boolean;
 };
 
 export function MousepadBrowser({
   mousepads,
   categories,
   initialCategory,
+  searchOnly = false,
 }: Props) {
   const [filters, setFilters] = useState<MousepadFilterState>(
     () => ({
@@ -62,6 +64,7 @@ export function MousepadBrowser({
         resultCount={filteredMousepads.length}
         value={filters}
         query={query}
+        searchOnly={searchOnly}
         onChange={setFilters}
         onQueryChange={setQuery}
         onReset={handleReset}
@@ -81,7 +84,9 @@ export function MousepadBrowser({
               No mousepads match these filters
             </p>
             <p className="text-sm text-muted-foreground">
-              Try adjusting the search or Speed / Control filters, or start fresh.
+              {searchOnly
+                ? "Try a different search term, or clear the search to see every glasspad again."
+                : "Try adjusting the search or Speed / Control filters, or start fresh."}
             </p>
             <Button variant="outline" onClick={handleReset}>
               <RotateCcw className="size-4" />

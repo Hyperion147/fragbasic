@@ -14,7 +14,9 @@ type MousepadsPageProps = {
 };
 
 export default async function MousepadsPage({ searchParams }: MousepadsPageProps) {
-    const mousepads = getAllMousepads();
+    const mousepads = getAllMousepads().filter(
+        (mousepad) => mousepad.category !== "glass",
+    );
     const params = searchParams ? await searchParams : undefined;
     const categories = getMousepadCategoryOptions(mousepads);
     const initialCategory = categories.some(
