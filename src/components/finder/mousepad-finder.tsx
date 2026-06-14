@@ -42,25 +42,40 @@ export function MousepadFinder({ mousepads }: Props) {
     const deferredInput = useDeferredValue(value);
 
     // Saved pads via localStorage
-    const [savedSlugs, setSavedSlugs] = useState<string[]>([]);
-    const [activeTab, setActiveTab] = useState<'results' | 'saved'>('results');
-
-    useEffect(() => {
-        const stored = localStorage.getItem('fragbasic_saved_pads');
-        if (stored) {
-            try {
-                setSavedSlugs(JSON.parse(stored));
-            } catch {}
+    const [savedSlugs, setSavedSlugs] = useState<string[]>(() => {
+        if (typeof window === "undefined") {
+            return [];
         }
-    }, []);
+
+        const stored = window.localStorage.getItem("fragbasic_saved_pads");
+        if (!stored) {
+            return [];
+        }
+
+        try {
+            const parsed = JSON.parse(stored);
+            return Array.isArray(parsed)
+                ? parsed.filter((value): value is string => typeof value === "string")
+                : [];
+        } catch {
+            return [];
+        }
+    });
+    const [activeTab, setActiveTab] = useState<'results' | 'saved'>('results');
 
     useEffect(() => {
         localStorage.setItem('fragbasic_saved_pads', JSON.stringify(savedSlugs));
     }, [savedSlugs]);
 
-    const savedSet = useMemo(() => new Set(savedSlugs), [savedSlugs]);
+    const savedSet = new Set(savedSlugs);
+    const maxSaved = 4;
 
     const toggleSave = (slug: string) => {
+        const isAddingNew = !savedSet.has(slug);
+        if (isAddingNew) {
+            setActiveTab("saved");
+        }
+
         setSavedSlugs((prev) => {
             if (prev.includes(slug)) {
                 return prev.filter((s) => s !== slug);
@@ -68,17 +83,10 @@ export function MousepadFinder({ mousepads }: Props) {
             if (prev.length >= maxSaved) {
                 return prev;
             }
-            setActiveTab("saved");
             return [...prev, slug];
         });
     };
-
-    const savedMousepads = useMemo(
-        () => mousepads.filter((p) => savedSet.has(p.slug)),
-        [mousepads, savedSet]
-    );
-
-    const maxSaved = 4;
+    const savedMousepads = mousepads.filter((pad) => savedSet.has(pad.slug));
     const canSaveMore = savedSlugs.length < maxSaved;
     const hasGames = value.games.length > 0;
 

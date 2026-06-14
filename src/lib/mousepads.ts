@@ -1,5 +1,5 @@
 import { mousepads } from "@/data/mousepads/mousepads";
-import type { Mousepad, MousepadColorway } from "@/types/mousepad";
+import type { Mousepad } from "@/types/mousepad";
 
 // Re-export centralized format helpers (and the legacy name)
 export {

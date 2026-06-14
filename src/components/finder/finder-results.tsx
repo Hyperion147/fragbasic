@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Info, Target } from "lucide-react";
+import { Target } from "lucide-react";
 
 import { FinderResultCard } from "@/components/finder/finder-result-card";
 import { Badge } from "@/components/ui/badge";
@@ -16,7 +16,13 @@ type Props = {
     canSaveMore?: boolean;
 };
 
-export function FinderResults({ results, onToggleSave, isSaved, gamesSelected = true, canSaveMore = true }: Props) {
+export function FinderResults({
+    results,
+    onToggleSave,
+    isSaved,
+    gamesSelected = true,
+    canSaveMore = true,
+}: Props) {
     if (!gamesSelected) {
         return (
             <Card className="border-border bg-card/90 p-8 text-center shadow-xl shadow-black/10">
@@ -24,9 +30,13 @@ export function FinderResults({ results, onToggleSave, isSaved, gamesSelected = 
                     <div className="mx-auto flex size-12 items-center justify-center rounded-2xl border border-border bg-background/60">
                         <Target className="size-6 text-muted-foreground" />
                     </div>
-                    <h3 className="text-xl font-semibold tracking-tight">Select games to see recommendations</h3>
+                    <h3 className="text-xl font-semibold tracking-tight">
+                        Select games to see recommendations
+                    </h3>
                     <p className="text-sm leading-6 text-muted-foreground">
-                        Choose up to 3 games you play on the left. We'll rank mousepads based on how well they match your playstyle, sensitivity, and preferences.
+                        Choose up to 3 games you play on the left. We&apos;ll rank
+                        mousepads based on how well they match your playstyle,
+                        sensitivity, and preferences.
                     </p>
                 </div>
             </Card>
@@ -37,9 +47,12 @@ export function FinderResults({ results, onToggleSave, isSaved, gamesSelected = 
         return (
             <Card className="border-border bg-card/90 p-8 text-center shadow-xl shadow-black/10">
                 <div className="mx-auto max-w-xs space-y-3">
-                    <p className="text-xl font-semibold tracking-tight">No matches found</p>
+                    <p className="text-xl font-semibold tracking-tight">
+                        No matches found
+                    </p>
                     <p className="text-sm leading-6 text-muted-foreground">
-                        Try selecting different games or adjusting your sensitivity and preferences.
+                        Try selecting different games or adjusting your
+                        sensitivity and preferences.
                     </p>
                 </div>
             </Card>
@@ -60,7 +73,9 @@ export function FinderResults({ results, onToggleSave, isSaved, gamesSelected = 
                     </div>
 
                     <div className="flex flex-wrap gap-2">
-                        <Badge variant="outline">{results.length} results</Badge>
+                        <Badge variant="outline">
+                            {results.length} results
+                        </Badge>
                         <Badge variant="outline">Why these results?</Badge>
                     </div>
                 </div>
@@ -73,11 +88,15 @@ export function FinderResults({ results, onToggleSave, isSaved, gamesSelected = 
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.04, duration: 0.28 }}
                         >
-                            <FinderResultCard 
-                                result={result} 
-                                rank={index + 1} 
+                            <FinderResultCard
+                                result={result}
+                                rank={index + 1}
                                 onToggleSave={onToggleSave}
-                                isSaved={isSaved ? isSaved(result.mousepad.slug) : false}
+                                isSaved={
+                                    isSaved
+                                        ? isSaved(result.mousepad.slug)
+                                        : false
+                                }
                                 canSaveMore={canSaveMore}
                             />
                         </motion.div>

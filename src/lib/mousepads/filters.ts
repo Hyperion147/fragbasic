@@ -55,6 +55,8 @@ const companyOrder = [
   "Zowie",
 ] as const;
 
+type MainCompany = (typeof companyOrder)[number];
+
 const mainCompanies = new Set(companyOrder);
 
 const categoryOrder: MousepadCategory[] = [
@@ -99,7 +101,7 @@ export function getMousepadBrandOptions(
   const hasGlass = pads.some((pad) => pad.category === "glass");
   const hasOther = pads.some((pad) => {
     const comp = getMousepadCompany(pad);
-    return !mainCompanies.has(comp as any) && pad.category !== "glass";
+    return !isMainCompany(comp) && pad.category !== "glass";
   });
 
   const options: FilterOption<string>[] = [...mainOptions];
@@ -177,7 +179,7 @@ export function filterMousepads(
             return false;
           }
         } else if (filters.brand === "Others") {
-          if (mainCompanies.has(company as any) || pad.category === "glass") {
+          if (isMainCompany(company) || pad.category === "glass") {
             return false;
           }
         } else if (company !== filters.brand) {
@@ -235,4 +237,8 @@ function getMousepadSortValue(mousepad: Mousepad, sort: MousepadSortKey) {
     default:
       return mousepad.feel.control;
   }
+}
+
+function isMainCompany(company: string): company is MainCompany {
+  return mainCompanies.has(company as MainCompany);
 }

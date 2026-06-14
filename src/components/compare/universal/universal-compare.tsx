@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Copy, Scale, ShieldCheck, SlidersHorizontal } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -39,9 +39,10 @@ export function UniversalCompare({ allMousepads }: Props) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const padsParam = searchParams.get("pads");
+  const hasPadsParam = searchParams.has("pads");
 
   const urlSelectedSlugs = useMemo(() => {
-    if (!padsParam) {
+    if (padsParam === null) {
       return [];
     }
 
@@ -52,15 +53,11 @@ export function UniversalCompare({ allMousepads }: Props) {
       .slice(0, MAX_SELECTED)
       .filter((slug) => getMousepadBySlug(slug));
   }, [padsParam]);
-  const urlSelectedKey = urlSelectedSlugs.join(",");
 
   const [query, setQuery] = useState("");
-  const [selectedSlugs, setSelectedSlugs] = useState<string[]>(
-    urlSelectedSlugs.length > 0
-      ? urlSelectedSlugs
-      : DEFAULT_SELECTED_SLUGS.filter((slug) => getMousepadBySlug(slug))
-  );
-  const selectedKey = selectedSlugs.join(",");
+  const selectedSlugs = hasPadsParam
+    ? urlSelectedSlugs
+    : DEFAULT_SELECTED_SLUGS.filter((slug) => getMousepadBySlug(slug));
 
   const selectedMousepads = useMemo(
     () =>
@@ -72,21 +69,9 @@ export function UniversalCompare({ allMousepads }: Props) {
 
   const canCompare = selectedMousepads.length >= 2;
 
-  useEffect(() => {
-    if (urlSelectedKey.length === 0 || urlSelectedKey === selectedKey) {
-      return;
-    }
-    setSelectedSlugs(urlSelectedSlugs);
-  }, [selectedKey, urlSelectedKey, urlSelectedSlugs]);
-
   function replaceUrl(slugs: string[]) {
     const params = new URLSearchParams(searchParams.toString());
-
-    if (slugs.length > 0) {
-      params.set("pads", slugs.join(","));
-    } else {
-      params.delete("pads");
-    }
+    params.set("pads", slugs.join(","));
 
     const nextQuery = params.toString();
     router.replace(nextQuery ? `?${nextQuery}` : "/mousepads/compare/universal", {
@@ -100,14 +85,12 @@ export function UniversalCompare({ allMousepads }: Props) {
     }
 
     const next = [...selectedSlugs, mousepad.slug];
-    setSelectedSlugs(next);
     replaceUrl(next);
     setQuery("");
   }
 
   function handleRemove(slug: string) {
     const next = selectedSlugs.filter((item) => item !== slug);
-    setSelectedSlugs(next);
     replaceUrl(next);
   }
 
@@ -145,7 +128,6 @@ export function UniversalCompare({ allMousepads }: Props) {
                 size="sm"
                 variant="ghost"
                 onClick={() => {
-                  setSelectedSlugs([]);
                   replaceUrl([]);
                 }}
               >
@@ -227,7 +209,6 @@ export function UniversalCompare({ allMousepads }: Props) {
                     variant="outline"
                     onClick={() => {
                       const valid = preset.slugs.filter((s) => getMousepadBySlug(s));
-                      setSelectedSlugs(valid);
                       replaceUrl(valid);
                     }}
                   >

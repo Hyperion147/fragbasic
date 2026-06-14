@@ -4,7 +4,6 @@ import { Droplets } from "lucide-react";
 
 import { FinderOptionCard } from "@/components/finder/finder-option-card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
@@ -98,7 +97,6 @@ export function FinderForm({
     onDesiredFeelChange,
     onTextureChange,
     onHumidityChange,
-    onSubmit,
 }: Props) {
     return (
         <Card className="border-border bg-card/90 p-8 shadow-xl shadow-black/10">
