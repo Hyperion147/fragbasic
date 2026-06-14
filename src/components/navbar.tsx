@@ -26,6 +26,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { brandConfig } from "@/lib/brands";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const brandLinks = Object.values(brandConfig).map((brand) => ({
     label: brand.name,
@@ -122,8 +123,15 @@ export function SiteNavbar() {
 
     return (
         <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-xl">
-            <div className="flex h-16 w-full items-center justify-between px-4 md:px-6 lg:px-8">
+            <div className="flex h-16 w-full items-center justify-between px-4 md:px-6 lg:px-10">
                 <Link href="/" className="group flex items-center gap-3">
+                    <Image
+                        src="/logo.png"
+                        alt="Fragbasic"
+                        width={195}
+                        height={449}
+                        className="size-10 transition-opacity group-hover:opacity-88"
+                    />
                     <h1 className="text-2xl font-semibold tracking-tighter lg:text-[1.35rem]">
                         FRAGBASIC
                         <span className="text-xs text-secondary-foreground">
@@ -139,7 +147,9 @@ export function SiteNavbar() {
                         <Link href="/mousepads/finder">Finder</Link>
                     </Button>
                     <Button size="sm" asChild>
-                        <Link href="/mousepads/compare/universal">Universal Compare</Link>
+                        <Link href="/mousepads/compare/universal">
+                            Universal Compare
+                        </Link>
                     </Button>
                 </div>
 
@@ -154,7 +164,9 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
         <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
                 <NavigationMenuItem>
-                    <NavigationMenuTrigger className="px-3 py-1.5 tracking-tight">Mousepads</NavigationMenuTrigger>
+                    <NavigationMenuTrigger className="px-3 py-1.5 tracking-tight">
+                        Mousepads
+                    </NavigationMenuTrigger>
                     <NavigationMenuContent>
                         <div className="w-full overflow-hidden rounded-3xl border border-border bg-card/40 ring-1 ring-border/50 shadow-2xl shadow-black/10">
                             <div className="grid grid-cols-[1.1fr_1fr_1.2fr_1fr]">
@@ -223,22 +235,23 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                 <div className="border-r border-border/70 p-4 w-60">
                                     <MousepadsMenuHeading title="Top brands" />
                                     <div className="mt-4 space-y-4">
-
                                         <div className="space-y-2">
-                                        {brandLinks.map((item) => (
-                                            <NavigationMenuLink
-                                                key={item.href}
-                                                asChild
-                                            >
-                                                <Link
-                                                    href={item.href}
-                                                    className="flex items-center justify-between rounded-md px-0 py-1.5 text-sm font-semibold uppercase tracking-[0.16em] text-foreground/85 hover:bg-transparent hover:text-foreground focus:bg-transparent"
+                                            {brandLinks.map((item) => (
+                                                <NavigationMenuLink
+                                                    key={item.href}
+                                                    asChild
                                                 >
-                                                    <span>{item.label}</span>
-                                                    <ChevronRight className="size-4 text-muted-foreground" />
-                                                </Link>
-                                            </NavigationMenuLink>
-                                        ))}
+                                                    <Link
+                                                        href={item.href}
+                                                        className="flex items-center justify-between rounded-md px-0 py-1.5 text-sm font-semibold uppercase tracking-[0.16em] text-foreground/85 hover:bg-transparent hover:text-foreground focus:bg-transparent"
+                                                    >
+                                                        <span>
+                                                            {item.label}
+                                                        </span>
+                                                        <ChevronRight className="size-4 text-muted-foreground" />
+                                                    </Link>
+                                                </NavigationMenuLink>
+                                            ))}
                                         </div>
                                     </div>
                                     <Button
@@ -270,14 +283,13 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                     : "",
                                 isActivePath(pathname, item.href)
                                     ? "bg-muted text-foreground"
-                                    : ""
+                                    : "",
                             )}
                         >
                             <Link href={item.href}>
                                 <span
                                     className={cn(
-                                        item.href ===
-                                            "/mousepads/glasspads" &&
+                                        item.href === "/mousepads/glasspads" &&
                                             "glasspads-wave-link",
                                     )}
                                 >
@@ -416,23 +428,23 @@ function MobileNavigation() {
                                 Explore
                             </p>
                             <nav className="grid gap-2">
-                            {mobileNavItems.map((item) => (
-                                <Button
-                                    key={item.href}
-                                    variant={
-                                        isActivePath(pathname, item.href)
-                                            ? "secondary"
-                                            : "ghost"
-                                    }
-                                    className="justify-between rounded-2xl px-4 py-5"
-                                    asChild
-                                >
-                                    <Link href={item.href}>
-                                        {item.label}
-                                        <ChevronRight className="size-4 text-muted-foreground" />
-                                    </Link>
-                                </Button>
-                            ))}
+                                {mobileNavItems.map((item) => (
+                                    <Button
+                                        key={item.href}
+                                        variant={
+                                            isActivePath(pathname, item.href)
+                                                ? "secondary"
+                                                : "ghost"
+                                        }
+                                        className="justify-between rounded-2xl px-4 py-5"
+                                        asChild
+                                    >
+                                        <Link href={item.href}>
+                                            {item.label}
+                                            <ChevronRight className="size-4 text-muted-foreground" />
+                                        </Link>
+                                    </Button>
+                                ))}
                             </nav>
                         </div>
 
@@ -441,19 +453,19 @@ function MobileNavigation() {
                                 Browse brands
                             </p>
                             <div className="grid gap-2">
-                            {brandLinks.map((item) => (
-                                <Button
-                                    key={item.href}
-                                    variant="outline"
-                                    className="justify-between rounded-2xl px-4 py-5"
-                                    asChild
-                                >
-                                    <Link href={item.href}>
-                                        {item.label}
-                                        <ChevronRight className="size-4 text-muted-foreground" />
-                                    </Link>
-                                </Button>
-                            ))}
+                                {brandLinks.map((item) => (
+                                    <Button
+                                        key={item.href}
+                                        variant="outline"
+                                        className="justify-between rounded-2xl px-4 py-5"
+                                        asChild
+                                    >
+                                        <Link href={item.href}>
+                                            {item.label}
+                                            <ChevronRight className="size-4 text-muted-foreground" />
+                                        </Link>
+                                    </Button>
+                                ))}
                             </div>
                         </div>
                     </div>

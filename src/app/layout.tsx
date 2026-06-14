@@ -3,6 +3,7 @@ import "./globals.css";
 import { Inter, Lora, Roboto_Mono } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { SiteNavbar } from "@/components/navbar";
+import { SiteFooter } from "@/components/site-footer";
 import { Analytics } from "@vercel/analytics/next";
 import { getRootMetadata } from "@/lib/seo";
 
@@ -31,6 +32,7 @@ export default function RootLayout({
         <Analytics />
         <SiteNavbar />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );
