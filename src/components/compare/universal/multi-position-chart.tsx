@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  SPEED_CONTROL_ZONES,
   formatMousepadValue,
   getDefaultColorway,
   getMousepadFullName,
@@ -18,15 +19,6 @@ type Props = {
   mousepads: Mousepad[];
 };
 
-const zones = [
-  { label: "Mud", start: 0, end: 16.7 },
-  { label: "Control", start: 16.7, end: 33.4 },
-  { label: "Balanced Control", start: 33.4, end: 50.1 },
-  { label: "Balanced Speed", start: 50.1, end: 66.8 },
-  { label: "Speed", start: 66.8, end: 83.5 },
-  { label: "Glass", start: 83.5, end: 100 },
-] as const;
-
 export function MultiPositionChart({ mousepads }: Props) {
   return (
     <Card className="border-border bg-card">
@@ -35,9 +27,9 @@ export function MultiPositionChart({ mousepads }: Props) {
           Speed-control position
         </CardTitle>
         <CardDescription>
-          Each pad gets its own lane on a shared scale. Position uses the full
-          feel profile, so speed, control, stopping power, and friction all
-          shape where a pad lands.
+          Each pad gets its own lane on a shared scale. Position starts from the
+          pad&apos;s curated category, then uses speed, stopping power, friction,
+          and movement freedom to fine-tune the final landing spot.
         </CardDescription>
       </CardHeader>
 
@@ -72,7 +64,7 @@ export function MultiPositionChart({ mousepads }: Props) {
 
                   <div className="space-y-2">
                     <div className="relative h-10 overflow-hidden rounded-full border border-border bg-[linear-gradient(90deg,oklch(0.24_0.01_230/0.5),oklch(0.27_0.01_230/0.5),oklch(0.31_0.02_230/0.5),oklch(0.35_0.02_230/0.5),oklch(0.39_0.03_230/0.5),oklch(0.43_0.03_230/0.5))]">
-                      {zones.slice(0, -1).map((zone) => (
+                      {SPEED_CONTROL_ZONES.slice(0, -1).map((zone) => (
                         <div
                           key={zone.label}
                           className="absolute top-0 bottom-0 w-px bg-border/70"
@@ -106,7 +98,7 @@ export function MultiPositionChart({ mousepads }: Props) {
                     </div>
 
                     <div className="grid grid-cols-6 text-[10px] uppercase tracking-[0.14em] text-muted-foreground md:text-[11px]">
-                      {zones.map((zone) => (
+                      {SPEED_CONTROL_ZONES.map((zone) => (
                         <span key={zone.label} className="text-center">
                           {zone.label}
                         </span>

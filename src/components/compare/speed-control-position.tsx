@@ -1,19 +1,15 @@
 import { Card } from "@/components/ui/card"
-import { getMousepadSpeedControlPosition } from "@/lib/mousepads"
+import {
+  SPEED_CONTROL_ZONES,
+  getMousepadSpeedControlPosition,
+  getSpeedControlZoneLabel,
+} from "@/lib/mousepads"
 import type { Mousepad } from "@/types/mousepad"
 
 type Props = {
   left: Mousepad
   right: Mousepad
 }
-
-const zones = [
-  { label: "Mud", start: 0, end: 20 },
-  { label: "Slow control", start: 20, end: 40 },
-  { label: "Balanced control", start: 40, end: 60 },
-  { label: "Balanced speed", start: 60, end: 80 },
-  { label: "Speed / glass", start: 80, end: 100 },
-]
 
 export function SpeedControlPosition({ left, right }: Props) {
   const leftPosition = getMousepadSpeedControlPosition(left)
@@ -27,16 +23,16 @@ export function SpeedControlPosition({ left, right }: Props) {
           Where they sit on the glide scale
         </h2>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
-          This uses the same feel-weighted logic as the rest of FragBasic, so
-          speed, control, stopping power, and friction all influence the final
-          placement.
+          This scale starts from each pad&apos;s curated category, then nudges the
+          position with speed, stopping power, friction, and freedom of movement
+          so balanced pads do not get dragged too far into control.
         </p>
       </div>
 
       <div className="space-y-12">
         <div className="relative">
-          <div className="grid h-14 grid-cols-5 overflow-hidden rounded-2xl border border-border bg-[linear-gradient(90deg,oklch(0.26_0.02_220),oklch(0.31_0.03_220),oklch(0.35_0.04_220),oklch(0.41_0.05_220),oklch(0.47_0.06_220))]">
-            {zones.map((zone) => (
+          <div className="grid h-14 grid-cols-6 overflow-hidden rounded-2xl border border-border bg-[linear-gradient(90deg,oklch(0.26_0.02_220),oklch(0.29_0.02_220),oklch(0.32_0.03_220),oklch(0.36_0.04_220),oklch(0.4_0.05_220),oklch(0.46_0.06_220))]">
+            {SPEED_CONTROL_ZONES.map((zone) => (
               <div
                 key={zone.label}
                 className="flex items-center justify-center border-r border-border/60 px-2 text-center text-[11px] text-muted-foreground last:border-r-0 md:text-xs"
@@ -115,7 +111,7 @@ function PositionSummary({
             {pad.brand} {pad.name}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
-            {getZoneLabel(position)}
+            {getSpeedControlZoneLabel(position)}
           </p>
         </div>
 
@@ -126,12 +122,4 @@ function PositionSummary({
       </div>
     </div>
   )
-}
-
-function getZoneLabel(position: number) {
-  if (position < 20) return "Mud"
-  if (position < 40) return "Slow control"
-  if (position < 60) return "Balanced control"
-  if (position < 80) return "Balanced speed"
-  return "Speed / glass"
 }

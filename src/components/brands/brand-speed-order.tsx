@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  SPEED_CONTROL_ZONES,
   formatMousepadValue,
   getDefaultColorway,
   getMousepadFullName,
@@ -21,8 +22,8 @@ export function BrandSpeedOrder({ mousepads }: Props) {
         </CardTitle>
         <p className="text-sm leading-6 text-muted-foreground">
           Ordered from slower, more planted pads to faster, freer options using
-          the same feel-weighted position logic from the compare tools, with
-          speed, control, stopping power, and friction all factored in.
+          the same calibrated category-first logic from the compare tools, then
+          refined by speed, stopping power, friction, and glide freedom.
         </p>
       </CardHeader>
 
@@ -72,12 +73,24 @@ export function BrandSpeedOrder({ mousepads }: Props) {
                   />
                 </div>
                 <div className="grid grid-cols-6 text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-                  <span>Mud</span>
-                  <span className="text-center">Control</span>
-                  <span className="text-center">Bal Ctrl</span>
-                  <span className="text-center">Bal Spd</span>
-                  <span className="text-center">Speed</span>
-                  <span className="text-right">Glass</span>
+                  {SPEED_CONTROL_ZONES.map((zone, index) => (
+                    <span
+                      key={zone.label}
+                      className={
+                        index === 0
+                          ? ""
+                          : index === SPEED_CONTROL_ZONES.length - 1
+                            ? "text-right"
+                            : "text-center"
+                      }
+                    >
+                      {zone.label === "Balanced Control"
+                        ? "Bal Ctrl"
+                        : zone.label === "Balanced Speed"
+                          ? "Bal Spd"
+                          : zone.label}
+                    </span>
+                  ))}
                 </div>
               </div>
 

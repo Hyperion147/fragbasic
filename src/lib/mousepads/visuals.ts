@@ -1,12 +1,30 @@
 import type { Mousepad, MousepadCategory, MousepadColorway } from "@/types/mousepad";
 
-const speedControlBias: Record<MousepadCategory, number> = {
-  mud: -8,
-  control: -4,
-  "balanced-control": -1,
-  "balanced-speed": 1,
-  speed: 4,
-  glass: 7,
+export const SPEED_CONTROL_ZONES = [
+  { label: "Mud", start: 0, end: 18 },
+  { label: "Control", start: 18, end: 36 },
+  { label: "Balanced Control", start: 36, end: 52 },
+  { label: "Balanced Speed", start: 52, end: 68 },
+  { label: "Speed", start: 68, end: 84 },
+  { label: "Glass", start: 84, end: 100 },
+] as const;
+
+const speedControlBasePosition: Record<MousepadCategory, number> = {
+  mud: 14,
+  control: 30,
+  "balanced-control": 44,
+  "balanced-speed": 59,
+  speed: 74,
+  glass: 92,
+};
+
+const speedControlRange: Record<MousepadCategory, { min: number; max: number }> = {
+  mud: { min: 0, max: 18 },
+  control: { min: 18, max: 36 },
+  "balanced-control": { min: 36, max: 52 },
+  "balanced-speed": { min: 52, max: 68 },
+  speed: { min: 68, max: 84 },
+  glass: { min: 84, max: 100 },
 };
 
 export function getDefaultColorway(mousepad?: Mousepad): MousepadColorway {
@@ -64,29 +82,36 @@ export function getMousepadChartColors(
 }
 
 export function getMousepadSpeedControlPosition(mousepad: Mousepad) {
-  const { speed, control, stoppingPower, staticFriction, dynamicFriction } =
-    mousepad.feel;
-  const weightedScore =
-    50 +
-    (speed - 5) * 8 -
-    (control - 5) * 5 -
-    (stoppingPower - 5) * 3.5 -
-    (staticFriction - 5) * 2.5 -
-    (dynamicFriction - 5) * 1.5 +
-    speedControlBias[mousepad.category];
+  const {
+    speed,
+    control,
+    stoppingPower,
+    staticFriction,
+    dynamicFriction,
+    microAdjustments,
+  } = mousepad.feel;
 
-  // Compress the extremes so very fast glass pads and very slow mud pads
-  // separate cleanly without hard-clamping to 0 or 100 in the UI.
-  const normalizedScore = 50 + Math.tanh((weightedScore - 50) / 30) * 45;
+  const frictionAverage = (staticFriction + dynamicFriction) / 2;
+  const feelAdjustment =
+    (speed - control) * 2.5 +
+    (5 - stoppingPower) * 0.9 +
+    (5 - frictionAverage) * 1.2 +
+    (microAdjustments - 5) * 0.35;
 
-  return Math.max(0, Math.min(100, normalizedScore));
+  const position = speedControlBasePosition[mousepad.category] + feelAdjustment;
+  const range = speedControlRange[mousepad.category];
+
+  return clamp(position, range.min, range.max);
 }
 
 export function getSpeedControlZoneLabel(position: number) {
-  if (position < 16.7) return "Mud";
-  if (position < 33.4) return "Control";
-  if (position < 50.1) return "Balanced Control";
-  if (position < 66.8) return "Balanced Speed";
-  if (position < 83.5) return "Speed";
-  return "Glass";
+  return (
+    SPEED_CONTROL_ZONES.find(
+      (zone) => position >= zone.start && position < zone.end
+    )?.label ?? "Glass"
+  );
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, value));
 }
