@@ -115,11 +115,11 @@ function NavigationMenuViewport({
   ...props
 }: React.ComponentProps<typeof NavigationMenuPrimitive.Viewport>) {
   return (
-    <div className="absolute top-full left-0 flex justify-center">
+    <div className="absolute top-full left-1/2 flex w-screen -translate-x-1/2 justify-center px-4 md:px-6 lg:px-8">
       <NavigationMenuPrimitive.Viewport
         data-slot="navigation-menu-viewport"
         className={cn(
-          "origin-top-center relative mt-2 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-lg border border-border bg-popover text-popover-foreground shadow-xl data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]",
+          "origin-top-center relative mt-2 h-[var(--radix-navigation-menu-viewport-height)] w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-lg border border-border bg-popover text-popover-foreground shadow-xl data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:zoom-in-90 md:max-w-[calc(100vw-3rem)] md:w-[var(--radix-navigation-menu-viewport-width)] lg:max-w-[calc(100vw-4rem)]",
           className
         )}
         {...props}

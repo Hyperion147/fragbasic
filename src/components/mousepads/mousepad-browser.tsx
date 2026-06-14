@@ -7,7 +7,6 @@ import { MousepadFilters } from "@/components/mousepads/mousepad-filters";
 import {
   filterMousepads,
   getDefaultMousepadFilters,
-  type FilterOption,
   type MousepadCategory,
   type MousepadFilters as MousepadFilterState,
 } from "@/lib/mousepads";
@@ -18,14 +17,12 @@ import { getMousepadFullName } from "@/lib/mousepads";
 
 type Props = {
   mousepads: Mousepad[];
-  brands: FilterOption<string>[];
-  categories: FilterOption<MousepadCategory>[];
+  categories: Array<{ label: string; value: MousepadCategory }>;
   initialCategory?: MousepadCategory;
 };
 
 export function MousepadBrowser({
   mousepads,
-  brands,
   categories,
   initialCategory,
 }: Props) {
@@ -61,7 +58,6 @@ export function MousepadBrowser({
   return (
     <div className="space-y-6">
       <MousepadFilters
-        brands={brands}
         categories={categories}
         resultCount={filteredMousepads.length}
         value={filters}
@@ -85,7 +81,7 @@ export function MousepadBrowser({
               No mousepads match these filters
             </p>
             <p className="text-sm text-muted-foreground">
-              Try adjusting the Company or Speed / Control filters, or start fresh.
+              Try adjusting the search or Speed / Control filters, or start fresh.
             </p>
             <Button variant="outline" onClick={handleReset}>
               <RotateCcw className="size-4" />

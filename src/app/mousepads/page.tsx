@@ -3,7 +3,6 @@ import { MousepadBrowser } from "@/components/mousepads/mousepad-browser";
 import { SiteSection } from "@/components/SiteSection";
 import {
   getAllMousepads,
-  getMousepadBrandOptions,
   getMousepadCategoryOptions,
 } from "@/lib/mousepads";
 import type { MousepadCategory } from "@/types/mousepad";
@@ -28,7 +27,7 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
         <main className="min-h-screen bg-background text-foreground">
             <section className="border-b border-border bg-background">
                 <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
-                    <div className="max-w-4xl">
+                    <div className="max-w-5xl">
                         <div className="flex flex-wrap gap-2">
                             <Badge className="text-black">
                                 Mousepad database
@@ -50,7 +49,6 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
                 <SiteSection>
                     <MousepadBrowser
                         mousepads={mousepads}
-                        brands={getMousepadBrandOptions(mousepads)}
                         categories={categories}
                         initialCategory={initialCategory}
                     />
