@@ -287,8 +287,8 @@ export const glassMousepads: Mousepad[] = [
     surface: "glass",
     glassSurfaceFinish: "coated",
     glassSurfaceFinishNotes:
-      "Wallhack's FAQ describes a special glass-etching process that creates a layer on the surface, which behaves like a treated or coated finish and adds more control than raw slick glass.",
-    base: "unknown",
+      "Wallhack's FAQ describes a special glass-etching process that creates a layer on the surface, and the official SP-005 page describes a subtle surface texture with speed-oriented glide.",
+    base: "silicone",
     softness: "hard",
 
     sizes: [
@@ -296,7 +296,7 @@ export const glassMousepads: Mousepad[] = [
         label: "XL",
         width: 490,
         height: 420,
-        thickness: 5,
+        thickness: 2.5,
         unit: "mm",
       },
     ],
@@ -308,12 +308,6 @@ export const glassMousepads: Mousepad[] = [
           name: "Black",
           slug: "black",
           color: "#111111",
-          available: true,
-        },
-        {
-          name: "Clear",
-          slug: "clear",
-          color: "#f0f0f0",
           available: true,
         },
       ],
@@ -334,7 +328,7 @@ export const glassMousepads: Mousepad[] = [
       sweatResistance: 10,
       dustHairResistance: 9.5,
       washable: true,
-      notes: "One of the most recommended glass pads for players new to glass. Offers excellent speed with usable control for adapted users, and works well with sleeves for comfort and consistency.",
+      notes: "The official SP-005 page positions it as a fast, speed-oriented glass surface with subtle texture, a low-profile build, and a concave silicone base grid for full desk stability. Works well with sleeves for comfort and consistency.",
     },
 
     texture: {
@@ -356,15 +350,14 @@ export const glassMousepads: Mousepad[] = [
     ],
 
     price: {
-      usd: 95,
-      inr: 8800,
+      usd: 129,
     },
 
     availability: {
       global: true,
       india: "import-only",
       stores: ["Wallhack direct", "import sellers"],
-      notes: "Popular glass pad with growing importer support.",
+      notes: "Officially sold by Wallhack globally; India availability still depends on direct import or third-party sellers.",
     },
 
     images: {
@@ -405,9 +398,9 @@ export const glassMousepads: Mousepad[] = [
 
     sources: [
       {
-        label: "Wallhack official SP-005 page",
+        label: "Wallhack official SP-005 Black page",
         type: "official",
-        url: "https://wallhack.com/",
+        url: "https://wallhack.com/en-int/products/sp-005-black",
       },
       {
         label: "Multiple r/MousepadReview glass pad threads and reviews",
