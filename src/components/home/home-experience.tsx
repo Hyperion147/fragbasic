@@ -147,6 +147,9 @@ export function HomeExperience({
                 <RevealSection delay={0.38}>
                     <WhyPanel />
                 </RevealSection>
+                <RevealSection delay={0.44}>
+                    <SleevesTeasePanel />
+                </RevealSection>
             </div>
         </main>
     );
@@ -421,8 +424,7 @@ function CompareSide({
     );
 }
 
-function FinderPanel({
-}: Record<string, never>) {
+function FinderPanel({}: Record<string, never>) {
     return (
         <section className="grid gap-6 rounded-2xl border border-border bg-card/40 p-6 md:p-8 lg:grid-cols-[1.05fr_1fr_1fr_1.2fr]">
             <div className="flex justify-between flex-col">
@@ -511,7 +513,10 @@ function FinderStep({
 }) {
     return (
         <div className="relative">
-            <Badge variant="outline" className="rounded-md text-[10px] tracking-[0.5px]">
+            <Badge
+                variant="outline"
+                className="rounded-md text-[10px] tracking-[0.5px]"
+            >
                 {label}
             </Badge>
             <ChevronsRight className="absolute top-20 right-20" />
@@ -539,9 +544,7 @@ function FinderButton({
             href={href}
             className="group flex flex-col items-center gap-2 text-center"
         >
-            <span
-                className="flex size-16 items-center justify-center rounded-full border border-border bg-background/70 transition-all duration-200 group-hover:border-foreground/25 group-hover:bg-background"
-            >
+            <span className="flex size-16 items-center justify-center rounded-full border border-border bg-background/70 transition-all duration-200 group-hover:border-foreground/25 group-hover:bg-background">
                 <Image
                     src={iconSrc}
                     alt=""
@@ -675,7 +678,10 @@ const homeFinderCtas = [
         title: "Tracking-first setup",
         body: "Jump into the full finder with fast-game context.",
         image: "/mousepads/artisan/raiden-orange.png",
-        href: buildFinderRedirectHref({ game: "Apex", preference: "More Speed" }),
+        href: buildFinderRedirectHref({
+            game: "Apex",
+            preference: "More Speed",
+        }),
     },
     {
         title: "Balanced all-rounder",
@@ -687,7 +693,10 @@ const homeFinderCtas = [
         title: "Tac-FPS control bias",
         body: "Open the real finder with a steadier control lean.",
         image: "/mousepads/artisan/zero-dai-dai-orange.png",
-        href: buildFinderRedirectHref({ game: "Valorant", preference: "More Control" }),
+        href: buildFinderRedirectHref({
+            game: "Valorant",
+            preference: "More Control",
+        }),
     },
 ] as const;
 
@@ -742,6 +751,53 @@ function WhyPanel() {
                 </div>
             </div>
         </section>
+    );
+}
+
+function SleevesTeasePanel() {
+    return (
+        <section className="relative overflow-hidden rounded-2xl border border-border bg-card/40">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.08),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.05),transparent_32%)]" />
+            <div className="relative grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+                <div className="max-w-2xl p-6 md:p-8">
+                    <Badge
+                        variant="outline"
+                        className="rounded-md bg-background/50 text-[10px] tracking-[0.5px]"
+                    >
+                        Coming next
+                    </Badge>
+                    <h2 className="mt-5 text-3xl font-semibold tracking-tight md:text-4xl">
+                        Gaming arm sleeves are coming to FRAGBASIC.
+                    </h2>
+                    <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground">
+                        The next expansion will rank sleeves by glide feel,
+                        comfort, and consistency, then map them against mousepad
+                        compatibility so you can find combos that actually work
+                        together.
+                    </p>
+                </div>
+
+                <div className="relative min-h-[360px] overflow-hidden translate-x-30">
+                    <Image
+                        src="/teaser.png"
+                        alt="teaser"
+                        fill
+                        className="-z-5 object-cover blur-[2px]"
+                    />
+                </div>
+            </div>
+        </section>
+    );
+}
+
+function TeaseStat({ title, body }: { title: string; body: string }) {
+    return (
+        <div className="rounded-xl border border-border bg-background/60 p-4">
+            <p className="text-sm font-semibold text-foreground">{title}</p>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                {body}
+            </p>
+        </div>
     );
 }
 
