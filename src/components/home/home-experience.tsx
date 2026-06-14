@@ -147,9 +147,7 @@ export function HomeExperience({
                 <RevealSection delay={0.38}>
                     <WhyPanel />
                 </RevealSection>
-                <RevealSection delay={0.44}>
-                    <SleevesTeasePanel />
-                </RevealSection>
+                <SleevesTeasePanel />
             </div>
         </main>
     );
@@ -755,8 +753,32 @@ function WhyPanel() {
 }
 
 function SleevesTeasePanel() {
+    const reduceMotion = useReducedMotion();
+
     return (
-        <section className="relative overflow-hidden rounded-2xl border border-border bg-card/40">
+        <motion.section
+            className="relative overflow-hidden rounded-2xl border border-border bg-card/40"
+            initial={
+                reduceMotion
+                    ? false
+                    : { opacity: 0, y: -12, filter: "blur(14px)" }
+            }
+            whileInView={
+                reduceMotion
+                    ? undefined
+                    : { opacity: 1, y: 0, filter: "blur(0px)" }
+            }
+            viewport={reduceMotion ? undefined : { once: false, amount: 0.2 }}
+            transition={
+                reduceMotion
+                    ? undefined
+                    : {
+                          duration: 1,
+                          delay: 0.44,
+                          ease: [0.22, 1, 0.36, 1],
+                      }
+            }
+        >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.08),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.05),transparent_32%)]" />
             <div className="relative grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
                 <div className="max-w-2xl p-6 md:p-8">
@@ -786,18 +808,7 @@ function SleevesTeasePanel() {
                     />
                 </div>
             </div>
-        </section>
-    );
-}
-
-function TeaseStat({ title, body }: { title: string; body: string }) {
-    return (
-        <div className="rounded-xl border border-border bg-background/60 p-4">
-            <p className="text-sm font-semibold text-foreground">{title}</p>
-            <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                {body}
-            </p>
-        </div>
+        </motion.section>
     );
 }
 
