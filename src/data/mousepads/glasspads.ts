@@ -594,5 +594,165 @@ export const glassMousepads: Mousepad[] = [
       type: "review",
     },
   ],
-}
+},
+
+  // ZPAD V1 XL
+  {
+    id: "zpad-v1-xl",
+    slug: "zpad-v1-xl",
+
+    brand: "Z PAD",
+    name: "V1 XL",
+    series: "Glass Mouse Pad",
+
+    category: "glass",
+    surface: "glass",
+    glassSurfaceFinish: "uncoated",
+    glassSurfaceFinishNotes:
+      "The public product page clearly positions this as a glass mouse pad, and a long-term owner review specifically describes it as uncoated. The official page does not appear to publish coating language directly, so the finish is anchored mainly by the user review.",
+    base: "rubber",
+    softness: "hard",
+
+    sizes: [
+      {
+        label: "XL",
+        width: 490,
+        height: 420,
+        thickness: 3,
+        unit: "mm",
+      },
+    ],
+
+    visuals: {
+      defaultColorway: "custom-design",
+      colorways: [
+        {
+          name: "Custom Design",
+          slug: "custom-design",
+          color: "#1f1f1f",
+          image: "/mousepads/others/z-pad.webp",
+          available: true,
+        },
+      ],
+    },
+
+    feel: {
+      speed: 8.0,
+      control: 4.0,
+      stoppingPower: 4.0,
+      staticFriction: 3.0,
+      dynamicFriction: 2.0,
+      microAdjustments: 9.0,
+      ratingConfidence: "community",
+    },
+
+    environment: {
+      humidityResistance: 10,
+      sweatResistance: 9,
+      dustHairResistance: 7,
+      washable: true,
+      notes:
+        "Community testing describes the pad as highly consistent over long use with excellent resistance to sweat and environmental slowdown, which matches what you would expect from a hard glass surface.",
+    },
+
+    texture: {
+      feel: "smooth",
+      skinComfort: 8,
+      sleeveFriendly: true,
+      noiseLevel: "medium",
+    },
+
+    recommendedFor: {
+      games: ["apex", "overwatch", "general-fps"],
+      aimStyles: ["tracking", "switching", "micro-adjustments"],
+      sensitivity: ["low", "medium", "high"],
+    },
+
+    avoidIf: [
+      "You mainly play tactical FPS and want more stopping power",
+      "You dislike hard glass surfaces",
+      "You want cloth-like friction feedback",
+      "You prefer slower glass options",
+    ],
+
+    price: {
+      usd: 30,
+      inr: 2700,
+    },
+
+    availability: {
+      global: false,
+      india: "available",
+      stores: ["ZPAD official"],
+      notes:
+        "Official ZPAD India storefront lists the XL V1 product page. The page fetched on June 14, 2026 showed the item as out of stock, so practical availability may depend on restocks.",
+    },
+
+    images: {
+      main: "/mousepads/others/z-pad.webp",
+    },
+
+    personal: {
+      owned: false,
+      tested: false,
+      notes:
+        "This profile is anchored by one detailed long-term owner review and the official ZPAD storefront copy. It looks like a budget-friendly speed-leaning glass option aimed at smooth glide and tracking rather than tactical stopping power. The exact physical dimensions were not clearly exposed on the public product page during this pass, so the listed XL size should be treated as a conservative inferred placeholder until directly verified.",
+      pros: [
+        "Fast glide for the price",
+        "Excellent micro-adjustment freedom",
+        "Very strong humidity consistency",
+        "Good sleeve compatibility",
+        "Strong value in India",
+      ],
+      cons: [
+        "Limited stopping power for tac FPS",
+        "Hard glass surface will not suit everyone",
+        "Custom-print workflow may vary in print quality",
+        "Public specs are still relatively sparse",
+      ],
+    },
+
+    communityConsensus: {
+      summary:
+        "ZPAD V1 XL appears to be an affordable Indian glass pad built around speed, smoothness, and tracking freedom. The available evidence points to a fast, low-friction surface that performs well in humid conditions and makes the most sense for aim training and tracking-heavy shooters.",
+      commonComparisons: [
+        "Wallhack SP-005",
+        "SkyPAD / Wallhack glass pads",
+        "budget glass pads",
+      ],
+      strengths: [
+        "Fast smooth glide",
+        "Excellent for tracking and aim training",
+        "Very high humidity resistance",
+        "Strong price-to-performance value",
+      ],
+      weaknesses: [
+        "Not ideal for Valorant or CS-style stopping",
+        "Sparse official spec sheet",
+        "Glass learning curve still applies",
+      ],
+    },
+
+    sources: [
+      {
+        label: "ZPAD official XL V1 product page",
+        type: "official",
+        url: "https://zpad.in/product/custom-glass-mouse-pad-xl-size/",
+      },
+      {
+        label: "ZPAD official homepage",
+        type: "official",
+        url: "https://zpad.in/",
+      },
+      {
+        label: "Z PAD Instagram brand page",
+        type: "official",
+        url: "https://www.instagram.com/zpad.in/",
+      },
+      {
+        label: "Community review by bl4ckholeyt",
+        type: "review",
+      },
+    ],
+  }
 ];

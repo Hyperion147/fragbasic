@@ -491,8 +491,8 @@ export const othersMousepads: Mousepad[] = [
   name: "Wu Xiang",
   series: "Pioneer",
 
-  category: "balanced-control",
-  surface: "cloth",
+  category: "balanced-speed",
+  surface: "hybrid",
   base: "poron",
   softness: "soft",
 
@@ -526,58 +526,57 @@ export const othersMousepads: Mousepad[] = [
   },
 
   feel: {
-    speed: 5.9,
-    control: 7.4,
-    stoppingPower: 7.8,
-    staticFriction: 6.6,
-    dynamicFriction: 6.2,
-    microAdjustments: 8.3,
-    ratingConfidence: "estimated",
+    speed: 8.0,
+    control: 6.0,
+    stoppingPower: 5.0,
+    staticFriction: 4.0,
+    dynamicFriction: 4.0,
+    microAdjustments: 7.0,
+    ratingConfidence: "community",
   },
 
   environment: {
-    humidityResistance: 8.5,
-    sweatResistance: 8.3,
-    dustHairResistance: 7.5,
+    humidityResistance: 4.0,
+    sweatResistance: 8.0,
+    dustHairResistance: 8.0,
     washable: true,
       notes:
-        "Likely to remain fairly stable across humidity changes thanks to the poron-style base and premium cloth construction, but this entry still needs stronger first-party verification.",
+        "Community testing points to a coated or treated surface that resists sweat and debris well, but humidity performance looks notably weaker than the previous estimate. One long-term owner also reported yellowing over time while saying the glide stayed consistent for roughly six months.",
   },
 
   texture: {
-    feel: "slightly-textured",
-    skinComfort: 8,
+    feel: "smooth",
+    skinComfort: 7.8,
     sleeveFriendly: true,
     noiseLevel: "quiet",
   },
 
   recommendedFor: {
     games: [
-      "valorant",
-      "cs2",
+      "apex",
+      "overwatch",
       "general-fps",
     ],
     aimStyles: [
-      "precision",
       "hybrid",
-      "flicking",
+      "tracking",
+      "switching",
     ],
     sensitivity: [
+      "low",
       "medium",
-      "high",
     ],
   },
 
   avoidIf: [
-    "You want a true speed pad",
-    "You mainly play tracking-heavy titles",
-    "You prefer extremely low friction surfaces",
-    "You want glass-like glide",
+    "You want strong humidity performance",
+    "You mainly play tactical FPS and want more stopping power",
+    "You prefer slower cloth control pads",
+    "You dislike treated or coated surfaces that can show wear over time",
   ],
 
   price: {
-    usd: 35,
-    inr: 3000,
+    inr: 2950,
   },
 
   availability: {
@@ -585,11 +584,9 @@ export const othersMousepads: Mousepad[] = [
     india: "available",
     stores: [
       "Neo Macro",
-      "ESPTiger",
-      "MaxGaming",
     ],
     notes:
-      "Widely available through ESPTiger partners and specialty peripheral retailers.",
+      "Confirmed in India via Neo Macro. Broader stock may vary by region and restock window.",
   },
 
   images: {
@@ -600,57 +597,53 @@ export const othersMousepads: Mousepad[] = [
     owned: false,
     tested: false,
       notes:
-        "Positioned here as a premium balanced-control pad, but this profile is still low-confidence and should be treated as provisional until stronger first-party or detailed reviewer evidence is added.",
+        "This profile is now anchored more heavily to community testing than to the older provisional estimate. Current evidence points to a clearly faster hybrid-style pad rather than a balanced-control cloth option.",
     pros: [
-      "Strong stopping power",
-      "Excellent base quality",
-      "Consistent glide",
-      "Good micro-adjustment capability",
-      "Comfortable surface feel",
-      "Good balance of speed and control",
+      "Fast glide for a non-glass surface",
+      "Low static and dynamic friction",
+      "Good sweat and dust resistance",
+      "Consistent glide over months of use in one long-term review",
+      "Competitive pricing in India",
     ],
     cons: [
-      "Not fast enough for dedicated speed-pad users",
-      "Can feel controlled for low-sens trackers",
-      "Less widely known than Artisan or LGG options",
+      "Humidity resistance looks weak for this class",
+      "Coated finish may yellow or show wear over time",
+      "Stopping power is limited versus control-oriented pads",
     ],
   },
 
   communityConsensus: {
     summary:
-      "The Wuxiang Pioneer is currently modeled as a premium balanced-control mousepad with strong stability and stopping power, but this remains one of the lower-confidence entries in the dataset pending stronger verification.",
+      "The Wuxiang Pioneer appears to be one of the faster hybrid-style pads in this dataset, with low friction, moderate control, and better sweat and dust resistance than humidity resistance. It should sit much closer to the speed side than the earlier balanced-control estimate suggested.",
 
     commonComparisons: [
-      "Artisan Zero Soft",
-      "LGG Saturn Pro",
+      "Artisan Hien Soft",
+      "LGG Neptune Pro Soft",
       "ESPTiger Tang Dao",
-      "Zowie G-SR-SE Rouge II",
-      "InfinityMice Control V2",
+      "Aqua Control II",
+      "fast hybrid pads",
     ],
 
     strengths: [
-      "Balanced and predictable glide",
-      "Strong stopping power",
-      "Premium poron base",
-      "Comfortable texture",
-      "Excellent tactical FPS performance",
+      "Very fast glide",
+      "Low initial and in-motion resistance",
+      "Solid micro-adjustment freedom",
+      "Good sweat resistance",
+      "Good dust and hair resistance",
     ],
 
     weaknesses: [
-      "Not particularly fast",
-      "May feel controlled for tracking-focused players",
-      "Less available than mainstream alternatives",
+      "Humidity resistance is below average",
+      "Stopping power is modest",
+      "Surface may yellow with age",
     ],
   },
 
   sources: [
     {
-      label: "ESPTiger official listings",
-      type: "official",
-    },
-    {
-      label: "Neo Macro retailer listing",
+      label: "Neo Macro Pioneer Wu Xiang Gaming Mousepad listing",
       type: "store",
+      url: "https://neomacro.in/products/pioneer-wu-xiang-gaming-mousepad-esptiger",
     },
     {
       label: "Community review by bymuii",
