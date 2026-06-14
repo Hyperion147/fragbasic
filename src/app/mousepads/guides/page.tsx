@@ -34,10 +34,10 @@ export default function GuidesPage() {
                         </h1>
 
                         <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
-                            This section is being expanded into a proper guide
-                            library. For now, use the mousepad database and
-                            compare tools while the written breakdowns are being
-                            added.
+                            This is the starter layer of the guide library:
+                            quick frameworks for choosing between control,
+                            balanced, speed, and humidity-friendly pads before
+                            the longer breakdowns land.
                         </p>
 
                         <div className="mt-8 flex flex-wrap gap-3">

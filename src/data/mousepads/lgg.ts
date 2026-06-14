@@ -180,9 +180,6 @@ export const lggMousepads: Mousepad[] = [
                 url: "https://www.reddit.com/r/MousepadReview/comments/1skpxvf/artisan_zero_vs_pulsar_hyperion/",
             },
         ],
-
-        createdAt: "2026-06-10",
-        updatedAt: "2026-06-10",
     },
 
     // Saturn Pro
@@ -370,9 +367,6 @@ export const lggMousepads: Mousepad[] = [
                 url: "https://www.amazon.com/Lethal-Gaming-Gear-Saturn-Xsoft/dp/B0DG8JPCMT",
             },
         ],
-
-        createdAt: "2026-06-11",
-        updatedAt: "2026-06-11",
     },
 
     // Neptune Pro
@@ -559,9 +553,6 @@ export const lggMousepads: Mousepad[] = [
                 url: "https://www.reddit.com/r/MousepadReview/comments/1e7ffep/lethal_gaming_gear_neptune_pro_review/",
             },
         ],
-
-        createdAt: "2026-06-11",
-        updatedAt: "2026-06-11",
     },
 
     // Jupiter Pro
@@ -737,8 +728,5 @@ export const lggMousepads: Mousepad[] = [
                 url: "https://www.reddit.com/r/MousepadReview/comments/1fvxsfl/review_lgg_jupiter_pro_v2_soft_xl_this_might_be/",
             },
         ],
-
-        createdAt: "2026-06-11",
-        updatedAt: "2026-06-11",
     },
 ];

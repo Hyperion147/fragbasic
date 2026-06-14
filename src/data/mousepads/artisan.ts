@@ -167,9 +167,6 @@ export const artisanMousepads: Mousepad[] = [
                 url: "https://artisan-jp.com/global/selection-guide",
             },
         ],
-
-        createdAt: "2026-06-10",
-        updatedAt: "2026-06-10",
     },
 
     // Raiden
@@ -350,9 +347,6 @@ export const artisanMousepads: Mousepad[] = [
                 url: "https://www.reddit.com/r/MousepadReview/comments/1c61fz9/artisan_raiden_soft_a_brief_overview/",
             },
         ],
-
-        createdAt: "2026-06-11",
-        updatedAt: "2026-06-11",
     },
 
     // Hayate Otsu
@@ -532,9 +526,6 @@ export const artisanMousepads: Mousepad[] = [
                 url: "https://www.reddit.com/r/MousepadReview/comments/1evlter/my_experience_with_artisan_mousepads_hayate_otsu/",
             },
         ],
-
-        createdAt: "2026-06-11",
-        updatedAt: "2026-06-11",
     },
 
     // Hien
@@ -744,9 +735,6 @@ export const artisanMousepads: Mousepad[] = [
                 url: "https://www.amazon.in/Artisan-Hien-Wine-FX-HI-SF-XL-R-Japan/dp/B07F5TMZZC",
             },
         ],
-
-        createdAt: "2026-06-11",
-        updatedAt: "2026-06-11",
     },
 
     // Type-99
@@ -940,8 +928,5 @@ export const artisanMousepads: Mousepad[] = [
                 url: "https://ausmodshop.com/products/artisan-fx-type-99-matcha-green",
             },
         ],
-
-        createdAt: "2026-06-11",
-        updatedAt: "2026-06-11",
     },
 ];

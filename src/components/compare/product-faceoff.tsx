@@ -81,6 +81,26 @@ function PadCard({ pad }: { pad: Mousepad }) {
             value={`${pad.environment.humidityResistance}/10`}
           />
         </div>
+
+        {pad.communityConsensus && (
+          <div className="border-t border-border/60 pt-4 space-y-2">
+            <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+              Community notes
+            </p>
+            <p className="text-sm leading-6 text-muted-foreground line-clamp-3">
+              {pad.communityConsensus.summary}
+            </p>
+            {pad.communityConsensus.commonComparisons?.length ? (
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {pad.communityConsensus.commonComparisons.slice(0, 3).map((c) => (
+                  <Badge key={c} variant="outline" className="text-[10px] px-2 py-0">
+                    {c}
+                  </Badge>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        )}
       </div>
     </Card>
   )

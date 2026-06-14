@@ -172,9 +172,6 @@ export const steelseriesMousepads: Mousepad[] = [
                 url: "https://sclgaming.in/product/steelseries-qck-heavy-mouse-pad/",
             },
         ],
-
-        createdAt: "2026-06-12",
-        updatedAt: "2026-06-12",
     },
 
     // QCK Performance Control
@@ -348,9 +345,6 @@ export const steelseriesMousepads: Mousepad[] = [
                 url: "https://www.pcgamer.com/hardware/gaming-mice/my-fave-piece-of-PC-gaming-tech-to-launch-this-year-was-the-softest-kind-of-hardware-there-is/",
             },
         ],
-
-        createdAt: "2026-06-12",
-        updatedAt: "2026-06-12",
     },
 
     // QCK Performance Balance
@@ -530,9 +524,6 @@ export const steelseriesMousepads: Mousepad[] = [
                 url: "https://www.pcgamer.com/hardware/gaming-mice/my-fave-piece-of-PC-gaming-tech-to-launch-this-year-was-the-softest-kind-of-hardware-there-is/",
             },
         ],
-
-        createdAt: "2026-06-12",
-        updatedAt: "2026-06-12",
     },
 
     // QCK Performance Speed
@@ -708,8 +699,5 @@ export const steelseriesMousepads: Mousepad[] = [
                 url: "https://www.reddit.com/r/MousepadReview/",
             },
         ],
-
-        createdAt: "2026-06-12",
-        updatedAt: "2026-06-12",
     },
 ];

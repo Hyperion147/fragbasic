@@ -52,11 +52,11 @@ export default async function ComparePage({ params }: PageProps) {
     notFound();
   }
 
-  const { left, right } = comparisonData;
+  const { comparison, left, right } = comparisonData;
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <CompareHero left={left} right={right} />
+      <CompareHero left={left} right={right} comparisonSlug={comparison.slug} />
 
       <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10 space-y-6">
         <ProductFaceoff left={left} right={right} />

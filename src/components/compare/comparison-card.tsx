@@ -17,6 +17,10 @@ export function ComparisonCard({ comparison, left, right }: Props) {
     return (
         <Link href={`/mousepads/compare/${comparison.slug}`} className="h-full">
             <Card className="group h-full border-border bg-card/95 p-5 transition-all duration-200 hover:border-primary/45 hover:shadow-lg hover:shadow-black/10">
+                <div className="mb-4 flex flex-wrap items-center gap-2">
+                    <Badge className="text-black">Published matchup</Badge>
+                    <Badge variant="outline">{comparison.tags[0]}</Badge>
+                </div>
                 <div className="grid gap-3 rounded-3xl md:grid-cols-[1fr_auto_1fr] md:items-center">
                     <PadSummary
                         brand={left.brand}

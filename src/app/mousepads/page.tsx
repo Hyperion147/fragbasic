@@ -6,9 +6,23 @@ import {
   getMousepadBrandOptions,
   getMousepadCategoryOptions,
 } from "@/lib/mousepads";
+import type { MousepadCategory } from "@/types/mousepad";
 
-export default function MousepadsPage() {
+type MousepadsPageProps = {
+    searchParams?: Promise<{
+        category?: string;
+    }>;
+};
+
+export default async function MousepadsPage({ searchParams }: MousepadsPageProps) {
     const mousepads = getAllMousepads();
+    const params = searchParams ? await searchParams : undefined;
+    const categories = getMousepadCategoryOptions(mousepads);
+    const initialCategory = categories.some(
+        (option) => option.value === params?.category,
+    )
+        ? (params?.category as MousepadCategory)
+        : undefined;
 
     return (
         <main className="min-h-screen bg-background text-foreground">
@@ -37,7 +51,8 @@ export default function MousepadsPage() {
                     <MousepadBrowser
                         mousepads={mousepads}
                         brands={getMousepadBrandOptions(mousepads)}
-                        categories={getMousepadCategoryOptions(mousepads)}
+                        categories={categories}
+                        initialCategory={initialCategory}
                     />
                 </SiteSection>
             </section>

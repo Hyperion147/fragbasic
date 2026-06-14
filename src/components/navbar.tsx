@@ -55,7 +55,6 @@ import {
     Gauge,
     Grid2x2,
     Menu,
-    Search,
     Shield,
     Sparkles,
     Star,
@@ -63,7 +62,6 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -89,10 +87,11 @@ const directNavItems = [
 ];
 
 const mobileNavItems = [
-    { label: "Mousepads", href: "/mousepads" },
+    { label: "All Mousepads", href: "/mousepads" },
     { label: "Universal Compare", href: "/mousepads/compare/universal" },
+    { label: "Finder", href: "/mousepads/finder" },
+    { label: "Compare Hub", href: "/mousepads/compare" },
     { label: "Brands", href: "/mousepads/brands/artisan" },
-    ...directNavItems,
 ];
 const mousepadMenuLinks: Array<{
     title: string;
@@ -103,47 +102,46 @@ const mousepadMenuLinks: Array<{
 }> = [
     {
         title: "All Mousepads",
-        body: "Browse all mousepads",
+        body: "Browse the full database by feel, surface & availability",
         href: "/mousepads",
         icon: Grid2x2,
     },
     {
-        title: "Speed-Control Spectrum",
-        body: "See all pads on the scale",
-        href: "/mousepads",
+        title: "Universal Compare",
+        body: "Build your own 2-3 pad matchup",
+        href: "/mousepads/compare/universal",
         icon: Gauge,
     },
     {
-        title: "Best Mousepads",
-        body: "Curated best lists",
-        href: "/mousepads",
+        title: "Mousepad Finder",
+        body: "Get personalized recommendations",
+        href: "/mousepads/finder",
         icon: Star,
     },
     {
-        title: "New Releases",
-        body: "Latest mousepads",
-        href: "/mousepads",
+        title: "Compare Hub",
+        body: "Published head-to-heads",
+        href: "/mousepads/compare",
         icon: Sparkles,
-        badge: "New",
     },
 ] as const;
 const feelLinks = [
     {
         title: "Control",
         body: "More stopping power",
-        href: "/mousepads",
+        href: "/mousepads?category=control",
         icon: Shield,
     },
     {
         title: "Balanced",
         body: "Even speed & control",
-        href: "/mousepads",
+        href: "/mousepads?category=balanced-control",
         icon: Gauge,
     },
     {
         title: "Speed",
         body: "More glide & fast feel",
-        href: "/mousepads",
+        href: "/mousepads?category=speed",
         icon: Zap,
     },
 ] as const;
@@ -153,16 +151,16 @@ const comparisonLinks = [
         href: "/mousepads/compare/artisan-zero-soft-vs-lgg-saturn-pro-soft",
     },
     {
-        title: "Zowie G-SR-SE vs Xraypad Aqua Control II",
-        href: "/mousepads/compare",
-    },
-    {
-        title: "Artisan Hien vs SteelSeries QcK Heavy",
-        href: "/mousepads/compare",
-    },
-    {
         title: "LGG Saturn Pro vs Artisan Type-99",
         href: "/mousepads/compare/lgg-saturn-pro-soft-vs-artisan-type-99-soft",
+    },
+    {
+        title: "Artisan Zero vs Pulsar Hyperion",
+        href: "/mousepads/compare/artisan-zero-soft-vs-pulsar-lgg-hyperion-soft",
+    },
+    {
+        title: "Zowie G-SR III vs LGG Saturn Pro",
+        href: "/mousepads/compare/zowie-g-sr-iii-vs-lgg-saturn-pro-soft",
     },
 ] as const;
 
@@ -431,6 +429,8 @@ function MousepadsMenuFeelLink({
 }
 
 function MobileNavigation() {
+    const pathname = usePathname();
+
     return (
         <div className="md:hidden">
             <Sheet>
@@ -443,46 +443,63 @@ function MobileNavigation() {
                 <SheetContent side="right" className="w-80">
                     <div className="mt-8 space-y-6">
                         <Link href="/" className="flex items-center gap-3">
-                            <div className="flex size-9 items-center justify-center rounded-lg border border-border bg-card">
-                                <span className="text-sm font-semibold text-primary">
-                                    F
-                                </span>
-                            </div>
-
                             <div>
-                                <p className="text-sm font-semibold">
-                                    FragBasic
+                                <p className="text-lg font-semibold tracking-tight">
+                                    FRAGBASIC
+                                    <span className="text-[10px] text-secondary-foreground">
+                                        .FUN
+                                    </span>
                                 </p>
                                 <p className="text-xs text-muted-foreground">
-                                    FPS gear lab
+                                    Mousepad data, finder, and compare tools
                                 </p>
                             </div>
                         </Link>
 
-                        <nav className="grid gap-2">
+                        <div className="space-y-3">
+                            <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                                Explore
+                            </p>
+                            <nav className="grid gap-2">
                             {mobileNavItems.map((item) => (
                                 <Button
                                     key={item.href}
-                                    variant="ghost"
-                                    className="justify-start"
+                                    variant={
+                                        isActivePath(pathname, item.href)
+                                            ? "secondary"
+                                            : "ghost"
+                                    }
+                                    className="justify-between rounded-2xl px-4 py-5"
                                     asChild
                                 >
-                                    <Link href={item.href}>{item.label}</Link>
+                                    <Link href={item.href}>
+                                        {item.label}
+                                        <ChevronRight className="size-4 text-muted-foreground" />
+                                    </Link>
                                 </Button>
                             ))}
-                        </nav>
+                            </nav>
+                        </div>
 
-                        <div className="grid gap-2 border-t border-border pt-4">
+                        <div className="space-y-3 border-t border-border pt-4">
+                            <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                                Browse brands
+                            </p>
+                            <div className="grid gap-2">
                             {brandLinks.map((item) => (
                                 <Button
                                     key={item.href}
                                     variant="outline"
-                                    className="justify-start"
+                                    className="justify-between rounded-2xl px-4 py-5"
                                     asChild
                                 >
-                                    <Link href={item.href}>{item.label}</Link>
+                                    <Link href={item.href}>
+                                        {item.label}
+                                        <ChevronRight className="size-4 text-muted-foreground" />
+                                    </Link>
                                 </Button>
                             ))}
+                            </div>
                         </div>
                     </div>
                 </SheetContent>

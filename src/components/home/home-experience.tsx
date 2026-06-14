@@ -10,9 +10,6 @@ import {
     CircleDot,
     Crosshair,
     Gamepad2,
-    Keyboard,
-    Monitor,
-    Mouse,
     SlidersHorizontal,
     Sparkles,
     Target,
@@ -63,22 +60,22 @@ const gearCategories = [
         icon: Target,
     },
     {
-        title: "Mice",
-        countLabel: "Coming soon",
-        href: "/mousepads",
-        icon: Mouse,
+        title: "Finder",
+        countLabel: "Personalized picks",
+        href: "/mousepads/finder",
+        icon: Sparkles,
     },
     {
-        title: "Keyboards",
-        countLabel: "Coming soon",
-        href: "/mousepads",
-        icon: Keyboard,
+        title: "Compare",
+        countLabel: "Published + custom",
+        href: "/mousepads/compare",
+        icon: SlidersHorizontal,
     },
     {
-        title: "Monitors",
-        countLabel: "Coming soon",
-        href: "/mousepads",
-        icon: Monitor,
+        title: "Guides",
+        countLabel: "Buying help",
+        href: "/mousepads/guides",
+        icon: Crosshair,
     },
 ] as const;
 
@@ -475,7 +472,7 @@ function FinderPanel({
                     </p>
                 </div>
                 <Button asChild className="w-fit mt-6">
-                    <Link href="/mousepads/compare/universal">
+                    <Link href="/mousepads/finder">
                         Find your mousepad
                         <ArrowRight className="size-4" />
                     </Link>
@@ -535,6 +532,9 @@ function FinderPanel({
                                 </p>
                                 <p className="text-[11px] text-emerald-400 mt-0.5">
                                     {95 - index * 3}% match
+                                </p>
+                                <p className="mt-1 text-[11px] leading-4 text-muted-foreground">
+                                    {getHomeFinderReason(result, activePreference)}
                                 </p>
                             </Link>
                         </motion.div>
@@ -745,8 +745,9 @@ function SpectrumPanel() {
                     <div className="flex w-full items-start gap-6 w-full">
                         <div className="flex justify-between w-full">
                             {visualSpectrumPads.map((pad) => (
-                                <div
+                                <Link
                                     key={pad.name}
+                                    href="/mousepads"
                                     className="relative flex flex-col items-center"
                                 >
                                     <span
@@ -756,7 +757,7 @@ function SpectrumPanel() {
                                     <span className="mt-6 whitespace-pre-line text-center text-sm font-medium leading-5 text-foreground/88">
                                         {pad.name}
                                     </span>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     </div>
@@ -789,6 +790,23 @@ function SpectrumPanel() {
             </div>
         </section>
     );
+}
+
+function getHomeFinderReason(
+    result: string,
+    activePreference: (typeof preferences)[number],
+) {
+    if (activePreference === "More Control") {
+        return "More stopping power for steadier aim";
+    }
+
+    if (activePreference === "More Speed") {
+        return "Faster glide with easier tracking";
+    }
+
+    return result === "Artisan Zero"
+        ? "Safe balanced pick for most FPS players"
+        : "Balanced feel without losing consistency";
 }
 
 function WhyPanel() {

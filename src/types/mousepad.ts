@@ -171,17 +171,5 @@ export interface Mousepad {
 
     personal: MousepadPersonalNotes;
 
-    affiliate?: {
-        official?: string;
-        amazon?: string;
-        waimers?: string;
-        genesispc?: string;
-        maxgaming?: string;
-        other?: string;
-    };
-
     sources: MousepadSource[];
-
-    createdAt: string;
-    updatedAt: string;
 }

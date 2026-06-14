@@ -32,6 +32,10 @@ export function SelectedMousepadStrip({ mousepads, onRemove }: Props) {
       </CardHeader>
 
       <CardContent>
+        <p className="mb-4 text-sm text-muted-foreground">
+          Remove pads here to free a slot, or keep this set and scroll down for
+          the shared feel, position, and environment views.
+        </p>
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           {mousepads.map((mousepad) => {
             const colorway = getDefaultColorway(mousepad);

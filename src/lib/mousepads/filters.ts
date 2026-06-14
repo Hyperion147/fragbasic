@@ -55,6 +55,8 @@ const companyOrder = [
   "Zowie",
 ] as const;
 
+const mainCompanies = new Set(companyOrder);
+
 const categoryOrder: MousepadCategory[] = [
   "mud",
   "control",
@@ -87,12 +89,30 @@ export function getMousepadBrandOptions(
 ): FilterOption<string>[] {
   const companies = new Set(pads.map((pad) => getMousepadCompany(pad)));
 
-  return companyOrder
+  const mainOptions = companyOrder
     .filter((company) => companies.has(company))
     .map((company) => ({
       label: company,
       value: company,
     }));
+
+  const hasGlass = pads.some((pad) => pad.category === "glass");
+  const hasOther = pads.some((pad) => {
+    const comp = getMousepadCompany(pad);
+    return !mainCompanies.has(comp as any) && pad.category !== "glass";
+  });
+
+  const options: FilterOption<string>[] = [...mainOptions];
+
+  if (hasGlass) {
+    options.push({ label: "Glasspads", value: "Glasspads" });
+  }
+
+  if (hasOther) {
+    options.push({ label: "Others", value: "Others" });
+  }
+
+  return options;
 }
 
 export function getMousepadCategoryOptions(
@@ -150,11 +170,19 @@ export function filterMousepads(
 ): Mousepad[] {
   return [...pads]
     .filter((pad) => {
-      if (
-        filters.brand !== ALL_FILTER_VALUE &&
-        getMousepadCompany(pad) !== filters.brand
-      ) {
-        return false;
+      if (filters.brand !== ALL_FILTER_VALUE) {
+        const company = getMousepadCompany(pad);
+        if (filters.brand === "Glasspads") {
+          if (pad.category !== "glass") {
+            return false;
+          }
+        } else if (filters.brand === "Others") {
+          if (mainCompanies.has(company as any) || pad.category === "glass") {
+            return false;
+          }
+        } else if (company !== filters.brand) {
+          return false;
+        }
       }
 
       if (

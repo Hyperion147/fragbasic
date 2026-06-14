@@ -1,9 +1,10 @@
 "use client";
 
-import { RotateCcw } from "lucide-react";
+import { RotateCcw, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import {
   type FilterOption,
   type MousepadCategory,
@@ -15,7 +16,9 @@ type Props = {
   categories: FilterOption<MousepadCategory>[];
   resultCount: number;
   value: MousepadFilters;
+  query: string;
   onChange: (next: MousepadFilters) => void;
+  onQueryChange: (next: string) => void;
   onReset: () => void;
 };
 
@@ -24,7 +27,9 @@ export function MousepadFilters({
   categories,
   resultCount,
   value,
+  query,
   onChange,
+  onQueryChange,
   onReset,
 }: Props) {
   return (
@@ -48,12 +53,27 @@ export function MousepadFilters({
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:gap-8">
+      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-8">
+        <div className="space-y-3">
+          <p className="text-sm text-muted-foreground">Search</p>
+          <div className="relative">
+            <Search className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              value={query}
+              onChange={(event) => onQueryChange(event.target.value)}
+              placeholder="Search by brand, series, or model"
+              className="pl-10"
+              aria-label="Search the mousepad database"
+            />
+          </div>
+        </div>
+
         <div className="space-y-3">
           <p className="text-sm text-muted-foreground">Company</p>
           <div className="flex flex-wrap gap-2">
             {brands.map((option) => {
               const active = value.brand === option.value;
+              const isGlasspads = option.value === "Glasspads";
 
               return (
                 <Button
@@ -61,7 +81,15 @@ export function MousepadFilters({
                   type="button"
                   size="sm"
                   variant={active ? "default" : "outline"}
-                  className={active ? "text-black" : ""}
+                  className={
+                    isGlasspads
+                      ? active
+                        ? "bg-sky-400/90 text-white border-sky-300 hover:bg-sky-500"
+                        : "border-sky-400 text-sky-300 hover:bg-sky-950/40"
+                      : active
+                      ? "text-black"
+                      : ""
+                  }
                   onClick={() => onChange({ ...value, brand: option.value })}
                 >
                   {option.label}
@@ -70,9 +98,11 @@ export function MousepadFilters({
             })}
           </div>
         </div>
+      </div>
 
+      <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:gap-8">
         <div className="space-y-3">
-          <p className="text-sm text-end text-muted-foreground">Speed / Control</p>
+          <p className="text-sm text-muted-foreground">Speed / Control</p>
           <div className="flex flex-wrap gap-2">
             {categories.map((option) => {
               const active = value.category === option.value;

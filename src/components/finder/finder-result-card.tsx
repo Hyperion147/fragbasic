@@ -85,6 +85,18 @@ export function FinderResultCard({ result, rank, isSaved, onToggleSave, canSaveM
                                 </Badge>
                             ))}
                     </div>
+
+                    <div className="flex flex-wrap gap-2">
+                        {reasons.slice(1, 3).map((reason) => (
+                            <Badge
+                                key={reason}
+                                variant="outline"
+                                className="rounded-md text-xs text-muted-foreground"
+                            >
+                                {reason}
+                            </Badge>
+                        ))}
+                    </div>
                 </div>
 
                 <div className="flex flex-col items-start gap-8 md:items-end">

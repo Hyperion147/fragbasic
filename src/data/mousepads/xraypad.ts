@@ -188,9 +188,6 @@ export const xraypadMousepads: Mousepad[] = [
                 url: "https://www.reddit.com/r/MousepadReview/comments/1d4xj0l/difference_between_the_aqua_control_series/",
             },
         ],
-
-        createdAt: "2026-06-12",
-        updatedAt: "2026-06-12",
     },
 
     // Aqua Control Zero
@@ -360,9 +357,6 @@ export const xraypadMousepads: Mousepad[] = [
                 url: "https://www.reddit.com/r/MousepadReview/comments/1d4xj0l/difference_between_the_aqua_control_series/",
             },
         ],
-
-        createdAt: "2026-06-12",
-        updatedAt: "2026-06-12",
     },
 
     // Aqua Control II
@@ -557,9 +551,6 @@ export const xraypadMousepads: Mousepad[] = [
                 url: "https://www.reddit.com/r/MousepadReview/comments/1blb3b5/xraypad_aqua_control_ii_sakura_black_review/",
             },
         ],
-
-        createdAt: "2026-06-12",
-        updatedAt: "2026-06-12",
     },
 
     // Equate Plus V2
@@ -755,9 +746,6 @@ export const xraypadMousepads: Mousepad[] = [
                 url: "https://www.reddit.com/r/MousepadReview/comments/1alvn4g/xraypad_equate_plus_v2_review/",
             },
         ],
-
-        createdAt: "2026-06-12",
-        updatedAt: "2026-06-12",
     },
 
     // Aqua Control Pro
@@ -938,8 +926,5 @@ export const xraypadMousepads: Mousepad[] = [
                 url: "https://shop.x-raypad.com/",
             },
         ],
-
-        createdAt: "2026-06-12",
-        updatedAt: "2026-06-12",
     },
 ];

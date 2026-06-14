@@ -68,6 +68,7 @@ export function MousepadFinder({ mousepads }: Props) {
             if (prev.length >= maxSaved) {
                 return prev;
             }
+            setActiveTab("saved");
             return [...prev, slug];
         });
     };
@@ -104,7 +105,7 @@ export function MousepadFinder({ mousepads }: Props) {
     );
 
     const topResults = recommendations.slice(0, 5);
-    const honorableMentions = recommendations.slice(5, 10).map((entry) => entry.mousepad);
+    const honorableEntries = recommendations.slice(5, 10);
 
     return (
         <div className="space-y-12">
@@ -172,7 +173,50 @@ export function MousepadFinder({ mousepads }: Props) {
 
                         <TabsContent value="saved" className="mt-0">
                             {savedMousepads.length > 0 ? (
-                                <div>
+                                <div className="space-y-4">
+                                    <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-border bg-card/90 p-4">
+                                        <div>
+                                            <p className="text-sm font-medium text-foreground">
+                                                Your shortlist
+                                            </p>
+                                            <p className="text-sm text-muted-foreground">
+                                                Save up to four pads, then jump into direct comparison when you have at least two.
+                                            </p>
+                                        </div>
+                                        <div className="flex flex-wrap gap-2">
+                                            {savedMousepads.length >= 2 ? (
+                                                <Button
+                                                    variant="outline"
+                                                    size="sm"
+                                                    asChild
+                                                >
+                                                    <Link
+                                                        href={`/mousepads/compare/universal?pads=${savedMousepads
+                                                            .slice(0, 3)
+                                                            .map((pad) => pad.slug)
+                                                            .join(",")}`}
+                                                    >
+                                                        Compare saved pads
+                                                    </Link>
+                                                </Button>
+                                            ) : (
+                                                <Button
+                                                    variant="outline"
+                                                    size="sm"
+                                                    disabled
+                                                >
+                                                    Compare saved pads
+                                                </Button>
+                                            )}
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={() => setSavedSlugs([])}
+                                            >
+                                                Clear saved
+                                            </Button>
+                                        </div>
+                                    </div>
                                     <div className="grid grid-cols-2 gap-3">
                                         {savedMousepads.map((pad) => (
                                             <div key={pad.slug} className="relative">
@@ -208,6 +252,13 @@ export function MousepadFinder({ mousepads }: Props) {
                                         <p className="text-sm leading-6 text-muted-foreground">
                                             Click the bookmark icon on any recommendation in the Results tab to build your personal collection.
                                         </p>
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => setActiveTab("results")}
+                                        >
+                                            Go to results
+                                        </Button>
                                     </div>
                                 </Card>
                             )}
@@ -216,7 +267,7 @@ export function MousepadFinder({ mousepads }: Props) {
                 </div>
             </div>
 
-            {honorableMentions.length > 0 && (
+            {honorableEntries.length > 0 && (
                 <section className="space-y-5">
                     <div>
                         <p className="text-sm text-muted-foreground">
@@ -228,7 +279,12 @@ export function MousepadFinder({ mousepads }: Props) {
                     </div>
 
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                        {honorableMentions.map((mousepad) => {
+                        {honorableEntries.map((entry) => {
+                            const mousepad = entry.mousepad;
+                            const shortReason = entry.reasons?.[0] || 
+                                (mousepad.environment.humidityResistance >= 8 
+                                    ? "Strong humidity performance" 
+                                    : "Solid all-round fit");
                             return (
                                 <Link
                                     key={mousepad.slug}
@@ -251,10 +307,7 @@ export function MousepadFinder({ mousepads }: Props) {
                                             {getMousepadFullName(mousepad)}
                                         </h3>
                                         <p className="text-sm leading-6 text-muted-foreground">
-                                            {formatMousepadValue(mousepad.category)} -{" "}
-                                            {mousepad.environment.humidityResistance >= 8
-                                                ? "strong humidity performance"
-                                                : "solid all-round fit"}
+                                            {formatMousepadValue(mousepad.category)} — {shortReason}
                                         </p>
                                         <span className="inline-flex items-center gap-2 text-sm font-medium text-foreground transition-colors group-hover:text-violet-200">
                                             View details

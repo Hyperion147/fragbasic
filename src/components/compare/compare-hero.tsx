@@ -1,6 +1,9 @@
 import { ArrowUpDown } from "lucide-react";
+import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ClientShareButton } from "@/components/ClientShareButton";
 import {
     getCompareHeroBody,
     getComparisonHighlights,
@@ -11,9 +14,10 @@ import type { Mousepad } from "@/types/mousepad";
 type Props = {
     left: Mousepad;
     right: Mousepad;
+    comparisonSlug: string;
 };
 
-export function CompareHero({ left, right }: Props) {
+export function CompareHero({ left, right, comparisonSlug }: Props) {
     const highlights = getComparisonHighlights(left, right);
     const verdictRows = getCompareVerdictRows(left, right);
 
@@ -40,6 +44,20 @@ export function CompareHero({ left, right }: Props) {
                     <p className="max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
                         {getCompareHeroBody(left, right)}
                     </p>
+
+                    <div className="flex flex-wrap gap-3">
+                        <Button asChild>
+                            <Link
+                                href={`/mousepads/compare/universal?pads=${left.slug},${right.slug}`}
+                            >
+                                Open in Universal Compare
+                            </Link>
+                        </Button>
+                        <ClientShareButton
+                            href={`/mousepads/compare/${comparisonSlug}`}
+                            label="Share matchup"
+                        />
+                    </div>
 
                     <div className="grid gap-3 sm:grid-cols-3">
                         {highlights.map((item) => (

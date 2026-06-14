@@ -156,8 +156,6 @@ export const zowieMousepads: Mousepad[] = [
         },
     ],
 
-    createdAt: "2026-06-11",
-    updatedAt: "2026-06-11",
 },
 
   // H-SR III
@@ -305,8 +303,6 @@ export const zowieMousepads: Mousepad[] = [
         },
     ],
 
-    createdAt: "2026-06-11",
-    updatedAt: "2026-06-11",
 },
 
   // G-SR-SE Gris
@@ -459,8 +455,6 @@ export const zowieMousepads: Mousepad[] = [
         },
     ],
 
-    createdAt: "2026-06-11",
-    updatedAt: "2026-06-11",
 },
 
   // G-SR-SE Rouge II
@@ -607,8 +601,6 @@ export const zowieMousepads: Mousepad[] = [
         },
     ],
 
-    createdAt: "2026-06-11",
-    updatedAt: "2026-06-11",
 },
 
   // G-SR-SE Bi
@@ -750,7 +742,5 @@ export const zowieMousepads: Mousepad[] = [
         },
     ],
 
-    createdAt: "2026-06-11",
-    updatedAt: "2026-06-11",
 },
 ]

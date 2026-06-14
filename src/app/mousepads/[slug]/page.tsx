@@ -8,6 +8,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react"
+import { ClientShareButton } from "@/components/ClientShareButton"
 
 import { getRelatedComparisons } from "@/lib/comparisons"
 import { getBrandSlugFromMousepad } from "@/lib/brands"
@@ -79,6 +80,7 @@ export default async function MousepadPage({ params }: PageProps) {
                 <Badge variant="outline">{formatValue(pad.softness)}</Badge>
                 <Badge variant="outline">{formatValue(pad.surface)}</Badge>
                 <Badge variant="outline">{formatValue(pad.base)} base</Badge>
+                <Badge variant="outline">{pad.sources.length} sources</Badge>
               </div>
 
               <div>
@@ -133,6 +135,13 @@ export default async function MousepadPage({ params }: PageProps) {
                     <Link href={`/mousepads/brands/${brandSlug}`}>Visit brand</Link>
                   </Button>
                 ) : null}
+
+                <ClientShareButton href={`/mousepads/${pad.slug}`} label="Share pad" />
+                <Button variant="outline" asChild>
+                  <Link href={`/mousepads/compare/universal?pads=${pad.slug}`}>
+                    Add to compare
+                  </Link>
+                </Button>
               </div>
             </div>
 
@@ -153,6 +162,7 @@ export default async function MousepadPage({ params }: PageProps) {
             <MousepadFeelChart pad={pad} />
             <MousepadSpecGrid pad={pad} />
             <SurfaceAndUseCard pad={pad} />
+            <CommunityNotesCard pad={pad} />
             <PersonalNotes pad={pad} />
             <SourcesCard pad={pad} />
           </div>
@@ -338,6 +348,11 @@ function CompareLinksCard({
             {comparisonSlug ? "Open related comparison" : "Visit compare hub"}
           </Link>
         </Button>
+        <Button variant="outline" asChild className="w-full">
+          <Link href={`/mousepads/compare/universal?pads=${pad.slug}`}>
+            Start a custom compare set
+          </Link>
+        </Button>
       </div>
     </Card>
   )
@@ -388,6 +403,67 @@ function SurfaceAndUseCard({ pad }: { pad: Mousepad }) {
           </ul>
         </div>
       ) : null}
+    </Card>
+  )
+}
+
+function CommunityNotesCard({ pad }: { pad: Mousepad }) {
+  const consensus = pad.communityConsensus
+
+  return (
+    <Card className="border-border bg-card p-5 md:p-6">
+      <p className="text-sm text-muted-foreground">Community Notes</p>
+
+      <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+        What the community says
+      </h2>
+
+      <p className="mt-4 text-sm leading-7 text-muted-foreground">
+        {consensus.summary}
+      </p>
+
+      {consensus.commonComparisons?.length ? (
+        <div className="mt-5">
+          <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground mb-2">
+            Commonly compared to
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {consensus.commonComparisons.map((c) => (
+              <Badge key={c} variant="outline" className="text-xs">
+                {c}
+              </Badge>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <div className="rounded-2xl border border-border bg-background/70 p-4">
+          <p className="font-medium text-foreground flex items-center gap-2">
+            <Check className="size-4 text-primary" /> Strengths
+          </p>
+          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+            {consensus.strengths.map((strength) => (
+              <li key={strength} className="flex items-start gap-2">
+                • {strength}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="rounded-2xl border border-border bg-background/70 p-4">
+          <p className="font-medium text-foreground flex items-center gap-2">
+            Weaknesses
+          </p>
+          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+            {consensus.weaknesses.map((weakness) => (
+              <li key={weakness} className="flex items-start gap-2">
+                • {weakness}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </Card>
   )
 }
@@ -444,6 +520,10 @@ function SourcesCard({ pad }: { pad: Mousepad }) {
       </h2>
 
       <div className="mt-5 space-y-3">
+        <p className="text-sm text-muted-foreground">
+          Built from firsthand notes, community consensus, and source links for
+          quick verification.
+        </p>
         {pad.sources.map((source) => (
           <div
             key={`${source.label}-${source.url ?? source.type}`}
@@ -478,4 +558,3 @@ function getHeroSummary(pad: Mousepad) {
   const games = pad.recommendedFor.games.slice(0, 2).map(formatValue).join(" and ")
   return `${pad.brand} ${pad.name} is a ${formatValue(pad.category)} pad built for ${games}. It balances ${pad.feel.control}/10 control, ${pad.feel.speed}/10 speed, and ${pad.feel.stoppingPower}/10 stopping power for players who care about gear feel, not just marketing labels.`
 }
-

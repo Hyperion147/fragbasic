@@ -72,8 +72,12 @@ export function MousepadSelector({
     <Card className="border-border bg-card">
       <CardHeader>
         <CardTitle className="text-2xl tracking-tight">
-          Pick up to three mousepads
+          Pick up to three mousepads ({selectedSlugs.length}/{maxSelected})
         </CardTitle>
+        <p className="text-sm leading-6 text-muted-foreground">
+          Search by brand, series, or model name. The universal charts become
+          much more useful once at least two pads are in the set.
+        </p>
       </CardHeader>
 
       <CardContent className="space-y-4">
@@ -84,8 +88,16 @@ export function MousepadSelector({
             onChange={(event) => onQueryChange(event.target.value)}
             placeholder="Search by brand, series, or mousepad name"
             className="pl-10"
+            aria-label="Search mousepads to add to compare"
           />
         </div>
+
+        {hasReachedLimit ? (
+          <div className="rounded-2xl border border-dashed border-border bg-background/70 px-4 py-3 text-sm text-muted-foreground">
+            You already have the maximum of three pads selected. Remove one from
+            the comparison strip below to add a different pad.
+          </div>
+        ) : null}
         
         <div className="grid gap-3 md:grid-cols-2">
           {availableMousepads.map((mousepad) => {
@@ -117,6 +129,7 @@ export function MousepadSelector({
                   size="sm"
                   onClick={() => onAdd(mousepad)}
                   disabled={hasReachedLimit}
+                  aria-label={`Add ${getMousepadFullName(mousepad)} to compare`}
                 >
                   <Plus className="size-4" />
                   Add

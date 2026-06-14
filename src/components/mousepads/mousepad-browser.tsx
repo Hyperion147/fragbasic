@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { MousepadCard } from "@/components/mousepads/mousepad-card";
 import { MousepadFilters } from "@/components/mousepads/mousepad-filters";
@@ -14,25 +14,49 @@ import {
 import type { Mousepad } from "@/types/mousepad";
 import { SearchX, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getMousepadFullName } from "@/lib/mousepads";
 
 type Props = {
   mousepads: Mousepad[];
   brands: FilterOption<string>[];
   categories: FilterOption<MousepadCategory>[];
+  initialCategory?: MousepadCategory;
 };
 
 export function MousepadBrowser({
   mousepads,
   brands,
   categories,
+  initialCategory,
 }: Props) {
   const [filters, setFilters] = useState<MousepadFilterState>(
-    getDefaultMousepadFilters()
+    () => ({
+      ...getDefaultMousepadFilters(),
+      category: initialCategory ?? getDefaultMousepadFilters().category,
+    })
   );
+  const [query, setQuery] = useState("");
 
-  const handleReset = () => setFilters(getDefaultMousepadFilters());
+  const handleReset = () => {
+    setFilters(getDefaultMousepadFilters());
+    setQuery("");
+  };
 
-  const filteredMousepads = filterMousepads(mousepads, filters);
+  const filteredMousepads = useMemo(() => {
+    const visible = filterMousepads(mousepads, filters);
+    const normalizedQuery = query.trim().toLowerCase();
+
+    if (!normalizedQuery) {
+      return visible;
+    }
+
+    return visible.filter((pad) =>
+      [getMousepadFullName(pad), pad.brand, pad.series ?? "", pad.surface]
+        .join(" ")
+        .toLowerCase()
+        .includes(normalizedQuery)
+    );
+  }, [filters, mousepads, query]);
 
   return (
     <div className="space-y-6">
@@ -41,7 +65,9 @@ export function MousepadBrowser({
         categories={categories}
         resultCount={filteredMousepads.length}
         value={filters}
+        query={query}
         onChange={setFilters}
+        onQueryChange={setQuery}
         onReset={handleReset}
       />
 

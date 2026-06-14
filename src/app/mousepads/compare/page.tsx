@@ -7,6 +7,7 @@ import {
 } from "@/lib/comparisons";
 import { getMousepadBySlug } from "@/lib/mousepads";
 import Link from "next/link";
+import { ClientShareButton } from "@/components/ClientShareButton";
 
 export default function CompareIndexPage() {
     const comparisons = getPublishedComparisons()
@@ -44,11 +45,14 @@ export default function CompareIndexPage() {
                             Popular head-to-head comparisons
                         </h2>
                     </div>
-                    <div className="items-center gap-2 flex flex-col items-end">
-                        <Button size="lg" variant="secondary" asChild>
-                            <Link href="/mousepads/compare/universal">Universal Compare</Link>
-                        </Button>
-                        <p>Compare upto 3 mousepads of your choice</p>
+                    <div className="flex flex-col items-end gap-2">
+                        <div className="flex items-center gap-2">
+                            <Button size="lg" variant="secondary" asChild>
+                                <Link href="/mousepads/compare/universal">Universal Compare</Link>
+                            </Button>
+                            <ClientShareButton href="/mousepads/compare" label="Share hub" />
+                        </div>
+                        <p className="text-sm text-muted-foreground">Compare up to 3 mousepads of your choice</p>
                     </div>
                 </div>
             </section>
