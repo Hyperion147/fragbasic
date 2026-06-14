@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +9,7 @@ import {
   getAllBrandSlugs,
   getBrandMousepads,
 } from "@/lib/brands";
+import { buildMetadata } from "@/lib/seo";
 
 const brandDescriptions: Record<string, string> = {
   artisan: "Premium Japanese cloth lineup with standout control, speed, and base quality.",
@@ -16,6 +18,22 @@ const brandDescriptions: Record<string, string> = {
   xraypad: "Huge variety across Aqua Control, Equate, and hybrid-leaning surfaces.",
   zowie: "Tac-FPS staples built around controlled glide and familiar tournament-ready feel.",
 };
+
+export const metadata: Metadata = buildMetadata({
+  title: "Mousepad Brands",
+  description:
+    "Browse mousepad brands tracked on FragBasic, including Artisan, LGG, SteelSeries, Xraypad, and Zowie, with brand-specific pad pages and comparisons.",
+  path: "/mousepads/brands",
+  keywords: [
+    "mousepad brands",
+    "artisan mousepads",
+    "lgg mousepads",
+    "xraypad mousepads",
+    "zowie mousepads",
+  ],
+  images: getAllBrandSlugs()
+    .flatMap((slug) => getBrandMousepads(slug).map((mousepad) => mousepad.images.main)),
+});
 
 export default function BrandsIndexPage() {
   const brands = getAllBrandSlugs().map((slug) => ({

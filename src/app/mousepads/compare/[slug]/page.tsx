@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { BuyRecommendation } from "@/components/compare/buy-recommendation";
@@ -11,6 +12,7 @@ import { VerdictPanel } from "@/components/compare/verdict-panel";
 import { getAllComparisons } from "@/lib/comparisons";
 import { getComparisonPageData } from "@/lib/compare";
 import { getMousepadFullName } from "@/lib/mousepads";
+import { buildMetadata } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{
@@ -24,7 +26,7 @@ export function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const comparisonData = getComparisonPageData(slug);
 
@@ -34,14 +36,21 @@ export async function generateMetadata({ params }: PageProps) {
 
   const { comparison, left, right } = comparisonData;
 
-  return {
+  return buildMetadata({
     title: comparison.title,
     description: `${comparison.excerpt} Compare ${getMousepadFullName(
       left
     )} and ${getMousepadFullName(
       right
-    )} across speed, control, stopping power, and humidity resistance.`,
-  };
+    )} across speed, control, stopping power, humidity resistance, and overall feel.`,
+    path: `/mousepads/compare/${comparison.slug}`,
+    keywords: [
+      comparison.title,
+      `${getMousepadFullName(left)} vs ${getMousepadFullName(right)}`,
+      "mousepad comparison",
+    ],
+    images: [left.images.main, right.images.main],
+  });
 }
 
 export default async function ComparePage({ params }: PageProps) {

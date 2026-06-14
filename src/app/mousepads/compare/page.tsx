@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ComparisonBrowser } from "@/components/compare/comparison-browser";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,34 @@ import {
 import { getMousepadBySlug } from "@/lib/mousepads";
 import Link from "next/link";
 import { ClientShareButton } from "@/components/ClientShareButton";
+import { buildMetadata } from "@/lib/seo";
+
+const compareHubImages = getPublishedComparisons()
+    .map((comparison) => {
+        const left = getMousepadBySlug(comparison.leftSlug);
+        const right = getMousepadBySlug(comparison.rightSlug);
+
+        if (!left || !right) {
+            return [];
+        }
+
+        return [left.images.main, right.images.main];
+    })
+    .flat();
+
+export const metadata: Metadata = buildMetadata({
+    title: "Mousepad Comparisons",
+    description:
+        "Read published mousepad comparisons and compare FPS pads side by side across speed, control, stopping power, and feel.",
+    path: "/mousepads/compare",
+    keywords: [
+        "mousepad comparison",
+        "artisan zero vs lgg saturn pro",
+        "mousepad compare tool",
+        "fps pad comparison",
+    ],
+    images: compareHubImages,
+});
 
 export default function CompareIndexPage() {
     const comparisons = getPublishedComparisons()

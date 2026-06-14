@@ -93,7 +93,7 @@ export function SpecRows({ left, right }: Props) {
       right: formatValue(right.availability.india),
     },
     {
-      label: "Estimated India price",
+      label: "Estimated price in India",
       left: left.price.inr ? `Rs ${left.price.inr.toLocaleString("en-IN")}` : "N/A",
       right: right.price.inr
         ? `Rs ${right.price.inr.toLocaleString("en-IN")}`

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import {
@@ -26,6 +27,7 @@ import { MousepadSpecGrid } from "@/components/mousepads/mousepad-spec-grid"
 import { MousepadImageGallery } from "@/components/mousepads/mousepad-image-gallery"
 import { SimilarMousepads } from "@/components/mousepads/similar-mousepads"
 import type { Mousepad } from "@/types/mousepad"
+import { buildMetadata } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{
@@ -39,7 +41,7 @@ export function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
   const pad = getMousepadBySlug(slug)
 
@@ -47,10 +49,18 @@ export async function generateMetadata({ params }: PageProps) {
     notFound()
   }
 
-  return {
+  return buildMetadata({
     title: `${pad.brand} ${pad.name} Review & Specs`,
-    description: `${pad.brand} ${pad.name} feel profile, specs, humidity resistance, control, speed, and FPS recommendations.`,
-  }
+    description: `${pad.brand} ${pad.name} review with feel profile, specs, humidity resistance, control, speed, and FPS recommendations on FragBasic.`,
+    path: `/mousepads/${pad.slug}`,
+    keywords: [
+      `${pad.brand} ${pad.name}`,
+      `${pad.brand} ${pad.name} review`,
+      `${pad.brand} ${pad.name} specs`,
+      `${pad.brand} ${pad.name} mousepad`,
+    ],
+    images: [pad.images.main],
+  })
 }
 
 export default async function MousepadPage({ params }: PageProps) {
@@ -113,7 +123,7 @@ export default async function MousepadPage({ params }: PageProps) {
                   value={`${pad.environment.humidityResistance}/10 resistance`}
                 />
                 <HighlightCard
-                  label="India price"
+                  label="Price in India"
                   value={formatPrice(pad.price.inr)}
                 />
               </div>
@@ -257,7 +267,7 @@ function AvailabilityCard({ pad }: { pad: Mousepad }) {
       </h3>
 
       <p className="mt-3 text-sm text-muted-foreground">
-        Estimated India price:{" "}
+        Estimated price in India:{" "}
         <span className="text-foreground">{formatPrice(pad.price.inr)}</span>
       </p>
 

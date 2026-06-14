@@ -1,10 +1,8 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
     ChevronRight,
-    Database,
-    ScanSearch,
-    SlidersHorizontal,
 } from "lucide-react";
 
 import { MousepadFinder } from "@/components/finder/mousepad-finder";
@@ -12,30 +10,21 @@ import { SiteSection } from "@/components/SiteSection";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { getAllMousepads } from "@/lib/mousepads";
+import { buildMetadata } from "@/lib/seo";
 
-const heroFeatures = [
-    {
-        title: "Data-driven recommendations",
-        body: "Recommendations use the actual speed, control, stopping power, and environment data in your database.",
-        icon: Database,
-    },
-    {
-        title: "Personalized for you",
-        body: "Game choice, sensitivity, desired feel, and texture preference all shift the ranking logic.",
-        icon: ScanSearch,
-    },
-    {
-        title: "Transparent results",
-        body: "Every recommendation shows why it matched and what tradeoffs to expect before you click through.",
-        icon: SlidersHorizontal,
-    },
-] as const;
-
-export const metadata = {
+export const metadata: Metadata = buildMetadata({
     title: "Mousepad Finder",
     description:
-        "Answer a few questions and get mousepad recommendations based on your games, feel preferences, and environment.",
-};
+        "Answer a few questions and get mousepad recommendations based on your games, feel preferences, sensitivity, and environment.",
+    path: "/mousepads/finder",
+    keywords: [
+        "mousepad finder",
+        "best mousepad for valorant",
+        "best mousepad for cs2",
+        "mousepad recommendation tool",
+    ],
+    images: ["/hero-bg.png"],
+});
 
 export default function MousepadFinderPage() {
     const mousepads = getAllMousepads();

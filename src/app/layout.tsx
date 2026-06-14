@@ -4,11 +4,9 @@ import { Inter, Lora, Roboto_Mono } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { SiteNavbar } from "@/components/navbar";
 import { Analytics } from "@vercel/analytics/next";
+import { getRootMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "FragBasic | Mousepad Database & FPS Gear",
-  description: "Browse mousepads by feel, compare models, and use the finder to discover the right pad for your games and sensitivity.",
-};
+export const metadata: Metadata = getRootMetadata();
 
 const inter = Inter({ subsets: ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext', 'greek', 'greek-ext', 'vietnamese'], weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'], variable: '--font-inter' });
 

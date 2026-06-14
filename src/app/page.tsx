@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { HomeExperience } from "@/components/home/home-experience";
 import { getAllBrandSlugs, getBrandMousepads, brandConfig } from "@/lib/brands";
 import { getPublishedComparisons } from "@/lib/comparisons";
@@ -7,6 +8,26 @@ import {
   getMousepadFullName,
   getMousepadBySlug,
 } from "@/lib/mousepads";
+import { buildMetadata } from "@/lib/seo";
+
+const homepageMousepadImages = getAllMousepads()
+  .slice(0, 8)
+  .map((mousepad) => mousepad.images.main);
+
+export const metadata: Metadata = buildMetadata({
+  title: "Mousepad Database, Glasspads, Comparisons & FPS Finder",
+  description:
+    "Browse cloth mousepads and glasspads, compare FPS pads side by side, and use the FragBasic finder to discover the right pad for Valorant, CS2, Apex, and more.",
+  path: "/",
+  keywords: [
+    "mousepad database india",
+    "best mousepads for valorant",
+    "best glasspads",
+    "fps mousepad finder",
+    "mousepad compare",
+  ],
+  images: homepageMousepadImages,
+});
 
 export default function HomePage() {
   const mousepads = getAllMousepads();

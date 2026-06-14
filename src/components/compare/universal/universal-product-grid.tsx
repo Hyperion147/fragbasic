@@ -140,7 +140,7 @@ export function UniversalProductGrid({ mousepads }: Props) {
                                     )}
                                 />
                                 <DetailPill
-                                    label="India price"
+                                    label="Price in India"
                                     value={
                                         mousepad.price.inr
                                             ? `Rs ${mousepad.price.inr.toLocaleString("en-IN")}`

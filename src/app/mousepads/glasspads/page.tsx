@@ -1,13 +1,30 @@
+import type { Metadata } from "next";
 import { Badge } from "@/components/ui/badge";
 import { MousepadBrowser } from "@/components/mousepads/mousepad-browser";
 import { SiteSection } from "@/components/SiteSection";
 import { getAllMousepads } from "@/lib/mousepads";
+import { buildMetadata } from "@/lib/seo";
+
+const glasspads = getAllMousepads().filter(
+  (mousepad) => mousepad.category === "glass",
+);
+
+export const metadata: Metadata = buildMetadata({
+  title: "Glasspads Database",
+  description:
+    "Browse FragBasic's dedicated glasspads database with fast surfaces, glass-specific tradeoffs, and tracked models for competitive FPS players.",
+  path: "/mousepads/glasspads",
+  keywords: [
+    "glasspads",
+    "glass mousepads",
+    "wallhack sp-005 review",
+    "tekkusai phantom",
+    "best glasspads for fps",
+  ],
+  images: glasspads.map((mousepad) => mousepad.images.main),
+});
 
 export default function GlasspadsPage() {
-  const glasspads = getAllMousepads().filter(
-    (mousepad) => mousepad.category === "glass",
-  );
-
   return (
     <main className="min-h-screen bg-background text-foreground">
       <section className="border-b border-border bg-background">

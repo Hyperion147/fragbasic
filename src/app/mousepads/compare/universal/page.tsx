@@ -1,6 +1,22 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { UniversalCompare } from "@/components/compare/universal/universal-compare";
 import { getAllMousepads } from "@/lib/mousepads";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Universal Mousepad Compare",
+  description:
+    "Build your own 2-3 mousepad matchup on FragBasic and compare speed, control, stopping power, micro-adjustments, and environment resistance.",
+  path: "/mousepads/compare/universal",
+  keywords: [
+    "universal mousepad compare",
+    "compare mousepads side by side",
+    "glasspad vs cloth pad",
+    "mousepad stats comparison",
+  ],
+  images: getAllMousepads().map((mousepad) => mousepad.images.main),
+});
 
 export default function UniversalComparePage() {
   const allMousepads = getAllMousepads();

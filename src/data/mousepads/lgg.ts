@@ -357,15 +357,9 @@ export const lggMousepads: Mousepad[] = [
                 url: "https://lethal.gg/collections/mousepads-1",
             },
             {
-                label: "Ausmodshop Saturn Pro listing",
-                type: "store",
-                url: "https://ausmodshop.com/products/lethal-gaming-gear-saturn-pro",
-            },
-            {
-                label: "Amazon Saturn Pro XLSQ listing",
-                type: "store",
-                url: "https://www.amazon.com/Lethal-Gaming-Gear-Saturn-Xsoft/dp/B0DG8JPCMT",
-            },
+                label: "Community review by end0x00",
+                type: "review"
+            }
         ],
     },
 

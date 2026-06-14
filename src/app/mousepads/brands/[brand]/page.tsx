@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { BrandBestPicks } from "@/components/brands/brand-best-picks";
@@ -14,6 +15,7 @@ import {
   getBrandSpeedControlOrder,
   type BrandSlug,
 } from "@/lib/brands";
+import { buildMetadata } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{
@@ -27,7 +29,7 @@ export function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { brand } = await params;
   const brandName = getBrandNameFromSlug(brand);
 
@@ -35,10 +37,20 @@ export async function generateMetadata({ params }: PageProps) {
     notFound();
   }
 
-  return {
+  const brandSlug = brand as BrandSlug;
+  const brandMousepads = getBrandSpeedControlOrder(brandSlug);
+
+  return buildMetadata({
     title: `${brandName} Mousepads`,
-    description: `Browse ${brandName} mousepads by brand overview, speed-control order, top picks, and published comparisons.`,
-  };
+    description: `Browse ${brandName} mousepads with specs, speed-control ordering, best picks, and comparisons on FragBasic.`,
+    path: `/mousepads/brands/${brand}`,
+    keywords: [
+      `${brandName} mousepads`,
+      `${brandName} mousepad review`,
+      `${brandName} pad comparison`,
+    ],
+    images: brandMousepads.map((mousepad) => mousepad.images.main),
+  });
 }
 
 export default async function BrandPage({ params }: PageProps) {

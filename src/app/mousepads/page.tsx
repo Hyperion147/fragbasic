@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Badge } from "@/components/ui/badge";
 import { MousepadBrowser } from "@/components/mousepads/mousepad-browser";
 import { SiteSection } from "@/components/SiteSection";
@@ -5,7 +6,27 @@ import {
   getAllMousepads,
   getMousepadCategoryOptions,
 } from "@/lib/mousepads";
+import { buildMetadata } from "@/lib/seo";
 import type { MousepadCategory } from "@/types/mousepad";
+
+const browseMousepads = getAllMousepads().filter(
+    (mousepad) => mousepad.category !== "glass",
+);
+
+export const metadata: Metadata = buildMetadata({
+    title: "Mousepad Database",
+    description:
+        "Browse FragBasic's mousepad database for cloth and hybrid FPS pads by feel, speed, control, stopping power, and India availability.",
+    path: "/mousepads",
+    keywords: [
+        "mousepad reviews",
+        "mousepad database",
+        "cloth mousepads",
+        "control mousepads",
+        "speed mousepads",
+    ],
+    images: browseMousepads.map((mousepad) => mousepad.images.main),
+});
 
 type MousepadsPageProps = {
     searchParams?: Promise<{
@@ -14,9 +35,7 @@ type MousepadsPageProps = {
 };
 
 export default async function MousepadsPage({ searchParams }: MousepadsPageProps) {
-    const mousepads = getAllMousepads().filter(
-        (mousepad) => mousepad.category !== "glass",
-    );
+    const mousepads = browseMousepads;
     const params = searchParams ? await searchParams : undefined;
     const categories = getMousepadCategoryOptions(mousepads);
     const initialCategory = categories.some(

@@ -1,0 +1,49 @@
+import type { MetadataRoute } from "next";
+
+import { getAllBrandSlugs } from "@/lib/brands";
+import { getAllComparisons } from "@/lib/comparisons";
+import { getAllMousepads } from "@/lib/mousepads";
+import { getSiteUrl } from "@/lib/seo";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const siteUrl = getSiteUrl();
+  const now = new Date();
+
+  const staticRoutes = [
+    "",
+    "/mousepads",
+    "/mousepads/glasspads",
+    "/mousepads/brands",
+    "/mousepads/finder",
+    "/mousepads/compare",
+    "/mousepads/compare/universal",
+  ].map((path) => ({
+    url: `${siteUrl}${path}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: path === "" ? 1 : 0.8,
+  }));
+
+  const mousepadRoutes = getAllMousepads().map((mousepad) => ({
+    url: `${siteUrl}/mousepads/${mousepad.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.9,
+  }));
+
+  const brandRoutes = getAllBrandSlugs().map((brand) => ({
+    url: `${siteUrl}/mousepads/brands/${brand}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
+  const comparisonRoutes = getAllComparisons().map((comparison) => ({
+    url: `${siteUrl}/mousepads/compare/${comparison.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
+  return [...staticRoutes, ...mousepadRoutes, ...brandRoutes, ...comparisonRoutes];
+}

@@ -913,19 +913,13 @@ export const artisanMousepads: Mousepad[] = [
                 url: "https://artisan-jp.com/global/fx-type99",
             },
             {
-                label: "JPGamingUSA Type-99 listing",
-                type: "store",
-                url: "https://jpgamingusa.com/products/artisan-fx-type-99-mousepad",
-            },
-            {
                 label: "GenesisPC India Type-99 listing",
                 type: "store",
                 url: "https://www.genesispc.in/products/artisan-fx-type-99-gaming-mousepad",
             },
             {
-                label: "Ausmodshop Type-99 listing",
-                type: "store",
-                url: "https://ausmodshop.com/products/artisan-fx-type-99-matcha-green",
+                label: "Community review by napst3r666",
+                type: "review",
             },
         ],
     },
