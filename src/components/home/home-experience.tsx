@@ -215,7 +215,7 @@ function Hero({
             }
         >
             <div className="relative z-10 grid min-h-130 w-full gap-8 md:grid-cols-[0.92fr_1.08fr]">
-                <div className="flex flex-col justify-center ml-20 py-24 md:py-40 px-4 md:px-6 lg:px-8">
+                <div className="flex flex-col justify-center ml-20 px-4 md:px-6 lg:px-8">
                     <Badge
                         variant="outline"
                         className="w-fit gap-2 rounded-md bg-background/60 px-3 py-2 text-[11px] uppercase tracking-[0.16em]"
@@ -224,7 +224,7 @@ function Hero({
                         Competitive gaming gear database
                     </Badge>
 
-                    <h1 className="mt-6 max-w-3xl text-5xl font-semibold leading-[1.05] tracking-tighter text-foreground md:text-7xl">
+                    <h1 className="mt-6 max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tighter text-foreground md:text-7xl">
                         Find the gear that matches how you play.
                     </h1>
 
