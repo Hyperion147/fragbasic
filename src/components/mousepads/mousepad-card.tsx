@@ -8,9 +8,16 @@ import {
   formatMousepadValue,
   getMousepadFullName,
 } from "@/lib/mousepads";
+import { cn } from "@/lib/utils";
 import type { Mousepad } from "@/types/mousepad";
 
-export function MousepadCard({ pad }: { pad: Mousepad }) {
+export function MousepadCard({
+  pad,
+  compact = false,
+}: {
+  pad: Mousepad;
+  compact?: boolean;
+}) {
   const glassFinishLabel =
     pad.category === "glass" && pad.glassSurfaceFinish
       ? pad.glassSurfaceFinish === "unknown"
@@ -19,8 +26,16 @@ export function MousepadCard({ pad }: { pad: Mousepad }) {
       : null;
 
   return (
-    <Link href={`/mousepads/${pad.slug}`} className="h-full">
-      <Card className="group h-full border-border bg-card/95 p-5 transition-all duration-200 hover:border-primary/45 hover:shadow-lg hover:shadow-black/10">
+    <Link
+      href={`/mousepads/${pad.slug}`}
+      className={cn(compact ? "block" : "h-full")}
+    >
+      <Card
+        className={cn(
+          "group border-border bg-card/95 p-5 transition-all duration-200 hover:border-primary/45 hover:shadow-lg hover:shadow-black/10",
+          compact ? "h-auto" : "h-full",
+        )}
+      >
         <div className="flex flex-wrap gap-2">
           <Badge className="text-black">{formatMousepadValue(pad.category)}</Badge>
           <Badge variant="outline">{formatMousepadValue(pad.surface)}</Badge>
@@ -44,24 +59,37 @@ export function MousepadCard({ pad }: { pad: Mousepad }) {
           </h2>
         </div>
 
-        <div className="relative aspect-4/3 rounded-3xl border border-border bg-card">
+        <div
+          className={cn(
+            "relative rounded-3xl border border-border bg-card",
+            compact ? "aspect-[16/10]" : "aspect-4/3",
+          )}
+        >
           <Image
             src={pad.images.main}
             alt={getMousepadFullName(pad)}
             fill
             sizes="(min-width: 1024px) 28vw, (min-width: 768px) 44vw, 100vw"
-            className="object-contain p-5 transition-transform duration-300 group-hover:scale-[1.03]"
+            className={cn(
+              "object-contain transition-transform duration-300 group-hover:scale-[1.03]",
+              compact ? "p-4" : "p-5",
+            )}
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className={cn("grid gap-3", compact ? "grid-cols-4" : "grid-cols-2")}>
           <StatPill label="Control" value={pad.feel.control} />
           <StatPill label="Speed" value={pad.feel.speed} />
           <StatPill label="Stopping" value={pad.feel.stoppingPower} />
           <StatPill label="Micro" value={pad.feel.microAdjustments} />
         </div>
 
-        <div className="mt-auto flex items-center justify-between gap-3 text-sm text-muted-foreground">
+        <div
+          className={cn(
+            "flex items-center justify-between gap-3 text-sm text-muted-foreground",
+            compact ? "" : "mt-auto",
+          )}
+        >
           <span>{formatMousepadValue(pad.texture.feel)} feel</span>
           <span className="inline-flex items-center gap-2 font-medium text-foreground">
             View profile

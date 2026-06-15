@@ -89,9 +89,9 @@ export function SiteFooter() {
                             FRAGBASIC.FUN helps players research mousepads
                             faster.
                         </p>
-                        <div className="flex flex-wrap items-center gap-2">
-                            <Link href="https://cal.com/suryansu/15min">
-                                Hire me :
+                        <div className="flex flex-wrap items-center gap-4">
+                            <Link href="https://forms.gle/5b1QejGptx63eQHw9">
+                                Submit Review
                             </Link>
                             <RectTipComp
                                 heading="@x.com/suryansu87"
