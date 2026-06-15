@@ -31,8 +31,6 @@ export const metadata: Metadata = buildMetadata({
     "xraypad mousepads",
     "zowie mousepads",
   ],
-  images: getAllBrandSlugs()
-    .flatMap((slug) => getBrandMousepads(slug).map((mousepad) => mousepad.images.main)),
 });
 
 export default function BrandsIndexPage() {

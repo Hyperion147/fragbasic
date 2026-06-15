@@ -5,7 +5,6 @@ type MetadataOptions = {
   description: string;
   path: string;
   keywords?: string[];
-  images?: string[];
 };
 
 const siteName = "FragBasic";
@@ -21,18 +20,13 @@ export function getAbsoluteUrl(path: string) {
   return new URL(path, siteUrl).toString();
 }
 
-export function getAbsoluteImageUrls(images: string[]) {
-  return images.map((image) => getAbsoluteUrl(image));
-}
-
 export function buildMetadata({
   title,
   description,
   path,
   keywords = [],
-  images = ["/hero-bg.png"],
 }: MetadataOptions): Metadata {
-  const absoluteImages = getAbsoluteImageUrls(images);
+  const absoluteImage = getAbsoluteUrl("/og-image.png");
   const url = getAbsoluteUrl(path);
 
   return {
@@ -57,15 +51,13 @@ export function buildMetadata({
       siteName,
       title,
       description,
-      images: absoluteImages.map((image) => ({
-        url: image,
-      })),
+      images: [{ url: absoluteImage }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: absoluteImages,
+      images: [absoluteImage],
     },
   };
 }
@@ -100,7 +92,7 @@ export function getRootMetadata(): Metadata {
       description: defaultDescription,
       images: [
         {
-          url: getAbsoluteUrl("/hero-bg.png"),
+          url: getAbsoluteUrl("/og-image.png"),
         },
       ],
     },
@@ -108,7 +100,7 @@ export function getRootMetadata(): Metadata {
       card: "summary_large_image",
       title: "FragBasic | Mousepad Database, Glasspads, Comparisons & Finder",
       description: defaultDescription,
-      images: [getAbsoluteUrl("/hero-bg.png")],
+      images: [getAbsoluteUrl("/og-image.png")],
     },
     category: "technology",
   };

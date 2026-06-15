@@ -38,7 +38,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const brandSlug = brand as BrandSlug;
-  const brandMousepads = getBrandSpeedControlOrder(brandSlug);
 
   return buildMetadata({
     title: `${brandName} Mousepads`,
@@ -49,7 +48,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `${brandName} mousepad review`,
       `${brandName} pad comparison`,
     ],
-    images: brandMousepads.map((mousepad) => mousepad.images.main),
   });
 }
 

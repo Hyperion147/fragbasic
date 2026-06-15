@@ -21,7 +21,6 @@ export const metadata: Metadata = buildMetadata({
     "tekkusai phantom",
     "best glasspads for fps",
   ],
-  images: glasspads.map((mousepad) => mousepad.images.main),
 });
 
 export default function GlasspadsPage() {

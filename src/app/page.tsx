@@ -2,17 +2,8 @@ import type { Metadata } from "next";
 import { HomeExperience } from "@/components/home/home-experience";
 import { getAllBrandSlugs, getBrandMousepads, brandConfig } from "@/lib/brands";
 import { getPublishedComparisons } from "@/lib/comparisons";
-import {
-  getAllMousepads,
-  getDefaultColorway,
-  getMousepadFullName,
-  getMousepadBySlug,
-} from "@/lib/mousepads";
+import { getAllMousepads, getDefaultColorway, getMousepadFullName, getMousepadBySlug } from "@/lib/mousepads";
 import { buildMetadata } from "@/lib/seo";
-
-const homepageMousepadImages = getAllMousepads()
-  .slice(0, 8)
-  .map((mousepad) => mousepad.images.main);
 
 export const metadata: Metadata = buildMetadata({
   title: "Mousepad Database, Glasspads, Comparisons & FPS Finder",
@@ -26,7 +17,6 @@ export const metadata: Metadata = buildMetadata({
     "fps mousepad finder",
     "mousepad compare",
   ],
-  images: homepageMousepadImages,
 });
 
 export default function HomePage() {

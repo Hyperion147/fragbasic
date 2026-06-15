@@ -15,7 +15,6 @@ export const metadata: Metadata = buildMetadata({
     "glasspad vs cloth pad",
     "mousepad stats comparison",
   ],
-  images: getAllMousepads().map((mousepad) => mousepad.images.main),
 });
 
 export default function UniversalComparePage() {

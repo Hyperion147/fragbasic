@@ -26,7 +26,6 @@ export const metadata: Metadata = buildMetadata({
         "control mousepads",
         "speed mousepads",
     ],
-    images: browseMousepads.map((mousepad) => mousepad.images.main),
 });
 
 type MousepadsPageProps = {

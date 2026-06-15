@@ -49,7 +49,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `${getMousepadFullName(left)} vs ${getMousepadFullName(right)}`,
       "mousepad comparison",
     ],
-    images: [left.images.main, right.images.main],
   });
 }
 

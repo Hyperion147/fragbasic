@@ -59,7 +59,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `${pad.brand} ${pad.name} specs`,
       `${pad.brand} ${pad.name} mousepad`,
     ],
-    images: [pad.images.main],
   })
 }
 

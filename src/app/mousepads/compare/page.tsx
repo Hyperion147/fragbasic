@@ -11,19 +11,6 @@ import Link from "next/link";
 import { ClientShareButton } from "@/components/ClientShareButton";
 import { buildMetadata } from "@/lib/seo";
 
-const compareHubImages = getPublishedComparisons()
-    .map((comparison) => {
-        const left = getMousepadBySlug(comparison.leftSlug);
-        const right = getMousepadBySlug(comparison.rightSlug);
-
-        if (!left || !right) {
-            return [];
-        }
-
-        return [left.images.main, right.images.main];
-    })
-    .flat();
-
 export const metadata: Metadata = buildMetadata({
     title: "Mousepad Comparisons",
     description:
@@ -35,7 +22,6 @@ export const metadata: Metadata = buildMetadata({
         "mousepad compare tool",
         "fps pad comparison",
     ],
-    images: compareHubImages,
 });
 
 export default function CompareIndexPage() {

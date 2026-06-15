@@ -23,7 +23,6 @@ export const metadata: Metadata = buildMetadata({
         "best mousepad for cs2",
         "mousepad recommendation tool",
     ],
-    images: ["/hero-bg.png"],
 });
 
 export default function MousepadFinderPage() {
