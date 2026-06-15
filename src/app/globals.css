@@ -254,14 +254,4 @@
             0 0 20px color-mix(in srgb, var(--brand-glow) 10%, transparent);
     }
 
-    .brand-nav-link[data-active="true"]::after {
-        content: "";
-        position: absolute;
-        left: 0.8rem;
-        right: 0.8rem;
-        bottom: 0.45rem;
-        height: 1px;
-        background: color-mix(in srgb, var(--brand-hover) 80%, white 20%);
-        box-shadow: 0 0 12px color-mix(in srgb, var(--brand-glow) 55%, transparent);
-    }
 }

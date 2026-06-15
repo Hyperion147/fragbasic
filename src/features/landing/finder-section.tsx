@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ChevronsRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -50,7 +50,7 @@ const homeFinderCtas = [
 
 export function FinderSection() {
   return (
-    <section className="grid gap-6 rounded-2xl border border-border bg-card/40 p-6 md:p-8 lg:grid-cols-[1.05fr_1fr_1fr_1.2fr]">
+    <section className="grid gap-6 rounded-2xl border border-border bg-card/40 p-6 md:p-8 lg:grid-cols-[1.05fr_1fr_1fr_1fr]">
       <div className="flex flex-col justify-between">
         <div>
           <h2 className="text-3xl font-semibold tracking-tight">
@@ -61,12 +61,6 @@ export function FinderSection() {
             playstyle.
           </p>
         </div>
-        <Button asChild className="mt-6 w-fit">
-          <Link href="/mousepads/finder">
-            Find your mousepad
-            <ArrowRight className="size-4" />
-          </Link>
-        </Button>
       </div>
 
       <FinderStep label="Step 1" title="What do you play?">
@@ -92,33 +86,12 @@ export function FinderSection() {
       </FinderStep>
 
       <FinderStep label="Step 3" title="Open the real finder">
-        <div className="grid grid-cols-3 gap-3 md:gap-4">
-          {homeFinderCtas.map((card) => (
-            <Link
-              key={card.title}
-              href={card.href}
-              className="overflow-hidden rounded-xl border border-border bg-background/75 p-3 transition-colors hover:border-primary/55"
-            >
-              <div className="relative h-16 overflow-hidden rounded-lg">
-                <Image
-                  src={card.image}
-                  alt=""
-                  fill
-                  quality={35}
-                  sizes="(max-width: 768px) 30vw, 96px"
-                  className="object-cover opacity-90"
-                />
-              </div>
-              <p className="mt-3 truncate text-sm font-medium">{card.title}</p>
-              <p className="mt-0.5 text-[11px] text-emerald-400">
-                Open full finder
-              </p>
-              <p className="mt-1 text-[11px] leading-4 text-muted-foreground">
-                {card.body}
-              </p>
-            </Link>
-          ))}
-        </div>
+        <Button asChild className="mt-6 w-fit">
+          <Link href="/mousepads/finder">
+            Find your mousepad
+            <ArrowRight className="size-4" />
+          </Link>
+        </Button>
       </FinderStep>
     </section>
   );
@@ -141,7 +114,6 @@ function FinderStep({
       >
         {label}
       </Badge>
-      <ChevronsRight className="absolute top-20 right-20" />
       {title ? (
         <h3 className="mt-5 text-base font-semibold tracking-tight">{title}</h3>
       ) : null}
