@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { MousepadBrowser } from "@/components/mousepads/mousepad-browser";
 import { SiteSection } from "@/components/SiteSection";
@@ -53,6 +54,12 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
             <section className="border-b border-border bg-background">
                 <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
                     <div className="max-w-5xl">
+                        <SiteBreadcrumbs
+                            items={[
+                                { label: "Home", href: "/" },
+                                { label: "Mousepads" },
+                            ]}
+                        />
                         <div className="flex flex-wrap gap-2">
                             <Badge className="text-black">
                                 Mousepad database

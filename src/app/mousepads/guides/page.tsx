@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -24,6 +25,13 @@ export default function GuidesPage() {
             <section className="border-b border-border bg-background">
                 <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
                     <div className="max-w-4xl">
+                        <SiteBreadcrumbs
+                            items={[
+                                { label: "Home", href: "/" },
+                                { label: "Mousepads", href: "/mousepads" },
+                                { label: "Guides" },
+                            ]}
+                        />
                         <div className="flex flex-wrap gap-2">
                             <Badge className="text-black">Guides</Badge>
                             <Badge variant="outline">Competitive FPS focus</Badge>

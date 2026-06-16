@@ -14,21 +14,26 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { getAllBestPages, getBestPagePicks } from "@/data/best-pages";
 import { getAllMousepads, getMousepadFullName } from "@/lib/mousepads";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-    title: "Best Mousepads",
+    title: "Best Mousepads for FPS Games",
     description:
-        "Browse FragBasic's best mousepad guides for control, speed, VALORANT, CS2, glasspads, and humidity-resistant picks.",
+        "Browse FragBasic's best mousepad guides for FPS games, including control, speed, VALORANT, CS2, glasspads, and humidity-resistant picks.",
     path: "/best",
     keywords: [
         "best mousepads",
         "best fps mousepads",
+        "best mousepads for fps",
+        "best gaming mousepads",
         "best valorant mousepads",
         "best cs2 mousepads",
         "best glasspads",
+        "best control mousepads",
+        "best speed mousepads",
     ],
 });
 
@@ -65,6 +70,12 @@ export default function BestPage() {
                 <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
                     <div className="grid gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(360px,0.58fr)] lg:items-end">
                         <div className="max-w-5xl">
+                            <SiteBreadcrumbs
+                                items={[
+                                    { label: "Home", href: "/" },
+                                    { label: "Best" },
+                                ]}
+                            />
                             <div className="flex flex-wrap gap-2">
                                 <Badge className="text-black">Best picks</Badge>
                                 <Badge variant="outline">6 guide paths</Badge>

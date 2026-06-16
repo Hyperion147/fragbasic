@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { BrandBestPicks } from "@/components/brands/brand-best-picks";
-import { BrandComparisons } from "@/components/brands/brand-comparisons";
-import { BrandOverview } from "@/components/brands/brand-overview";
-import { BrandSpeedOrder } from "@/components/brands/brand-speed-order";
-import { MousepadCard } from "@/components/mousepads/mousepad-card";
+import { BrandPageShell } from "@/components/brands/brand-page-shell";
 import {
+  brandConfig,
   getAllBrandSlugs,
-  getBrandBestPicks,
   getBrandNameFromSlug,
   getBrandOverview,
-  getBrandPopularComparisons,
-  getBrandSpeedControlOrder,
   type BrandSlug,
 } from "@/lib/brands";
 import { buildMetadata } from "@/lib/seo";
@@ -37,11 +31,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     notFound();
   }
 
-  const brandSlug = brand as BrandSlug;
+  const brandEntry = brandConfig[brand as BrandSlug];
 
   return buildMetadata({
     title: `${brandName} Mousepads`,
-    description: `Browse ${brandName} mousepads with specs, speed-control ordering, best picks, and comparisons on FragBasic.`,
+    description: brandEntry.description,
     path: `/mousepads/brands/${brand}`,
     keywords: [
       `${brandName} mousepads`,
@@ -61,58 +55,16 @@ export default async function BrandPage({ params }: PageProps) {
 
   const brandSlug = brand as BrandSlug;
   const overview = getBrandOverview(brandSlug);
-  const bestPicks = getBrandBestPicks(brandSlug);
 
-  if (!overview || !bestPicks) {
+  if (!overview) {
     notFound();
   }
 
-  const orderedMousepads = getBrandSpeedControlOrder(brandSlug);
-  const comparisons = getBrandPopularComparisons(brandSlug);
-
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <BrandOverview
+    <BrandPageShell
         brand={overview.brand}
-        summary={overview.summary}
-        controlAverage={overview.controlAverage}
-        speedAverage={overview.speedAverage}
-        availableInIndiaCount={overview.availableInIndiaCount}
-        strongestCategory={overview.strongestCategory}
-        cheapestPad={overview.cheapestPad}
-        totalPads={overview.mousepads.length}
+        mousepads={overview.mousepads}
+        averageRating={overview.averageRating}
       />
-
-      <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
-        <div className="mx-auto max-w-7xl space-y-8">
-        <BrandBestPicks
-          control={bestPicks.control}
-          speed={bestPicks.speed}
-          value={bestPicks.value}
-        />
-
-        <section className="space-y-4">
-          <div className="max-w-3xl">
-            <h2 className="text-3xl font-semibold tracking-tight">
-              All {brandName} pads
-            </h2>
-            <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              Every tracked mousepad currently listed under {brandName}, using
-              the same product card language as the main mousepad database.
-            </p>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {overview.mousepads.map((mousepad) => (
-              <MousepadCard key={mousepad.slug} pad={mousepad} />
-            ))}
-          </div>
-        </section>
-
-        <BrandSpeedOrder mousepads={orderedMousepads} />
-        <BrandComparisons comparisons={comparisons} brandName={brandName} />
-        </div>
-      </div>
-    </main>
   );
 }
