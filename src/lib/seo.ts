@@ -9,6 +9,7 @@ type MetadataOptions = {
 
 const siteName = "FragBasic";
 const siteUrl = "https://fragbasic.fun";
+const ogImageUrl = new URL("/og-image.png", siteUrl).toString();
 const defaultDescription =
   "FragBasic is a mousepad-focused FPS gear database for cloth pads, glasspads, comparisons, and recommendation-driven discovery.";
 
@@ -26,8 +27,8 @@ export function buildMetadata({
   path,
   keywords = [],
 }: MetadataOptions): Metadata {
-  const absoluteImage = getAbsoluteUrl("/og-image.png");
   const url = getAbsoluteUrl(path);
+  const socialTitle = `${title} | ${siteName}`;
 
   return {
     title,
@@ -49,15 +50,22 @@ export function buildMetadata({
       type: "website",
       url,
       siteName,
-      title,
+      title: socialTitle,
       description,
-      images: [{ url: absoluteImage }],
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: `${title} on ${siteName}`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: socialTitle,
       description,
-      images: [absoluteImage],
+      images: [ogImageUrl],
     },
   };
 }
@@ -66,6 +74,10 @@ export function getRootMetadata(): Metadata {
   return {
     metadataBase: new URL(siteUrl),
     applicationName: siteName,
+    creator: siteName,
+    publisher: siteName,
+    authors: [{ name: siteName }],
+    referrer: "origin-when-cross-origin",
     title: {
       default: "FragBasic | Mousepad Database, Glasspads, Comparisons & Finder",
       template: `%s | ${siteName}`,
@@ -92,7 +104,10 @@ export function getRootMetadata(): Metadata {
       description: defaultDescription,
       images: [
         {
-          url: getAbsoluteUrl("/og-image.png"),
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: "FragBasic social preview image",
         },
       ],
     },
@@ -100,7 +115,7 @@ export function getRootMetadata(): Metadata {
       card: "summary_large_image",
       title: "FragBasic | Mousepad Database, Glasspads, Comparisons & Finder",
       description: defaultDescription,
-      images: [getAbsoluteUrl("/og-image.png")],
+      images: [ogImageUrl],
     },
     category: "technology",
   };
