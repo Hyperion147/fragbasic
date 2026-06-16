@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FragBasic
 
-## Getting Started
+FragBasic is a mousepad-focused FPS gear site built with Next.js. It includes:
 
-First, run the development server:
+- A mousepad database for cloth, hybrid, and glass surfaces
+- Published comparison pages and a universal compare tool
+- A guided mousepad finder
+- Curated `/best` pages for common use cases and games
+
+## Local Development
+
+Run the app locally:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production Domain
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The production site is:
 
-## Learn More
+```txt
+https://fragbasic.fun
+```
 
-To learn more about Next.js, take a look at the following resources:
+## SEO Routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+FragBasic uses Next App Router metadata routes for SEO infrastructure.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Sitemap URL: `https://fragbasic.fun/sitemap.xml`
+- Robots URL: `https://fragbasic.fun/robots.txt`
 
-## Deploy on Vercel
+These are generated from:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [src/app/sitemap.ts](x:\Work\test\fragbasic\src\app\sitemap.ts)
+- [src/app/robots.ts](x:\Work\test\fragbasic\src\app\robots.ts)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The canonical site URL is centralized in:
+
+- [src/lib/seo.ts](x:\Work\test\fragbasic\src\lib\seo.ts)
+
+## Google Search Console
+
+For Google indexing, submit this sitemap:
+
+```txt
+https://fragbasic.fun/sitemap.xml
+```
+
+That is the only sitemap URL Google needs for this project right now.
+
+## Build Check
+
+Useful commands:
+
+```bash
+npx tsc --noEmit
+npm run lint
+npm run build
+```

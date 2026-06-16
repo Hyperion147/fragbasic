@@ -131,6 +131,12 @@ function ProductPreview({
 }) {
     return (
         <div className="relative aspect-square overflow-hidden">
+            <div
+                className="absolute inset-x-5 top-8 bottom-4 rounded-full opacity-55 blur-2xl"
+                style={{
+                    background: `radial-gradient(circle at center, ${color}, transparent 70%)`,
+                }}
+            />
             <Image
                 src={image}
                 alt={name}

@@ -12,15 +12,17 @@ import { ClientShareButton } from "@/components/ClientShareButton";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-    title: "Mousepad Comparisons",
+    title: "Mousepad Comparisons and Side-by-Side Matchups",
     description:
-        "Read published mousepad comparisons and compare FPS pads side by side across speed, control, stopping power, and feel.",
+        "Read published mousepad comparisons and compare FPS pads side by side across speed, control, stopping power, glide feel, and game fit.",
     path: "/mousepads/compare",
     keywords: [
         "mousepad comparison",
         "artisan zero vs lgg saturn pro",
         "mousepad compare tool",
         "fps pad comparison",
+        "mousepad vs mousepad",
+        "compare mousepads side by side",
     ],
 });
 
@@ -56,9 +58,14 @@ export default function CompareIndexPage() {
                                 {comparisons.length === 1 ? "" : "s"}
                             </Badge>
                         </div>
-                        <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
-                            Popular head-to-head comparisons
-                        </h2>
+                        <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">
+                            Compare mousepads side by side.
+                        </h1>
+                        <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
+                            Read published head-to-head matchups across speed,
+                            control, stopping power, and overall feel before
+                            you open the universal compare tool.
+                        </p>
                     </div>
                     <div className="flex flex-col items-end gap-2">
                         <div className="flex items-center gap-2">
