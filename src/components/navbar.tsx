@@ -46,7 +46,7 @@ const mobileNavItems = [
     { label: "GlassPads", href: "/mousepads/glasspads" },
     { label: "Best Picks", href: "/best" },
     { label: "Universal Compare", href: "/mousepads/compare/universal" },
-    { label: "Finder", href: "/mousepads/finder" },
+    { label: "Find My Mousepad", href: "/mousepads/finder" },
     { label: "Compare Hub", href: "/mousepads/compare" },
     { label: "Brands", href: "/mousepads/brands" },
 ];
@@ -167,9 +167,9 @@ export function SiteNavbar() {
 
                 <DesktopNavigation pathname={pathname} />
 
-                <div className="hidden items-center gap-3 md:flex">
+                <div className="hidden items-center gap-4 md:flex">
                     <Button size="sm" asChild variant="outline">
-                        <Link href="/mousepads/finder">Finder</Link>
+                        <Link href="/mousepads/finder">Find My Mousepad</Link>
                     </Button>
                     <Button size="sm" asChild>
                         <Link href="/mousepads/compare/universal">

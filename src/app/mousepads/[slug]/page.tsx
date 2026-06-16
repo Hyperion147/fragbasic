@@ -17,7 +17,6 @@ import { getBrandSlugFromMousepad } from "@/lib/brands"
 import {
   getAllMousepads,
   getMousepadBySlug,
-  getSimilarMousepads,
 } from "@/lib/mousepads"
 import { formatPrice, formatValue } from "@/lib/utils/format"
 import { Card } from "@/components/ui/card"
@@ -26,7 +25,10 @@ import { Button } from "@/components/ui/button"
 import { MousepadFeelChart } from "@/components/mousepads/mousepad-feel-chart"
 import { MousepadSpecGrid } from "@/components/mousepads/mousepad-spec-grid"
 import { MousepadImageGallery } from "@/components/mousepads/mousepad-image-gallery"
-import { SimilarMousepads } from "@/components/mousepads/similar-mousepads"
+import {
+  RelatedAlternatives,
+  type RelatedAlternativeGroup,
+} from "@/components/mousepads/related-alternatives"
 import type { Mousepad } from "@/types/mousepad"
 import { buildMetadata } from "@/lib/seo";
 
@@ -71,10 +73,7 @@ export default async function MousepadPage({ params }: PageProps) {
 
   const relatedComparisons = getRelatedComparisons(pad.slug)
   const brandSlug = getBrandSlugFromMousepad(pad)
-  const similarMousepads = getSimilarMousepads(pad, {
-    excludeSameBrand: true,
-    limit: 3,
-  })
+  const relatedAlternativeGroups = getRelatedAlternativeGroups(pad)
   const publishedComparison = relatedComparisons.find(
     (comparison) => comparison.status === "published"
   )
@@ -206,7 +205,10 @@ export default async function MousepadPage({ params }: PageProps) {
               comparisonSlug={publishedComparison?.slug}
               relatedCount={relatedComparisons.length}
             />
-            <SimilarMousepads source={pad} mousepads={similarMousepads} />
+            <RelatedAlternatives
+              source={pad}
+              groups={relatedAlternativeGroups}
+            />
           </aside>
         </div>
       </div>
@@ -587,4 +589,39 @@ function SourcesCard({ pad }: { pad: Mousepad }) {
 function getHeroSummary(pad: Mousepad) {
   const games = pad.recommendedFor.games.slice(0, 2).map(formatValue).join(" and ")
   return `${pad.brand} ${pad.name} is a ${formatValue(pad.category)} pad built for ${games}. It balances ${pad.feel.control}/10 control, ${pad.feel.speed}/10 speed, and ${pad.feel.stoppingPower}/10 stopping power for players who care about gear feel, not just marketing labels.`
+}
+
+function getRelatedAlternativeGroups(
+  pad: Mousepad
+): RelatedAlternativeGroup[] {
+  const related = pad.relatedAlternatives
+
+  if (!related) {
+    return []
+  }
+
+  return [
+    {
+      label: "Similar feeling",
+      description: "Closest in overall glide, control, and use case.",
+      mousepads: resolveRelatedMousepads(pad, related.similarFeeling),
+    },
+    {
+      label: "More control",
+      description: "Slower or more planted options with extra stopping power.",
+      mousepads: resolveRelatedMousepads(pad, related.moreControl),
+    },
+    {
+      label: "More speed",
+      description: "Faster options when you want less friction and easier glide.",
+      mousepads: resolveRelatedMousepads(pad, related.moreSpeed),
+    },
+  ]
+}
+
+function resolveRelatedMousepads(source: Mousepad, slugs: string[]) {
+  return slugs
+    .filter((slug) => slug !== source.slug)
+    .map((slug) => getMousepadBySlug(slug))
+    .filter((mousepad): mousepad is Mousepad => Boolean(mousepad))
 }
