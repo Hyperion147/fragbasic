@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ComparisonBrowser } from "@/components/compare/comparison-browser";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -49,6 +50,13 @@ export default function CompareIndexPage() {
             <section className="border-b border-border bg-background">
                 <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10 flex items-end justify-between">
                     <div className="max-w-3xl">
+                        <SiteBreadcrumbs
+                            items={[
+                                { label: "Home", href: "/" },
+                                { label: "Mousepads", href: "/mousepads" },
+                                { label: "Compare" },
+                            ]}
+                        />
                         <div className="flex flex-wrap gap-2">
                             <Badge className="text-black">
                                 Compare mousepads

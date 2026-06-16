@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { UniversalCompare } from "@/components/compare/universal/universal-compare";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { getAllMousepads } from "@/lib/mousepads";
 import { buildMetadata } from "@/lib/seo";
 
@@ -23,6 +24,16 @@ export default function UniversalComparePage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+        <div className="mb-6">
+          <SiteBreadcrumbs
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Mousepads", href: "/mousepads" },
+              { label: "Compare", href: "/mousepads/compare" },
+              { label: "Universal Compare" },
+            ]}
+          />
+        </div>
         <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading comparison tools...</div>}>
           <UniversalCompare allMousepads={allMousepads} />
         </Suspense>

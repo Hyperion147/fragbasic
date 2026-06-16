@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
-import {
-    ChevronRight,
-} from "lucide-react";
 
 import { MousepadFinder } from "@/components/finder/mousepad-finder";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { SiteSection } from "@/components/SiteSection";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -36,23 +33,13 @@ export default function MousepadFinderPage() {
                 <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
                     <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
                         <div className="space-y-8">
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <Link
-                                    href="/"
-                                    className="transition-colors hover:text-foreground"
-                                >
-                                    Home
-                                </Link>
-                                <ChevronRight className="size-4" />
-                                <Link
-                                    href="/mousepads"
-                                    className="transition-colors hover:text-foreground"
-                                >
-                                    Mousepads
-                                </Link>
-                                <ChevronRight className="size-4" />
-                                <span className="text-foreground">Finder</span>
-                            </div>
+                            <SiteBreadcrumbs
+                                items={[
+                                    { label: "Home", href: "/" },
+                                    { label: "Mousepads", href: "/mousepads" },
+                                    { label: "Finder" },
+                                ]}
+                            />
 
                             <div className="max-w-3xl">
                                 <div className="flex flex-wrap gap-2">

@@ -10,6 +10,7 @@ import {
   Sparkles,
 } from "lucide-react"
 import { ClientShareButton } from "@/components/ClientShareButton"
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs"
 
 import { getRelatedComparisons } from "@/lib/comparisons"
 import { getBrandSlugFromMousepad } from "@/lib/brands"
@@ -84,6 +85,13 @@ export default async function MousepadPage({ params }: PageProps) {
         <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
           <div className="mx-auto max-w-7xl grid gap-8 md:grid-cols-[1.05fr_0.95fr]">
             <div className="space-y-6">
+              <SiteBreadcrumbs
+                items={[
+                  { label: "Home", href: "/" },
+                  { label: "Mousepads", href: "/mousepads" },
+                  { label: `${pad.brand} ${pad.name}` },
+                ]}
+              />
               <div className="flex flex-wrap gap-2">
                 <Badge className="text-black">{formatValue(pad.category)}</Badge>
                 <Badge variant="outline">{formatValue(pad.softness)}</Badge>

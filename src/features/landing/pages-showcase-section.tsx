@@ -96,21 +96,16 @@ export function PagesShowcaseSection({
 
   return (
     <section className="space-y-5">
-      <div className="mx-auto max-w-4xl text-center">
+      <div className="text-start mb-8">
         <Badge
           variant="outline"
-          className="rounded-md px-3 py-1 uppercase tracking-[0.18em] text-[11px]"
+          className="rounded-md px-3 py-1 uppercase tracking-[0.18em] text-[11px] text-brand-hover"
         >
           Core pages
         </Badge>
         <h2 className="mt-5 text-balance text-4xl font-semibold tracking-tight md:text-6xl">
           Start where the question starts.
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
-          Browse the full database, jump into glass only, open curated best
-          pages, or compare real matchups without bouncing through the wrong
-          route first.
-        </p>
       </div>
 
       <div className="grid gap-4 xl:grid-cols-4">
@@ -129,7 +124,7 @@ export function PagesShowcaseSection({
             <Link
               key={item.title}
               href={item.href}
-              className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card/70 p-6 transition-colors hover:border-[color:color-mix(in_srgb,var(--brand-hover)_48%,transparent)] hover:shadow-[0_0_24px_color-mix(in_srgb,var(--brand-glow)_12%,transparent)]"
+              className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card/70 p-6 transition-colors hover:border-[color-mix(in_srgb,var(--brand-hover)_48%,transparent)] hover:shadow-[0_0_24px_color-mix(in_srgb,var(--brand-glow)_12%,transparent)]"
             >
               <div
                 className={cn(
@@ -138,7 +133,7 @@ export function PagesShowcaseSection({
                 )}
               />
               <div className="relative flex items-start justify-between gap-4">
-                <span className="flex size-11 items-center justify-center rounded-lg border border-[color:color-mix(in_srgb,var(--brand-hover)_28%,transparent)] bg-[color:color-mix(in_srgb,var(--brand)_10%,transparent)] text-[color:var(--brand-hover)]">
+                <span className="flex size-11 items-center justify-center rounded-lg border border-[color-mix(in_srgb,var(--brand-hover)_28%,transparent)] bg-[color-mix(in_srgb,var(--brand)_10%,transparent)] text-brand-hover">
                   <Icon className="size-5" />
                 </span>
                 <div className="text-right">
@@ -181,7 +176,7 @@ export function PagesShowcaseSection({
               key={stat.label}
               className="flex items-center gap-4 bg-background/92 px-5 py-5"
             >
-              <span className="flex size-10 items-center justify-center rounded-lg border border-[color:color-mix(in_srgb,var(--brand-hover)_24%,transparent)] bg-[color:color-mix(in_srgb,var(--brand)_10%,transparent)] text-[color:var(--brand-hover)]">
+              <span className="flex size-10 items-center justify-center rounded-lg border border-[color-mix(in_srgb,var(--brand-hover)_24%,transparent)] bg-[color-mix(in_srgb,var(--brand)_10%,transparent)] text-brand-hover">
                 <Icon className="size-5" />
               </span>
               <div>

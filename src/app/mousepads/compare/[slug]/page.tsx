@@ -9,6 +9,7 @@ import { ProductFaceoff } from "@/components/compare/product-faceoff";
 import { SpeedControlPosition } from "@/components/compare/speed-control-position";
 import { SpecRows } from "@/components/compare/spec-rows";
 import { VerdictPanel } from "@/components/compare/verdict-panel";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { getAllComparisons } from "@/lib/comparisons";
 import { getComparisonPageData } from "@/lib/compare";
 import { getMousepadFullName } from "@/lib/mousepads";
@@ -64,6 +65,16 @@ export default async function ComparePage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <div className="w-full px-4 pt-8 md:px-6 lg:px-8 xl:px-10">
+        <SiteBreadcrumbs
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Mousepads", href: "/mousepads" },
+            { label: "Compare", href: "/mousepads/compare" },
+            { label: comparison.title },
+          ]}
+        />
+      </div>
       <CompareHero left={left} right={right} comparisonSlug={comparison.slug} />
 
       <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10 space-y-6">

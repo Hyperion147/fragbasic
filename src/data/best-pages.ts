@@ -86,6 +86,8 @@ export const bestPages = [
       "control mousepad",
       "fps control mousepad",
       "tac fps mousepad",
+      "best mousepad for control",
+      "best control pad for valorant",
     ],
   },
   {
@@ -144,6 +146,8 @@ export const bestPages = [
       "speed mousepad",
       "fast mousepad",
       "tracking mousepad",
+      "best fast mousepad",
+      "best speed pad for fps",
     ],
   },
   {
@@ -202,6 +206,8 @@ export const bestPages = [
       "valorant mousepad",
       "tac fps mousepad",
       "best mousepad for valorant",
+      "valorant control mousepad",
+      "best tac fps mousepad",
     ],
   },
   {
@@ -260,6 +266,8 @@ export const bestPages = [
       "cs2 mousepad",
       "counter strike mousepad",
       "best mousepad for cs2",
+      "best mousepad for counter strike",
+      "cs2 control mousepad",
     ],
   },
   {
@@ -318,6 +326,8 @@ export const bestPages = [
       "glass mousepad",
       "best glass mousepads",
       "fps glasspad",
+      "best glasspad for fps",
+      "fastest glass mousepad",
     ],
   },
   {
@@ -376,6 +386,8 @@ export const bestPages = [
       "best mousepad for humidity",
       "sweat resistant mousepad",
       "monsoon mousepad",
+      "humid climate mousepad",
+      "best mousepad for sweaty hands",
     ],
   },
 ] as const satisfies readonly BestPageConfig[];

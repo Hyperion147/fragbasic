@@ -12,6 +12,7 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MousepadCard } from "@/components/mousepads/mousepad-card";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import {
     getAllBestPages,
     getBestPageBySlug,
@@ -44,9 +45,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     return buildMetadata({
         title: page.title,
-        description: page.description,
+        description: `${page.description} See curated picks, best-use cases, and FPS-focused reasoning for each recommendation.`,
         path: `/best/${page.slug}`,
-        keywords: page.keywords,
+        keywords: [
+            ...page.keywords,
+            "best gaming mousepads",
+            "fps mousepad guide",
+            `best ${page.badge.toLowerCase()} mousepads`,
+        ],
     });
 }
 
@@ -67,6 +73,13 @@ export default async function BestMousepadsPage({ params }: Props) {
                 <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
                     <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.55fr)] lg:items-end">
                         <div className="max-w-5xl">
+                            <SiteBreadcrumbs
+                                items={[
+                                    { label: "Home", href: "/" },
+                                    { label: "Best", href: "/best" },
+                                    { label: page.title },
+                                ]}
+                            />
                             <div className="flex flex-wrap gap-2">
                                 <Badge className="text-black">
                                     {page.badge}

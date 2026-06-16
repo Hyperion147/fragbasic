@@ -13,22 +13,122 @@ export const brandConfig = {
   artisan: {
     slug: "artisan",
     name: "Artisan",
+    logoSrc: "/brands-logo/artisan-logo.png",
+    officialSite: "https://artisan-jp.com/global/",
+    origin: "Japan",
+    tagline: "Precision. Performance. Perfection.",
+    description:
+      "Artisan is known for premium Japanese cloth pads with unusually consistent surfaces, multiple foam options, and some of the most benchmarked shapes in competitive FPS.",
+    highlights: [
+      {
+        title: "Premium Quality",
+        body: "High-end materials and meticulous craftsmanship across the lineup.",
+      },
+      {
+        title: "Consistent Performance",
+        body: "Trusted by players who want repeatable glide and dependable control.",
+      },
+      {
+        title: "Community Trusted",
+        body: "One of the most referenced benchmark brands in enthusiast mousepad discussions.",
+      },
+    ],
   },
   lgg: {
     slug: "lgg",
     name: "LGG",
+    logoSrc: "/brands-logo/lgg-logo.png",
+    officialSite: "https://lethal.gg/collections/mousepads-1",
+    origin: "USA",
+    tagline: "Science. Surface. Superior.",
+    description:
+      "LGG covers a wide spread from deep-control cloth to fast enthusiast surfaces, which is why players often use it as the practical alternative to import-only premium brands.",
+    highlights: [
+      {
+        title: "Wide Speed Range",
+        body: "From Jupiter control to Neptune speed, the lineup covers very different aim styles.",
+      },
+      {
+        title: "Competitive Value",
+        body: "Strong enthusiast-level surfaces without forcing every buyer into the highest-end import tier.",
+      },
+      {
+        title: "Tried in Real Matchups",
+        body: "Saturn, Neptune, and Jupiter come up constantly in direct community comparisons.",
+      },
+    ],
   },
   steelseries: {
     slug: "steelseries",
     name: "SteelSeries",
+    logoSrc: "/brands-logo/steelseries-logo.png",
+    officialSite: "https://steelseries.com/gaming-mousepads",
+    origin: "Denmark",
+    tagline: "Classic control, mainstream familiarity.",
+    description:
+      "SteelSeries remains the reference point for classic QcK-style control, especially for players who still judge newer cloth pads against the old tournament-standard feel.",
+    highlights: [
+      {
+        title: "Legacy Benchmark",
+        body: "QcK surfaces are still the baseline many players use when describing control pads.",
+      },
+      {
+        title: "Accessible Shapes",
+        body: "Common sizes and broad retail availability make the lineup easy to try and replace.",
+      },
+      {
+        title: "Control First",
+        body: "The lineup stays centered on familiar stopping power rather than chasing novelty.",
+      },
+    ],
   },
   xraypad: {
     slug: "xraypad",
     name: "Xraypad",
+    logoSrc: "/brands-logo/xraypad-logo.png",
+    officialSite: "https://shop.x-raypad.com/product-category/products/x-ray-gaming-mouse-pads/",
+    origin: "China",
+    tagline: "Born for precision.",
+    description:
+      "Xraypad is the customization-heavy brand in the database: broad size choices, many prints, and several surfaces that are especially popular with players balancing speed, texture, and humid-room consistency.",
+    highlights: [
+      {
+        title: "Huge Variety",
+        body: "Aqua Control, Equate, and Pro variants give the brand one of the widest spreads in feel.",
+      },
+      {
+        title: "Humidity Friendly",
+        body: "A lot of the lineup is chosen specifically for more stable glide in warm or damp conditions.",
+      },
+      {
+        title: "Customization Heavy",
+        body: "Sizes, prints, and surface options make Xraypad popular with players who want more choice.",
+      },
+    ],
   },
   zowie: {
     slug: "zowie",
     name: "Zowie",
+    logoSrc: "/brands-logo/zowie-logo.png",
+    officialSite: "https://zowie.benq.com/en-in/mouse-pad.html",
+    origin: "Taiwan",
+    tagline: "Designed for esports.",
+    description:
+      "Zowie mousepads are built around familiar tac-FPS behavior: controlled glide, straightforward surfaces, and a lineup that makes sense to players who care more about aiming discipline than novelty.",
+    highlights: [
+      {
+        title: "Tac-FPS Focused",
+        body: "G-SR and G-SR-SE pads remain common references for VALORANT and CS-style aim.",
+      },
+      {
+        title: "Simple by Design",
+        body: "The lineup is narrow, deliberate, and easy to understand without a maze of variants.",
+      },
+      {
+        title: "Tournament Familiarity",
+        body: "A lot of competitive players know immediately where Zowie sits on the control spectrum.",
+      },
+    ],
   },
 } as const;
 
@@ -96,12 +196,16 @@ export function getBrandOverview(brandSlug: BrandSlug) {
   const speedOrdered = getBrandSpeedControlOrder(brandSlug);
   const slowestPad = speedOrdered[0];
   const fastestPad = speedOrdered[speedOrdered.length - 1];
+  const averageRating = roundToOne(
+    average(mousepads.map((mousepad) => getMousepadCommunityRating(mousepad)))
+  );
 
   return {
     brand: brandConfig[brandSlug],
     mousepads,
     controlAverage,
     speedAverage,
+    averageRating,
     availableInIndiaCount,
     strongestCategory,
     cheapestPad,
@@ -217,6 +321,17 @@ function getMousepadValueScore(mousepad: Mousepad) {
   const price = getNormalizedPriceInr(mousepad);
 
   return overallScore / price;
+}
+
+function getMousepadCommunityRating(mousepad: Mousepad) {
+  const overall =
+    mousepad.feel.speed * 0.24 +
+    mousepad.feel.control * 0.26 +
+    mousepad.feel.stoppingPower * 0.18 +
+    mousepad.feel.microAdjustments * 0.2 +
+    mousepad.environment.humidityResistance * 0.12;
+
+  return Math.min(5, overall / 2);
 }
 
 function getNormalizedPriceInr(mousepad: Mousepad) {
