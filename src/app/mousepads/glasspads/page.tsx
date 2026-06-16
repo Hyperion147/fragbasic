@@ -10,16 +10,18 @@ const glasspads = getAllMousepads().filter(
 );
 
 export const metadata: Metadata = buildMetadata({
-  title: "Glasspads Database",
+  title: "Glass Mousepad Database",
   description:
-    "Browse FragBasic's dedicated glasspads database with fast surfaces, glass-specific tradeoffs, and tracked models for competitive FPS players.",
+    "Browse FragBasic's glass mousepad database with fast surfaces, glass-specific tradeoffs, and tracked models for competitive FPS players who want speed and consistency.",
   path: "/mousepads/glasspads",
   keywords: [
     "glasspads",
     "glass mousepads",
+    "glass mousepad database",
     "wallhack sp-005 review",
     "tekkusai phantom",
     "best glasspads for fps",
+    "best glass mousepads",
   ],
 });
 
@@ -37,12 +39,14 @@ export default function GlasspadsPage() {
             </div>
 
             <h1 className="mt-5 text-5xl font-semibold tracking-tight md:text-7xl">
-              Browse dedicated glasspads in one place.
+              Browse dedicated glass mousepads in one place.
             </h1>
 
             <p className="mt-6 max-w-3xl text-base leading-7 text-muted-foreground md:text-lg">
               Fast surfaces, glass-specific tradeoffs, and the current tracked
               lineup without mixing them into the cloth-first mousepad browser.
+              Useful when you want low-friction aiming, easier cleaning, and
+              better humidity consistency.
             </p>
           </div>
         </div>

@@ -15,16 +15,19 @@ const browseMousepads = getAllMousepads().filter(
 );
 
 export const metadata: Metadata = buildMetadata({
-    title: "Mousepad Database",
+    title: "Mousepad Database for FPS Games",
     description:
-        "Browse FragBasic's mousepad database for cloth and hybrid FPS pads by feel, speed, control, stopping power, and India availability.",
+        "Browse FragBasic's mousepad database for FPS games, with cloth and hybrid pads sorted by speed, control, stopping power, surface feel, and India availability.",
     path: "/mousepads",
     keywords: [
         "mousepad reviews",
         "mousepad database",
         "cloth mousepads",
+        "hybrid mousepads",
         "control mousepads",
         "speed mousepads",
+        "best fps mousepads",
+        "mousepads india",
     ],
 });
 
@@ -63,6 +66,12 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
                             Browse pads by feel, surface, and India
                             availability.
                         </h1>
+
+                        <p className="mt-6 max-w-3xl text-base leading-7 text-muted-foreground md:text-lg">
+                            Explore cloth and hybrid mousepads for VALORANT,
+                            CS2, Apex, and more, then narrow the list by speed,
+                            control, stopping power, and brand.
+                        </p>
                     </div>
                 </div>
             </section>

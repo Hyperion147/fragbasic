@@ -21,33 +21,6 @@ const preferenceIcons = {
   "More Speed": "/games-icon/speedometer.png",
 } as const;
 
-const homeFinderCtas = [
-  {
-    title: "Tracking-first setup",
-    body: "Jump into the full finder with fast-game context.",
-    image: "/mousepads/artisan/raiden-orange.png",
-    href: buildFinderRedirectHref({
-      game: "Apex",
-      preference: "More Speed",
-    }),
-  },
-  {
-    title: "Balanced all-rounder",
-    body: "Start from the safest middle-ground finder path.",
-    image: "/mousepads/lgg/saturn-blue.png",
-    href: buildFinderRedirectHref({ game: "CS2", preference: "Balanced" }),
-  },
-  {
-    title: "Tac-FPS control bias",
-    body: "Open the real finder with a steadier control lean.",
-    image: "/mousepads/artisan/zero-dai-dai-orange.png",
-    href: buildFinderRedirectHref({
-      game: "Valorant",
-      preference: "More Control",
-    }),
-  },
-] as const;
-
 export function FinderSection() {
   return (
     <section className="grid gap-6 rounded-2xl border border-border bg-card/40 p-6 md:p-8 lg:grid-cols-[1.05fr_1fr_1fr_1fr]">

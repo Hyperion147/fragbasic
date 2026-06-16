@@ -13,15 +13,17 @@ import { getAllMousepads } from "@/lib/mousepads";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-    title: "Mousepad Finder",
+    title: "Mousepad Finder for VALORANT, CS2, and FPS Games",
     description:
-        "Answer a few questions and get mousepad recommendations based on your games, feel preferences, sensitivity, and environment.",
+        "Answer a few questions and get mousepad recommendations based on your game, feel preference, sensitivity, humidity, and aiming style.",
     path: "/mousepads/finder",
     keywords: [
         "mousepad finder",
         "best mousepad for valorant",
         "best mousepad for cs2",
         "mousepad recommendation tool",
+        "find the right mousepad",
+        "mousepad recommendation",
     ],
 });
 
@@ -69,7 +71,8 @@ export default function MousepadFinderPage() {
                                 <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
                                     Answer a few questions and we&apos;ll find
                                     the mousepads that best match your
-                                    playstyle.
+                                    playstyle, game, sensitivity, and control
+                                    versus speed preference.
                                 </p>
                             </div>
                         </div>
