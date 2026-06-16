@@ -96,10 +96,10 @@ export function PagesShowcaseSection({
 
   return (
     <section className="space-y-5">
-      <div className="mx-auto max-w-4xl text-center">
+      <div className="text-start mb-8">
         <Badge
           variant="outline"
-          className="rounded-md px-3 py-1 uppercase tracking-[0.18em] text-[11px]"
+          className="rounded-md px-3 py-1 uppercase tracking-[0.18em] text-[11px] text-brand-hover"
         >
           Core pages
         </Badge>
