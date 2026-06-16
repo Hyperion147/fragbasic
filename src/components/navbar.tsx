@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
     ArrowRight,
+    BookOpenText,
     ChevronRight,
     Gauge,
     Grid2x2,
@@ -35,6 +36,7 @@ const brandLinks = Object.values(brandConfig).map((brand) => ({
 
 const directNavItems = [
     { label: "GlassPads", href: "/mousepads/glasspads" },
+    { label: "Best", href: "/best" },
     { label: "Compare", href: "/mousepads/compare" },
     { label: "Brands", href: "/mousepads/brands" },
 ];
@@ -42,6 +44,7 @@ const directNavItems = [
 const mobileNavItems = [
     { label: "All Mousepads", href: "/mousepads" },
     { label: "GlassPads", href: "/mousepads/glasspads" },
+    { label: "Best Picks", href: "/best" },
     { label: "Universal Compare", href: "/mousepads/compare/universal" },
     { label: "Finder", href: "/mousepads/finder" },
     { label: "Compare Hub", href: "/mousepads/compare" },
@@ -115,6 +118,28 @@ const comparisonLinks = [
     {
         title: "Zowie G-SR III vs LGG Saturn Pro",
         href: "/mousepads/compare/zowie-g-sr-iii-vs-lgg-saturn-pro-soft",
+    },
+] as const;
+const bestGuideLinks = [
+    {
+        title: "Best mousepads home",
+        href: "/best",
+    },
+    {
+        title: "Best control mousepads",
+        href: "/best/control-mousepads",
+    },
+    {
+        title: "Best speed mousepads",
+        href: "/best/speed-mousepads",
+    },
+    {
+        title: "Best VALORANT mousepads",
+        href: "/best/valorant-mousepads",
+    },
+    {
+        title: "Best CS2 mousepads",
+        href: "/best/cs2-mousepads",
     },
 ] as const;
 
@@ -233,21 +258,19 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                 </div>
 
                                 <div className="border-r border-border/70 p-4 w-60">
-                                    <MousepadsMenuHeading title="Top brands" />
+                                    <MousepadsMenuHeading title="Best pages" />
                                     <div className="mt-4 space-y-4">
                                         <div className="space-y-2">
-                                            {brandLinks.map((item) => (
+                                            {bestGuideLinks.map((item) => (
                                                 <NavigationMenuLink
                                                     key={item.href}
                                                     asChild
                                                 >
                                                     <Link
                                                         href={item.href}
-                                                        className="flex items-center justify-between rounded-md px-0 py-1.5 text-sm font-semibold uppercase tracking-[0.16em] text-foreground/85 hover:bg-transparent hover:text-foreground focus:bg-transparent"
+                                                        className="flex items-center justify-between rounded-md px-0 py-1.5 text-sm text-foreground/85 hover:bg-transparent hover:text-foreground focus:bg-transparent"
                                                     >
-                                                        <span>
-                                                            {item.label}
-                                                        </span>
+                                                        <span>{item.title}</span>
                                                         <ChevronRight className="size-4 text-muted-foreground" />
                                                     </Link>
                                                 </NavigationMenuLink>
@@ -260,8 +283,8 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                         asChild
                                         className="mt-4 w-full align-bottom"
                                     >
-                                        <Link href="/mousepads/brands">
-                                            View all brands
+                                        <Link href="/best">
+                                            Open best pages
                                             <ArrowRight className="size-4" />
                                         </Link>
                                     </Button>
@@ -277,16 +300,13 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                             asChild
                             className={cn(
                                 navigationMenuTriggerStyle,
-                                "px-3 py-1.5 tracking-tight",
-                                item.href === "/mousepads/glasspads"
-                                    ? "text-sky-100"
-                                    : "",
-                                isActivePath(pathname, item.href)
-                                    ? "bg-muted text-foreground"
-                                    : "",
+                                "brand-nav-link px-3 py-1.5 tracking-tight text-foreground/80",
                             )}
                         >
-                            <Link href={item.href}>
+                            <Link
+                                href={item.href}
+                                data-active={isActivePath(pathname, item.href)}
+                            >
                                 <span
                                     className={cn(
                                         item.href === "/mousepads/glasspads" &&
@@ -436,7 +456,12 @@ function MobileNavigation() {
                                                 ? "secondary"
                                                 : "ghost"
                                         }
-                                        className="justify-between rounded-2xl px-4 py-5"
+                                        className={cn(
+                                            "justify-between rounded-2xl px-4 py-5",
+                                            isActivePath(pathname, item.href)
+                                                ? "border-[color:color-mix(in_srgb,var(--brand-hover)_26%,transparent)] bg-[color:color-mix(in_srgb,var(--brand)_14%,transparent)] text-foreground shadow-[0_0_18px_color-mix(in_srgb,var(--brand-glow)_12%,transparent)]"
+                                                : "",
+                                        )}
                                         asChild
                                     >
                                         <Link href={item.href}>
@@ -446,6 +471,27 @@ function MobileNavigation() {
                                     </Button>
                                 ))}
                             </nav>
+                        </div>
+
+                        <div className="space-y-3 border-t border-border pt-4">
+                            <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                                Best pages
+                            </p>
+                            <div className="grid gap-2">
+                                {bestGuideLinks.map((item) => (
+                                    <Button
+                                        key={item.href}
+                                        variant="outline"
+                                        className="justify-between rounded-2xl px-4 py-5"
+                                        asChild
+                                    >
+                                        <Link href={item.href}>
+                                            {item.title}
+                                            <BookOpenText className="size-4 text-primary" />
+                                        </Link>
+                                    </Button>
+                                ))}
+                            </div>
                         </div>
 
                         <div className="space-y-3 border-t border-border pt-4">

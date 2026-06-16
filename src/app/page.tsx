@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { HomeExperience } from "@/components/home/home-experience";
+import { HomeExperience } from "@/features/landing/home-experience";
+import { getAllBestPages } from "@/data/best-pages";
 import { getAllBrandSlugs, getBrandMousepads, brandConfig } from "@/lib/brands";
 import { getPublishedComparisons } from "@/lib/comparisons";
 import { getAllMousepads, getDefaultColorway, getMousepadFullName, getMousepadBySlug } from "@/lib/mousepads";
@@ -21,12 +22,17 @@ export const metadata: Metadata = buildMetadata({
 
 export default function HomePage() {
   const mousepads = getAllMousepads();
+  const glasspadCount = mousepads.filter(
+    (mousepad) => mousepad.category === "glass",
+  ).length;
+  const bestPageCount = getAllBestPages().length;
+  const publishedComparisons = getPublishedComparisons();
   const brands = getAllBrandSlugs().map((slug) => ({
     slug,
     name: brandConfig[slug].name,
     count: getBrandMousepads(slug).length,
   }));
-  const comparisons = getPublishedComparisons()
+  const comparisons = publishedComparisons
     .map((comparison) => {
       const left = getMousepadBySlug(comparison.leftSlug);
       const right = getMousepadBySlug(comparison.rightSlug);
@@ -51,7 +57,10 @@ export default function HomePage() {
   return (
     <HomeExperience
       mousepadCount={mousepads.length}
+      glasspadCount={glasspadCount}
+      bestPageCount={bestPageCount}
       brandCount={brands.length}
+      comparisonCount={publishedComparisons.length}
       brands={brands}
       comparisons={comparisons}
     />

@@ -4,6 +4,7 @@ import { getAllBrandSlugs } from "@/lib/brands";
 import { getAllComparisons } from "@/lib/comparisons";
 import { getAllMousepads } from "@/lib/mousepads";
 import { getSiteUrl } from "@/lib/seo";
+import { getBestPageSlugs } from "@/data/best-pages";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
@@ -17,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/mousepads/finder",
     "/mousepads/compare",
     "/mousepads/compare/universal",
+    "/best",
   ].map((path) => ({
     url: `${siteUrl}${path}`,
     lastModified: now,
@@ -45,5 +47,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...mousepadRoutes, ...brandRoutes, ...comparisonRoutes];
+  const bestRoutes = getBestPageSlugs().map((slug) => ({
+    url: `${siteUrl}/best/${slug}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.85,
+  }));
+
+  return [
+    ...staticRoutes,
+    ...mousepadRoutes,
+    ...brandRoutes,
+    ...comparisonRoutes,
+    ...bestRoutes,
+  ];
 }
