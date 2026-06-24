@@ -71,18 +71,30 @@ export default function CompareIndexPage() {
                         </h1>
                         <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
                             Read published head-to-head matchups across speed,
-                            control, stopping power, and overall feel before
-                            you open the universal compare tool.
+                            control, stopping power, and overall feel before you
+                            open the universal compare tool.
+                        </p>
+                        <p className="mt-4 rounded-lg border border-sky-300/40 bg-sky-400/10 px-4 py-3 text-sm leading-6 text-sky-100">
+                            Note: Glasspad and mousepad ratings use different
+                            feel scales. Treat these numbers as comparison
+                            values, not absolute product ratings.
                         </p>
                     </div>
                     <div className="flex flex-col items-end gap-2">
                         <div className="flex items-center gap-2">
                             <Button size="lg" variant="secondary" asChild>
-                                <Link href="/mousepads/compare/universal">Universal Compare</Link>
+                                <Link href="/mousepads/compare/universal">
+                                    Universal Compare
+                                </Link>
                             </Button>
-                            <ClientShareButton href="/mousepads/compare" label="Share hub" />
+                            <ClientShareButton
+                                href="/mousepads/compare"
+                                label="Share hub"
+                            />
                         </div>
-                        <p className="text-sm text-muted-foreground">Compare up to 3 mousepads of your choice</p>
+                        <p className="text-sm text-muted-foreground">
+                            Compare up to 3 mousepads of your choice
+                        </p>
                     </div>
                 </div>
             </section>

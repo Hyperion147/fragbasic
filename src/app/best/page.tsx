@@ -96,8 +96,8 @@ export default function BestPage() {
 
                             <div className="mt-8 flex flex-wrap gap-3">
                                 <Button asChild>
-                                    <Link href="#guides">
-                                        Browse guides
+                                    <Link href="/mousepads/compare/universal">
+                                        Visit Universal Compare
                                         <ArrowRight className="size-4" />
                                     </Link>
                                 </Button>
