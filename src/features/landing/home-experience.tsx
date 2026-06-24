@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { BrandsSection } from "@/features/landing/brands-section";
 import { FinderSection } from "@/features/landing/finder-section";
 import { HeroSection } from "@/features/landing/hero-section";
+import { LatestAddedSection } from "@/features/landing/latest-added-section";
 import { PagesShowcaseSection } from "@/features/landing/pages-showcase-section";
 import { PopularComparisonsSection } from "@/features/landing/popular-comparisons-section";
 import { SleevesTeaseSection } from "@/features/landing/sleeves-tease-section";
@@ -20,6 +21,7 @@ export function HomeExperience({
   comparisonCount,
   brands,
   comparisons,
+  latestAdded,
 }: LandingProps) {
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -36,6 +38,11 @@ export function HomeExperience({
             comparisonCount={comparisonCount}
           />
         </RevealSection>
+        {latestAdded ? (
+          <RevealSection delay={0.11}>
+            <LatestAddedSection pad={latestAdded} />
+          </RevealSection>
+        ) : null}
         <RevealSection delay={0.14}>
           <PopularComparisonsSection comparisons={comparisons} />
         </RevealSection>

@@ -135,6 +135,13 @@ export interface MousepadVisuals {
     colorways: MousepadColorway[];
 }
 
+export interface MousepadRelatedAlternatives {
+    similarFeeling: string[];
+    moreControl: string[];
+    moreSpeed: string[];
+    notes?: string;
+}
+
 export interface Mousepad {
     id: string;
     slug: string;
@@ -183,6 +190,8 @@ export interface Mousepad {
     };
 
     personal: MousepadPersonalNotes;
+
+    relatedAlternatives?: MousepadRelatedAlternatives;
 
     sources: MousepadSource[];
 }

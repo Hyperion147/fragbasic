@@ -22,6 +22,7 @@ export const metadata: Metadata = buildMetadata({
 
 export default function HomePage() {
   const mousepads = getAllMousepads();
+  const latestAdded = getMousepadBySlug("atk-crimson");
   const glasspadCount = mousepads.filter(
     (mousepad) => mousepad.category === "glass",
   ).length;
@@ -63,6 +64,7 @@ export default function HomePage() {
       comparisonCount={publishedComparisons.length}
       brands={brands}
       comparisons={comparisons}
+      latestAdded={latestAdded}
     />
   );
 }
