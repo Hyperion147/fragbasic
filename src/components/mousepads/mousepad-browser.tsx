@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { MousepadCard } from "@/components/mousepads/mousepad-card";
 import { MousepadFilters } from "@/components/mousepads/mousepad-filters";
 import {
+  ALL_FILTER_VALUE,
   filterMousepads,
   getDefaultMousepadFilters,
   type MousepadCategory,
@@ -21,6 +22,7 @@ type Props = {
   categories: Array<{ label: string; value: MousepadCategory }>;
   initialCategory?: MousepadCategory;
   searchOnly?: boolean;
+  latestAddedSlugs?: readonly string[];
 };
 
 export function MousepadBrowser({
@@ -29,6 +31,7 @@ export function MousepadBrowser({
   categories,
   initialCategory,
   searchOnly = false,
+  latestAddedSlugs = [],
 }: Props) {
   const [filters, setFilters] = useState<MousepadFilterState>(
     () => ({
@@ -46,18 +49,33 @@ export function MousepadBrowser({
   const filteredMousepads = useMemo(() => {
     const visible = filterMousepads(mousepads, filters);
     const normalizedQuery = query.trim().toLowerCase();
+    const latestOrder = new Map(
+      latestAddedSlugs.map((slug, index) => [slug, index])
+    );
+    const shouldPinLatest =
+      normalizedQuery.length === 0 &&
+      filters.brand === ALL_FILTER_VALUE &&
+      filters.category === ALL_FILTER_VALUE &&
+      filters.surface === ALL_FILTER_VALUE &&
+      filters.indiaAvailability === ALL_FILTER_VALUE;
 
     if (!normalizedQuery) {
-      return visible;
+      return shouldPinLatest ? pinLatestMousepads(visible, latestOrder) : visible;
     }
 
-    return visible.filter((pad) =>
-      [getMousepadFullName(pad), pad.brand, pad.series ?? "", pad.surface]
-        .join(" ")
-        .toLowerCase()
-        .includes(normalizedQuery)
-    );
-  }, [filters, mousepads, query]);
+    return visible
+      .filter((pad) =>
+        [getMousepadFullName(pad), pad.brand, pad.series ?? "", pad.surface]
+          .join(" ")
+          .toLowerCase()
+          .includes(normalizedQuery)
+      );
+  }, [filters, latestAddedSlugs, mousepads, query]);
+
+  const latestAddedSlugSet = useMemo(
+    () => new Set(latestAddedSlugs),
+    [latestAddedSlugs]
+  );
 
   return (
     <div className="space-y-6">
@@ -76,7 +94,11 @@ export function MousepadBrowser({
       {filteredMousepads.length > 0 ? (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {filteredMousepads.map((pad) => (
-            <MousepadCard key={pad.slug} pad={pad} />
+            <MousepadCard
+              key={pad.slug}
+              pad={pad}
+              isLatestAdded={latestAddedSlugSet.has(pad.slug)}
+            />
           ))}
         </div>
       ) : (
@@ -100,4 +122,32 @@ export function MousepadBrowser({
       )}
     </div>
   );
+}
+
+function pinLatestMousepads(
+  mousepads: Mousepad[],
+  latestOrder: Map<string, number>
+) {
+  if (latestOrder.size === 0) {
+    return mousepads;
+  }
+
+  return [...mousepads].sort((left, right) => {
+    const leftOrder = latestOrder.get(left.slug);
+    const rightOrder = latestOrder.get(right.slug);
+
+    if (leftOrder === undefined && rightOrder === undefined) {
+      return 0;
+    }
+
+    if (leftOrder === undefined) {
+      return 1;
+    }
+
+    if (rightOrder === undefined) {
+      return -1;
+    }
+
+    return leftOrder - rightOrder;
+  });
 }

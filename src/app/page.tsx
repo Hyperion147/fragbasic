@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { HomeExperience } from "@/features/landing/home-experience";
 import { getAllBestPages } from "@/data/best-pages";
+import { latestAddedMousepadSlugs } from "@/data/latest-added";
 import { getAllBrandSlugs, getBrandMousepads, brandConfig } from "@/lib/brands";
 import { getPublishedComparisons } from "@/lib/comparisons";
 import { getAllMousepads, getDefaultColorway, getMousepadFullName, getMousepadBySlug } from "@/lib/mousepads";
@@ -22,7 +23,9 @@ export const metadata: Metadata = buildMetadata({
 
 export default function HomePage() {
   const mousepads = getAllMousepads();
-  const latestAdded = getMousepadBySlug("atk-crimson");
+  const latestAdded = latestAddedMousepadSlugs
+    .map((slug) => getMousepadBySlug(slug))
+    .filter((mousepad) => mousepad !== undefined);
   const glasspadCount = mousepads.filter(
     (mousepad) => mousepad.category === "glass",
   ).length;

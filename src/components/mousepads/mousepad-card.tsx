@@ -14,9 +14,11 @@ import type { Mousepad } from "@/types/mousepad";
 export function MousepadCard({
   pad,
   compact = false,
+  isLatestAdded = false,
 }: {
   pad: Mousepad;
   compact?: boolean;
+  isLatestAdded?: boolean;
 }) {
   const glassFinishLabel =
     pad.category === "glass" && pad.glassSurfaceFinish
@@ -38,6 +40,14 @@ export function MousepadCard({
       >
         <div className="flex flex-wrap gap-2">
           <Badge className="text-black">{formatMousepadValue(pad.category)}</Badge>
+          {isLatestAdded ? (
+            <Badge
+              variant="outline"
+              className="border-sky-300/70 bg-sky-200/10 text-sky-100"
+            >
+              Latest added
+            </Badge>
+          ) : null}
           <Badge variant="outline">{formatMousepadValue(pad.surface)}</Badge>
           {glassFinishLabel ? (
             <Badge

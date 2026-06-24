@@ -12,7 +12,7 @@ export const glassMousepads: Mousepad[] = [
 
     category: "glass",
     surface: "glass",
-    glassSurfaceFinish: "unknown",
+    glassSurfaceFinish: "uncoated",
     glassSurfaceFinishNotes:
       "Retailer listings mention micro-texture and Japanese glass, but do not clearly confirm whether the surface is coated or fully uncoated.",
     base: "rubber",
@@ -151,7 +151,7 @@ export const glassMousepads: Mousepad[] = [
 
     category: "glass",
     surface: "glass",
-    glassSurfaceFinish: "unknown",
+    glassSurfaceFinish: "uncoated",
     glassSurfaceFinishNotes:
       "Current product descriptions emphasize tempered glass and a balanced smooth surface, but do not clearly state a coated or uncoated finish.",
     base: "rubber",
@@ -752,6 +752,181 @@ export const glassMousepads: Mousepad[] = [
       {
         label: "Community review by bl4ckholeyt",
         type: "review",
+      },
+    ],
+  },
+
+  // InfinityMice Tora
+  {
+    id: "infinitymice-tora",
+    slug: "infinitymice-tora",
+
+    brand: "InfinityMice",
+    name: "Tora",
+    series: "Limited Edition Glass Mousepad",
+
+    category: "glass",
+    surface: "glass",
+    glassSurfaceFinish: "uncoated",
+    glassSurfaceFinishNotes:
+      "InfinityMice's official page lists the Tora as non-coated and non-glossy. Retailer listings describe a matte glass surface with a balanced/control-oriented glide.",
+    base: "unknown",
+    softness: "hard",
+
+    sizes: [
+      {
+        label: "XL",
+        width: 490,
+        height: 420,
+        thickness: 3,
+        unit: "mm",
+      },
+    ],
+
+    visuals: {
+      defaultColorway: "tora",
+      colorways: [
+        {
+          name: "Tora",
+          slug: "tora",
+          color: "#373f3f",
+          image: "/mousepads/glasspads/infinitymice-tora.jpg",
+          available: false,
+        },
+      ],
+    },
+
+    feel: {
+      speed: 6.6,
+      control: 7.4,
+      stoppingPower: 6.4,
+      staticFriction: 4.8,
+      dynamicFriction: 4.1,
+      microAdjustments: 8.7,
+      ratingConfidence: "community",
+    },
+
+    environment: {
+      humidityResistance: 10,
+      sweatResistance: 10,
+      dustHairResistance: 7,
+      washable: true,
+      notes:
+        "The hard glass surface should remain very consistent through humidity and sweat. One owner impression noted dust can cling more than expected, so it is not scored as the cleanest glasspad despite strong environmental consistency.",
+    },
+
+    texture: {
+      feel: "smooth",
+      skinComfort: 10,
+      sleeveFriendly: true,
+      noiseLevel: "quiet",
+    },
+
+    recommendedFor: {
+      games: ["valorant", "cs2", "general-fps"],
+      aimStyles: ["precision", "micro-adjustments", "flicking"],
+      sensitivity: ["low", "medium"],
+    },
+
+    avoidIf: [
+      "You want a very fast glasspad",
+      "You rely on low-LOD sensor settings that can be picky on glass",
+      "You want an easy-to-buy in-stock product",
+      "You prefer textured glass feedback",
+    ],
+
+    price: {
+      usd: 89.99,
+      inr: 15000,
+    },
+
+    availability: {
+      global: true,
+      india: "import-only",
+      stores: ["InfinityMice", "MaxGaming", "Respawn Gaming Tech"],
+      notes:
+        "Official and retailer pages list Tora as sold out during the June 2026 research pass. India access is likely import or resale only; the INR value reflects the submitted purchase price rather than official local MSRP.",
+    },
+
+    images: {
+      main: "/mousepads/glasspads/infinitymice-tora.jpg",
+    },
+
+    personal: {
+      owned: false,
+      tested: false,
+      notes:
+        "Added from cync3_'s submitted review and cross-checked against current official and retailer specs. The submitted review rated it as very control-oriented for glass and closer to cloth speed than most glasspads. They also reported sensor tracking issues at low LOD that were resolved by increasing mouse LOD.",
+      pros: [
+        "Controlled glide for a glasspad",
+        "Excellent sleeve friendliness",
+        "Very smooth skin feel",
+        "Strong tactical FPS fit compared with faster glass",
+        "Non-coated glass surface",
+      ],
+      cons: [
+        "Still a hard glass surface",
+        "Not ideal for players chasing maximum glass speed",
+        "May need higher mouse LOD on some sensors",
+        "Sold-out limited product",
+        "Import pricing can be high in India",
+      ],
+    },
+
+    communityConsensus: {
+      summary:
+        "InfinityMice Tora is a limited non-coated glasspad positioned around balanced/control glide rather than raw speed. In the FragBasic glass scale it sits near the controlled end, making it a better tactical FPS candidate than many faster glasspads while still keeping glass consistency and smoothness.",
+      commonComparisons: [
+        "ATK Crimson",
+        "Tekkusai Singularity",
+        "Wallhack SP-005",
+        "Midori The Return",
+        "Pulsar Superglide",
+      ],
+      strengths: [
+        "More controlled than most glasspads",
+        "Smooth non-glossy surface",
+        "Excellent sleeve and skin comfort",
+        "Balanced glide for tactical and fast-paced shooters",
+        "Stable full custom-blend base",
+      ],
+      weaknesses: [
+        "Limited edition and currently sold out",
+        "Sensor LOD can matter on some setups",
+        "Still has less natural braking than cloth control pads",
+        "Base material is described as custom blend by InfinityMice and silicone by one retailer",
+      ],
+    },
+
+    sources: [
+      {
+        label: "cync3_ community review submitted June 2026",
+        type: "personal",
+      },
+      {
+        label: "InfinityMice official Tora product page",
+        type: "official",
+        url: "https://www.infinitymice.com/products/tora",
+      },
+      {
+        label: "MaxGaming InfinityMice Tora listing",
+        type: "store",
+        url: "https://us.maxgaming.com/us/mousepads/infinitymice-tora-limited-edition",
+      },
+      {
+        label: "Respawn Gaming Tech Tora listing",
+        type: "store",
+        url: "https://www.respawngt.com/products/infinitymice-tora-glass-mousepad-pre-order-",
+      },
+      {
+        label: "Community Tora owner discussion",
+        type: "reddit",
+        url: "https://www.reddit.com/r/MousepadReview/comments/1jnwutg/how_did_i_ever_game_without_a_glass_mouse_pad/",
+      },
+      {
+        label: "Fresh Reviews glasspad coverage featuring Tora",
+        type: "review",
+        url: "https://www.youtube.com/watch?v=8f8cr1Qd4JM",
       },
     ],
   },

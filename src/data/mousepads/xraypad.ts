@@ -553,6 +553,171 @@ export const xraypadMousepads: Mousepad[] = [
         ],
     },
 
+    // Aqua Control II SR / Revati
+    {
+        id: "xraypad-aqua-control-ii-sr-revati",
+        slug: "xraypad-aqua-control-ii-sr-revati",
+
+        brand: "Xraypad",
+        name: "Aqua Control II SR / Revati",
+        series: "Aqua Control II SR",
+
+        category: "control",
+        surface: "cloth",
+        base: "rubber",
+        softness: "soft",
+
+        sizes: [
+            {
+                label: "XL",
+                width: 450,
+                height: 400,
+                thickness: 4,
+                unit: "mm",
+            },
+        ],
+
+        visuals: {
+            defaultColorway: "revati",
+            colorways: [
+                {
+                    name: "Revati",
+                    slug: "revati",
+                    color: "#73808d",
+                    image: "/mousepads/xraypad/aqua-control-ii-sr-revati.jpg",
+                    available: false,
+                },
+            ],
+        },
+
+        feel: {
+            speed: 4.1,
+            control: 9.0,
+            stoppingPower: 9.6,
+            staticFriction: 8.4,
+            dynamicFriction: 6.7,
+            microAdjustments: 7.8,
+            ratingConfidence: "community",
+        },
+
+        environment: {
+            humidityResistance: 8.5,
+            sweatResistance: 8.5,
+            dustHairResistance: 5.5,
+            washable: true,
+            notes:
+                "Official copy positions the SR / Revati as an Aqua Control 2 surface suitable for sweaty hands. The submitted review says the rough texture attracts dust and is harder to clean than smoother cloth pads.",
+        },
+
+        texture: {
+            feel: "rough",
+            skinComfort: 4.2,
+            sleeveFriendly: true,
+            noiseLevel: "medium",
+        },
+
+        recommendedFor: {
+            games: ["valorant", "cs2", "general-fps"],
+            aimStyles: ["precision", "micro-adjustments", "flicking"],
+            sensitivity: ["low", "medium"],
+        },
+
+        avoidIf: [
+            "You are coming from glass and dislike rough cloth texture",
+            "You want a fast Aqua Control II-style glide",
+            "You want an easy-to-clean smooth surface",
+            "You play mostly tracking-heavy games",
+        ],
+
+        price: {
+            usd: 29.99,
+            inr: 2799,
+        },
+
+        availability: {
+            global: true,
+            india: "limited",
+            stores: ["Xraypad", "NMPC India"],
+            notes:
+                "NMPC India lists the XL 450x400x4mm Revati variant at Rs. 2,799, but it was sold out during the June 2026 research pass. X-Raypad lists it globally with flat packaging.",
+        },
+
+        images: {
+            main: "/mousepads/xraypad/aqua-control-ii-sr-revati.jpg",
+        },
+
+        personal: {
+            owned: false,
+            tested: false,
+            notes:
+                "Added from cync3_'s submitted review and cross-checked against X-Raypad/NMPC specs. The reviewer scored it as much slower and more locked-in than the generic Aqua Control II profile, with instant stopping power, rough texture, dust attraction, and flat-box shipping.",
+            pros: [
+                "Excellent stopping power",
+                "Strong tactical FPS control",
+                "Flat packaged instead of rolled",
+                "Good sweat suitability",
+                "Clear stitched edge construction",
+            ],
+            cons: [
+                "Rough surface can feel abrasive, especially after glasspads",
+                "Attracts dust",
+                "Texture makes cleaning harder",
+                "Less glide freedom than standard Aqua Control II",
+                "Limited/sold-out India availability",
+            ],
+        },
+
+        communityConsensus: {
+            summary:
+                "Aqua Control II SR / Revati is a collaboration variant using the Aqua Control 2 FPS surface, but the submitted user review places this copy much closer to a slow control pad than the standard AC II entry. It should make the most sense for Valorant and CS2 players who want immediate stopping and can tolerate a rougher surface.",
+
+            commonComparisons: [
+                "Aqua Control II",
+                "Aqua Control Zero",
+                "Equate Plus V2",
+                "LGG Saturn Pro",
+                "Zowie G-SR III",
+            ],
+
+            strengths: [
+                "Very high stopping power",
+                "Strong locked-in control",
+                "Tactical FPS fit",
+                "Flat packaging",
+                "Sweat-friendly Aqua Control surface",
+            ],
+
+            weaknesses: [
+                "Rough hand feel",
+                "Dust attraction",
+                "Harder cleaning than smoother pads",
+                "Less suitable for players wanting fast glide",
+            ],
+        },
+
+        sources: [
+            {
+                label: "cync3_ community review submitted June 2026",
+                type: "personal",
+            },
+            {
+                label: "X-Raypad Aqua Control II SR / REVATI official page",
+                type: "official",
+                url: "https://shop.x-raypad.com/shop/x-raypad-aqua-control-ii-sr-revati-gaming-mouse-pads/",
+            },
+            {
+                label: "NMPC India Revati product page",
+                type: "store",
+                url: "https://www.nmpc.in/products/x-raypad-aqua-control-ii-sr-revati",
+            },
+            {
+                label: "MaxGaming generic Aqua Control II listing",
+                type: "store",
+                url: "https://us.maxgaming.com/us/mousepads/aqua-control-ii-mousepad-white-xl",
+            },
+        ],
+    },
+
     // Equate Plus V2
     {
         id: "xraypad-equate-plus-v2",
