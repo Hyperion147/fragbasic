@@ -72,10 +72,6 @@ export function MousepadSelector({
         <CardTitle className="text-2xl tracking-tight">
           Pick up to three mousepads ({selectedSlugs.length}/{maxSelected})
         </CardTitle>
-        <p className="text-sm leading-6 text-muted-foreground">
-          Search by brand, series, or model name. The universal charts become
-          much more useful once at least two pads are in the set.
-        </p>
       </CardHeader>
 
       <CardContent className="space-y-4">

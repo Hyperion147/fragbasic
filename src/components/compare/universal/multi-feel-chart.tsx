@@ -18,7 +18,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getMousepadChartColors } from "@/lib/mousepads";
+import {
+  FEEL_METRICS,
+  FEEL_SCALE_DESCRIPTIONS,
+  FEEL_SCALE_LABELS,
+  type FeelScaleMode,
+  getCalibratedFeelValue,
+  getFeelScaleModesForComparison,
+  getMousepadChartColors,
+} from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
 
 type Props = {
@@ -29,61 +37,72 @@ type FeelChartRow = {
   metric: string;
 } & Record<string, string | number>;
 
-const feelRows = [
-  { label: "Speed", key: "speed" },
-  { label: "Control", key: "control" },
-  { label: "Stopping", key: "stoppingPower" },
-  { label: "Static", key: "staticFriction" },
-  { label: "Dynamic", key: "dynamicFriction" },
-  { label: "Micro", key: "microAdjustments" },
-] as const;
-
 export function MultiFeelChart({ mousepads }: Props) {
-  const data: FeelChartRow[] = feelRows.map((row) => {
-    const values = Object.fromEntries(
-      mousepads.map((mousepad) => [mousepad.slug, mousepad.feel[row.key]])
-    );
-
-    return {
-      metric: row.label,
-      ...values,
-    };
-  });
-
-  const config: Record<
-    string,
-    { label: string; colors: { light: string[] } }
-  > = Object.fromEntries(
-    mousepads.map((mousepad) => {
-      const color = getMousepadChartColors(mousepad).stroke;
-
-      return [
-        mousepad.slug,
-        {
-          label: mousepad.name,
-          colors: {
-            light: [color],
-          },
-        },
-      ];
-    })
-  );
+  const scaleModes = getFeelScaleModesForComparison(mousepads);
+  const config = getChartConfig(mousepads);
 
   return (
     <Card className="border-border bg-card">
       <CardHeader>
         <CardTitle className="text-2xl tracking-tight">Feel profile</CardTitle>
         <CardDescription>
-          Compare core glide behavior across speed, control, stopping power,
-          friction, and micro-adjustment freedom.
+          {scaleModes.length > 1
+            ? "Mixed glass and non-glass sets show native surface-family ratings plus a universal glide calibration."
+            : "Compare core glide behavior across speed, control, stopping power, friction, and micro-adjustment freedom."}
         </CardDescription>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className={scaleModes.length > 1 ? "grid gap-5 xl:grid-cols-2" : ""}>
+        {scaleModes.map((mode) => (
+          <ScaleRadar
+            key={mode}
+            mousepads={mousepads}
+            config={config}
+            mode={mode}
+          />
+        ))}
+      </CardContent>
+    </Card>
+  );
+}
+
+function ScaleRadar({
+  mousepads,
+  config,
+  mode,
+}: {
+  mousepads: Mousepad[];
+  config: Record<string, { label: string; colors: { light: string[] } }>;
+  mode: FeelScaleMode;
+}) {
+  const data: FeelChartRow[] = FEEL_METRICS.map((row) => {
+    const values = Object.fromEntries(
+      mousepads.map((mousepad) => [
+        mousepad.slug,
+        getCalibratedFeelValue(mousepad, row.key, mode),
+      ])
+    );
+
+    return {
+      metric: row.shortLabel,
+      ...values,
+    };
+  });
+
+  return (
+    <div className="rounded-3xl border border-border bg-background/35 p-4">
+      <div className="mb-3">
+        <h3 className="text-lg font-semibold tracking-tight">
+          {FEEL_SCALE_LABELS[mode]}
+        </h3>
+        <p className="mt-1 text-sm leading-6 text-muted-foreground">
+          {FEEL_SCALE_DESCRIPTIONS[mode]}
+        </p>
+      </div>
         <EvilRadarChart
           data={data}
           config={config}
-          className="mx-auto aspect-square max-h-[36rem] bg-background/20 pb-8"
+          className="mx-auto aspect-square max-h-[36rem] pb-8"
           chartProps={{ outerRadius: "72%" }}
         >
           <PolarGrid gridType="circle" />
@@ -113,7 +132,24 @@ export function MultiFeelChart({ mousepads }: Props) {
             );
           })}
         </EvilRadarChart>
-      </CardContent>
-    </Card>
+    </div>
+  );
+}
+
+function getChartConfig(mousepads: Mousepad[]) {
+  return Object.fromEntries(
+    mousepads.map((mousepad) => {
+      const color = getMousepadChartColors(mousepad).stroke;
+
+      return [
+        mousepad.slug,
+        {
+          label: mousepad.name,
+          colors: {
+            light: [color],
+          },
+        },
+      ];
+    })
   );
 }

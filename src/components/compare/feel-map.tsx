@@ -1,18 +1,16 @@
 import { Card } from "@/components/ui/card"
 import {
+  FEEL_METRICS,
+  FEEL_SCALE_DESCRIPTIONS,
+  FEEL_SCALE_LABELS,
+  type FeelScaleMode,
+  formatCalibratedFeelValue,
+  getCalibratedFeelValue,
   getFeaturedColorwaySlug,
+  getFeelScaleModesForComparison,
   getMousepadChartColors,
 } from "@/lib/mousepads"
 import type { Mousepad } from "@/types/mousepad"
-
-const rows = [
-  ["Speed", "speed"],
-  ["Control", "control"],
-  ["Stopping Power", "stoppingPower"],
-  ["Static Friction", "staticFriction"],
-  ["Dynamic Glide", "dynamicFriction"],
-  ["Micro-adjustments", "microAdjustments"],
-] as const
 
 export function FeelMap({
   left,
@@ -26,6 +24,7 @@ export function FeelMap({
     right,
     getFeaturedColorwaySlug(right)
   )
+  const scaleModes = getFeelScaleModesForComparison([left, right])
 
   return (
     <Card className="border-border bg-card p-5 md:p-6">
@@ -35,9 +34,9 @@ export function FeelMap({
           How they feel in-game
         </h2>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
-          Each row compares the two pads on the same 10-point scale so you can
-          see where the feel difference is minor and where it is immediately
-          noticeable.
+          {scaleModes.length > 1
+            ? "Glass and fabric do not share the same raw feel meaning, so the map shows native ratings and a universal cross-surface calibration."
+            : "Each row compares the two pads on their native 10-point surface-family scale."}
         </p>
       </div>
 
@@ -46,19 +45,68 @@ export function FeelMap({
         <LegendChip color={rightColors.solid} label={right.name} />
       </div>
 
-      <div className="space-y-6">
-        {rows.map(([label, key]) => (
-          <div key={key} className="rounded-3xl border border-border bg-background/40 p-4">
+      <div className="space-y-5">
+        {scaleModes.map((mode) => (
+          <ScaleMap
+            key={mode}
+            left={left}
+            right={right}
+            leftColor={leftColors.solid}
+            rightColor={rightColors.solid}
+            mode={mode}
+          />
+        ))}
+      </div>
+    </Card>
+  )
+}
+
+function ScaleMap({
+  left,
+  right,
+  leftColor,
+  rightColor,
+  mode,
+}: {
+  left: Mousepad
+  right: Mousepad
+  leftColor: string
+  rightColor: string
+  mode: FeelScaleMode
+}) {
+  return (
+    <div className="rounded-3xl border border-border bg-background/35 p-4">
+      <div className="mb-5">
+        <h3 className="text-lg font-semibold tracking-tight">
+          {FEEL_SCALE_LABELS[mode]}
+        </h3>
+        <p className="mt-1 text-sm leading-6 text-muted-foreground">
+          {FEEL_SCALE_DESCRIPTIONS[mode]}
+        </p>
+      </div>
+
+      <div className="space-y-5">
+        {FEEL_METRICS.map(({ label, key }) => (
+          <div key={key} className="rounded-3xl border border-border bg-card/55 p-4">
             <div className="mb-3 flex items-center justify-between gap-3 text-sm">
               <span className="font-medium text-foreground">{label}</span>
               <span className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
-                {left.feel[key]} / {right.feel[key]}
+                {formatCalibratedFeelValue(left, key, mode)} /{" "}
+                {formatCalibratedFeelValue(right, key, mode)}
               </span>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
-              <Meter value={left.feel[key]} align="right" color={leftColors.solid} />
-              <Meter value={right.feel[key]} align="left" color={rightColors.solid} />
+              <Meter
+                value={getCalibratedFeelValue(left, key, mode)}
+                align="right"
+                color={leftColor}
+              />
+              <Meter
+                value={getCalibratedFeelValue(right, key, mode)}
+                align="left"
+                color={rightColor}
+              />
             </div>
 
             <div className="mt-2 grid grid-cols-2 text-xs text-muted-foreground">
@@ -68,7 +116,7 @@ export function FeelMap({
           </div>
         ))}
       </div>
-    </Card>
+    </div>
   )
 }
 

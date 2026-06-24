@@ -7,6 +7,8 @@ import {
 } from "@/components/ui/card";
 import {
   getDefaultColorway,
+  getCalibratedFeelValue,
+  hasMixedFeelScaleFamilies,
   getMousepadFullName,
 } from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
@@ -51,9 +53,21 @@ const summaryItems: Array<{
 ];
 
 export function CompareSummaryCards({ mousepads }: Props) {
+  const useUniversalFeel = hasMixedFeelScaleFamilies(mousepads);
+  const resolvedItems = summaryItems.map((item) =>
+    item.key === "speed" && useUniversalFeel
+      ? {
+          ...item,
+          label: "Fastest overall",
+          accessor: (mousepad: Mousepad) =>
+            getCalibratedFeelValue(mousepad, "speed", "universal"),
+        }
+      : item
+  );
+
   return (
     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-      {summaryItems.map((item) => {
+      {resolvedItems.map((item) => {
         const winners = getWinningMousepads(mousepads, item.accessor);
         const leadValue = winners.length > 0 ? item.accessor(winners[0]) : 0;
 
@@ -61,7 +75,9 @@ export function CompareSummaryCards({ mousepads }: Props) {
           <Card key={item.key} className="border-border bg-card">
             <CardHeader>
               <CardTitle className="text-base">{item.label}</CardTitle>
-              <CardDescription>{leadValue}/10 lead score</CardDescription>
+              <CardDescription>
+                {leadValue}/10 {useUniversalFeel && item.key === "speed" ? "universal" : "lead"} score
+              </CardDescription>
             </CardHeader>
             <CardContent>
               {winners.map((mousepad) => {

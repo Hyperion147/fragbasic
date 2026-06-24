@@ -78,8 +78,9 @@ export function MousepadFeelChart({ pad }: Props) {
                 </h2>
 
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-                    A 1-10 profile for speed, control, stopping power, static
-                    friction, dynamic glide, and micro-adjustment freedom.
+                    A native 1-10 profile for speed, control, stopping power,
+                    static friction, dynamic glide, and micro-adjustment
+                    freedom inside this pad&apos;s surface family.
                 </p>
             </div>
 

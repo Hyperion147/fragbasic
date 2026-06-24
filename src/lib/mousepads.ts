@@ -43,3 +43,4 @@ export function getMousepadCompany(mousepad: Mousepad) {
 export * from "./mousepads/filters";
 export * from "./mousepads/visuals";
 export * from "./mousepads/similarity";
+export * from "./mousepads/calibration";
