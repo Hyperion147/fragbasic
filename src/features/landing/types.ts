@@ -1,3 +1,5 @@
+import type { Mousepad } from "@/types/mousepad";
+
 export type BrandPreview = {
   slug: string;
   name: string;
@@ -23,4 +25,5 @@ export type LandingProps = {
   comparisonCount: number;
   brands: BrandPreview[];
   comparisons: ComparisonPreview[];
+  latestAdded?: Mousepad;
 };

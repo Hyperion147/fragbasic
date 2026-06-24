@@ -754,5 +754,178 @@ export const glassMousepads: Mousepad[] = [
         type: "review",
       },
     ],
+  },
+
+  // ATK Crimson
+  {
+    id: "atk-crimson",
+    slug: "atk-crimson",
+
+    brand: "ATK",
+    name: "Crimson",
+    series: "Tempered Glass Mouse Pad",
+
+    category: "glass",
+    surface: "glass",
+    glassSurfaceFinish: "uncoated",
+    glassSurfaceFinishNotes:
+      "ATK social posts describe Crimson as coating-free, while Indian retailer listings describe a micro-etched ultra-clear tempered glass surface. Store listings do not use the word uncoated directly, so the finish is anchored by ATK's launch copy and community discussion.",
+    base: "polyurethane",
+    softness: "hard",
+
+    sizes: [
+      {
+        label: "XL",
+        width: 490,
+        height: 420,
+        thickness: 3.5,
+        unit: "mm",
+      },
+    ],
+
+    visuals: {
+      defaultColorway: "crimson",
+      colorways: [
+        {
+          name: "Crimson",
+          slug: "crimson",
+          color: "#b51f31",
+          image: "/mousepads/glasspads/atk-crimson.webp",
+          available: true,
+        },
+      ],
+    },
+
+    feel: {
+      speed: 7.1,
+      control: 6.8,
+      stoppingPower: 7.2,
+      staticFriction: 4.2,
+      dynamicFriction: 4.8,
+      microAdjustments: 9.0,
+      ratingConfidence: "community",
+    },
+
+    environment: {
+      humidityResistance: 10.0,
+      sweatResistance: 10.0,
+      dustHairResistance: 7.0,
+      washable: true,
+      notes:
+        "The submitted community review rates humidity and sweat resistance at 10/10, which lines up with expectations for a hard glass surface. Dust and hair resistance is still lower than the cleanest premium glass pads because debris can be more noticeable on the micro-etched surface.",
+    },
+
+    texture: {
+      feel: "slightly-textured",
+      skinComfort: 8.0,
+      sleeveFriendly: true,
+      noiseLevel: "medium",
+    },
+
+    recommendedFor: {
+      games: ["valorant", "cs2", "general-fps"],
+      aimStyles: ["micro-adjustments", "precision", "flicking"],
+      sensitivity: ["low", "medium"],
+    },
+
+    avoidIf: [
+      "You want a very fast glass pad",
+      "You dislike anime-style artwork on your setup",
+      "You want a widely available non-limited product",
+      "You prefer soft cloth feedback under your wrist",
+    ],
+
+    price: {
+      usd: 90,
+      inr: 6000,
+    },
+
+    availability: {
+      global: true,
+      india: "available",
+      stores: ["RyuGear", "Altf4gear", "NMPC India", "ATK Store", "MaxGaming"],
+      notes:
+        "Indian retailers list Crimson around Rs. 5,499-5,999. RyuGear showed in-stock units during the June 2026 research pass, while Altf4gear listed it as a pre-order.",
+    },
+
+    images: {
+      main: "/mousepads/glasspads/atk-crimson.webp",
+    },
+
+    personal: {
+      owned: false,
+      tested: false,
+      notes:
+        "Added from mnjx's submitted Discord review and cross-checked against current retailer specs. The submitted ratings framed Crimson as a very controlled glass pad; the displayed feel scores are normalized to FragBasic's existing scale so it sits as controlled glass rather than slower-than-cloth mud.",
+      pros: [
+        "Very strong stopping power for glass",
+        "Excellent micro-adjustments",
+        "Outstanding humidity and sweat consistency",
+        "Good sleeve compatibility",
+        "Available through Indian retailers",
+      ],
+      cons: [
+        "Slower and more controlled than common speed-first glass pads",
+        "Limited-edition availability can shift quickly",
+        "Base material is described differently across community notes and retailer specs",
+        "Dust and hair are still noticeable on the hard surface",
+      ],
+    },
+
+    communityConsensus: {
+      summary:
+        "ATK Crimson is a limited-edition micro-etched tempered glass pad that currently looks like a control-leaning glass option in the FragBasic dataset. Store copy and community impressions point to smooth, precise control with easier stopping than speed-first glasspads, making it more interesting for tactical FPS players than most glass options.",
+      commonComparisons: [
+        "Wallhack SP-005",
+        "Tekkusai Singularity",
+        "Pulsar Superglide",
+        "control glass pads",
+      ],
+      strengths: [
+        "High control and stopping power for a glass surface",
+        "Excellent micro-adjustment freedom",
+        "Near-perfect humidity and sweat resistance",
+        "Micro-etched tempered glass construction",
+        "Strong India availability for a limited glasspad",
+      ],
+      weaknesses: [
+        "Not the best fit for players who want maximum glass speed",
+        "Limited to 888 pieces worldwide",
+        "Official and community base-material descriptions do not perfectly match",
+        "Requires glass-pad maintenance habits and suitable skates",
+      ],
+    },
+
+    sources: [
+      {
+        label: "mnjx Discord review submitted June 15, 2026",
+        type: "personal",
+      },
+      {
+        label: "RyuGear ATK Crimson product page",
+        type: "store",
+        url: "https://ryugear.in/products/atk-tempered-glass-mouse-pad-crimson-limited-edition",
+      },
+      {
+        label: "Altf4gear accessories listing",
+        type: "store",
+        url: "https://altf4gear.com/search/accessories",
+      },
+      {
+        label: "NMPC India ATK Crimson product page",
+        type: "store",
+        url: "https://www.nmpc.in/products/atk-tempered-glass-mouse-pad-crimson-limited-edition",
+      },
+      {
+        label: "MaxGaming ATK Crimson listing",
+        type: "store",
+        url: "https://us.maxgaming.com/us/mousepads/atk-tempered-glass-mousepad-crimson",
+      },
+      {
+        label: "ATK launch post and community discussion",
+        type: "reddit",
+        url: "https://www.reddit.com/r/MousepadReview/comments/1q5h20v/atk_crimson_glaspad_questions/",
+      },
+    ],
   }
 ];
