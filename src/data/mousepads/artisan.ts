@@ -815,7 +815,7 @@ export const artisanMousepads: Mousepad[] = [
         },
 
         feel: {
-            speed: 4.1,
+            speed: 2,
             control: 9.1,
             stoppingPower: 9.3,
             staticFriction: 8.6,

@@ -44,6 +44,7 @@ const directNavItems = [
 const mobileNavItems = [
     { label: "All Mousepads", href: "/mousepads" },
     { label: "GlassPads", href: "/mousepads/glasspads" },
+    { label: "Mouse Skates", href: "/accessories/mouse-skates" },
     { label: "Best Picks", href: "/best" },
     { label: "Universal Compare", href: "/mousepads/compare/universal" },
     { label: "Find My Mousepad", href: "/mousepads/finder" },
@@ -80,6 +81,21 @@ const mousepadMenuLinks: Array<{
         body: "Published head-to-heads",
         href: "/mousepads/compare",
         icon: Sparkles,
+    },
+] as const;
+const accessoryMenuLinks: Array<{
+    title: string;
+    body: string;
+    href: string;
+    icon: typeof Sparkles;
+    badge?: string;
+}> = [
+    {
+        title: "Mouse Skates",
+        body: "Xraypad skate ratings, materials, and speed-control order",
+        href: "/accessories/mouse-skates",
+        icon: Sparkles,
+        badge: "New",
     },
 ] as const;
 const feelLinks = [
@@ -290,6 +306,33 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                     </Button>
                                 </div>
                             </div>
+                        </div>
+                    </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                    <NavigationMenuTrigger className="px-3 py-1.5 tracking-tight">
+                        Accessories
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                        <div className="w-[420px] overflow-hidden rounded-3xl border border-border bg-card/40 p-4 ring-1 ring-border/50 shadow-2xl shadow-black/10">
+                            <MousepadsMenuHeading title="Accessories" />
+                            <div className="mt-4 space-y-3">
+                                {accessoryMenuLinks.map((item) => (
+                                    <MousepadsMenuFeatureLink
+                                        key={item.title}
+                                        href={item.href}
+                                        title={item.title}
+                                        body={item.body}
+                                        icon={item.icon}
+                                        badge={item.badge}
+                                    />
+                                ))}
+                            </div>
+                            <p className="mt-4 border-t border-border pt-4 text-xs leading-5 text-muted-foreground">
+                                Starting with skates. More accessory data can
+                                plug into this menu later.
+                            </p>
                         </div>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
