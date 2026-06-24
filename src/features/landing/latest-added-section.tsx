@@ -11,59 +11,64 @@ type Props = {
 };
 
 export function LatestAddedSection({ pads }: Props) {
-  const primaryPad = pads[0];
+  const visiblePads = pads.slice(0, 3);
+  const primaryPad = visiblePads[0];
 
   if (!primaryPad) {
     return null;
   }
 
   return (
-    <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-      <div>
-        <Badge
-          variant="outline"
-          className="gap-2 rounded-md px-3 py-1 uppercase tracking-[0.18em] text-[11px] text-brand-hover"
-        >
-          <Sparkles className="size-3.5" />
-          Latest added
-        </Badge>
+    <section className="space-y-6">
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <Badge
+            variant="outline"
+            className="gap-2 rounded-md px-3 py-1 uppercase tracking-[0.18em] text-[11px] text-brand-hover"
+          >
+            <Sparkles className="size-3.5" />
+            Latest added
+          </Badge>
 
-        <h2 className="mt-5 text-balance text-4xl font-semibold tracking-tight md:text-6xl">
-          {pads.length === 1
-            ? `${primaryPad.brand} ${primaryPad.name} joins the database.`
-            : `${pads.length} fresh community additions join the database.`}
-        </h2>
+          <h2 className="mt-5 text-balance text-4xl font-semibold tracking-tight md:text-6xl">
+            {visiblePads.length === 1
+              ? `${primaryPad.brand} ${primaryPad.name} joins the database.`
+              : `${visiblePads.length} fresh community additions join the database.`}
+          </h2>
 
-        <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground">
-          {pads.length === 1 ? (
-            <>
-              A {formatMousepadValue(primaryPad.category)} pad with{" "}
-              {primaryPad.feel.control}/10 control,{" "}
-              {primaryPad.feel.stoppingPower}/10 stopping power, and{" "}
-              {primaryPad.environment.humidityResistance}/10 humidity resistance
-              from the latest community submission.
-            </>
-          ) : (
-            <>
-              The newest batch covers{" "}
-              {pads.map((pad) => `${pad.brand} ${pad.name}`).join(", ")} with
-              fresh control, stopping power, and surface notes from community
-              submissions.
-            </>
-          )}
-        </p>
+          <p className="mt-5 max-w-3xl text-base leading-7 text-muted-foreground">
+            {visiblePads.length === 1 ? (
+              <>
+                A {formatMousepadValue(primaryPad.category)} pad with{" "}
+                {primaryPad.feel.control}/10 control,{" "}
+                {primaryPad.feel.stoppingPower}/10 stopping power, and{" "}
+                {primaryPad.environment.humidityResistance}/10 humidity
+                resistance from the latest community submission.
+              </>
+            ) : (
+              <>
+                The newest batch covers{" "}
+                {visiblePads
+                  .map((pad) => `${pad.brand} ${pad.name}`)
+                  .join(", ")}{" "}
+                with fresh control, stopping power, and surface notes from
+                community submissions.
+              </>
+            )}
+          </p>
+        </div>
 
         <Link
           href={`/mousepads/${primaryPad.slug}`}
-          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-hover transition-colors hover:text-foreground"
+          className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-brand-hover transition-colors hover:text-foreground"
         >
           Open latest profile
           <ArrowRight className="size-4" />
         </Link>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        {pads.map((pad) => (
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {visiblePads.map((pad) => (
           <MousepadCard
             key={pad.slug}
             pad={pad}
