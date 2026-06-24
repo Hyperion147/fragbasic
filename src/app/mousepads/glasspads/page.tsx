@@ -3,6 +3,7 @@ import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { MousepadBrowser } from "@/components/mousepads/mousepad-browser";
 import { SiteSection } from "@/components/SiteSection";
+import { latestAddedGlasspadSlugs } from "@/data/latest-added";
 import { getAllMousepads } from "@/lib/mousepads";
 import { buildMetadata } from "@/lib/seo";
 
@@ -66,6 +67,7 @@ export default function GlasspadsPage() {
             mousepads={glasspads}
             categories={[]}
             searchOnly
+            latestAddedSlugs={latestAddedGlasspadSlugs}
           />
         </SiteSection>
       </section>

@@ -38,9 +38,9 @@ export function HomeExperience({
             comparisonCount={comparisonCount}
           />
         </RevealSection>
-        {latestAdded ? (
+        {latestAdded && latestAdded.length > 0 ? (
           <RevealSection delay={0.11}>
-            <LatestAddedSection pad={latestAdded} />
+            <LatestAddedSection pads={latestAdded} />
           </RevealSection>
         ) : null}
         <RevealSection delay={0.14}>

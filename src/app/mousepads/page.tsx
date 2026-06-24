@@ -3,6 +3,7 @@ import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { MousepadBrowser } from "@/components/mousepads/mousepad-browser";
 import { SiteSection } from "@/components/SiteSection";
+import { latestAddedMousepadSlugs } from "@/data/latest-added";
 import {
   getAllMousepads,
   getMousepadBrandOptions,
@@ -90,6 +91,7 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
                         brands={brands}
                         categories={categories}
                         initialCategory={initialCategory}
+                        latestAddedSlugs={latestAddedMousepadSlugs}
                     />
                 </SiteSection>
             </section>

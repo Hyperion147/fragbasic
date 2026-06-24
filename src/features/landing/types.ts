@@ -25,5 +25,5 @@ export type LandingProps = {
   comparisonCount: number;
   brands: BrandPreview[];
   comparisons: ComparisonPreview[];
-  latestAdded?: Mousepad;
+  latestAdded?: Mousepad[];
 };
