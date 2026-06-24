@@ -8,6 +8,7 @@ import {
 import {
   SPEED_CONTROL_ZONES,
   formatMousepadValue,
+  getCalibratedFeelValue,
   getDefaultColorway,
   getMousepadFullName,
   getMousepadSpeedControlPosition,
@@ -27,9 +28,9 @@ export function MultiPositionChart({ mousepads }: Props) {
           Speed-control position
         </CardTitle>
         <CardDescription>
-          Each pad gets its own lane on a shared scale. Position starts from the
-          pad&apos;s curated category, then uses speed, stopping power, friction,
-          and movement freedom to fine-tune the final landing spot.
+          Each pad gets its own lane on the universal glide scale. Glass and
+          non-glass pads are calibrated before positioning, so hard-surface
+          speed is not flattened into the same band as cloth speed.
         </CardDescription>
       </CardHeader>
 
@@ -91,7 +92,7 @@ export function MultiPositionChart({ mousepads }: Props) {
                             style={{ backgroundColor: color }}
                           />
                           <span className="text-xs font-medium text-foreground">
-                            {mousepad.feel.speed}
+                            {getCalibratedFeelValue(mousepad, "speed", "universal")}
                           </span>
                         </div>
                       </div>
@@ -112,7 +113,9 @@ export function MultiPositionChart({ mousepads }: Props) {
                     </p>
                     <p className="mt-1 text-xs text-muted-foreground">
                       {formatMousepadValue(mousepad.category)} / speed{" "}
-                      {mousepad.feel.speed} / control {mousepad.feel.control}
+                      {getCalibratedFeelValue(mousepad, "speed", "universal")} /
+                      control{" "}
+                      {getCalibratedFeelValue(mousepad, "control", "universal")}
                     </p>
                   </div>
                 </div>

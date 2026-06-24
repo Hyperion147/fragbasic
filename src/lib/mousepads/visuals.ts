@@ -1,4 +1,5 @@
 import type { Mousepad, MousepadCategory, MousepadColorway } from "@/types/mousepad";
+import { getCalibratedFeel } from "./calibration";
 
 export const SPEED_CONTROL_ZONES = [
   { label: "Mud", start: 0, end: 18 },
@@ -89,7 +90,7 @@ export function getMousepadSpeedControlPosition(mousepad: Mousepad) {
     staticFriction,
     dynamicFriction,
     microAdjustments,
-  } = mousepad.feel;
+  } = getCalibratedFeel(mousepad, "universal");
 
   const frictionAverage = (staticFriction + dynamicFriction) / 2;
   const feelAdjustment =

@@ -320,6 +320,13 @@ export const bestPages = [
           "A slightly more controlled glass profile in the tracked set, useful if pure speed feels too exposed.",
         bestFor: "Cloth players taking their first serious glass step.",
       },
+      {
+        slug: "atk-crimson",
+        label: "Controlled value glass",
+        reason:
+          "A control-leaning micro-etched glasspad with strong stopping scores for glass and unusually good India availability.",
+        bestFor: "Tac-FPS players who want to try glass without jumping straight to the fastest surfaces.",
+      },
     ],
     keywords: [
       "best glasspads",
@@ -379,6 +386,13 @@ export const bestPages = [
         reason:
           "Community reviews consistently call out how stable it stays in high humidity while still giving more stopping power than faster hybrid pads.",
         bestFor: "Players who want strong climate resistance without jumping all the way to glass.",
+      },
+      {
+        slug: "atk-crimson",
+        label: "Glass consistency",
+        reason:
+          "Glass keeps humidity and sweat from changing the glide mid-session, while Crimson stays more controlled than the speed-first glass picks.",
+        bestFor: "Humid-room players who want maximum consistency and can live with a hard surface.",
       },
     ],
     keywords: [

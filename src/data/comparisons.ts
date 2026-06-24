@@ -12,6 +12,26 @@ export interface MousepadComparison {
 
 export const comparisons: MousepadComparison[] = [
   {
+    slug: "atk-crimson-vs-wallhack-sp-005",
+    title: "ATK Crimson vs Wallhack SP-005",
+    leftSlug: "atk-crimson",
+    rightSlug: "wallhack-sp-005",
+    excerpt:
+      "A control-leaning glasspad compared with one of the safer speed-first glass benchmarks.",
+    status: "published",
+    tags: ["Latest", "Glass", "Control Glass", "Speed", "ATK", "Wallhack"],
+  },
+  {
+    slug: "tekkusai-phantom-vs-tekkusai-singularity",
+    title: "Tekkusai Phantom vs Tekkusai Singularity",
+    leftSlug: "tekkusai-phantom",
+    rightSlug: "tekkusai-singularity",
+    excerpt:
+      "Tekkusai's faster premium glass option compared with its more balanced, beginner-friendlier glass surface.",
+    status: "published",
+    tags: ["Latest", "Glass", "Tekkusai", "Speed"],
+  },
+  {
     slug: "artisan-zero-soft-vs-pulsar-lgg-hyperion-soft",
     title: "Artisan Zero Soft vs Pulsar x LGG Hyperion Soft",
     leftSlug: "artisan-zero-soft",
@@ -62,16 +82,6 @@ export const comparisons: MousepadComparison[] = [
     tags: ["Popular", "Speed", "Tracking", "Artisan", "LGG"],
   },
   {
-    slug: "lgg-saturn-pro-soft-vs-artisan-type-99-soft",
-    title: "LGG Saturn Pro Soft vs Artisan Type-99 Soft",
-    leftSlug: "lgg-saturn-pro-soft",
-    rightSlug: "artisan-type-99-soft",
-    excerpt:
-      "Two premium control pads compared for stopping power, consistency, and tactical FPS precision.",
-    status: "published",
-    tags: ["Popular", "Control", "Tac FPS", "LGG", "Artisan"],
-  },
-  {
     slug: "zowie-g-sr-iii-vs-lgg-saturn-pro-soft",
     title: "Zowie G-SR III vs LGG Saturn Pro Soft",
     leftSlug: "zowie-g-sr-iii",
@@ -80,15 +90,5 @@ export const comparisons: MousepadComparison[] = [
       "A classic esports control pad compared with a modern premium Poron-base control option.",
     status: "published",
     tags: ["Popular", "Control", "Tac FPS", "Zowie", "LGG"],
-  },
-  {
-    slug: "zowie-g-sr-se-gris-vs-artisan-zero-soft",
-    title: "Zowie G-SR-SE Gris vs Artisan Zero Soft",
-    leftSlug: "zowie-g-sr-se-gris",
-    rightSlug: "artisan-zero-soft",
-    excerpt:
-      "A mainstream balanced-control esports pad compared with one of the safest premium Artisan picks.",
-    status: "published",
-    tags: ["Popular", "Balanced", "Control", "Zowie", "Artisan"],
   },
 ]

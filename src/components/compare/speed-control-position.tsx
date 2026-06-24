@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card"
 import {
   SPEED_CONTROL_ZONES,
+  getCalibratedFeelValue,
   getMousepadSpeedControlPosition,
   getSpeedControlZoneLabel,
 } from "@/lib/mousepads"
@@ -23,9 +24,9 @@ export function SpeedControlPosition({ left, right }: Props) {
           Where they sit on the glide scale
         </h2>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
-          This scale starts from each pad&apos;s curated category, then nudges the
-          position with speed, stopping power, friction, and freedom of movement
-          so balanced pads do not get dragged too far into control.
+          This is the universal glide scale. Glass and non-glass pads are
+          calibrated before positioning, so glass speed does not share the same
+          raw score meaning as cloth speed.
         </p>
       </div>
 
@@ -117,7 +118,10 @@ function PositionSummary({
 
         <div className="text-right">
           <p className="text-xl font-semibold">{pad.feel.speed}</p>
-          <p className="text-xs text-muted-foreground">speed score</p>
+          <p className="text-xs text-muted-foreground">native speed</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {getCalibratedFeelValue(pad, "speed", "universal")}/10 universal
+          </p>
         </div>
       </div>
     </div>
