@@ -45,6 +45,8 @@ const mobileNavItems = [
     { label: "All Mousepads", href: "/mousepads" },
     { label: "GlassPads", href: "/mousepads/glasspads" },
     { label: "Mouse Skates", href: "/accessories/mouse-skates" },
+    { label: "Browse Skates", href: "/accessories/mouse-skates/browse" },
+    { label: "Compare Skates", href: "/accessories/mouse-skates/compare" },
     { label: "Best Picks", href: "/best" },
     { label: "Universal Compare", href: "/mousepads/compare/universal" },
     { label: "Find My Mousepad", href: "/mousepads/finder" },
@@ -92,10 +94,22 @@ const accessoryMenuLinks: Array<{
 }> = [
     {
         title: "Mouse Skates",
-        body: "Xraypad skate ratings, materials, and speed-control order",
+        body: "Fast-to-slow skate spectrum and material guide",
         href: "/accessories/mouse-skates",
         icon: Sparkles,
         badge: "New",
+    },
+    {
+        title: "Browse Skates",
+        body: "Filter by company, material, fastest, and slowest",
+        href: "/accessories/mouse-skates/browse",
+        icon: Grid2x2,
+    },
+    {
+        title: "Compare Skates",
+        body: "Pick 2-3 skates for a skate-specific matchup",
+        href: "/accessories/mouse-skates/compare",
+        icon: Gauge,
     },
 ] as const;
 const feelLinks = [

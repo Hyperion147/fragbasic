@@ -69,11 +69,6 @@ export default function CompareIndexPage() {
                         <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">
                             Compare mousepads side by side.
                         </h1>
-                        <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
-                            Read published head-to-head matchups across speed,
-                            control, stopping power, and overall feel before you
-                            open the universal compare tool.
-                        </p>
                         <p className="mt-4 rounded-lg border border-sky-300/40 bg-sky-400/10 px-4 py-3 text-sm leading-6 text-sky-100">
                             Note: Glasspad and mousepad ratings use different
                             feel scales. Treat these numbers as comparison
