@@ -19,6 +19,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/mousepads/compare",
     "/mousepads/compare/universal",
     "/accessories/mouse-skates",
+    "/accessories/mouse-skates/browse",
+    "/accessories/mouse-skates/compare",
     "/best",
   ].map((path) => ({
     url: `${siteUrl}${path}`,
