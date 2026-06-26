@@ -453,12 +453,12 @@ export const glassMousepads: Mousepad[] = [
   },
 
   feel: {
-    speed: 8.6,
-    control: 4.2,
-    stoppingPower: 4.8,
-    staticFriction: 2.8,
-    dynamicFriction: 1.8,
-    microAdjustments: 9.8,
+    speed: 8.0,
+    control: 4.6,
+    stoppingPower: 5.0,
+    staticFriction: 2.4,
+    dynamicFriction: 3.0,
+    microAdjustments: 9.5,
     ratingConfidence: "community",
   },
 
@@ -501,7 +501,7 @@ export const glassMousepads: Mousepad[] = [
 
   price: {
     usd: 120,
-    inr: 12500,
+    inr: 13000,
   },
 
   availability: {
@@ -524,7 +524,7 @@ export const glassMousepads: Mousepad[] = [
     owned: false,
     tested: false,
     notes:
-      "Community impressions consistently place it as a smooth, premium glass pad with strong glide and excellent comfort characteristics. Frequently described as more skin-friendly than SP-004 while maintaining comparable speed.",
+      "Community impressions consistently place it as a smooth, premium glass pad with strong glide and excellent comfort characteristics. PURPLE's submitted review called it the best balanced uncoated glasspad for cloth-to-glass transitions, while noting that the base grip can be weak on some desks.",
     pros: [
       "Extremely smooth glide",
       "Outstanding micro-adjustments",
@@ -540,6 +540,7 @@ export const glassMousepads: Mousepad[] = [
       "Limited production run",
       "Premium pricing",
       "Less forgiving than cloth pads",
+      "Base grip may not stick firmly to every desk",
     ],
   },
 
@@ -573,6 +574,10 @@ export const glassMousepads: Mousepad[] = [
   },
 
   sources: [
+    {
+      label: "PURPLE community review submitted June 2026",
+      type: "personal",
+    },
     {
       label: "Midori official product listing",
       type: "official",

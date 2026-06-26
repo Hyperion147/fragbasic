@@ -358,12 +358,12 @@ export const othersMousepads: Mousepad[] = [
     },
 
     feel: {
-      speed: 4.2,
-      control: 8.8,
-      stoppingPower: 9.0,
-      staticFriction: 6.4,
-      dynamicFriction: 7.6,
-      microAdjustments: 8.7,
+      speed: 4.1,
+      control: 7.8,
+      stoppingPower: 7.5,
+      staticFriction: 5.8,
+      dynamicFriction: 6.3,
+      microAdjustments: 8.2,
       ratingConfidence: "community",
     },
 
@@ -413,7 +413,7 @@ export const othersMousepads: Mousepad[] = [
     personal: {
       owned: false,
       tested: false,
-      notes: "Positioned as a premium smooth control pad. Slower than Artisan Zero and Saturn Pro, but smoother and more locked-in for precise aim styles.",
+      notes: "Positioned as a premium smooth control pad. PURPLE's submitted review rated it lower on raw control/stopping than earlier community estimates while still calling it one of the best control pads, so the final scores are averaged downward but keep it firmly in the control class.",
       pros: [
         "Very smooth surface",
         "Strong stopping power",
@@ -455,6 +455,10 @@ export const othersMousepads: Mousepad[] = [
 
     sources: [
       {
+        label: "PURPLE community review submitted June 2026",
+        type: "personal",
+      },
+      {
         label: "Kurosun official website",
         type: "official",
         url: "https://kurosun.co/",
@@ -478,6 +482,159 @@ export const othersMousepads: Mousepad[] = [
         label: "Periview Kurosun Shogun review",
         type: "review",
         url: "https://periview.gg/2025/01/29/kurosun-shogun-jude-reviews/",
+      },
+    ],
+  },
+
+  // Matrova Scarlet
+  {
+    id: "matrova-scarlet",
+    slug: "matrova-scarlet",
+
+    brand: "Matrova",
+    name: "Scarlet",
+    series: "Mid Balance",
+
+    category: "balanced-control",
+    surface: "hybrid",
+    base: "silicone",
+    softness: "soft",
+
+    sizes: [
+      {
+        label: "XL",
+        width: 490,
+        height: 420,
+        thickness: 4,
+        unit: "mm",
+      },
+    ],
+
+    visuals: {
+      defaultColorway: "scarlet",
+      colorways: [
+        {
+          name: "Scarlet",
+          slug: "scarlet",
+          color: "#e83e4f",
+          image: "/mousepads/others/matrova-scarlet.jpg",
+          available: true,
+        },
+        {
+          name: "Custom",
+          slug: "custom",
+          color: "#6f5f9f",
+          available: true,
+        },
+      ],
+    },
+
+    feel: {
+      speed: 6.1,
+      control: 7.2,
+      stoppingPower: 6.6,
+      staticFriction: 5.3,
+      dynamicFriction: 5.6,
+      microAdjustments: 8.1,
+      ratingConfidence: "community",
+    },
+
+    environment: {
+      humidityResistance: 8.0,
+      sweatResistance: 8.0,
+      dustHairResistance: 6.8,
+      washable: true,
+      notes:
+        "Official copy positions Scarlet as a mid-balance smooth-control pad. The submitted review noted different X/Y texture and a controlled feel without muddy slowdown.",
+    },
+
+    texture: {
+      feel: "slightly-textured",
+      skinComfort: 8.0,
+      sleeveFriendly: true,
+      noiseLevel: "quiet",
+    },
+
+    recommendedFor: {
+      games: ["valorant", "cs2", "apex", "general-fps"],
+      aimStyles: ["hybrid", "micro-adjustments", "flicking"],
+      sensitivity: ["low", "medium"],
+    },
+
+    avoidIf: [
+      "You want a very slow control pad",
+      "You dislike noticeable X/Y texture difference",
+      "You want easy local India availability",
+      "You prefer traditional cloth instead of treated hybrid surfaces",
+    ],
+
+    price: {
+      inr: 3000,
+    },
+
+    availability: {
+      global: true,
+      india: "import-only",
+      stores: ["Matrova"],
+      notes:
+        "Submitted price was around Rs. 3,000 before import costs. Matrova sells direct and supports custom options, so India buyers may need to import.",
+    },
+
+    images: {
+      main: "/mousepads/others/matrova-scarlet.jpg",
+    },
+
+    personal: {
+      owned: false,
+      tested: false,
+      notes:
+        "Added from PURPLE's submitted review and Matrova product copy. The profile keeps it on the border of control and balanced, with X/Y texture called out as a defining trait.",
+      pros: [
+        "Balanced control without muddy feel",
+        "Good micro-adjustment freedom",
+        "Interesting X/Y texture character",
+        "Custom options available",
+        "Competitive direct price",
+      ],
+      cons: [
+        "Import required for India",
+        "X/Y texture difference will not suit everyone",
+        "Less community data than bigger brands",
+        "Silicone/PU-style base may vary by desk",
+      ],
+    },
+
+    communityConsensus: {
+      summary:
+        "Matrova Scarlet is a balanced-control hybrid pad with a smooth-control focus and noticeable X/Y texture character. It should appeal to players who want a controlled but not muddy glide and are comfortable importing from a smaller enthusiast brand.",
+      commonComparisons: [
+        "Artisan Zero",
+        "Kurosun Samurai",
+        "Aqua Control Plus",
+        "LGG Saturn Pro",
+      ],
+      strengths: [
+        "Controlled but still mobile",
+        "Distinct texture tuning",
+        "Good hybrid FPS fit",
+        "Custom color/design options",
+      ],
+      weaknesses: [
+        "Sparse long-term community data",
+        "Import-only for India",
+        "X/Y difference may be polarizing",
+      ],
+    },
+
+    sources: [
+      {
+        label: "PURPLE community review submitted June 2026",
+        type: "personal",
+      },
+      {
+        label: "Matrova Scarlet product page",
+        type: "official",
+        url: "https://matrova.com/products/scarlet-mouse-pad",
       },
     ],
   },
@@ -650,5 +807,157 @@ export const othersMousepads: Mousepad[] = [
       type: "review",
     },
   ],
-}
+},
+
+  // Talongames Type99
+  {
+    id: "talongames-type99",
+    slug: "talongames-type99",
+
+    brand: "Talongames",
+    name: "Type99",
+    series: "Type99 Control",
+
+    category: "control",
+    surface: "cloth",
+    base: "silicone",
+    softness: "soft",
+
+    sizes: [
+      {
+        label: "XL",
+        width: 490,
+        height: 420,
+        thickness: 4,
+        unit: "mm",
+      },
+    ],
+
+    visuals: {
+      defaultColorway: "matcha-green",
+      colorways: [
+        {
+          name: "Matcha Green",
+          slug: "matcha-green",
+          color: "#8aa734",
+          image: "/mousepads/others/talongames-type99.jpg",
+          available: true,
+        },
+      ],
+    },
+
+    feel: {
+      speed: 2.6,
+      control: 8.4,
+      stoppingPower: 8.3,
+      staticFriction: 7.7,
+      dynamicFriction: 7.0,
+      microAdjustments: 6.9,
+      ratingConfidence: "community",
+    },
+
+    environment: {
+      humidityResistance: 7.8,
+      sweatResistance: 7.8,
+      dustHairResistance: 6.2,
+      washable: true,
+      notes:
+        "Indian retailer copy describes the surface as fast yet controlled with a non-slip rubberized bottom. The submitted review places it extremely close to Artisan Type-99 in control feel, but with a less premium base.",
+    },
+
+    texture: {
+      feel: "smooth",
+      skinComfort: 8.0,
+      sleeveFriendly: true,
+      noiseLevel: "quiet",
+    },
+
+    recommendedFor: {
+      games: ["valorant", "cs2", "general-fps"],
+      aimStyles: ["precision", "micro-adjustments", "flicking"],
+      sensitivity: ["low", "medium"],
+    },
+
+    avoidIf: [
+      "You want premium Poron base quality",
+      "You need a fast tracking pad",
+      "You dislike high static friction",
+      "You want many colorway choices",
+    ],
+
+    price: {
+      inr: 2000,
+    },
+
+    availability: {
+      global: true,
+      india: "available",
+      stores: ["RyuGear", "Loadout", "Keyora"],
+      notes:
+        "Submitted price was around Rs. 2,000 through Indian retailers. RyuGear and Loadout list the 490x420x4mm version.",
+    },
+
+    images: {
+      main: "/mousepads/others/talongames-type99.jpg",
+    },
+
+    personal: {
+      owned: false,
+      tested: false,
+      notes:
+        "Added from PURPLE's submitted review and Indian retailer specs. It is treated as a budget Artisan Type-99 alternative: very controlled and slow, but with a less refined base.",
+      pros: [
+        "Strong control for the price",
+        "High stopping power",
+        "Very affordable compared with Artisan",
+        "Good India availability",
+        "Familiar Type-99-like control target",
+      ],
+      cons: [
+        "Base is not as good as Artisan",
+        "Less premium stitching/build feel",
+        "Limited community data",
+        "Slow glide can feel restrictive",
+      ],
+    },
+
+    communityConsensus: {
+      summary:
+        "Talongames Type99 is a budget control pad aimed at the Artisan Type-99 feel profile. It is much cheaper and locally obtainable in India, with strong stopping power and control, but the base and overall premium feel are expectedly below Artisan.",
+      commonComparisons: [
+        "Artisan Type-99 Mid",
+        "Artisan Type-99 Soft",
+        "Zowie G-SR III",
+        "Kurosun Shogun",
+      ],
+      strengths: [
+        "Excellent value control option",
+        "Strong stopping power",
+        "Good for Valorant and CS2",
+        "Easy India availability",
+      ],
+      weaknesses: [
+        "Base quality below Artisan",
+        "Less refined than premium control pads",
+        "Not suitable for speed-focused players",
+      ],
+    },
+
+    sources: [
+      {
+        label: "PURPLE community review submitted June 2026",
+        type: "personal",
+      },
+      {
+        label: "RyuGear Talongames Type99 listing",
+        type: "store",
+        url: "https://ryugear.in/products/talongames-type-99-control-mousepad",
+      },
+      {
+        label: "Loadout Talongames Type99 listing",
+        type: "store",
+        url: "https://www.loadout.co.in/product-page/talongames-type-99-mousepad-490-x-420",
+      },
+    ],
+  },
 ];
