@@ -30,7 +30,12 @@ import {
   type RelatedAlternativeGroup,
 } from "@/components/mousepads/related-alternatives"
 import type { Mousepad } from "@/types/mousepad"
-import { buildMetadata } from "@/lib/seo";
+import {
+  JsonLd,
+  buildBreadcrumbJsonLd,
+  buildMetadata,
+  buildMousepadReviewJsonLd,
+} from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{
@@ -80,6 +85,16 @@ export default async function MousepadPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <JsonLd
+        data={[
+          buildBreadcrumbJsonLd([
+            { label: "Home", path: "/" },
+            { label: "Mousepads", path: "/mousepads" },
+            { label: `${pad.brand} ${pad.name}`, path: `/mousepads/${pad.slug}` },
+          ]),
+          buildMousepadReviewJsonLd(pad),
+        ]}
+      />
       <section className="border-b border-border bg-background">
         <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
           <div className="mx-auto max-w-7xl grid gap-8 md:grid-cols-[1.05fr_0.95fr]">

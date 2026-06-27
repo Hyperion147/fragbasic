@@ -34,6 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
     changeFrequency: "weekly" as const,
     priority: 0.9,
+    images: [`${siteUrl}${mousepad.images.main}`],
   }));
 
   const brandRoutes = getAllBrandSlugs().map((brand) => ({
