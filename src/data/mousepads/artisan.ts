@@ -923,4 +923,200 @@ export const artisanMousepads: Mousepad[] = [
             },
         ],
     },
+
+    // Type-99 Mid
+    {
+        id: "artisan-type-99-mid",
+        slug: "artisan-type-99-mid",
+
+        brand: "Artisan",
+        name: "Type-99 Mid",
+        series: "Type-99",
+
+        category: "control",
+        surface: "cloth",
+        base: "poron",
+        softness: "mid",
+
+        sizes: [
+            {
+                label: "S",
+                width: 240,
+                height: 210,
+                thickness: 3,
+                unit: "mm",
+            },
+            {
+                label: "M",
+                width: 310,
+                height: 240,
+                thickness: 3,
+                unit: "mm",
+            },
+            {
+                label: "L",
+                width: 420,
+                height: 330,
+                thickness: 3,
+                unit: "mm",
+            },
+            {
+                label: "XL",
+                width: 490,
+                height: 420,
+                thickness: 3,
+                unit: "mm",
+            },
+            {
+                label: "XXL",
+                width: 500,
+                height: 490,
+                thickness: 3,
+                unit: "mm",
+            },
+        ],
+
+        visuals: {
+            defaultColorway: "matcha",
+            colorways: [
+                {
+                    name: "Matcha",
+                    slug: "matcha",
+                    color: "#9BA66D",
+                    image: "/mousepads/artisan/type99-matcha.png",
+                    available: true,
+                },
+                {
+                    name: "Black",
+                    slug: "black",
+                    color: "#1c1c1c",
+                    image: "/mousepads/artisan/type99-black.png",
+                    available: true,
+                },
+                {
+                    name: "Gray",
+                    slug: "gray",
+                    color: "#7E817A",
+                    available: true,
+                },
+            ],
+        },
+
+        feel: {
+            speed: 2.4,
+            control: 9.3,
+            stoppingPower: 9.2,
+            staticFriction: 7.7,
+            dynamicFriction: 6.9,
+            microAdjustments: 7.4,
+            ratingConfidence: "community",
+        },
+
+        environment: {
+            humidityResistance: 9.0,
+            sweatResistance: 8.8,
+            dustHairResistance: 6.6,
+            washable: true,
+            notes:
+                "Official Type-99 copy positions the surface as Artisan's slow control option with sweat/humidity-aware fabric. Mid uses the firmer 3mm base, so it feels less plush and slightly more direct than Soft.",
+        },
+
+        texture: {
+            feel: "smooth",
+            skinComfort: 8.4,
+            sleeveFriendly: true,
+            noiseLevel: "quiet",
+        },
+
+        recommendedFor: {
+            games: ["valorant", "cs2", "general-fps"],
+            aimStyles: ["precision", "micro-adjustments", "flicking"],
+            sensitivity: ["low", "medium"],
+        },
+
+        avoidIf: [
+            "You want a fast glide",
+            "You prefer plush Xsoft or Soft bases",
+            "You play mostly tracking-heavy games",
+            "You dislike high-friction control pads",
+        ],
+
+        price: {
+            usd: 65,
+            inr: 6000,
+        },
+
+        availability: {
+            global: true,
+            india: "limited",
+            stores: ["NMPC", "GenesisPC", "import sellers"],
+            notes:
+                "Submitted India price was around Rs. 6,000 through NMPC/Genesis-style imports. Stock depends heavily on color, size, and hardness.",
+        },
+
+        images: {
+            main: "/mousepads/artisan/type99-matcha.png",
+        },
+
+        personal: {
+            owned: false,
+            tested: false,
+            notes:
+                "Added from PURPLE's submitted review and averaged against Artisan's official Type-99 positioning plus the existing Soft profile. The submitted row listed very high speed, but the final site-scale rating keeps Type-99 Mid in the slow control class where it belongs.",
+            pros: [
+                "Elite stopping power",
+                "Very strong tactical FPS control",
+                "Direct firmer-base feedback",
+                "Premium Artisan construction",
+                "Good humidity-focused surface positioning",
+            ],
+            cons: [
+                "Restrictive for tracking-heavy shooters",
+                "Less forgiving than Soft or Xsoft",
+                "Expensive",
+                "Limited India stock",
+            ],
+        },
+
+        communityConsensus: {
+            summary:
+                "Type-99 Mid is the firmer, more direct version of Artisan's flagship control surface. It should be treated as one of the slowest premium cloth pads in the database, with top-tier stopping power and a more immediate feel than Type-99 Soft.",
+            commonComparisons: [
+                "Artisan Type-99 Soft",
+                "Kurosun Shogun",
+                "LGG Jupiter Pro",
+                "Zowie G-SR III",
+            ],
+            strengths: [
+                "Excellent control",
+                "Outstanding stopping power",
+                "Direct Mid-base feedback",
+                "Premium stitching and base quality",
+                "Great for Valorant and CS2",
+            ],
+            weaknesses: [
+                "Too slow for many tracking players",
+                "Less plush than Soft",
+                "High price",
+                "Stock can be difficult in India",
+            ],
+        },
+
+        sources: [
+            {
+                label: "PURPLE community review submitted June 2026",
+                type: "personal",
+            },
+            {
+                label: "Artisan official Type-99 page",
+                type: "official",
+                url: "https://artisan-jp.com/global/fx-type99",
+            },
+            {
+                label: "GenesisPC India Type-99 listing",
+                type: "store",
+                url: "https://www.genesispc.in/products/artisan-fx-type-99-gaming-mousepad",
+            },
+        ],
+    },
 ];

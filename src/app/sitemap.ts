@@ -19,6 +19,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/mousepads/compare",
     "/mousepads/compare/universal",
     "/accessories/mouse-skates",
+    "/accessories/mouse-skates/browse",
+    "/accessories/mouse-skates/compare",
     "/best",
   ].map((path) => ({
     url: `${siteUrl}${path}`,
@@ -32,6 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
     changeFrequency: "weekly" as const,
     priority: 0.9,
+    images: [`${siteUrl}${mousepad.images.main}`],
   }));
 
   const brandRoutes = getAllBrandSlugs().map((brand) => ({

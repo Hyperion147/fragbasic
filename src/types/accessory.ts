@@ -2,6 +2,7 @@ export type MouseSkateMaterial =
   | "ptfe"
   | "hardened-ptfe"
   | "uhmwpe"
+  | "glass"
   | "titanium";
 
 export type MouseSkateShape = "dots" | "donuts" | "mouse-specific";
@@ -35,6 +36,12 @@ export interface MouseSkate {
   thicknessMm?: number;
   diameterMm?: number;
   quantity?: string;
+  visual?: {
+    colorName: string;
+    primaryHex: string;
+    secondaryHex?: string;
+    textHex?: string;
+  };
   ratings: MouseSkateRatings;
   surfaceFit: {
     cloth: MouseSkateSurfaceFit;

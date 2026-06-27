@@ -718,6 +718,172 @@ export const xraypadMousepads: Mousepad[] = [
         ],
     },
 
+    // Origin Pro Cerberus
+    {
+        id: "xraypad-origin-pro-cerberus-soft",
+        slug: "xraypad-origin-pro-cerberus-soft",
+
+        brand: "Xraypad",
+        name: "Origin Pro Cerberus Soft",
+        series: "Origin Pro",
+
+        category: "control",
+        surface: "cloth",
+        base: "polyurethane",
+        softness: "soft",
+
+        sizes: [
+            {
+                label: "XL",
+                width: 450,
+                height: 400,
+                thickness: 4,
+                unit: "mm",
+            },
+            {
+                label: "XL SQ",
+                width: 500,
+                height: 500,
+                thickness: 4,
+                unit: "mm",
+            },
+        ],
+
+        visuals: {
+            defaultColorway: "cerberus",
+            colorways: [
+                {
+                    name: "Cerberus",
+                    slug: "cerberus",
+                    color: "#b41f2e",
+                    image: "/mousepads/xraypad/origin-pro-cerberus.webp",
+                    available: true,
+                },
+            ],
+        },
+
+        feel: {
+            speed: 3.7,
+            control: 7.4,
+            stoppingPower: 8.1,
+            staticFriction: 6.2,
+            dynamicFriction: 6.4,
+            microAdjustments: 7.5,
+            ratingConfidence: "community",
+        },
+
+        environment: {
+            humidityResistance: 8.3,
+            sweatResistance: 8.4,
+            dustHairResistance: 6.2,
+            washable: true,
+            notes:
+                "Official/store copy frames Origin Pro as a smooth fine-texture pad with a honeycomb polyurethane base. The submitted review noted the pad did not lay flat immediately out of the carton, so flatness can require break-in.",
+        },
+
+        texture: {
+            feel: "slightly-textured",
+            skinComfort: 7.4,
+            sleeveFriendly: true,
+            noiseLevel: "quiet",
+        },
+
+        recommendedFor: {
+            games: ["valorant", "cs2", "general-fps"],
+            aimStyles: ["precision", "micro-adjustments", "flicking"],
+            sensitivity: ["low", "medium"],
+        },
+
+        avoidIf: [
+            "You want a fast Aqua Control-style glide",
+            "You dislike pads that may need time to lay flat",
+            "You want a completely smooth control surface",
+            "You play mostly tracking-heavy games",
+        ],
+
+        price: {
+            usd: 39.9,
+            inr: 4000,
+        },
+
+        availability: {
+            global: true,
+            india: "limited",
+            stores: ["GenesisPC", "Xraypad", "Fumo", "AceGear"],
+            notes:
+                "Submitted India price was around Rs. 4,000 via Genesis. International stores list the Cerberus Soft/Xsoft variants, but stock varies by size and base softness.",
+        },
+
+        images: {
+            main: "/mousepads/xraypad/origin-pro-cerberus.webp",
+        },
+
+        personal: {
+            owned: false,
+            tested: false,
+            notes:
+                "Added from PURPLE's submitted review and cross-checked against Xraypad/store specs. The final ratings average the submitted control-pad feel with official performance charts that place the Soft variant higher in glide than a pure mudpad.",
+            pros: [
+                "Strong stopping power",
+                "Good tactical FPS control",
+                "Smooth fine-texture surface",
+                "Sticky polyurethane base",
+                "Distinct Cerberus artwork",
+            ],
+            cons: [
+                "May not lay flat immediately",
+                "Less glide freedom than faster Xraypad models",
+                "Artwork variant availability can rotate",
+                "Base feel may be less familiar than Poron",
+            ],
+        },
+
+        communityConsensus: {
+            summary:
+                "Origin Pro Cerberus Soft is a control-leaning Xraypad profile with a smooth fine-texture surface and polyurethane base. It sits below Aqua Control II in speed and closer to tactical FPS control pads, while still avoiding classic muddy cloth behavior.",
+            commonComparisons: [
+                "Aqua Control Zero",
+                "Aqua Control II SR / Revati",
+                "Equate Plus V2",
+                "LGG Saturn Pro",
+            ],
+            strengths: [
+                "Good stopping power",
+                "Controlled but not fully muddy",
+                "Smooth surface for a control pad",
+                "Strong anti-slip base",
+                "Good value around the Rs. 4,000 range",
+            ],
+            weaknesses: [
+                "Less proven than Aqua Control staples",
+                "Potential initial curl/flatness concern",
+                "Not ideal for speed-focused players",
+            ],
+        },
+
+        sources: [
+            {
+                label: "PURPLE community review submitted June 2026",
+                type: "personal",
+            },
+            {
+                label: "X-Raypad Origin Pro Cerberus official page",
+                type: "official",
+                url: "https://shop.x-raypad.com/shop/teru-x-x-raypad-origin-pro-cerberus-gaming-mouse-pads-soft-xsoft/",
+            },
+            {
+                label: "GenesisPC Origin Pro Cerberus listing",
+                type: "store",
+                url: "https://www.genesispc.in/products/xraypads-origin-pro-cerberus",
+            },
+            {
+                label: "AceGear Origin Pro Cerberus listing",
+                type: "store",
+                url: "https://acegear.eu/en_GB/p/X-Raypad-Origin-Pro-Cerberus-SOFT-450x400x4/912",
+            },
+        ],
+    },
+
     // Equate Plus V2
     {
         id: "xraypad-equate-plus-v2",

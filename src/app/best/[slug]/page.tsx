@@ -23,7 +23,13 @@ import {
     getAllMousepads,
     getMousepadFullName,
 } from "@/lib/mousepads";
-import { buildMetadata } from "@/lib/seo";
+import {
+    JsonLd,
+    buildBreadcrumbJsonLd,
+    buildGuideArticleJsonLd,
+    buildMetadata,
+    buildMousepadItemListJsonLd,
+} from "@/lib/seo";
 
 type Props = {
     params: Promise<{ slug: string }>;
@@ -69,6 +75,26 @@ export default async function BestMousepadsPage({ params }: Props) {
 
     return (
         <main className="min-h-screen bg-background text-foreground">
+            <JsonLd
+                data={[
+                    buildBreadcrumbJsonLd([
+                        { label: "Home", path: "/" },
+                        { label: "Best", path: "/best" },
+                        { label: page.title, path: `/best/${page.slug}` },
+                    ]),
+                    buildGuideArticleJsonLd({
+                        title: page.title,
+                        description: page.description,
+                        path: `/best/${page.slug}`,
+                    }),
+                    buildMousepadItemListJsonLd({
+                        name: page.title,
+                        description: page.description,
+                        path: `/best/${page.slug}`,
+                        mousepads: picks.map((pick) => pick.mousepad),
+                    }),
+                ]}
+            />
             <section className="border-b border-border bg-background">
                 <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
                     <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.55fr)] lg:items-end">
