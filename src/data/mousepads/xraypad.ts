@@ -175,17 +175,14 @@ export const xraypadMousepads: Mousepad[] = [
             {
                 label: "Xraypad Aqua Control Plus V2 official page",
                 type: "official",
-                url: "https://shop.x-raypad.com/product-category/products/x-ray-gaming-mouse-pads/acv2/",
             },
             {
                 label: "Xraypad official Aqua Control comparison",
                 type: "official",
-                url: "https://www.youtube.com/watch?v=WplAaUpozOA",
             },
             {
                 label: "MousepadReview Aqua Control discussion",
                 type: "reddit",
-                url: "https://www.reddit.com/r/MousepadReview/comments/1d4xj0l/difference_between_the_aqua_control_series/",
             },
         ],
     },
@@ -344,17 +341,14 @@ export const xraypadMousepads: Mousepad[] = [
             {
                 label: "GenesisPC Aqua Control Zero listing",
                 type: "store",
-                url: "https://www.genesispc.in/collections/xraypad",
             },
             {
                 label: "Xraypad official store",
                 type: "official",
-                url: "https://shop.x-raypad.com/",
             },
             {
                 label: "MousepadReview Aqua Control discussion",
                 type: "reddit",
-                url: "https://www.reddit.com/r/MousepadReview/comments/1d4xj0l/difference_between_the_aqua_control_series/",
             },
         ],
     },
@@ -538,17 +532,14 @@ export const xraypadMousepads: Mousepad[] = [
             {
                 label: "GenesisPC Aqua Control II listing",
                 type: "store",
-                url: "https://www.genesispc.in/products/x-raypad-aqua-control-ii-xl",
             },
             {
                 label: "Amazon India Aqua Control II listing",
                 type: "store",
-                url: "https://www.amazon.in/X-Raypad-Aqua-Control-Ultra-High-Requirements/dp/B09TSGCTML",
             },
             {
                 label: "MousepadReview Aqua Control II Sakura Black review",
                 type: "reddit",
-                url: "https://www.reddit.com/r/MousepadReview/comments/1blb3b5/xraypad_aqua_control_ii_sakura_black_review/",
             },
         ],
     },
@@ -703,17 +694,14 @@ export const xraypadMousepads: Mousepad[] = [
             {
                 label: "X-Raypad Aqua Control II SR / REVATI official page",
                 type: "official",
-                url: "https://shop.x-raypad.com/shop/x-raypad-aqua-control-ii-sr-revati-gaming-mouse-pads/",
             },
             {
                 label: "NMPC India Revati product page",
                 type: "store",
-                url: "https://www.nmpc.in/products/x-raypad-aqua-control-ii-sr-revati",
             },
             {
                 label: "MaxGaming generic Aqua Control II listing",
                 type: "store",
-                url: "https://us.maxgaming.com/us/mousepads/aqua-control-ii-mousepad-white-xl",
             },
         ],
     },
@@ -869,17 +857,14 @@ export const xraypadMousepads: Mousepad[] = [
             {
                 label: "X-Raypad Origin Pro Cerberus official page",
                 type: "official",
-                url: "https://shop.x-raypad.com/shop/teru-x-x-raypad-origin-pro-cerberus-gaming-mouse-pads-soft-xsoft/",
             },
             {
                 label: "GenesisPC Origin Pro Cerberus listing",
                 type: "store",
-                url: "https://www.genesispc.in/products/xraypads-origin-pro-cerberus",
             },
             {
                 label: "AceGear Origin Pro Cerberus listing",
                 type: "store",
-                url: "https://acegear.eu/en_GB/p/X-Raypad-Origin-Pro-Cerberus-SOFT-450x400x4/912",
             },
         ],
     },
@@ -1064,17 +1049,14 @@ export const xraypadMousepads: Mousepad[] = [
             {
                 label: "GenesisPC Equate Plus V2 listing",
                 type: "store",
-                url: "https://www.genesispc.in/products/xraypad-equate-plus-v2",
             },
             {
                 label: "NMPC Equate Plus V2 listing",
                 type: "store",
-                url: "https://www.nmpc.in/products/x-raypad-equate-plus-v2-kiwami-gaming-mouse-pad-eq-v2-kiwami",
             },
             {
                 label: "MousepadReview Equate Plus V2 review",
                 type: "reddit",
-                url: "https://www.reddit.com/r/MousepadReview/comments/1alvn4g/xraypad_equate_plus_v2_review/",
             },
         ],
     },
@@ -1239,22 +1221,18 @@ export const xraypadMousepads: Mousepad[] = [
             {
                 label: "GenesisPC Aqua Control Pro Neon listing",
                 type: "store",
-                url: "https://www.genesispc.in/products/x-raypad-aqua-control-pro-xl-neon-500-500-4",
             },
             {
                 label: "Amazon Aqua Control Pro listing",
                 type: "store",
-                url: "https://www.amazon.com/X-raypad-Aqua-Control-Gaming-Mouse/dp/B0DCVVLFBF",
             },
             {
                 label: "JPGamingUSA Aqua Control Pro listing",
                 type: "store",
-                url: "https://jpgamingusa.com/products/x-raypad-aqua-control-pro-mousepad-flat-packaging",
             },
             {
                 label: "Xraypad official store",
                 type: "official",
-                url: "https://shop.x-raypad.com/",
             },
         ],
     },

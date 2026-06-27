@@ -162,27 +162,22 @@ export const lggMousepads: Mousepad[] = [
             {
                 label: "Pulsar official product page",
                 type: "official",
-                url: "https://eu.pulsar.gg/products/pulsar-x-lgg-hyperion-gaming-mousepad-soft",
             },
             {
                 label: "Lethal Gaming Gear product page",
                 type: "official",
-                url: "https://lethal.gg/products/es-hyperion-pro-gaming-mousepad-soft",
             },
             {
                 label: "CtrlShiftStore India listing",
                 type: "store",
-                url: "https://ctrlshiftstore.com/products/pulsar-x-lgg-hyperion-gaming-mousepad",
             },
             {
                 label: "Waimers Hyperion Pro listing",
                 type: "store",
-                url: "https://waimers.in/products/pulsar-hyperion-pro",
             },
             {
                 label: "MousepadReview Reddit discussion",
                 type: "reddit",
-                url: "https://www.reddit.com/r/MousepadReview/comments/1skpxvf/artisan_zero_vs_pulsar_hyperion/",
             },
         ],
     },
@@ -354,17 +349,14 @@ export const lggMousepads: Mousepad[] = [
             {
                 label: "LGG Saturn Pro Soft official page",
                 type: "official",
-                url: "https://lethal.gg/products/es-saturn-pro-gaming-mousepad-soft",
             },
             {
                 label: "LGG mousepads catalog",
                 type: "official",
-                url: "https://lethal.gg/collections/mousepads-1",
             },
             {
                 label: "Waimers Saturn Pro listing",
                 type: "store",
-                url: "https://waimers.in/",
             },
             {
                 label: "Community review by end0x00",
@@ -571,27 +563,22 @@ export const lggMousepads: Mousepad[] = [
             {
                 label: "LGG Neptune Pro official page",
                 type: "official",
-                url: "https://lethal.gg/products/neptune-pro",
             },
             {
                 label: "LGG eS Neptune Pro official page",
                 type: "official",
-                url: "https://lethal.gg/products/es-neptune-pro-gaming-mousepad-soft",
             },
             {
                 label: "Ausmodshop Neptune Pro listing",
                 type: "store",
-                url: "https://ausmodshop.com/products/lethal-gaming-gear-neptune-pro-dark-grey",
             },
             {
                 label: "Waimers Neptune Pro listing",
                 type: "store",
-                url: "https://waimers.in/",
             },
             {
                 label: "MousepadReview Neptune Pro review",
                 type: "reddit",
-                url: "https://www.reddit.com/r/MousepadReview/comments/1e7ffep/lethal_gaming_gear_neptune_pro_review/",
             },
         ],
     },
@@ -757,22 +744,18 @@ export const lggMousepads: Mousepad[] = [
             {
                 label: "LGG Jupiter Pro official page",
                 type: "official",
-                url: "https://lethal.gg/products/es-jupiter-pro-gaming-mousepad-soft",
             },
             {
                 label: "MaxGaming Jupiter Pro listing",
                 type: "store",
-                url: "https://www.maxgaming.com/en/mousepads/jupiter-pro-gaming-mousepad-xl-soft-black",
             },
             {
                 label: "Waimers Jupiter Pro listing",
                 type: "store",
-                url: "https://waimers.in/",
             },
             {
                 label: "MousepadReview Jupiter Pro V2 review",
                 type: "reddit",
-                url: "https://www.reddit.com/r/MousepadReview/comments/1fvxsfl/review_lgg_jupiter_pro_v2_soft_xl_this_might_be/",
             },
         ],
     },

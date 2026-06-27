@@ -28,6 +28,7 @@ export type MousepadGame =
     | "valorant"
     | "cs2"
     | "apex"
+    | "quake"
     | "overwatch"
     | "fortnite"
     | "general-fps";
@@ -99,6 +100,11 @@ export interface MousepadPrice {
     usd?: number;
     inr?: number;
     eur?: number;
+    gbp?: number;
+    range?: {
+        minUsd?: number;
+        maxUsd?: number;
+    };
 }
 
 export interface MousepadAvailability {
@@ -154,6 +160,7 @@ export interface Mousepad {
     surface: MousepadSurface;
     glassSurfaceFinish?: GlassSurfaceFinish;
     glassSurfaceFinishNotes?: string;
+    coatingDurability?: string;
     base: MousepadBase;
     softness: MousepadSoftness;
 
@@ -182,6 +189,7 @@ export interface Mousepad {
 
     price: MousepadPrice;
     availability: MousepadAvailability;
+    includedAccessories?: string[];
 
     visuals: MousepadVisuals;
 

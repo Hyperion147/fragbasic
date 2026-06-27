@@ -142,17 +142,14 @@ export const zowieMousepads: Mousepad[] = [
         {
             label: "Zowie G-SR III official page",
             type: "official",
-            url: "https://zowie.benq.com/en-in/mouse-pad/g-sr-iii.html",
         },
         {
             label: "Zowie G-SR specs page",
             type: "official",
-            url: "https://zowie.benq.com/en-in/mouse-pad/g-sr.html",
         },
         {
             label: "ProSettings G-SR III review",
             type: "review",
-            url: "https://prosettings.net/reviews/zowie-g-sr-iii/",
         },
     ],
 
@@ -294,12 +291,10 @@ export const zowieMousepads: Mousepad[] = [
         {
             label: "Zowie H-SR III official page",
             type: "official",
-            url: "https://zowie.benq.eu/en-eu/mouse-pad/h-sr-iii.html",
         },
         {
             label: "MousepadReview H-SR III discussion",
             type: "reddit",
-            url: "https://www.reddit.com/r/MousepadReview/comments/1gv0iv9/is_the_hsr_iii_just_a_larger_gsr_iii_im_finding/",
         },
     ],
 
@@ -446,12 +441,10 @@ export const zowieMousepads: Mousepad[] = [
         {
             label: "Zowie G-SR-SE Gris official page",
             type: "official",
-            url: "https://zowie.benq.com/en-in/mouse-pad/g-sr-se-gris.html",
         },
         {
             label: "MouseReview G-SR-SE Gris impressions",
             type: "reddit",
-            url: "https://www.reddit.com/r/MouseReview/comments/16t1t3i/zowie_gsrse_gris_review_impressions/",
         },
     ],
 
@@ -592,12 +585,10 @@ export const zowieMousepads: Mousepad[] = [
         {
             label: "Zowie G-SR-SE Rouge II official page",
             type: "official",
-            url: "https://zowie.benq.com/en-in/mouse-pad/g-sr-se-rouge-ii.html",
         },
         {
             label: "MaxGaming Rouge II listing",
             type: "store",
-            url: "https://www.maxgaming.com/en/mousepads/zowie-g-sr-se-rouge-ii-mousepad",
         },
     ],
 
@@ -738,7 +729,6 @@ export const zowieMousepads: Mousepad[] = [
         {
             label: "Zowie G-SR-SE Bi official page",
             type: "official",
-            url: "https://zowie.benq.com/en-in/mouse-pad/g-sr-se-bi.html",
         },
     ],
 

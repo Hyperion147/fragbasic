@@ -164,7 +164,6 @@ export const artisanMousepads: Mousepad[] = [
             {
                 label: "Artisan official selection guide",
                 type: "official",
-                url: "https://artisan-jp.com/global/selection-guide",
             },
         ],
     },
@@ -324,27 +323,22 @@ export const artisanMousepads: Mousepad[] = [
             {
                 label: "Artisan NINJA FX Raiden official page",
                 type: "official",
-                url: "https://artisan-jp.com/global/fx-raiden",
             },
             {
                 label: "JPGamingUSA Raiden listing",
                 type: "store",
-                url: "https://jpgamingusa.com/products/artisan-fx-raiden-mousepad",
             },
             {
                 label: "GenesisPC India Raiden listing",
                 type: "store",
-                url: "https://www.genesispc.in/products/artisan-fx-raiden",
             },
             {
                 label: "MaxGaming Raiden listing",
                 type: "store",
-                url: "https://www.maxgaming.com/en/mousepads/mousepad-fx-raiden-xsoft-xxl-daidai-orange",
             },
             {
                 label: "MousepadReview Raiden Soft overview",
                 type: "reddit",
-                url: "https://www.reddit.com/r/MousepadReview/comments/1c61fz9/artisan_raiden_soft_a_brief_overview/",
             },
         ],
     },
@@ -508,22 +502,18 @@ export const artisanMousepads: Mousepad[] = [
             {
                 label: "Artisan Selection Guide",
                 type: "official",
-                url: "https://artisan-jp.com/global/selection-guide",
             },
             {
                 label: "GenesisPC Hayate Otsu V2 listing",
                 type: "store",
-                url: "https://www.genesispc.in/products/artisan-fx-hayate-otsu-v2-gaming-mousepad",
             },
             {
                 label: "JPGamingUSA Hayate Otsu V2 listing",
                 type: "store",
-                url: "https://jpgamingusa.com/products/artisan-fx-hayate-otsu-v2-mousepad",
             },
             {
                 label: "MousepadReview Artisan experience thread",
                 type: "reddit",
-                url: "https://www.reddit.com/r/MousepadReview/comments/1evlter/my_experience_with_artisan_mousepads_hayate_otsu/",
             },
         ],
     },
@@ -712,27 +702,22 @@ export const artisanMousepads: Mousepad[] = [
             {
                 label: "Artisan NINJA FX Hien official page",
                 type: "official",
-                url: "https://artisan-jp.com/global/fx-hien",
             },
             {
                 label: "Artisan Selection Guide",
                 type: "official",
-                url: "https://artisan-jp.com/global/selection-guide",
             },
             {
                 label: "GenesisPC Hien listing",
                 type: "store",
-                url: "https://www.genesispc.in/products/artisan-fx-hien-gaming-mousepad",
             },
             {
                 label: "JPGamingUSA Hien listing",
                 type: "store",
-                url: "https://jpgamingusa.com/products/artisan-fx-hien-mousepad",
             },
             {
                 label: "Amazon India Hien listing",
                 type: "store",
-                url: "https://www.amazon.in/Artisan-Hien-Wine-FX-HI-SF-XL-R-Japan/dp/B07F5TMZZC",
             },
         ],
     },
@@ -910,12 +895,10 @@ export const artisanMousepads: Mousepad[] = [
             {
                 label: "Artisan official Type-99 page",
                 type: "official",
-                url: "https://artisan-jp.com/global/fx-type99",
             },
             {
                 label: "GenesisPC India Type-99 listing",
                 type: "store",
-                url: "https://www.genesispc.in/products/artisan-fx-type-99-gaming-mousepad",
             },
             {
                 label: "Community review by napst3r666",
@@ -1110,12 +1093,10 @@ export const artisanMousepads: Mousepad[] = [
             {
                 label: "Artisan official Type-99 page",
                 type: "official",
-                url: "https://artisan-jp.com/global/fx-type99",
             },
             {
                 label: "GenesisPC India Type-99 listing",
                 type: "store",
-                url: "https://www.genesispc.in/products/artisan-fx-type-99-gaming-mousepad",
             },
         ],
     },

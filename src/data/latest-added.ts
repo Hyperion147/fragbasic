@@ -4,4 +4,8 @@ export const latestAddedMousepadSlugs = [
   "talongames-type99",
 ] as const;
 
-export const latestAddedGlasspadSlugs = ["xraypad-nod-x1", "infinitymice-tora"] as const;
+export const latestAddedGlasspadSlugs = [
+  "xraypad-nod-cr-x1",
+  "xraypad-nod-sp-x1",
+  "infinitymice-tora",
+] as const;

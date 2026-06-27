@@ -15,6 +15,9 @@ export function MousepadSpecGrid({ pad }: { pad: Mousepad }) {
         ["Category", formatValue(pad.category)],
         ["Surface", formatValue(pad.surface)],
         ...(glassFinishValue ? [["Glass finish", glassFinishValue]] : []),
+        ...(pad.coatingDurability
+            ? [["Coating durability", pad.coatingDurability]]
+            : []),
         ["Base", formatValue(pad.base)],
         ["Softness", formatValue(pad.softness)],
         ["Main size", size ? `${size.width} × ${size.height}mm` : "Unknown"],
@@ -58,6 +61,24 @@ export function MousepadSpecGrid({ pad }: { pad: Mousepad }) {
                 <p className="mt-3 text-sm leading-6 text-muted-foreground">
                     Finish note: {pad.glassSurfaceFinishNotes}
                 </p>
+            ) : null}
+
+            {pad.includedAccessories?.length ? (
+                <div className="mt-5 rounded-2xl border border-border bg-background/70 p-4">
+                    <p className="text-sm font-medium text-foreground">
+                        Included kit mentioned by some listings
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                        {pad.includedAccessories.map((accessory) => (
+                            <span
+                                key={accessory}
+                                className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
+                            >
+                                {accessory}
+                            </span>
+                        ))}
+                    </div>
+                </div>
             ) : null}
         </Card>
     );

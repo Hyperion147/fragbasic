@@ -149,17 +149,14 @@ export const othersMousepads: Mousepad[] = [
       {
         label: "ESPTIGER Shan Hai series product page",
         type: "official",
-        url: "https://esptiger.com/products/shan-hai-tang-dao-control-gaming-mousepad",
       },
       {
         label: "r/MousepadReview Tang Dao discussion and comparisons",
         type: "reddit",
-        url: "https://www.reddit.com/r/MousepadReview/comments/1ct1dvb/esptiger_tang_dao_round_up/",
       },
       {
         label: "Community review comparing to Artisan Zero",
         type: "review",
-        url: "https://damiancooper.medium.com/esptiger-shan-hai-tangdao-black-a-chinese-artisan-zero-rival-8fa493719dd6",
       },
     ],
   },
@@ -300,22 +297,18 @@ export const othersMousepads: Mousepad[] = [
       {
         label: "Kurosun official website",
         type: "official",
-        url: "https://kurosun.co/",
       },
       {
         label: "Kurosun Samurai Mousepad Review",
         type: "reddit",
-        url: "https://www.reddit.com/r/MousepadReview/comments/1dtzv1e/kurosun_samurai_mousepad_review/",
       },
       {
         label: "Type 99 or Kurosun Samurai discussion",
         type: "reddit",
-        url: "https://www.reddit.com/r/MousepadReview/comments/1f1vw54/type_99_or_kurosun_samurai/",
       },
       {
         label: "LGG Saturn Pro vs Kurosun Samurai",
         type: "reddit",
-        url: "https://www.reddit.com/r/MousepadReview/comments/1i7lt1r/lgg_saturn_pro_vs_kurosun_samurai/",
       },
     ],
   },
@@ -461,27 +454,22 @@ export const othersMousepads: Mousepad[] = [
       {
         label: "Kurosun official website",
         type: "official",
-        url: "https://kurosun.co/",
       },
       {
         label: "Rivions Kurosun Shogun review",
         type: "review",
-        url: "https://www.rivions.com/blog/kurosun-shogun-review",
       },
       {
         label: "r/MousepadReview Kurosun Shogun review",
         type: "reddit",
-        url: "https://www.reddit.com/r/MousepadReview/comments/1iv2jhb/kurosun_shogun_review/",
       },
       {
         label: "Waimers Kurosun Shogun listing",
         type: "store",
-        url: "https://waimers.in/products/kurosun-shogun",
       },
       {
         label: "Periview Kurosun Shogun review",
         type: "review",
-        url: "https://periview.gg/2025/01/29/kurosun-shogun-jude-reviews/",
       },
     ],
   },
@@ -634,7 +622,6 @@ export const othersMousepads: Mousepad[] = [
       {
         label: "Matrova Scarlet product page",
         type: "official",
-        url: "https://matrova.com/products/scarlet-mouse-pad",
       },
     ],
   },
@@ -800,7 +787,6 @@ export const othersMousepads: Mousepad[] = [
     {
       label: "Neo Macro Pioneer Wu Xiang Gaming Mousepad listing",
       type: "store",
-      url: "https://neomacro.in/products/pioneer-wu-xiang-gaming-mousepad-esptiger",
     },
     {
       label: "Community review by bymuii",
@@ -951,12 +937,10 @@ export const othersMousepads: Mousepad[] = [
       {
         label: "RyuGear Talongames Type99 listing",
         type: "store",
-        url: "https://ryugear.in/products/talongames-type-99-control-mousepad",
       },
       {
         label: "Loadout Talongames Type99 listing",
         type: "store",
-        url: "https://www.loadout.co.in/product-page/talongames-type-99-mousepad-490-x-420",
       },
     ],
   },

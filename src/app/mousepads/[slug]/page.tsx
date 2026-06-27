@@ -308,6 +308,13 @@ function AvailabilityCard({ pad }: { pad: Mousepad }) {
         <span className="text-foreground">{formatPrice(pad.price.inr)}</span>
       </p>
 
+      {formatGlobalPrice(pad) ? (
+        <p className="mt-2 text-sm text-muted-foreground">
+          Global price:{" "}
+          <span className="text-foreground">{formatGlobalPrice(pad)}</span>
+        </p>
+      ) : null}
+
       {pad.availability.stores?.length ? (
         <div className="mt-4 flex flex-wrap gap-2">
           {pad.availability.stores.map((store) => (
@@ -325,6 +332,22 @@ function AvailabilityCard({ pad }: { pad: Mousepad }) {
       ) : null}
     </Card>
   )
+}
+
+function formatGlobalPrice(pad: Mousepad) {
+  if (pad.price.range?.minUsd && pad.price.range.maxUsd) {
+    return `$${pad.price.range.minUsd.toFixed(2)}-$${pad.price.range.maxUsd.toFixed(2)}`
+  }
+
+  if (pad.price.usd) {
+    return `$${pad.price.usd.toFixed(2)}`
+  }
+
+  if (pad.price.gbp) {
+    return `GBP ${pad.price.gbp.toFixed(2)}`
+  }
+
+  return null
 }
 
 function ColorwaysCard({ pad }: { pad: Mousepad }) {

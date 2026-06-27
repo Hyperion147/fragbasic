@@ -15,6 +15,8 @@ export const glassMousepads: Mousepad[] = [
     glassSurfaceFinish: "uncoated",
     glassSurfaceFinishNotes:
       "Retailer listings mention micro-texture and Japanese glass, but do not clearly confirm whether the surface is coated or fully uncoated.",
+    coatingDurability:
+      "No public coating-wear window found during the June 2026 refresh; treated as a durable glass surface until the finish is confirmed more explicitly.",
     base: "rubber",
     softness: "hard",
 
@@ -35,6 +37,7 @@ export const glassMousepads: Mousepad[] = [
           name: "Clear",
           slug: "clear",
           color: "#e8e8e8",
+          image: "/mousepads/glasspads/phantom.jpg",
           available: true,
         },
       ],
@@ -131,7 +134,6 @@ export const glassMousepads: Mousepad[] = [
       {
         label: "Tekkusai official / retailer listings",
         type: "official",
-        url: "https://ausmodshop.com/products/tekkusai-phantom-glass-mouse-pad",
       },
       {
         label: "r/MousepadReview glass pad tier lists and discussions",
@@ -154,6 +156,8 @@ export const glassMousepads: Mousepad[] = [
     glassSurfaceFinish: "uncoated",
     glassSurfaceFinishNotes:
       "Current product descriptions emphasize tempered glass and a balanced smooth surface, but do not clearly state a coated or uncoated finish.",
+    coatingDurability:
+      "No public coating-wear window found during the June 2026 refresh; current listings frame it as a durable tempered-glass surface.",
     base: "rubber",
     softness: "hard",
 
@@ -174,6 +178,7 @@ export const glassMousepads: Mousepad[] = [
           name: "Black",
           slug: "black",
           color: "#1f1f1f",
+          image: "/mousepads/glasspads/singularity.webp",
           available: true,
         },
       ],
@@ -265,7 +270,6 @@ export const glassMousepads: Mousepad[] = [
       {
         label: "Tekkusai retailer and community discussions",
         type: "official",
-        url: "https://www.fumo-collection.com/en/products/tekkusai-singularity",
       },
       {
         label: "Glass mousepad reviews on r/MousepadReview",
@@ -288,6 +292,8 @@ export const glassMousepads: Mousepad[] = [
     glassSurfaceFinish: "coated",
     glassSurfaceFinishNotes:
       "Wallhack's FAQ describes a special glass-etching process that creates a layer on the surface, and the official SP-005 page describes a subtle surface texture with speed-oriented glide.",
+    coatingDurability:
+      "Wallhack positions the etched glass surface as durable; no short coating-life replacement window was found during the June 2026 refresh.",
     base: "silicone",
     softness: "hard",
 
@@ -308,6 +314,7 @@ export const glassMousepads: Mousepad[] = [
           name: "Black",
           slug: "black",
           color: "#111111",
+          image: "/mousepads/glasspads/wh-sp005.webp",
           available: true,
         },
       ],
@@ -351,6 +358,10 @@ export const glassMousepads: Mousepad[] = [
 
     price: {
       usd: 129,
+      range: {
+        minUsd: 129,
+        maxUsd: 129,
+      },
     },
 
     availability: {
@@ -400,7 +411,6 @@ export const glassMousepads: Mousepad[] = [
       {
         label: "Wallhack official SP-005 Black page",
         type: "official",
-        url: "https://wallhack.com/en-int/products/sp-005-black",
       },
       {
         label: "Multiple r/MousepadReview glass pad threads and reviews",
@@ -427,6 +437,8 @@ export const glassMousepads: Mousepad[] = [
   glassSurfaceFinish: "uncoated",
   glassSurfaceFinishNotes:
     "Official Midori retailer listings explicitly describe The Return as using an uncoated glass surface for stable glide and high consistency.",
+  coatingDurability:
+    "Uncoated glass surface; no coating wear window applies based on current retailer wording.",
   base: "silicone",
   softness: "hard",
 
@@ -447,6 +459,7 @@ export const glassMousepads: Mousepad[] = [
         name: "The Return",
         slug: "the-return",
         color: "#465246",
+        image: "/mousepads/glasspads/midori-the-return.webp",
         available: true,
       },
     ],
@@ -615,6 +628,8 @@ export const glassMousepads: Mousepad[] = [
     glassSurfaceFinish: "uncoated",
     glassSurfaceFinishNotes:
       "The public product page clearly positions this as a glass mouse pad, and a long-term owner review specifically describes it as uncoated. The official page does not appear to publish coating language directly, so the finish is anchored mainly by the user review.",
+    coatingDurability:
+      "Community review evidence describes it as uncoated; no coating wear window applies if that finish is accurate.",
     base: "rubber",
     softness: "hard",
 
@@ -742,17 +757,14 @@ export const glassMousepads: Mousepad[] = [
       {
         label: "ZPAD official XL V1 product page",
         type: "official",
-        url: "https://zpad.in/product/custom-glass-mouse-pad-xl-size/",
       },
       {
         label: "ZPAD official homepage",
         type: "official",
-        url: "https://zpad.in/",
       },
       {
         label: "Z PAD Instagram brand page",
         type: "official",
-        url: "https://www.instagram.com/zpad.in/",
       },
       {
         label: "Community review by bl4ckholeyt",
@@ -775,6 +787,8 @@ export const glassMousepads: Mousepad[] = [
     glassSurfaceFinish: "uncoated",
     glassSurfaceFinishNotes:
       "InfinityMice's official page lists the Tora as non-coated and non-glossy. Retailer listings describe a matte glass surface with a balanced/control-oriented glide.",
+    coatingDurability:
+      "Official listing describes the surface as non-coated, so there is no coating wear window to track.",
     base: "unknown",
     softness: "hard",
 
@@ -911,45 +925,41 @@ export const glassMousepads: Mousepad[] = [
       {
         label: "InfinityMice official Tora product page",
         type: "official",
-        url: "https://www.infinitymice.com/products/tora",
       },
       {
         label: "MaxGaming InfinityMice Tora listing",
         type: "store",
-        url: "https://us.maxgaming.com/us/mousepads/infinitymice-tora-limited-edition",
       },
       {
         label: "Respawn Gaming Tech Tora listing",
         type: "store",
-        url: "https://www.respawngt.com/products/infinitymice-tora-glass-mousepad-pre-order-",
       },
       {
         label: "Community Tora owner discussion",
         type: "reddit",
-        url: "https://www.reddit.com/r/MousepadReview/comments/1jnwutg/how_did_i_ever_game_without_a_glass_mouse_pad/",
       },
       {
         label: "Fresh Reviews glasspad coverage featuring Tora",
         type: "review",
-        url: "https://www.youtube.com/watch?v=8f8cr1Qd4JM",
       },
     ],
   },
 
-  // Xraypad NOD X1
+  // Xraypad NOD CR-X1
   {
-    id: "xraypad-nod-x1",
-    slug: "xraypad-nod-x1",
+    id: "xraypad-nod-cr-x1",
+    slug: "xraypad-nod-cr-x1",
 
     brand: "Xraypad",
-    name: "NOD X1",
+    name: "NOD CR-X1",
     series: "NOD Glass Mousepad",
 
     category: "glass",
     surface: "glass",
-    glassSurfaceFinish: "unknown",
+    glassSurfaceFinish: "uncoated",
     glassSurfaceFinishNotes:
-      "The NOD X1 line has two finishes: CR-X1 is listed as coating-free for a more controlled permanent feel and long-term consistency, while SP-X1 uses a nano / oleophobic hard coating for a faster low-friction glide. Some listings describe SP coating life around 6-12 months under normal use.",
+      "CR-X1 is the coating-free Control Edition, positioned around permanent consistency, more controlled glide, and a safer cloth-to-glass transition.",
+    coatingDurability: "Coating-free surface; positioned as the permanent consistency option.",
     base: "silicone",
     softness: "hard",
 
@@ -983,47 +993,14 @@ export const glassMousepads: Mousepad[] = [
     },
 
     feel: {
-      speed: 8.4,
-      control: 5.0,
-      stoppingPower: 5.1,
-      staticFriction: 3.2,
-      dynamicFriction: 2.7,
-      microAdjustments: 9.2,
+      speed: 7.7,
+      control: 5.9,
+      stoppingPower: 5.8,
+      staticFriction: 3.7,
+      dynamicFriction: 3.3,
+      microAdjustments: 9.0,
       ratingConfidence: "estimated",
     },
-
-    feelVariants: [
-      {
-        label: "CR-X1 Control",
-        softness: "soft",
-        feel: {
-          speed: 7.7,
-          control: 5.9,
-          stoppingPower: 5.8,
-          staticFriction: 3.7,
-          dynamicFriction: 3.3,
-          microAdjustments: 9.0,
-          ratingConfidence: "estimated",
-        },
-        notes:
-          "Coating-free control edition positioned for Valorant, CS2, tactical shooters, cloth-to-glass transitions, and players who want more stopping power with permanent consistency.",
-      },
-      {
-        label: "SP-X1 Speed",
-        softness: "firm",
-        feel: {
-          speed: 9.0,
-          control: 4.2,
-          stoppingPower: 4.3,
-          staticFriction: 2.6,
-          dynamicFriction: 2.0,
-          microAdjustments: 9.4,
-          ratingConfidence: "estimated",
-        },
-        notes:
-          "Nano / oleophobic hard-coated speed edition positioned for near-zero initial friction, Apex, Quake, Overwatch, tracking-heavy games, low-DPI aimers, and very fast glide.",
-      },
-    ],
 
     environment: {
       humidityResistance: 10,
@@ -1042,21 +1019,25 @@ export const glassMousepads: Mousepad[] = [
     },
 
     recommendedFor: {
-      games: ["valorant", "cs2", "apex", "overwatch", "general-fps"],
-      aimStyles: ["tracking", "switching", "micro-adjustments", "precision"],
-      sensitivity: ["low", "medium", "high"],
+      games: ["valorant", "cs2", "general-fps"],
+      aimStyles: ["precision", "micro-adjustments", "flicking"],
+      sensitivity: ["low", "medium"],
     },
 
     avoidIf: [
-      "You want soft cloth feedback under your wrist",
+      "You want the fastest possible glass glide",
+      "You mainly play tracking-heavy games and prefer very low initial friction",
       "You dislike thin hard pads",
-      "You need a single confirmed finish instead of choosing between CR and SP",
       "You do not want to maintain a glass surface or use suitable skates",
     ],
 
     price: {
-      usd: 89.9,
+      usd: 81.95,
       inr: 12999,
+      range: {
+        minUsd: 81.95,
+        maxUsd: 116.95,
+      },
     },
 
     availability: {
@@ -1064,8 +1045,15 @@ export const glassMousepads: Mousepad[] = [
       india: "limited",
       stores: ["Xraypad", "NMPC India", "MaxGaming"],
       notes:
-        "X-Raypad indexed pricing runs from US$81.95 to US$116.95. MaxGaming lists L size at $104.99 as a pre-order, NMPC India lists Rs. 12,999 as a sold-out/pre-order listing, and Esports Gear UK lists the SP Armoury Crate variant at GBP89.99 as a pre-order with an early July ETA. Stock may vary by finish and artwork.",
+        "X-Raypad indexed pricing runs from US$81.95 to US$116.95 across the NOD X1 line. NMPC India lists Rs. 12,999 as a sold-out/pre-order listing. Stock may vary by finish and artwork.",
     },
+
+    includedAccessories: [
+      "Jade Air skates",
+      "Obsidian Air silent skates",
+      "Sleeve/case",
+      "Cleaning cloth",
+    ],
 
     images: {
       main: "/mousepads/glasspads/xraypad-nod-x1.jpg",
@@ -1075,46 +1063,44 @@ export const glassMousepads: Mousepad[] = [
       owned: false,
       tested: false,
       notes:
-        "Added from current store specs rather than long-term community testing. Xraypad positions it for gaming and professional precision use. The feel ratings are estimates based on Xraypad's CR/SP positioning and should be revisited once owner reviews settle.",
+        "Added from current store specs rather than long-term community testing. Xraypad positions CR-X1 for gaming and professional precision use where control, stopping power, and long-term consistency matter more than maximum glass speed.",
       pros: [
-        "Choice between control and speed glass finishes",
+        "Coating-free permanent consistency positioning",
+        "More controlled than the SP speed edition",
+        "Better fit for Valorant, CS2, and tactical shooters",
         "Very thin 2 mm tempered glass build",
         "CNC 45-degree bevel should reduce wrist edge discomfort",
         "Silicone base for desk stability",
-        "Water and oil resistant surface",
-        "Some listings include Jade Air skates, Obsidian Air silent skates, a sleeve/case, and a cleaning cloth",
       ],
       cons: [
         "Early product with limited community consensus",
-        "CR and SP variants may feel meaningfully different",
+        "Not as fast as SP-X1",
         "Glass learning curve still applies",
         "Premium India pricing",
-        "SP coating is not positioned as permanently consistent like CR",
       ],
     },
 
     communityConsensus: {
       summary:
-        "Xraypad NOD X1 is a new slim 2 mm glass pad line split into CR-X1 control and SP-X1 speed variants. Store copy positions CR as the safer cloth-to-glass, tactical shooter, and permanent-consistency pick, while SP is the low-friction tracking option with coating life described by some listings as roughly 6-12 months under normal use.",
+        "Xraypad NOD CR-X1 is the control-focused, coating-free version of the NOD X1 glasspad line. Store copy positions it as the better pick for Valorant, CS2, tactical shooters, and cloth-to-glass transitions because it prioritizes control, stopping power, and long-term consistency over maximum speed.",
       commonComparisons: [
-        "Wallhack SP-005",
         "ATK Crimson",
         "InfinityMice Tora",
-        "Pulsar Superglide",
+        "Wallhack SP-005",
+        "control glass pads",
       ],
       strengths: [
-        "Variant choice across controlled and speed-first glass",
+        "Coating-free surface",
+        "More controlled glide for glass",
+        "Permanent consistency positioning",
         "Slim tempered glass construction",
         "Fine micro-texture with low noise",
         "Silicone base and beveled edge",
-        "Xraypad availability network",
-        "Optional bundle contents on some listings",
       ],
       weaknesses: [
         "Not enough long-term owner data yet",
-        "Mixed finish line can be confusing",
-        "SP coating longevity is finite compared with CR",
-        "Hard glass surface drawbacks remain",
+        "Still fast and hard compared with cloth",
+        "Less suited to players chasing maximum speed",
         "Availability depends on pre-order and regional stock",
       ],
     },
@@ -1123,17 +1109,192 @@ export const glassMousepads: Mousepad[] = [
       {
         label: "X-Raypad official NOD X1 product page",
         type: "official",
-        url: "https://shop.x-raypad.com/shop/nod-x1-glass-mousepads/",
       },
       {
         label: "NMPC India NOD 2mm Slim Glass Mousepad listing",
         type: "store",
-        url: "https://www.nmpc.in/products/x-raypad-nod-2mm-slim-glass-mousepad-control-or-speed-edition",
+      },
+      {
+        label: "MaxGaming Xraypad NOD CR-X1 listing",
+        type: "store",
+      },
+    ],
+  },
+
+  // Xraypad NOD SP-X1
+  {
+    id: "xraypad-nod-sp-x1",
+    slug: "xraypad-nod-sp-x1",
+
+    brand: "Xraypad",
+    name: "NOD SP-X1",
+    series: "NOD Glass Mousepad",
+
+    category: "glass",
+    surface: "glass",
+    glassSurfaceFinish: "coated",
+    glassSurfaceFinishNotes:
+      "SP-X1 is the nano / oleophobic hard-coated Speed Edition, positioned around near-zero initial friction and very fast glide.",
+    coatingDurability: "Some listings describe SP coating life around 6-12 months under normal use.",
+    base: "silicone",
+    softness: "hard",
+
+    sizes: [
+      {
+        label: "L",
+        width: 490,
+        height: 420,
+        thickness: 2,
+        unit: "mm",
+      },
+    ],
+
+    visuals: {
+      defaultColorway: "mian",
+      colorways: [
+        {
+          name: "Mian",
+          slug: "mian",
+          color: "#d8edf7",
+          image: "/mousepads/glasspads/xraypad-nod-x1.jpg",
+          available: true,
+        },
+        {
+          name: "Armory Crate",
+          slug: "armory-crate",
+          color: "#2d3440",
+          available: true,
+        },
+      ],
+    },
+
+    feel: {
+      speed: 9.0,
+      control: 4.2,
+      stoppingPower: 4.3,
+      staticFriction: 2.6,
+      dynamicFriction: 2.0,
+      microAdjustments: 9.4,
+      ratingConfidence: "estimated",
+    },
+
+    environment: {
+      humidityResistance: 10,
+      sweatResistance: 10,
+      dustHairResistance: 8,
+      washable: true,
+      notes:
+        "The tempered glass surface is listed as waterproof, sweat-proof, oil-resistant, wipe-clean, and designed around a fine sensor-optimized micro-texture that avoids grease, scratching, and sticky glide.",
+    },
+
+    texture: {
+      feel: "slightly-textured",
+      skinComfort: 7,
+      sleeveFriendly: true,
+      noiseLevel: "quiet",
+    },
+
+    recommendedFor: {
+      games: ["apex", "quake", "overwatch", "fortnite", "general-fps"],
+      aimStyles: ["tracking", "switching", "micro-adjustments"],
+      sensitivity: ["low", "medium", "high"],
+    },
+
+    avoidIf: [
+      "You mainly play tactical shooters and rely on stopping power",
+      "You want coating-free permanent consistency",
+      "You dislike very fast glass glide",
+      "You do not want to maintain a glass surface or use suitable skates",
+    ],
+
+    price: {
+      usd: 104.99,
+      inr: 12999,
+      gbp: 89.99,
+      range: {
+        minUsd: 81.95,
+        maxUsd: 116.95,
+      },
+    },
+
+    availability: {
+      global: true,
+      india: "limited",
+      stores: ["Xraypad", "NMPC India", "MaxGaming", "Esports Gear UK"],
+      notes:
+        "X-Raypad indexed pricing runs from US$81.95 to US$116.95 across the NOD X1 line. MaxGaming lists L size at $104.99 as a pre-order, NMPC India lists Rs. 12,999 as a sold-out/pre-order listing, and Esports Gear UK lists the SP Armoury Crate variant at GBP89.99 as a pre-order with an early July ETA.",
+    },
+
+    includedAccessories: [
+      "Jade Air skates",
+      "Obsidian Air silent skates",
+      "Sleeve/case",
+      "Cleaning cloth",
+    ],
+
+    images: {
+      main: "/mousepads/glasspads/xraypad-nod-x1.jpg",
+    },
+
+    personal: {
+      owned: false,
+      tested: false,
+      notes:
+        "Added from current store specs rather than long-term community testing. Xraypad positions SP-X1 for gaming and professional precision use where speed, near-zero initial friction, tracking, and fast glide matter more than permanent coating-free consistency.",
+      pros: [
+        "Very fast nano / oleophobic hard-coated glide",
+        "Near-zero initial friction positioning",
+        "Better fit for Apex, Quake, Overwatch, and tracking-heavy games",
+        "Very thin 2 mm tempered glass build",
+        "CNC 45-degree bevel should reduce wrist edge discomfort",
+        "Silicone base for desk stability",
+      ],
+      cons: [
+        "Early product with limited community consensus",
+        "Coating life is described as finite",
+        "Less controlled than CR-X1",
+        "Not the safer pick for tactical FPS stopping power",
+        "Glass learning curve still applies",
+      ],
+    },
+
+    communityConsensus: {
+      summary:
+        "Xraypad NOD SP-X1 is the speed-focused, nano / oleophobic hard-coated version of the NOD X1 glasspad line. Store copy positions it as the better pick for Apex, Quake, Overwatch, tracking-heavy games, low-DPI aimers, and players who want very fast glide, with coating life described by some listings as roughly 6-12 months under normal use.",
+      commonComparisons: [
+        "Wallhack SP-005",
+        "Pulsar Superglide",
+        "Tekkusai Phantom",
+        "speed glass pads",
+      ],
+      strengths: [
+        "Very fast glide",
+        "Near-zero initial friction positioning",
+        "Strong tracking-game fit",
+        "Slim tempered glass construction",
+        "Fine micro-texture with low noise",
+        "Silicone base and beveled edge",
+      ],
+      weaknesses: [
+        "Not enough long-term owner data yet",
+        "SP coating longevity is finite compared with CR",
+        "Less stopping power than CR-X1",
+        "Availability depends on pre-order and regional stock",
+      ],
+    },
+
+    sources: [
+      {
+        label: "X-Raypad official NOD X1 product page",
+        type: "official",
+      },
+      {
+        label: "NMPC India NOD 2mm Slim Glass Mousepad listing",
+        type: "store",
       },
       {
         label: "MaxGaming Xraypad NOD SP-X1 listing",
         type: "store",
-        url: "https://us.maxgaming.com/us/mousepads/x-raypad-nod-sp-x1-glass-mousepad",
       },
       {
         label: "Esports Gear UK Xraypad NOD SP Armoury Crate listing",
@@ -1156,6 +1317,8 @@ export const glassMousepads: Mousepad[] = [
     glassSurfaceFinish: "uncoated",
     glassSurfaceFinishNotes:
       "ATK social posts describe Crimson as coating-free, while Indian retailer listings describe a micro-etched ultra-clear tempered glass surface. Store listings do not use the word uncoated directly, so the finish is anchored by ATK's launch copy and community discussion.",
+    coatingDurability:
+      "ATK launch/community wording positions Crimson as coating-free; no finite coating-life window was found during the June 2026 refresh.",
     base: "polyurethane",
     softness: "hard",
 
@@ -1224,6 +1387,10 @@ export const glassMousepads: Mousepad[] = [
     price: {
       usd: 90,
       inr: 6000,
+      range: {
+        minUsd: 90,
+        maxUsd: 90,
+      },
     },
 
     availability: {
@@ -1290,27 +1457,22 @@ export const glassMousepads: Mousepad[] = [
       {
         label: "RyuGear ATK Crimson product page",
         type: "store",
-        url: "https://ryugear.in/products/atk-tempered-glass-mouse-pad-crimson-limited-edition",
       },
       {
         label: "Altf4gear accessories listing",
         type: "store",
-        url: "https://altf4gear.com/search/accessories",
       },
       {
         label: "NMPC India ATK Crimson product page",
         type: "store",
-        url: "https://www.nmpc.in/products/atk-tempered-glass-mouse-pad-crimson-limited-edition",
       },
       {
         label: "MaxGaming ATK Crimson listing",
         type: "store",
-        url: "https://us.maxgaming.com/us/mousepads/atk-tempered-glass-mousepad-crimson",
       },
       {
         label: "ATK launch post and community discussion",
         type: "reddit",
-        url: "https://www.reddit.com/r/MousepadReview/comments/1q5h20v/atk_crimson_glaspad_questions/",
       },
     ],
   }

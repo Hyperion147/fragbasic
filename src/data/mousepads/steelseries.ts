@@ -154,22 +154,18 @@ export const steelseriesMousepads: Mousepad[] = [
             {
                 label: "SteelSeries QcK Heavy official page",
                 type: "official",
-                url: "https://steelseries.com/gaming-mousepads/qck-heavy",
             },
             {
                 label: "SteelSeries mousepad size guide",
                 type: "official",
-                url: "https://steelseries.com/blog/which-mousepad-is-right-for-you",
             },
             {
                 label: "Amazon India QcK Heavy listing",
                 type: "store",
-                url: "https://www.amazon.in/SteelSeries-Gaming-Rubber-Optical-Compatible/dp/B000V7ARAU",
             },
             {
                 label: "SCL Gaming QcK Heavy listing",
                 type: "store",
-                url: "https://sclgaming.in/product/steelseries-qck-heavy-mouse-pad/",
             },
         ],
     },
@@ -327,22 +323,18 @@ export const steelseriesMousepads: Mousepad[] = [
             {
                 label: "SteelSeries QcK Performance official page",
                 type: "official",
-                url: "https://steelseries.com/gaming-mousepads/qck-performance",
             },
             {
                 label: "SteelSeries mousepad size guide",
                 type: "official",
-                url: "https://steelseries.com/blog/which-mousepad-is-right-for-you",
             },
             {
                 label: "GamingTrend QcK Performance review",
                 type: "review",
-                url: "https://gamingtrend.com/reviews/steelseries-qck-performance-mousepads-review-the-unsung-hero-on-your-desk-gets-an-upgrade/",
             },
             {
                 label: "PC Gamer QcK Performance coverage",
                 type: "review",
-                url: "https://www.pcgamer.com/hardware/gaming-mice/my-fave-piece-of-PC-gaming-tech-to-launch-this-year-was-the-softest-kind-of-hardware-there-is/",
             },
         ],
     },
@@ -506,22 +498,18 @@ export const steelseriesMousepads: Mousepad[] = [
             {
                 label: "SteelSeries QcK Performance official page",
                 type: "official",
-                url: "https://steelseries.com/gaming-mousepads/qck-performance",
             },
             {
                 label: "SteelSeries mousepad size guide",
                 type: "official",
-                url: "https://steelseries.com/blog/which-mousepad-is-right-for-you",
             },
             {
                 label: "Amazon India QcK Performance Balance listing",
                 type: "store",
-                url: "https://www.amazon.in/SteelSeries-Performance-Balance-Gaming-Mousepad/dp/B0DZ1P2SF2",
             },
             {
                 label: "PC Gamer QcK Performance coverage",
                 type: "review",
-                url: "https://www.pcgamer.com/hardware/gaming-mice/my-fave-piece-of-PC-gaming-tech-to-launch-this-year-was-the-softest-kind-of-hardware-there-is/",
             },
         ],
     },
@@ -681,22 +669,18 @@ export const steelseriesMousepads: Mousepad[] = [
             {
                 label: "SteelSeries QcK Performance official page",
                 type: "official",
-                url: "https://steelseries.com/gaming-mousepads/qck-performance",
             },
             {
                 label: "SteelSeries Performance Series overview",
                 type: "official",
-                url: "https://steelseries.com/blog",
             },
             {
                 label: "Performance Series review coverage",
                 type: "review",
-                url: "https://prosettings.net",
             },
             {
                 label: "MousepadReview Performance discussion",
                 type: "reddit",
-                url: "https://www.reddit.com/r/MousepadReview/",
             },
         ],
     },

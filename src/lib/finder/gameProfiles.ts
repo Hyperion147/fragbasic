@@ -40,7 +40,7 @@ export const gameProfiles: Record<GameProfileId, GameProfile> = {
     speedWeight: 1.25,
     stoppingPowerWeight: 0.75,
     consistencyWeight: 1,
-    labels: ["Apex", "Overwatch", "The Finals", "tracking"],
+    labels: ["Apex", "Quake", "Overwatch", "The Finals", "tracking"],
     // Tracking/arena games: common 20-50 cm/360 (higher sens for flicks/tracking). Faster pads often preferred.
   },
   mixed: {
@@ -95,6 +95,8 @@ const gameAliases: Record<string, GameProfileId> = {
   "tac fps": "tactical",
   apex: "tracking",
   "apex legends": "tracking",
+  quake: "tracking",
+  "quake champions": "tracking",
   overwatch: "tracking",
   "overwatch 2": "tracking",
   ow2: "tracking",
