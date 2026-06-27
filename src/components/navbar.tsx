@@ -187,12 +187,12 @@ export function SiteNavbar() {
                         height={449}
                         className="size-10 transition-opacity group-hover:opacity-88"
                     />
-                    <h1 className="text-2xl font-semibold tracking-tighter lg:text-[1.35rem]">
+                    <p className="text-2xl font-semibold tracking-tighter lg:text-[1.35rem]">
                         FRAGBASIC
                         <span className="text-xs text-secondary-foreground">
                             .FUN
                         </span>
-                    </h1>
+                    </p>
                 </Link>
 
                 <DesktopNavigation pathname={pathname} />

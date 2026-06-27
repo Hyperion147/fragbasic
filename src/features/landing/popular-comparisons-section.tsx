@@ -150,9 +150,9 @@ function ProductPreview({
 
 function MousepadName({ name }: { name: string }) {
     return (
-        <h3 className="min-h-12 text-base font-semibold leading-6 tracking-tight text-foreground">
+        <p className="min-h-12 text-base font-semibold leading-6 tracking-tight text-foreground">
             {name}
-        </h3>
+        </p>
     );
 }
 

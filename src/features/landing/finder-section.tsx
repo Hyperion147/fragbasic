@@ -88,7 +88,9 @@ function FinderStep({
         {label}
       </Badge>
       {title ? (
-        <h3 className="mt-5 text-base font-semibold tracking-tight">{title}</h3>
+        <p className="mt-5 text-base font-semibold tracking-tight text-foreground">
+          {title}
+        </p>
       ) : null}
       <div className="mt-5 flex flex-wrap gap-3">{children}</div>
     </div>

@@ -10,7 +10,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "Mousepad Database, Glasspads, Comparisons & FPS Finder",
   description:
-    "Browse cloth mousepads and glasspads, compare FPS pads side by side, and use the FragBasic finder to discover the right pad for Valorant, CS2, Apex, and more.",
+    "Browse FPS mousepads and glasspads, compare gear side by side, and find picks for VALORANT, CS2, Apex, and more.",
   path: "/",
   keywords: [
     "mousepad database india",

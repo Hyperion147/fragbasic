@@ -64,9 +64,9 @@ export function MousepadCard({
 
         <div className="space-y-1">
           <p className="text-sm text-muted-foreground">{pad.brand}</p>
-          <h2 className="text-xl font-semibold tracking-tight text-foreground">
+          <p className="text-xl font-semibold tracking-tight text-foreground">
             {pad.name}
-          </h2>
+          </p>
         </div>
 
         <div

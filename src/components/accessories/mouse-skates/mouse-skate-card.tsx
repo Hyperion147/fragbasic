@@ -26,9 +26,9 @@ export function MouseSkateCard({ skate }: { skate: MouseSkate }) {
 
       <div className="mt-4">
         <p className="text-sm text-muted-foreground">{skate.series}</p>
-        <h2 className="mt-1 text-xl font-semibold tracking-tight">
+        <p className="mt-1 text-xl font-semibold tracking-tight text-foreground">
           {skate.name}
-        </h2>
+        </p>
       </div>
 
       <p className="mt-3 text-sm leading-6 text-muted-foreground">

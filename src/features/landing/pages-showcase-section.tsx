@@ -147,9 +147,9 @@ export function PagesShowcaseSection({
               </div>
 
               <div className="relative mt-8">
-                <h3 className="text-3xl font-semibold tracking-tight">
+                <p className="text-3xl font-semibold tracking-tight text-foreground">
                   {item.title}
-                </h3>
+                </p>
                 <p className="mt-4 max-w-[30ch] text-base leading-7 text-muted-foreground">
                   {item.description}
                 </p>

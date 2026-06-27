@@ -195,9 +195,9 @@ export function SpectrumSection() {
                 </div>
 
                 <div className="mt-4 flex flex-1 flex-col">
-                  <h3 className="text-lg font-semibold leading-6 text-foreground">
+                  <p className="text-lg font-semibold leading-6 text-foreground">
                     {pad.name}
-                  </h3>
+                  </p>
                   <span className="mt-3 w-fit rounded-md border border-[color:color-mix(in_srgb,var(--brand-hover)_28%,transparent)] bg-[color:color-mix(in_srgb,var(--brand)_14%,transparent)] px-2 py-1 text-xs font-semibold text-brand-glow">
                     {pad.category}
                   </span>
@@ -226,7 +226,9 @@ export function SpectrumSection() {
                 <Icon className="size-5" />
               </span>
               <div>
-                <h3 className="text-base font-semibold">{note.title}</h3>
+                <p className="text-base font-semibold text-foreground">
+                  {note.title}
+                </p>
                 <p className="mt-1 text-sm leading-6 text-muted-foreground">
                   {note.text}
                 </p>
