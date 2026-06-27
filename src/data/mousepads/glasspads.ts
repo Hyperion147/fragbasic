@@ -12,7 +12,7 @@ export const glassMousepads: Mousepad[] = [
 
     category: "glass",
     surface: "glass",
-    glassSurfaceFinish: "uncoated",
+    glassSurfaceFinish: "coated",
     glassSurfaceFinishNotes:
       "Retailer listings mention micro-texture and Japanese glass, but do not clearly confirm whether the surface is coated or fully uncoated.",
     coatingDurability:
@@ -289,7 +289,7 @@ export const glassMousepads: Mousepad[] = [
 
     category: "glass",
     surface: "glass",
-    glassSurfaceFinish: "coated",
+    glassSurfaceFinish: "uncoated",
     glassSurfaceFinishNotes:
       "Wallhack's FAQ describes a special glass-etching process that creates a layer on the surface, and the official SP-005 page describes a subtle surface texture with speed-oriented glide.",
     coatingDurability:
@@ -784,7 +784,7 @@ export const glassMousepads: Mousepad[] = [
 
     category: "glass",
     surface: "glass",
-    glassSurfaceFinish: "uncoated",
+    glassSurfaceFinish: "coated",
     glassSurfaceFinishNotes:
       "InfinityMice's official page lists the Tora as non-coated and non-glossy. Retailer listings describe a matte glass surface with a balanced/control-oriented glide.",
     coatingDurability:
