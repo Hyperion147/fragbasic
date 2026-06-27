@@ -166,51 +166,14 @@ export function buildMousepadItemListJsonLd({
       position: index + 1,
       url: getAbsoluteUrl(`/mousepads/${mousepad.slug}`),
       item: {
-        "@type": "Product",
+        "@type": "Thing",
         name: `${mousepad.brand} ${mousepad.name}`,
         image: getAbsoluteUrl(mousepad.images.main),
-        brand: {
-          "@type": "Brand",
-          name: mousepad.brand,
-        },
         description: mousepad.communityConsensus.summary,
-        aggregateRating: {
-          "@type": "AggregateRating",
-          ratingValue: getMousepadOverallRating(mousepad),
-          bestRating: 10,
-          worstRating: 1,
-          ratingCount: mousepad.sources.length,
-        },
-        review: {
-          "@type": "Review",
-          name: `${mousepad.brand} ${mousepad.name} review`,
-          reviewBody: mousepad.communityConsensus.summary,
-          author: {
-            "@type": "Organization",
-            name: siteName,
-          },
-          reviewRating: {
-            "@type": "Rating",
-            ratingValue: getMousepadOverallRating(mousepad),
-            bestRating: 10,
-            worstRating: 1,
-          },
-        },
+        url: getAbsoluteUrl(`/mousepads/${mousepad.slug}`),
       },
     })),
   };
-}
-
-function getMousepadOverallRating(mousepad: Mousepad) {
-  const rating =
-    (mousepad.feel.speed +
-      mousepad.feel.control +
-      mousepad.feel.stoppingPower +
-      mousepad.feel.microAdjustments +
-      mousepad.environment.humidityResistance) /
-    5;
-
-  return Number(rating.toFixed(1));
 }
 
 export function buildGuideArticleJsonLd({
