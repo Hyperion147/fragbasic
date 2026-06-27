@@ -936,6 +936,212 @@ export const glassMousepads: Mousepad[] = [
     ],
   },
 
+  // Xraypad NOD X1
+  {
+    id: "xraypad-nod-x1",
+    slug: "xraypad-nod-x1",
+
+    brand: "Xraypad",
+    name: "NOD X1",
+    series: "NOD Glass Mousepad",
+
+    category: "glass",
+    surface: "glass",
+    glassSurfaceFinish: "unknown",
+    glassSurfaceFinishNotes:
+      "The NOD X1 line has two finishes: CR-X1 is listed as coating-free for a more controlled permanent feel and long-term consistency, while SP-X1 uses a nano / oleophobic hard coating for a faster low-friction glide. Some listings describe SP coating life around 6-12 months under normal use.",
+    base: "silicone",
+    softness: "hard",
+
+    sizes: [
+      {
+        label: "L",
+        width: 490,
+        height: 420,
+        thickness: 2,
+        unit: "mm",
+      },
+    ],
+
+    visuals: {
+      defaultColorway: "mian",
+      colorways: [
+        {
+          name: "Mian",
+          slug: "mian",
+          color: "#d8edf7",
+          image: "/mousepads/glasspads/xraypad-nod-x1.jpg",
+          available: true,
+        },
+        {
+          name: "Armory Crate",
+          slug: "armory-crate",
+          color: "#2d3440",
+          available: true,
+        },
+      ],
+    },
+
+    feel: {
+      speed: 8.4,
+      control: 5.0,
+      stoppingPower: 5.1,
+      staticFriction: 3.2,
+      dynamicFriction: 2.7,
+      microAdjustments: 9.2,
+      ratingConfidence: "estimated",
+    },
+
+    feelVariants: [
+      {
+        label: "CR-X1 Control",
+        softness: "soft",
+        feel: {
+          speed: 7.7,
+          control: 5.9,
+          stoppingPower: 5.8,
+          staticFriction: 3.7,
+          dynamicFriction: 3.3,
+          microAdjustments: 9.0,
+          ratingConfidence: "estimated",
+        },
+        notes:
+          "Coating-free control edition positioned for Valorant, CS2, tactical shooters, cloth-to-glass transitions, and players who want more stopping power with permanent consistency.",
+      },
+      {
+        label: "SP-X1 Speed",
+        softness: "firm",
+        feel: {
+          speed: 9.0,
+          control: 4.2,
+          stoppingPower: 4.3,
+          staticFriction: 2.6,
+          dynamicFriction: 2.0,
+          microAdjustments: 9.4,
+          ratingConfidence: "estimated",
+        },
+        notes:
+          "Nano / oleophobic hard-coated speed edition positioned for near-zero initial friction, Apex, Quake, Overwatch, tracking-heavy games, low-DPI aimers, and very fast glide.",
+      },
+    ],
+
+    environment: {
+      humidityResistance: 10,
+      sweatResistance: 10,
+      dustHairResistance: 8,
+      washable: true,
+      notes:
+        "The tempered glass surface is listed as waterproof, sweat-proof, oil-resistant, wipe-clean, and designed around a fine sensor-optimized micro-texture that avoids grease, scratching, and sticky glide.",
+    },
+
+    texture: {
+      feel: "slightly-textured",
+      skinComfort: 7,
+      sleeveFriendly: true,
+      noiseLevel: "quiet",
+    },
+
+    recommendedFor: {
+      games: ["valorant", "cs2", "apex", "overwatch", "general-fps"],
+      aimStyles: ["tracking", "switching", "micro-adjustments", "precision"],
+      sensitivity: ["low", "medium", "high"],
+    },
+
+    avoidIf: [
+      "You want soft cloth feedback under your wrist",
+      "You dislike thin hard pads",
+      "You need a single confirmed finish instead of choosing between CR and SP",
+      "You do not want to maintain a glass surface or use suitable skates",
+    ],
+
+    price: {
+      usd: 89.9,
+      inr: 12999,
+    },
+
+    availability: {
+      global: true,
+      india: "limited",
+      stores: ["Xraypad", "NMPC India", "MaxGaming"],
+      notes:
+        "X-Raypad indexed pricing runs from US$81.95 to US$116.95. MaxGaming lists L size at $104.99 as a pre-order, NMPC India lists Rs. 12,999 as a sold-out/pre-order listing, and Esports Gear UK lists the SP Armoury Crate variant at GBP89.99 as a pre-order with an early July ETA. Stock may vary by finish and artwork.",
+    },
+
+    images: {
+      main: "/mousepads/glasspads/xraypad-nod-x1.jpg",
+    },
+
+    personal: {
+      owned: false,
+      tested: false,
+      notes:
+        "Added from current store specs rather than long-term community testing. Xraypad positions it for gaming and professional precision use. The feel ratings are estimates based on Xraypad's CR/SP positioning and should be revisited once owner reviews settle.",
+      pros: [
+        "Choice between control and speed glass finishes",
+        "Very thin 2 mm tempered glass build",
+        "CNC 45-degree bevel should reduce wrist edge discomfort",
+        "Silicone base for desk stability",
+        "Water and oil resistant surface",
+        "Some listings include Jade Air skates, Obsidian Air silent skates, a sleeve/case, and a cleaning cloth",
+      ],
+      cons: [
+        "Early product with limited community consensus",
+        "CR and SP variants may feel meaningfully different",
+        "Glass learning curve still applies",
+        "Premium India pricing",
+        "SP coating is not positioned as permanently consistent like CR",
+      ],
+    },
+
+    communityConsensus: {
+      summary:
+        "Xraypad NOD X1 is a new slim 2 mm glass pad line split into CR-X1 control and SP-X1 speed variants. Store copy positions CR as the safer cloth-to-glass, tactical shooter, and permanent-consistency pick, while SP is the low-friction tracking option with coating life described by some listings as roughly 6-12 months under normal use.",
+      commonComparisons: [
+        "Wallhack SP-005",
+        "ATK Crimson",
+        "InfinityMice Tora",
+        "Pulsar Superglide",
+      ],
+      strengths: [
+        "Variant choice across controlled and speed-first glass",
+        "Slim tempered glass construction",
+        "Fine micro-texture with low noise",
+        "Silicone base and beveled edge",
+        "Xraypad availability network",
+        "Optional bundle contents on some listings",
+      ],
+      weaknesses: [
+        "Not enough long-term owner data yet",
+        "Mixed finish line can be confusing",
+        "SP coating longevity is finite compared with CR",
+        "Hard glass surface drawbacks remain",
+        "Availability depends on pre-order and regional stock",
+      ],
+    },
+
+    sources: [
+      {
+        label: "X-Raypad official NOD X1 product page",
+        type: "official",
+        url: "https://shop.x-raypad.com/shop/nod-x1-glass-mousepads/",
+      },
+      {
+        label: "NMPC India NOD 2mm Slim Glass Mousepad listing",
+        type: "store",
+        url: "https://www.nmpc.in/products/x-raypad-nod-2mm-slim-glass-mousepad-control-or-speed-edition",
+      },
+      {
+        label: "MaxGaming Xraypad NOD SP-X1 listing",
+        type: "store",
+        url: "https://us.maxgaming.com/us/mousepads/x-raypad-nod-sp-x1-glass-mousepad",
+      },
+      {
+        label: "Esports Gear UK Xraypad NOD SP Armoury Crate listing",
+        type: "store",
+      },
+    ],
+  },
+
   // ATK Crimson
   {
     id: "atk-crimson",

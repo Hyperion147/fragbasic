@@ -153,13 +153,13 @@ export function MousepadFeelChart({ pad }: Props) {
                         Variant note
                     </p>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                        Soft and firm bases can shift glide, feedback, and stopping behavior even within the same pad family. The chart above now reflects those variant-specific differences directly.
+                        Different variants can shift glide, feedback, and stopping behavior even within the same pad family. The chart above reflects those variant-specific differences directly.
                     </p>
                     {pad.feelVariants
                         .filter((variant) => variant.notes)
                         .map((variant) => (
                             <p
-                                key={`${variant.softness}-note`}
+                                key={`${variant.label}-${variant.softness}-note`}
                                 className="mt-3 text-sm leading-6 text-muted-foreground"
                             >
                                 <span className="font-medium text-foreground">
