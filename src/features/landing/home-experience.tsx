@@ -8,7 +8,7 @@ import { HeroSection } from "@/features/landing/hero-section";
 import { LatestAddedSection } from "@/features/landing/latest-added-section";
 import { PagesShowcaseSection } from "@/features/landing/pages-showcase-section";
 import { PopularComparisonsSection } from "@/features/landing/popular-comparisons-section";
-import { SleevesTeaseSection } from "@/features/landing/sleeves-tease-section";
+import { IemsTeaseSection } from "@/features/landing/iems-tease-section";
 import { SpectrumSection } from "@/features/landing/spectrum-section";
 import type { LandingProps } from "@/features/landing/types";
 import { WhySection } from "@/features/landing/why-section";
@@ -59,7 +59,7 @@ export function HomeExperience({
           <WhySection />
         </RevealSection>
         <RevealSection delay={0.44}>
-          <SleevesTeaseSection />
+          <IemsTeaseSection />
         </RevealSection>
       </div>
     </main>
