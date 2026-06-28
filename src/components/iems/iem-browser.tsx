@@ -8,30 +8,40 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
-  formatIemDriverType,
   formatIemSoundSignature,
   getIemFullName,
 } from "@/lib/iems";
-import type { Iem, IemDriverType, IemSoundSignature } from "@/types/iem";
+import type { Iem, IemSoundSignature } from "@/types/iem";
 
 const allFilterValue = "all";
 
 type SortKey = "score" | "fps" | "value" | "price";
+type PriceFilter = typeof allFilterValue | Iem["priceTier"];
+
+const priceTierOrder: Record<Iem["priceTier"], number> = {
+  "under-2000": 1,
+  "under-5000": 2,
+  midrange: 3,
+  premium: 4,
+};
 
 export function IemBrowser({ iems }: { iems: Iem[] }) {
   const [query, setQuery] = useState("");
-  const [driver, setDriver] = useState<typeof allFilterValue | IemDriverType>(allFilterValue);
   const [signature, setSignature] = useState<typeof allFilterValue | IemSoundSignature>(
     allFilterValue,
   );
+  const [price, setPrice] = useState<PriceFilter>(allFilterValue);
   const [sort, setSort] = useState<SortKey>("score");
 
-  const drivers = useMemo(
-    () => Array.from(new Set(iems.map((iem) => iem.driverType))),
-    [iems],
-  );
   const signatures = useMemo(
     () => Array.from(new Set(iems.map((iem) => iem.soundSignature))),
+    [iems],
+  );
+  const priceTiers = useMemo(
+    () =>
+      Array.from(new Set(iems.map((iem) => iem.priceTier))).sort(
+        (left, right) => priceTierOrder[left] - priceTierOrder[right],
+      ),
     [iems],
   );
 
@@ -40,11 +50,11 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
 
     return [...iems]
       .filter((iem) => {
-        if (driver !== allFilterValue && iem.driverType !== driver) {
+        if (signature !== allFilterValue && iem.soundSignature !== signature) {
           return false;
         }
 
-        if (signature !== allFilterValue && iem.soundSignature !== signature) {
+        if (price !== allFilterValue && iem.priceTier !== price) {
           return false;
         }
 
@@ -78,12 +88,12 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
 
         return right.ratings.fragbasic - left.ratings.fragbasic;
       });
-  }, [driver, iems, query, signature, sort]);
+  }, [iems, price, query, signature, sort]);
 
   const resetFilters = () => {
     setQuery("");
-    setDriver(allFilterValue);
     setSignature(allFilterValue);
+    setPrice(allFilterValue);
     setSort("score");
   };
 
@@ -94,7 +104,7 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
           <div>
             <p className="text-sm text-muted-foreground">Filters</p>
             <h2 className="text-2xl font-semibold tracking-tight">
-              Find IEMs by tuning, driver, and FPS score
+              Find IEMs by tuning, price, and FPS score
             </h2>
           </div>
           <div className="flex items-center gap-3">
@@ -123,21 +133,6 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
             </div>
           </div>
 
-          <FilterGroup label="Driver">
-            <FilterButton active={driver === allFilterValue} onClick={() => setDriver(allFilterValue)}>
-              All
-            </FilterButton>
-            {drivers.map((option) => (
-              <FilterButton
-                key={option}
-                active={driver === option}
-                onClick={() => setDriver(option)}
-              >
-                {formatIemDriverType(option)}
-              </FilterButton>
-            ))}
-          </FilterGroup>
-
           <FilterGroup label="Tuning">
             <FilterButton active={signature === allFilterValue} onClick={() => setSignature(allFilterValue)}>
               All
@@ -149,6 +144,21 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
                 onClick={() => setSignature(option)}
               >
                 {formatIemSoundSignature(option)}
+              </FilterButton>
+            ))}
+          </FilterGroup>
+
+          <FilterGroup label="Price">
+            <FilterButton active={price === allFilterValue} onClick={() => setPrice(allFilterValue)}>
+              All
+            </FilterButton>
+            {priceTiers.map((option) => (
+              <FilterButton
+                key={option}
+                active={price === option}
+                onClick={() => setPrice(option)}
+              >
+                {formatPriceTier(option)}
               </FilterButton>
             ))}
           </FilterGroup>
@@ -216,4 +226,15 @@ function FilterButton({
       {children}
     </Button>
   );
+}
+
+function formatPriceTier(priceTier: Iem["priceTier"]) {
+  const labels: Record<Iem["priceTier"], string> = {
+    "under-2000": "Under INR 2,000",
+    "under-5000": "Under INR 5,000",
+    midrange: "Midrange",
+    premium: "Premium",
+  };
+
+  return labels[priceTier];
 }
