@@ -1,6 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export function IemsTeaseSection() {
   return (
@@ -11,16 +14,22 @@ export function IemsTeaseSection() {
             variant="outline"
             className="rounded-md bg-background/50 text-[10px] tracking-[0.5px]"
           >
-            Coming next
+            New vertical
           </Badge>
           <h2 className="mt-5 text-3xl font-semibold tracking-tight md:text-4xl">
-            In-Ear Monitors are coming to FRAGBASIC.
+            IEMs are now part of FRAGBASIC.
           </h2>
           <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground">
-            The next expansion will rank in-ear monitors by imaging, footstep
-            clarity, comfort, isolation, and tuning so FPS audio picks are easier
-            to compare than a pile of forum tabs.
+            Browse in-ear monitors by imaging, footstep clarity, comfort,
+            isolation, and tuning so FPS audio picks are easier to compare than
+            a pile of forum tabs.
           </p>
+          <Button asChild className="mt-6">
+            <Link href="/iems">
+              Open IEM database
+              <ArrowRight className="size-4" />
+            </Link>
+          </Button>
         </div>
 
         <div className="relative min-h-[360px] translate-x-30 overflow-hidden">

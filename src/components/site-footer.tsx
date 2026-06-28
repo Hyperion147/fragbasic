@@ -11,6 +11,7 @@ import RectTipComp from "./ui/rect-tip";
 
 const primaryLinks = [
     { label: "All Mousepads", href: "/mousepads" },
+    { label: "IEMs", href: "/iems" },
     { label: "Finder", href: "/mousepads/finder" },
     { label: "Compare", href: "/mousepads/compare" },
     { label: "Universal Compare", href: "/mousepads/compare/universal" },

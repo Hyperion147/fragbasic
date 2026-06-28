@@ -3,11 +3,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
     ArrowRight,
-    BookOpenText,
     ChevronRight,
     Gauge,
     Grid2x2,
     Menu,
+    Search,
     Shield,
     Sparkles,
     Star,
@@ -26,33 +26,33 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { brandConfig } from "@/lib/brands";
+import { getAllIems } from "@/lib/iems";
+import { getAllMousepads, getMousepadCompany } from "@/lib/mousepads";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-const brandLinks = Object.values(brandConfig).map((brand) => ({
+const mousepadBrandLinks = Object.values(brandConfig).map((brand) => ({
     label: brand.name,
     href: `/mousepads/brands/${brand.slug}`,
 }));
 
+const glasspadBrandLabels = Array.from(
+    new Set(
+        getAllMousepads()
+            .filter((mousepad) => mousepad.category === "glass")
+            .map((mousepad) => getMousepadCompany(mousepad)),
+    ),
+).sort((left, right) => left.localeCompare(right));
+
+const iemBrandLabels = Array.from(
+    new Set(getAllIems().map((iem) => iem.brand)),
+).sort((left, right) => left.localeCompare(right));
+
 const directNavItems = [
     { label: "GlassPads", href: "/mousepads/glasspads" },
-    { label: "Best", href: "/best" },
-    { label: "Compare", href: "/mousepads/compare" },
-    { label: "Brands", href: "/mousepads/brands" },
+    { label: "IEMs", href: "/iems" },
 ];
 
-const mobileNavItems = [
-    { label: "All Mousepads", href: "/mousepads" },
-    { label: "GlassPads", href: "/mousepads/glasspads" },
-    { label: "Mouse Skates", href: "/accessories/mouse-skates" },
-    { label: "Browse Skates", href: "/accessories/mouse-skates/browse" },
-    { label: "Compare Skates", href: "/accessories/mouse-skates/compare" },
-    { label: "Best Picks", href: "/best" },
-    { label: "Universal Compare", href: "/mousepads/compare/universal" },
-    { label: "Find My Mousepad", href: "/mousepads/finder" },
-    { label: "Compare Hub", href: "/mousepads/compare" },
-    { label: "Brands", href: "/mousepads/brands" },
-];
 const mousepadMenuLinks: Array<{
     title: string;
     body: string;
@@ -77,12 +77,6 @@ const mousepadMenuLinks: Array<{
         body: "Get personalized recommendations",
         href: "/mousepads/finder",
         icon: Star,
-    },
-    {
-        title: "Compare Hub",
-        body: "Published head-to-heads",
-        href: "/mousepads/compare",
-        icon: Sparkles,
     },
 ] as const;
 const accessoryMenuLinks: Array<{
@@ -175,6 +169,7 @@ const bestGuideLinks = [
 
 export function SiteNavbar() {
     const pathname = usePathname();
+    const isIemsPath = isActivePath(pathname, "/iems");
 
     return (
         <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-xl">
@@ -198,14 +193,33 @@ export function SiteNavbar() {
                 <DesktopNavigation pathname={pathname} />
 
                 <div className="hidden items-center gap-4 md:flex">
-                    <Button size="sm" asChild variant="outline">
-                        <Link href="/mousepads/finder">Find My Mousepad</Link>
-                    </Button>
-                    <Button size="sm" asChild>
-                        <Link href="/mousepads/compare/universal">
-                            Universal Compare
-                        </Link>
-                    </Button>
+                    {isIemsPath ? (
+                        <>
+                            <div className="relative">
+                                <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+                                <input
+                                    type="search"
+                                    placeholder="Search IEMs..."
+                                    aria-label="Search IEMs"
+                                    className="h-8 w-52 rounded-lg border border-border bg-background/80 px-9 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-[color:color-mix(in_srgb,var(--brand-hover)_45%,transparent)]"
+                                />
+                            </div>
+                            <Button size="sm" asChild>
+                                <Link href="/iems#iems">Find My IEM</Link>
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            <Button size="sm" asChild variant="outline">
+                                <Link href="/mousepads/finder">Find My Mousepad</Link>
+                            </Button>
+                            <Button size="sm" asChild>
+                                <Link href="/mousepads/compare/universal">
+                                    Universal Compare
+                                </Link>
+                            </Button>
+                        </>
+                    )}
                 </div>
 
                 <MobileNavigation />
@@ -280,8 +294,8 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                         asChild
                                         className="mt-4 w-full"
                                     >
-                                        <Link href="/mousepads/compare">
-                                            View all comparisons
+                                        <Link href="/mousepads/compare/universal">
+                                            Open Universal Compare
                                             <ArrowRight className="size-4" />
                                         </Link>
                                     </Button>
@@ -351,6 +365,42 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                     </NavigationMenuContent>
                 </NavigationMenuItem>
 
+                <NavigationMenuItem>
+                    <NavigationMenuTrigger className="px-3 py-1.5 tracking-tight">
+                        Brands
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                        <div className="w-[760px] overflow-hidden rounded-3xl border border-border bg-card/40 p-4 ring-1 ring-border/50 shadow-2xl shadow-black/10">
+                            <div className="grid grid-cols-3 gap-4">
+                                <BrandCategoryColumn
+                                    title="Mousepads"
+                                    href="/mousepads/brands"
+                                    cta="Open mousepad brands"
+                                    items={mousepadBrandLinks}
+                                />
+                                <BrandCategoryColumn
+                                    title="Glasspads"
+                                    href="/mousepads/glasspads"
+                                    cta="Browse glasspad brands"
+                                    items={glasspadBrandLabels.map((label) => ({
+                                        label,
+                                        href: "/mousepads/glasspads",
+                                    }))}
+                                />
+                                <BrandCategoryColumn
+                                    title="IEMs"
+                                    href="/iems"
+                                    cta="Browse IEM brands"
+                                    items={iemBrandLabels.map((label) => ({
+                                        label,
+                                        href: "/iems#iems",
+                                    }))}
+                                />
+                            </div>
+                        </div>
+                    </NavigationMenuContent>
+                </NavigationMenuItem>
+
                 {directNavItems.map((item) => (
                     <NavigationMenuItem key={item.href}>
                         <NavigationMenuLink
@@ -368,6 +418,8 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                     className={cn(
                                         item.href === "/mousepads/glasspads" &&
                                             "glasspads-wave-link",
+                                        item.href === "/iems" &&
+                                            "iems-wave-link",
                                     )}
                                 >
                                     {item.label}
@@ -474,6 +526,44 @@ function MousepadsMenuFeelLink({
 
 function MobileNavigation() {
     const pathname = usePathname();
+    const mobileSections = [
+        {
+            title: "Mousepads",
+            items: [
+                { label: "All Mousepads", href: "/mousepads" },
+                { label: "GlassPads", href: "/mousepads/glasspads" },
+                { label: "Find My Mousepad", href: "/mousepads/finder" },
+                { label: "Universal Compare", href: "/mousepads/compare/universal" },
+                { label: "Best mousepads home", href: "/best" },
+                ...bestGuideLinks
+                    .filter((item) => item.href !== "/best")
+                    .map((item) => ({
+                        label: item.title,
+                        href: item.href,
+                    })),
+            ],
+        },
+        {
+            title: "IEMs",
+            items: [{ label: "Browse IEMs", href: "/iems" }],
+        },
+        {
+            title: "Accessories",
+            items: [
+                { label: "Mouse Skates", href: "/accessories/mouse-skates" },
+                { label: "Browse Skates", href: "/accessories/mouse-skates/browse" },
+                { label: "Compare Skates", href: "/accessories/mouse-skates/compare" },
+            ],
+        },
+        {
+            title: "Brands",
+            items: [
+                { label: "Mousepad Brands", href: "/mousepads/brands" },
+                { label: "Glasspad Brands", href: "/mousepads/glasspads" },
+                { label: "IEM Brands", href: "/iems#iems" },
+            ],
+        },
+    ] as const;
 
     return (
         <div className="md:hidden">
@@ -500,80 +590,90 @@ function MobileNavigation() {
                             </div>
                         </Link>
 
-                        <div className="space-y-3">
-                            <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
-                                Explore
-                            </p>
-                            <nav className="grid gap-2">
-                                {mobileNavItems.map((item) => (
-                                    <Button
-                                        key={item.href}
-                                        variant={
-                                            isActivePath(pathname, item.href)
-                                                ? "secondary"
-                                                : "ghost"
-                                        }
-                                        className={cn(
-                                            "justify-between rounded-2xl px-4 py-5",
-                                            isActivePath(pathname, item.href)
-                                                ? "border-[color:color-mix(in_srgb,var(--brand-hover)_26%,transparent)] bg-[color:color-mix(in_srgb,var(--brand)_14%,transparent)] text-foreground shadow-[0_0_18px_color-mix(in_srgb,var(--brand-glow)_12%,transparent)]"
-                                                : "",
-                                        )}
-                                        asChild
-                                    >
-                                        <Link href={item.href}>
-                                            {item.label}
-                                            <ChevronRight className="size-4 text-muted-foreground" />
-                                        </Link>
-                                    </Button>
-                                ))}
-                            </nav>
-                        </div>
-
-                        <div className="space-y-3 border-t border-border pt-4">
-                            <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
-                                Best pages
-                            </p>
-                            <div className="grid gap-2">
-                                {bestGuideLinks.map((item) => (
-                                    <Button
-                                        key={item.href}
-                                        variant="outline"
-                                        className="justify-between rounded-2xl px-4 py-5"
-                                        asChild
-                                    >
-                                        <Link href={item.href}>
-                                            {item.title}
-                                            <BookOpenText className="size-4 text-primary" />
-                                        </Link>
-                                    </Button>
-                                ))}
+                        {mobileSections.map((section, index) => (
+                            <div
+                                key={section.title}
+                                className={cn(
+                                    "space-y-3",
+                                    index > 0 && "border-t border-border pt-4",
+                                )}
+                            >
+                                <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                                    {section.title}
+                                </p>
+                                <nav className="grid gap-2">
+                                    {section.items.map((item) => (
+                                        <Button
+                                            key={`${section.title}-${item.href}`}
+                                            variant={
+                                                isActivePath(pathname, item.href)
+                                                    ? "secondary"
+                                                    : "ghost"
+                                            }
+                                            className={cn(
+                                                "justify-between rounded-2xl px-4 py-5",
+                                                isActivePath(pathname, item.href)
+                                                    ? "border-[color:color-mix(in_srgb,var(--brand-hover)_26%,transparent)] bg-[color:color-mix(in_srgb,var(--brand)_14%,transparent)] text-foreground shadow-[0_0_18px_color-mix(in_srgb,var(--brand-glow)_12%,transparent)]"
+                                                    : "",
+                                            )}
+                                            asChild
+                                        >
+                                            <Link href={item.href}>
+                                                {item.label}
+                                                <ChevronRight className="size-4 text-muted-foreground" />
+                                            </Link>
+                                        </Button>
+                                    ))}
+                                </nav>
                             </div>
-                        </div>
-
-                        <div className="space-y-3 border-t border-border pt-4">
-                            <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
-                                Browse brands
-                            </p>
-                            <div className="grid gap-2">
-                                {brandLinks.map((item) => (
-                                    <Button
-                                        key={item.href}
-                                        variant="outline"
-                                        className="justify-between rounded-2xl px-4 py-5"
-                                        asChild
-                                    >
-                                        <Link href={item.href}>
-                                            {item.label}
-                                            <ChevronRight className="size-4 text-muted-foreground" />
-                                        </Link>
-                                    </Button>
-                                ))}
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </SheetContent>
             </Sheet>
+        </div>
+    );
+}
+
+function BrandCategoryColumn({
+    title,
+    body,
+    href,
+    cta,
+    items,
+}: {
+    title: string;
+    body?: string;
+    href: string;
+    cta: string;
+    items: Array<{ label: string; href: string }>;
+}) {
+    return (
+        <div className="flex min-h-[260px] flex-col rounded-2xl border border-border/70 bg-background/45 p-4">
+            <MousepadsMenuHeading title={title} />
+            <p className="mt-3 max-w-[28ch] text-sm leading-6 text-muted-foreground">
+                {body}
+            </p>
+
+            <div className="mt-4 grid gap-2">
+                {items.map((item) => (
+                    <NavigationMenuLink key={`${title}-${item.label}`} asChild>
+                        <Link
+                            href={item.href}
+                            className="flex items-center justify-between rounded-xl border border-border bg-background/65 px-3 py-2 text-sm text-foreground/84 transition-colors hover:border-[color:color-mix(in_srgb,var(--brand-hover)_26%,transparent)] hover:bg-muted/35 hover:text-foreground focus:bg-muted/35"
+                        >
+                            <span>{item.label}</span>
+                            <ChevronRight className="size-4 text-muted-foreground" />
+                        </Link>
+                    </NavigationMenuLink>
+                ))}
+            </div>
+
+            <Button variant="outline" size="sm" asChild className="mt-auto w-full">
+                <Link href={href}>
+                    {cta}
+                    <ArrowRight className="size-4" />
+                </Link>
+            </Button>
         </div>
     );
 }

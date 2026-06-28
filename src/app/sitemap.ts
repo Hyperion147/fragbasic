@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { getAllBrandSlugs } from "@/lib/brands";
 import { getAllComparisons } from "@/lib/comparisons";
+import { getAllIems } from "@/lib/iems";
 import { getAllMousepads } from "@/lib/mousepads";
 import { getSiteUrl } from "@/lib/seo";
 import { getBestPageSlugs } from "@/data/best-pages";
@@ -18,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/mousepads/finder",
     "/mousepads/compare",
     "/mousepads/compare/universal",
+    "/iems",
     "/accessories/mouse-skates",
     "/accessories/mouse-skates/browse",
     "/accessories/mouse-skates/compare",
@@ -35,6 +37,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "weekly" as const,
     priority: 0.9,
     images: [`${siteUrl}${mousepad.images.main}`],
+  }));
+
+  const iemRoutes = getAllIems().map((iem) => ({
+    url: `${siteUrl}/iems/${iem.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.86,
+    images: [`${siteUrl}${iem.images.main}`],
   }));
 
   const brandRoutes = getAllBrandSlugs().map((brand) => ({
@@ -61,6 +71,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...staticRoutes,
     ...mousepadRoutes,
+    ...iemRoutes,
     ...brandRoutes,
     ...comparisonRoutes,
     ...bestRoutes,
