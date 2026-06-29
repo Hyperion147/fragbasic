@@ -7,10 +7,9 @@ import { Button } from "@/components/ui/button";
 
 type Props = {
   mousepadCount: number;
-  brandCount: number;
 };
 
-export function HeroSection({ mousepadCount, brandCount }: Props) {
+export function HeroSection({ mousepadCount }: Props) {
   return (
     <section className="relative overflow-hidden border-b border-border bg-background">
       <div className="relative z-10 grid min-h-130 w-full gap-8 md:grid-cols-[0.92fr_1.08fr]">
@@ -46,7 +45,7 @@ export function HeroSection({ mousepadCount, brandCount }: Props) {
 
           <div className="mt-8 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
             <Metric icon={CheckCircle2} label={`${mousepadCount} mousepads`} />
-            <Metric icon={CircleDot} label={`${brandCount} brands`} />
+            <Metric icon={CircleDot} label="Product-first browsing" />
             <Metric icon={Crosshair} label="Community + personal data" />
           </div>
         </div>

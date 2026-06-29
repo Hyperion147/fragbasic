@@ -15,7 +15,6 @@ import {
 
 import { Card } from "@/components/ui/card";
 import {
-    getFeaturedColorwaySlug,
     getMousepadChartColors,
 } from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
@@ -25,19 +24,16 @@ type Props = {
 };
 
 export function MousepadFeelChart({ pad }: Props) {
-    const chartColors = getMousepadChartColors(
-        pad,
-        getFeaturedColorwaySlug(pad)
-    );
+    const chartColors = getMousepadChartColors();
     const softVariant = pad.feelVariants?.find((variant) => variant.softness === "soft");
     const firmVariant = pad.feelVariants?.find((variant) => variant.softness === "firm");
     const metrics = [
-        { metric: "Speed", key: "speed" },
+        { metric: "Glide", key: "speed" },
         { metric: "Control", key: "control" },
         { metric: "Stopping", key: "stoppingPower" },
-        { metric: "Static", key: "staticFriction" },
-        { metric: "Dynamic", key: "dynamicFriction" },
-        { metric: "Micro", key: "microAdjustments" },
+        { metric: "Start", key: "staticFriction" },
+        { metric: "Glide drag", key: "dynamicFriction" },
+        { metric: "Corrections", key: "microAdjustments" },
     ] as const;
 
     const data = metrics.map(({ metric, key }) => ({
@@ -78,16 +74,16 @@ export function MousepadFeelChart({ pad }: Props) {
                 </h2>
 
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-                    A native 1-10 profile for speed, control, stopping power,
-                    static friction, dynamic glide, and micro-adjustment
-                    freedom inside this pad&apos;s surface family.
+                    A native feel profile for glide speed, aim control,
+                    stopping power, initial movement, moving glide, and small
+                    corrections inside this pad&apos;s surface family.
                 </p>
             </div>
 
             <EvilRadarChart
                 data={data}
                 config={chartConfig}
-                className="mx-auto aspect-square max-h-[420px]"
+                className="mx-auto aspect-square max-h-105"
                 chartProps={{
                     outerRadius: "72%",
                 }}

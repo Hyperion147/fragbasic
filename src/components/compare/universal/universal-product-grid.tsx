@@ -3,6 +3,9 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+    formatConfidenceLabel,
+    formatEnvironmentLabel,
+    formatFeelLabel,
     formatMousepadValue,
     getDefaultColorway,
     getMousepadFullName,
@@ -67,16 +70,25 @@ export function UniversalProductGrid({ mousepads }: Props) {
 
                             <div className="grid grid-cols-3 gap-2">
                                 <StatPill
-                                    label="Speed"
-                                    value={mousepad.feel.speed}
+                                    label="Glide"
+                                    value={formatFeelLabel(
+                                        mousepad.feel.speed,
+                                        "speed",
+                                    )}
                                 />
                                 <StatPill
                                     label="Control"
-                                    value={mousepad.feel.control}
+                                    value={formatFeelLabel(
+                                        mousepad.feel.control,
+                                        "control",
+                                    )}
                                 />
                                 <StatPill
-                                    label="Stop"
-                                    value={mousepad.feel.stoppingPower}
+                                    label="Stopping"
+                                    value={formatFeelLabel(
+                                        mousepad.feel.stoppingPower,
+                                        "stoppingPower",
+                                    )}
                                 />
                             </div>
 
@@ -100,16 +112,22 @@ export function UniversalProductGrid({ mousepads }: Props) {
                                     }
                                 />
                                 <DetailPill
-                                    label="Humidity"
-                                    value={`${mousepad.environment.humidityResistance}/10`}
+                                    label="Humidity handling"
+                                    value={formatEnvironmentLabel(
+                                        mousepad.environment.humidityResistance,
+                                    )}
                                 />
                                 <DetailPill
-                                    label="Sweat"
-                                    value={`${mousepad.environment.sweatResistance}/10`}
+                                    label="Sweat handling"
+                                    value={formatEnvironmentLabel(
+                                        mousepad.environment.sweatResistance,
+                                    )}
                                 />
                                 <DetailPill
-                                    label="Dust / Hair"
-                                    value={`${mousepad.environment.dustHairResistance}/10`}
+                                    label="Dust / hair handling"
+                                    value={formatEnvironmentLabel(
+                                        mousepad.environment.dustHairResistance,
+                                    )}
                                 />
                                 <DetailPill
                                     label="India"
@@ -134,8 +152,8 @@ export function UniversalProductGrid({ mousepads }: Props) {
                                     }
                                 />
                                 <DetailPill
-                                    label="Confidence"
-                                    value={formatMousepadValue(
+                                    label="Data confidence"
+                                    value={formatConfidenceLabel(
                                         mousepad.feel.ratingConfidence,
                                     )}
                                 />
@@ -184,11 +202,11 @@ export function UniversalProductGrid({ mousepads }: Props) {
     );
 }
 
-function StatPill({ label, value }: { label: string; value: number }) {
+function StatPill({ label, value }: { label: string; value: string }) {
     return (
         <div className="rounded-2xl border border-border bg-background p-3">
             <p className="text-xs text-muted-foreground">{label}</p>
-            <p className="mt-1 text-lg font-semibold text-foreground">
+            <p className="mt-1 text-sm font-semibold leading-5 text-foreground">
                 {value}
             </p>
         </div>
@@ -203,4 +221,3 @@ function DetailPill({ label, value }: { label: string; value: string }) {
         </div>
     );
 }
-

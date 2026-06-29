@@ -6,6 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  formatEnvironmentLabel,
+  formatFeelLabel,
   getDefaultColorway,
   getCalibratedFeelValue,
   hasMixedFeelScaleFamilies,
@@ -28,27 +30,37 @@ const summaryItems: Array<{
   label: string;
   key: SummaryKey;
   accessor: (mousepad: Mousepad) => number;
+  valueLabel: (value: number) => string;
 }> = [
-  { label: "Fastest", key: "speed", accessor: (mousepad) => mousepad.feel.speed },
   {
-    label: "Most control",
+    label: "Easiest glide",
+    key: "speed",
+    accessor: (mousepad) => mousepad.feel.speed,
+    valueLabel: (value) => formatFeelLabel(value, "speed"),
+  },
+  {
+    label: "Most locked-in",
     key: "control",
     accessor: (mousepad) => mousepad.feel.control,
+    valueLabel: (value) => formatFeelLabel(value, "control"),
   },
   {
-    label: "Best stopping power",
+    label: "Strongest stop",
     key: "stoppingPower",
     accessor: (mousepad) => mousepad.feel.stoppingPower,
+    valueLabel: (value) => formatFeelLabel(value, "stoppingPower"),
   },
   {
-    label: "Best humidity resistance",
+    label: "Best humidity handling",
     key: "humidityResistance",
     accessor: (mousepad) => mousepad.environment.humidityResistance,
+    valueLabel: formatEnvironmentLabel,
   },
   {
-    label: "Best micro-adjustments",
+    label: "Easiest corrections",
     key: "microAdjustments",
     accessor: (mousepad) => mousepad.feel.microAdjustments,
+    valueLabel: (value) => formatFeelLabel(value, "microAdjustments"),
   },
 ];
 
@@ -58,7 +70,7 @@ export function CompareSummaryCards({ mousepads }: Props) {
     item.key === "speed" && useUniversalFeel
       ? {
           ...item,
-          label: "Fastest overall",
+          label: "Easiest overall glide",
           accessor: (mousepad: Mousepad) =>
             getCalibratedFeelValue(mousepad, "speed", "universal"),
         }
@@ -76,7 +88,8 @@ export function CompareSummaryCards({ mousepads }: Props) {
             <CardHeader>
               <CardTitle className="text-base">{item.label}</CardTitle>
               <CardDescription>
-                {leadValue}/10 {useUniversalFeel && item.key === "speed" ? "universal" : "lead"} score
+                Current leader: {item.valueLabel(leadValue)}
+                {useUniversalFeel && item.key === "speed" ? " feel" : ""}
               </CardDescription>
             </CardHeader>
             <CardContent>

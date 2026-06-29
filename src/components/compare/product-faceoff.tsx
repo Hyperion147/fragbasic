@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import type { Mousepad } from "@/types/mousepad";
 import {
     getColorwayBySlug,
+    formatEnvironmentLabel,
+    formatFeelLabel,
     formatMousepadValue,
     getFeaturedColorwaySlug,
 } from "@/lib/mousepads";
@@ -76,9 +78,21 @@ function PadCard({ pad }: { pad: Mousepad }) {
                 </div>
 
                 <div className="grid grid-cols-3 gap-2">
-                    <MiniStat label="Speed" value={pad.feel.speed} />
-                    <MiniStat label="Control" value={pad.feel.control} />
-                    <MiniStat label="Stop" value={pad.feel.stoppingPower} />
+                    <MiniStat
+                        label="Glide speed"
+                        value={formatFeelLabel(pad.feel.speed, "speed")}
+                    />
+                    <MiniStat
+                        label="Aim control"
+                        value={formatFeelLabel(pad.feel.control, "control")}
+                    />
+                    <MiniStat
+                        label="Stopping"
+                        value={formatFeelLabel(
+                            pad.feel.stoppingPower,
+                            "stoppingPower",
+                        )}
+                    />
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-2">
@@ -87,8 +101,10 @@ function PadCard({ pad }: { pad: Mousepad }) {
                         value={formatMousepadValue(pad.texture.feel)}
                     />
                     <DetailPill
-                        label="Humidity"
-                        value={`${pad.environment.humidityResistance}/10`}
+                        label="Humidity handling"
+                        value={formatEnvironmentLabel(
+                            pad.environment.humidityResistance,
+                        )}
                     />
                 </div>
 
@@ -122,11 +138,11 @@ function PadCard({ pad }: { pad: Mousepad }) {
     );
 }
 
-function MiniStat({ label, value }: { label: string; value: number }) {
+function MiniStat({ label, value }: { label: string; value: string }) {
     return (
         <div className="rounded-xl border border-border bg-background p-3">
             <p className="text-xs text-muted-foreground">{label}</p>
-            <p className="mt-1 text-xl font-semibold">{value}</p>
+            <p className="mt-1 text-sm font-semibold leading-5">{value}</p>
         </div>
     );
 }

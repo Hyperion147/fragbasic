@@ -1,4 +1,8 @@
 import { Card } from "@/components/ui/card";
+import {
+    formatConfidenceLabel,
+    formatEnvironmentLabel,
+} from "@/lib/mousepads";
 import { formatValue } from "@/lib/utils/format";
 import type { Mousepad } from "@/types/mousepad";
 
@@ -24,10 +28,10 @@ export function MousepadSpecGrid({ pad }: { pad: Mousepad }) {
         ["Thickness", size?.thickness ? `${size.thickness}mm` : "Unknown"],
         ["Texture", formatValue(pad.texture.feel)],
         ["Sleeve friendly", pad.texture.sleeveFriendly ? "Yes" : "No"],
-        ["Humidity", `${pad.environment.humidityResistance}/10`],
-        ["Sweat", `${pad.environment.sweatResistance}/10`],
-        ["Dust / hair", `${pad.environment.dustHairResistance}/10`],
-        ["Confidence", formatValue(pad.feel.ratingConfidence)],
+        ["Humidity handling", formatEnvironmentLabel(pad.environment.humidityResistance)],
+        ["Sweat handling", formatEnvironmentLabel(pad.environment.sweatResistance)],
+        ["Dust / hair handling", formatEnvironmentLabel(pad.environment.dustHairResistance)],
+        ["Data confidence", formatConfidenceLabel(pad.feel.ratingConfidence)],
     ];
 
     return (

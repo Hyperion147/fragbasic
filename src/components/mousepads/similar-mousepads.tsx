@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
+  formatFeelLabel,
   formatMousepadValue,
   getDefaultColorway,
   getMousepadFullName,
@@ -59,8 +60,12 @@ export function SimilarMousepads({ source, mousepads }: Props) {
                 <Badge className="text-black">
                   {formatMousepadValue(mousepad.category)}
                 </Badge>
-                <Badge variant="outline">{mousepad.feel.control}/10 control</Badge>
-                <Badge variant="outline">{mousepad.feel.speed}/10 speed</Badge>
+                <Badge variant="outline">
+                  {formatFeelLabel(mousepad.feel.control, "control")} control
+                </Badge>
+                <Badge variant="outline">
+                  {formatFeelLabel(mousepad.feel.speed, "speed")} glide
+                </Badge>
               </div>
 
               <p className="text-sm leading-6 text-muted-foreground">

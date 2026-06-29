@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import {
+  formatFeelLabel,
   formatMousepadValue,
   getMousepadFullName,
 } from "@/lib/mousepads";
@@ -88,10 +89,16 @@ export function MousepadCard({
         </div>
 
         <div className={cn("grid gap-3", compact ? "grid-cols-4" : "grid-cols-2")}>
-          <StatPill label="Control" value={pad.feel.control} />
-          <StatPill label="Speed" value={pad.feel.speed} />
-          <StatPill label="Stopping" value={pad.feel.stoppingPower} />
-          <StatPill label="Micro" value={pad.feel.microAdjustments} />
+          <StatPill label="Control" value={formatFeelLabel(pad.feel.control, "control")} />
+          <StatPill label="Glide" value={formatFeelLabel(pad.feel.speed, "speed")} />
+          <StatPill
+            label="Stopping"
+            value={formatFeelLabel(pad.feel.stoppingPower, "stoppingPower")}
+          />
+          <StatPill
+            label="Corrections"
+            value={formatFeelLabel(pad.feel.microAdjustments, "microAdjustments")}
+          />
         </div>
 
         <div
@@ -111,13 +118,13 @@ export function MousepadCard({
   );
 }
 
-function StatPill({ label, value }: { label: string; value: number }) {
+function StatPill({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-border bg-background/80 px-4 py-3">
       <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
         {label}
       </p>
-      <p className="mt-1 text-lg font-semibold text-foreground">{value}</p>
+      <p className="mt-1 text-sm font-semibold leading-5 text-foreground">{value}</p>
     </div>
   );
 }

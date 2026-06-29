@@ -6,7 +6,6 @@ import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 
-import { brandConfig } from "@/lib/brands";
 import RectTipComp from "./ui/rect-tip";
 
 const primaryLinks = [
@@ -23,11 +22,6 @@ const browseLinks = [
     { label: "Balanced", href: "/mousepads?category=balanced-control" },
     { label: "Speed", href: "/mousepads?category=speed" },
 ] as const;
-
-const brandLinks = Object.values(brandConfig).map((brand) => ({
-    label: brand.name,
-    href: `/mousepads/brands/${brand.slug}`,
-}));
 
 export function SiteFooter() {
     const reduceMotion = useReducedMotion();
@@ -67,7 +61,7 @@ export function SiteFooter() {
                     </FooterReveal>
 
                     <FooterReveal delay={0.16} reduceMotion={reduceMotion}>
-                        <div className="grid gap-8 sm:grid-cols-3">
+                        <div className="grid gap-8 sm:grid-cols-2">
                             <FooterLinkGroup
                                 title="Explore"
                                 links={primaryLinks}
@@ -75,10 +69,6 @@ export function SiteFooter() {
                             <FooterLinkGroup
                                 title="Browse"
                                 links={browseLinks}
-                            />
-                            <FooterLinkGroup
-                                title="Brands"
-                                links={brandLinks}
                             />
                         </div>
                     </FooterReveal>

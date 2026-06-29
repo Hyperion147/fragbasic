@@ -47,7 +47,7 @@ export const bestPages = [
       "The tradeoff is real: big tracking motions and fast target switches ask for more effort. If you already fight sluggish aim, start with balanced-control instead of the slowest pad in the list.",
     ],
     rules: [
-      "Prioritize stopping power and static friction before raw control score.",
+      "Prioritize stopping power and initial movement before the broad control label.",
       "Choose smoother textures if you play long sessions without a sleeve.",
       "Avoid ultra-slow pads if your sensitivity is already low and your game has constant target switching.",
     ],
@@ -107,7 +107,7 @@ export const bestPages = [
       "If you mainly play tac shooters, speed is still viable, but the choice gets narrower. Look for pads that keep clean micro-adjustments without turning every panic stop into a slide.",
     ],
     rules: [
-      "Look for high speed with enough micro-adjustment score to keep small corrections clean.",
+      "Look for fast glide with enough small-correction freedom to keep adjustments clean.",
       "Choose hybrid or textured cloth when you want speed with hand feedback.",
       "Avoid the fastest surfaces if you already overflick under pressure.",
     ],

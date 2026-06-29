@@ -1,4 +1,8 @@
 import { Card } from "@/components/ui/card"
+import {
+  formatConfidenceLabel,
+  formatEnvironmentLabel,
+} from "@/lib/mousepads"
 import { formatSize, formatValue } from "@/lib/utils/format"
 import type { Mousepad } from "@/types/mousepad"
 
@@ -85,20 +89,20 @@ export function SpecRows({ left, right }: Props) {
       right: formatValue(right.texture.noiseLevel),
     },
     {
-      label: "Humidity resistance",
-      left: `${left.environment.humidityResistance}/10`,
-      right: `${right.environment.humidityResistance}/10`,
+      label: "Humidity handling",
+      left: formatEnvironmentLabel(left.environment.humidityResistance),
+      right: formatEnvironmentLabel(right.environment.humidityResistance),
       note: "Important for Indian weather and sweaty hands.",
     },
     {
-      label: "Sweat resistance",
-      left: `${left.environment.sweatResistance}/10`,
-      right: `${right.environment.sweatResistance}/10`,
+      label: "Sweat handling",
+      left: formatEnvironmentLabel(left.environment.sweatResistance),
+      right: formatEnvironmentLabel(right.environment.sweatResistance),
     },
     {
-      label: "Dust / hair resistance",
-      left: `${left.environment.dustHairResistance}/10`,
-      right: `${right.environment.dustHairResistance}/10`,
+      label: "Dust / hair handling",
+      left: formatEnvironmentLabel(left.environment.dustHairResistance),
+      right: formatEnvironmentLabel(right.environment.dustHairResistance),
     },
     {
       label: "Washable",
@@ -118,9 +122,9 @@ export function SpecRows({ left, right }: Props) {
         : "N/A",
     },
     {
-      label: "Source",
-      left: formatValue(left.feel.ratingConfidence),
-      right: formatValue(right.feel.ratingConfidence),
+      label: "Data confidence",
+      left: formatConfidenceLabel(left.feel.ratingConfidence),
+      right: formatConfidenceLabel(right.feel.ratingConfidence),
       note: "Personal-tested data should be trusted more than community estimates.",
     },
   ]

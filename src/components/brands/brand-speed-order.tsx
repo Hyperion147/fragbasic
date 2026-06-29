@@ -1,8 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  MOUSEPAD_GRAPH_COLOR,
   SPEED_CONTROL_ZONES,
+  formatFeelLabel,
   formatMousepadValue,
-  getDefaultColorway,
   getMousepadFullName,
   getMousepadSpeedControlPosition,
   getSpeedControlZoneLabel,
@@ -18,19 +19,20 @@ export function BrandSpeedOrder({ mousepads }: Props) {
     <Card className="border-border bg-card">
       <CardHeader>
         <CardTitle className="text-2xl tracking-tight">
-          Speed-control order
+          Glide feel order
         </CardTitle>
         <p className="text-sm leading-6 text-muted-foreground">
           Ordered from slower, more planted pads to faster, freer options using
           the same calibrated category-first logic from the compare tools, then
-          refined by speed, stopping power, friction, and glide freedom.
+          refined by glide speed, stopping power, initial movement, and small
+          correction freedom.
         </p>
       </CardHeader>
 
       <CardContent className="space-y-3">
         {mousepads.map((mousepad, index) => {
           const position = getMousepadSpeedControlPosition(mousepad);
-          const color = getDefaultColorway(mousepad).color;
+          const color = MOUSEPAD_GRAPH_COLOR;
 
           return (
             <div
@@ -84,9 +86,9 @@ export function BrandSpeedOrder({ mousepads }: Props) {
                             : "text-center"
                       }
                     >
-                      {zone.label === "Balanced Control"
+                      {zone.label === "Balanced control"
                         ? "Bal Ctrl"
-                        : zone.label === "Balanced Speed"
+                        : zone.label === "Balanced speed"
                           ? "Bal Spd"
                           : zone.label}
                     </span>
@@ -99,7 +101,8 @@ export function BrandSpeedOrder({ mousepads }: Props) {
                   {position.toFixed(1)}
                 </p>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  {mousepad.feel.speed}/10 speed, {mousepad.feel.control}/10 control
+                  {formatFeelLabel(mousepad.feel.speed, "speed")} glide,{" "}
+                  {formatFeelLabel(mousepad.feel.control, "control")} control
                 </p>
               </div>
             </div>

@@ -70,9 +70,9 @@ export default function CompareIndexPage() {
                             Compare mousepads side by side.
                         </h1>
                         <p className="mt-4 rounded-lg border border-sky-300/40 bg-sky-400/10 px-4 py-3 text-sm leading-6 text-sky-100">
-                            Note: Glasspad and mousepad ratings use different
-                            feel scales. Treat these numbers as comparison
-                            values, not absolute product ratings.
+                            Note: Feel labels are relative to other pads in the
+                            database. Mouse skates, humidity, wear, and surface
+                            type can change how a pad feels on your desk.
                         </p>
                     </div>
                     <div className="flex flex-col items-end gap-2">

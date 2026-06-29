@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { HomeExperience } from "@/features/landing/home-experience";
 import { getAllBestPages } from "@/data/best-pages";
 import { latestAddedMousepadSlugs } from "@/data/latest-added";
-import { getAllBrandSlugs, getBrandMousepads, brandConfig } from "@/lib/brands";
 import { getPublishedComparisons } from "@/lib/comparisons";
 import { getAllMousepads, getDefaultColorway, getMousepadFullName, getMousepadBySlug } from "@/lib/mousepads";
 import { buildMetadata } from "@/lib/seo";
@@ -31,11 +30,6 @@ export default function HomePage() {
   ).length;
   const bestPageCount = getAllBestPages().length;
   const publishedComparisons = getPublishedComparisons();
-  const brands = getAllBrandSlugs().map((slug) => ({
-    slug,
-    name: brandConfig[slug].name,
-    count: getBrandMousepads(slug).length,
-  }));
   const comparisons = publishedComparisons
     .map((comparison) => {
       const left = getMousepadBySlug(comparison.leftSlug);
@@ -63,9 +57,7 @@ export default function HomePage() {
       mousepadCount={mousepads.length}
       glasspadCount={glasspadCount}
       bestPageCount={bestPageCount}
-      brandCount={brands.length}
       comparisonCount={publishedComparisons.length}
-      brands={brands}
       comparisons={comparisons}
       latestAdded={latestAdded}
     />

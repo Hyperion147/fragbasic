@@ -7,7 +7,6 @@ import {
     Gauge,
     Grid2x2,
     Menu,
-    Search,
     Shield,
     Sparkles,
     Star,
@@ -25,28 +24,8 @@ import {
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { brandConfig } from "@/lib/brands";
-import { getAllIems } from "@/lib/iems";
-import { getAllMousepads, getMousepadCompany } from "@/lib/mousepads";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-
-const mousepadBrandLinks = Object.values(brandConfig).map((brand) => ({
-    label: brand.name,
-    href: `/mousepads/brands/${brand.slug}`,
-}));
-
-const glasspadBrandLabels = Array.from(
-    new Set(
-        getAllMousepads()
-            .filter((mousepad) => mousepad.category === "glass")
-            .map((mousepad) => getMousepadCompany(mousepad)),
-    ),
-).sort((left, right) => left.localeCompare(right));
-
-const iemBrandLabels = Array.from(
-    new Set(getAllIems().map((iem) => iem.brand)),
-).sort((left, right) => left.localeCompare(right));
 
 const directNavItems = [
     { label: "GlassPads", href: "/mousepads/glasspads" },
@@ -169,7 +148,6 @@ const bestGuideLinks = [
 
 export function SiteNavbar() {
     const pathname = usePathname();
-    const isIemsPath = isActivePath(pathname, "/iems");
 
     return (
         <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-xl">
@@ -193,33 +171,14 @@ export function SiteNavbar() {
                 <DesktopNavigation pathname={pathname} />
 
                 <div className="hidden items-center gap-4 md:flex">
-                    {isIemsPath ? (
-                        <>
-                            <div className="relative">
-                                <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-                                <input
-                                    type="search"
-                                    placeholder="Search IEMs..."
-                                    aria-label="Search IEMs"
-                                    className="h-8 w-52 rounded-lg border border-border bg-background/80 px-9 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-[color:color-mix(in_srgb,var(--brand-hover)_45%,transparent)]"
-                                />
-                            </div>
-                            <Button size="sm" asChild>
-                                <Link href="/iems#iems">Find My IEM</Link>
-                            </Button>
-                        </>
-                    ) : (
-                        <>
-                            <Button size="sm" asChild variant="outline">
-                                <Link href="/mousepads/finder">Find My Mousepad</Link>
-                            </Button>
-                            <Button size="sm" asChild>
-                                <Link href="/mousepads/compare/universal">
-                                    Universal Compare
-                                </Link>
-                            </Button>
-                        </>
-                    )}
+                    <Button size="sm" asChild variant="outline">
+                        <Link href="/mousepads/finder">Find My Mousepad</Link>
+                    </Button>
+                    <Button size="sm" asChild>
+                        <Link href="/mousepads/compare/universal">
+                            Universal Compare
+                        </Link>
+                    </Button>
                 </div>
 
                 <MobileNavigation />
@@ -361,42 +320,6 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                 Starting with skates. More accessory data can
                                 plug into this menu later.
                             </p>
-                        </div>
-                    </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                    <NavigationMenuTrigger className="px-3 py-1.5 tracking-tight">
-                        Brands
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <div className="w-[760px] overflow-hidden rounded-3xl border border-border bg-card/40 p-4 ring-1 ring-border/50 shadow-2xl shadow-black/10">
-                            <div className="grid grid-cols-3 gap-4">
-                                <BrandCategoryColumn
-                                    title="Mousepads"
-                                    href="/mousepads/brands"
-                                    cta="Open mousepad brands"
-                                    items={mousepadBrandLinks}
-                                />
-                                <BrandCategoryColumn
-                                    title="Glasspads"
-                                    href="/mousepads/glasspads"
-                                    cta="Browse glasspad brands"
-                                    items={glasspadBrandLabels.map((label) => ({
-                                        label,
-                                        href: "/mousepads/glasspads",
-                                    }))}
-                                />
-                                <BrandCategoryColumn
-                                    title="IEMs"
-                                    href="/iems"
-                                    cta="Browse IEM brands"
-                                    items={iemBrandLabels.map((label) => ({
-                                        label,
-                                        href: "/iems#iems",
-                                    }))}
-                                />
-                            </div>
                         </div>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -555,14 +478,6 @@ function MobileNavigation() {
                 { label: "Compare Skates", href: "/accessories/mouse-skates/compare" },
             ],
         },
-        {
-            title: "Brands",
-            items: [
-                { label: "Mousepad Brands", href: "/mousepads/brands" },
-                { label: "Glasspad Brands", href: "/mousepads/glasspads" },
-                { label: "IEM Brands", href: "/iems#iems" },
-            ],
-        },
     ] as const;
 
     return (
@@ -630,50 +545,6 @@ function MobileNavigation() {
                     </div>
                 </SheetContent>
             </Sheet>
-        </div>
-    );
-}
-
-function BrandCategoryColumn({
-    title,
-    body,
-    href,
-    cta,
-    items,
-}: {
-    title: string;
-    body?: string;
-    href: string;
-    cta: string;
-    items: Array<{ label: string; href: string }>;
-}) {
-    return (
-        <div className="flex min-h-[260px] flex-col rounded-2xl border border-border/70 bg-background/45 p-4">
-            <MousepadsMenuHeading title={title} />
-            <p className="mt-3 max-w-[28ch] text-sm leading-6 text-muted-foreground">
-                {body}
-            </p>
-
-            <div className="mt-4 grid gap-2">
-                {items.map((item) => (
-                    <NavigationMenuLink key={`${title}-${item.label}`} asChild>
-                        <Link
-                            href={item.href}
-                            className="flex items-center justify-between rounded-xl border border-border bg-background/65 px-3 py-2 text-sm text-foreground/84 transition-colors hover:border-[color:color-mix(in_srgb,var(--brand-hover)_26%,transparent)] hover:bg-muted/35 hover:text-foreground focus:bg-muted/35"
-                        >
-                            <span>{item.label}</span>
-                            <ChevronRight className="size-4 text-muted-foreground" />
-                        </Link>
-                    </NavigationMenuLink>
-                ))}
-            </div>
-
-            <Button variant="outline" size="sm" asChild className="mt-auto w-full">
-                <Link href={href}>
-                    {cta}
-                    <ArrowRight className="size-4" />
-                </Link>
-            </Button>
         </div>
     );
 }

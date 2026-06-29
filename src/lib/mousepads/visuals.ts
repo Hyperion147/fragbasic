@@ -1,13 +1,14 @@
 import type { Mousepad, MousepadCategory, MousepadColorway } from "@/types/mousepad";
 import { getCalibratedFeel } from "./calibration";
 
+export const MOUSEPAD_GRAPH_COLOR = "#7c3aed";
 export const SPEED_CONTROL_ZONES = [
-  { label: "Mud", start: 0, end: 18 },
-  { label: "Control", start: 18, end: 36 },
-  { label: "Balanced Control", start: 36, end: 52 },
-  { label: "Balanced Speed", start: 52, end: 68 },
-  { label: "Speed", start: 68, end: 84 },
-  { label: "Glass", start: 84, end: 100 },
+  { label: "Very controlled", shortLabel: "Very ctrl", start: 0, end: 18 },
+  { label: "Controlled", shortLabel: "Control", start: 18, end: 36 },
+  { label: "Balanced control", shortLabel: "Bal ctrl", start: 36, end: 52 },
+  { label: "Balanced speed", shortLabel: "Bal speed", start: 52, end: 68 },
+  { label: "Fast", shortLabel: "Fast", start: 68, end: 84 },
+  { label: "Very fast / glass", shortLabel: "Glass fast", start: 84, end: 100 },
 ] as const;
 
 const speedControlBasePosition: Record<MousepadCategory, number> = {
@@ -69,16 +70,11 @@ export function getFeaturedColorwaySlug(mousepad?: Mousepad) {
   return mousepad.visuals.defaultColorway;
 }
 
-export function getMousepadChartColors(
-  mousepad?: Mousepad,
-  colorwaySlug?: string
-) {
-  const colorway = getColorwayBySlug(mousepad, colorwaySlug);
-
+export function getMousepadChartColors() {
   return {
-    solid: colorway.color,
-    fill: colorway.color,
-    stroke: colorway.color,
+    solid: MOUSEPAD_GRAPH_COLOR,
+    fill: MOUSEPAD_GRAPH_COLOR,
+    stroke: MOUSEPAD_GRAPH_COLOR,
   };
 }
 
@@ -109,7 +105,7 @@ export function getSpeedControlZoneLabel(position: number) {
   return (
     SPEED_CONTROL_ZONES.find(
       (zone) => position >= zone.start && position < zone.end
-    )?.label ?? "Glass"
+    )?.label ?? "Very fast / glass"
   );
 }
 

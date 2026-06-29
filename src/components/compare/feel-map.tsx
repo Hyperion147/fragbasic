@@ -5,8 +5,8 @@ import {
   FEEL_SCALE_LABELS,
   type FeelScaleMode,
   formatCalibratedFeelValue,
+  formatFeelLabel,
   getCalibratedFeelValue,
-  getFeaturedColorwaySlug,
   getFeelScaleModesForComparison,
   getMousepadChartColors,
 } from "@/lib/mousepads"
@@ -19,11 +19,8 @@ export function FeelMap({
   left: Mousepad
   right: Mousepad
 }) {
-  const leftColors = getMousepadChartColors(left, getFeaturedColorwaySlug(left))
-  const rightColors = getMousepadChartColors(
-    right,
-    getFeaturedColorwaySlug(right)
-  )
+  const leftColors = getMousepadChartColors()
+  const rightColors = getMousepadChartColors()
   const scaleModes = getFeelScaleModesForComparison([left, right])
 
   return (
@@ -91,8 +88,8 @@ function ScaleMap({
             <div className="mb-3 flex items-center justify-between gap-3 text-sm">
               <span className="font-medium text-foreground">{label}</span>
               <span className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
-                {formatCalibratedFeelValue(left, key, mode)} /{" "}
-                {formatCalibratedFeelValue(right, key, mode)}
+                {formatFeelLabel(getCalibratedFeelValue(left, key, mode), key)} /{" "}
+                {formatFeelLabel(getCalibratedFeelValue(right, key, mode), key)}
               </span>
             </div>
 
@@ -110,8 +107,12 @@ function ScaleMap({
             </div>
 
             <div className="mt-2 grid grid-cols-2 text-xs text-muted-foreground">
-              <span>{left.name}</span>
-              <span className="text-right">{right.name}</span>
+              <span>
+                {left.name} - {formatCalibratedFeelValue(left, key, mode)}
+              </span>
+              <span className="text-right">
+                {right.name} - {formatCalibratedFeelValue(right, key, mode)}
+              </span>
             </div>
           </div>
         ))}

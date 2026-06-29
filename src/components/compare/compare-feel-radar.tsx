@@ -18,7 +18,6 @@ import {
     FEEL_SCALE_LABELS,
     type FeelScaleMode,
     getCalibratedFeelValue,
-    getFeaturedColorwaySlug,
     getFeelScaleModesForComparison,
     getMousepadChartColors,
 } from "@/lib/mousepads";
@@ -37,7 +36,7 @@ export function CompareFeelRadar({ left, right }: Props) {
             <div className="mb-6">
                 <p className="text-sm text-muted-foreground">Feel profile</p>
                 <h2 className="text-2xl font-semibold tracking-tight">
-                    Glide ratings with calibrated scale context
+                    Glide feel with calibrated scale context
                 </h2>
                 <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
                     {scaleModes.length > 1
@@ -64,11 +63,8 @@ function ScaleRadar({
     right: Mousepad;
     mode: FeelScaleMode;
 }) {
-    const leftChartColors = getMousepadChartColors(left, getFeaturedColorwaySlug(left));
-    const rightChartColors = getMousepadChartColors(
-        right,
-        getFeaturedColorwaySlug(right)
-    );
+    const leftChartColors = getMousepadChartColors();
+    const rightChartColors = getMousepadChartColors();
     const data = FEEL_METRICS.map((metric) => ({
         metric: metric.shortLabel,
         left: getCalibratedFeelValue(left, metric.key, mode),

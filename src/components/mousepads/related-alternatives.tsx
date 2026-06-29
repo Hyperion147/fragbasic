@@ -4,6 +4,7 @@ import { ArrowRight, Gauge, Scale, SlidersHorizontal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import {
+  formatFeelLabel,
   formatMousepadValue,
   getDefaultColorway,
   getMousepadFullName,
@@ -114,10 +115,10 @@ function RelatedAlternativeItem({ mousepad }: { mousepad: Mousepad }) {
               {formatMousepadValue(mousepad.category)}
             </Badge>
             <Badge variant="outline" className="text-xs">
-              {mousepad.feel.control}/10 control
+              {formatFeelLabel(mousepad.feel.control, "control")} control
             </Badge>
             <Badge variant="outline" className="text-xs">
-              {mousepad.feel.speed}/10 speed
+              {formatFeelLabel(mousepad.feel.speed, "speed")} glide
             </Badge>
           </div>
         </div>

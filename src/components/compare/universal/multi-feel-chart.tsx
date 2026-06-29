@@ -44,11 +44,11 @@ export function MultiFeelChart({ mousepads }: Props) {
   return (
     <Card className="border-border bg-card">
       <CardHeader>
-        <CardTitle className="text-2xl tracking-tight">Feel profile</CardTitle>
+        <CardTitle className="text-2xl tracking-tight">Feel breakdown</CardTitle>
         <CardDescription>
           {scaleModes.length > 1
-            ? "Mixed glass and non-glass sets show native surface-family ratings plus a universal glide calibration."
-            : "Compare core glide behavior across speed, control, stopping power, friction, and micro-adjustment freedom."}
+            ? "Use same-surface feel for pads from the same material family, and cross-surface feel when glass and cloth are in the same set."
+            : "Compare the parts of feel that matter in-game: glide, control, stop, start feel, moving friction, and small corrections."}
         </CardDescription>
       </CardHeader>
 
@@ -112,7 +112,7 @@ function ScaleRadar({
           <Tooltip variant="frosted-glass" />
 
           {mousepads.map((mousepad, index) => {
-            const chartColors = getMousepadChartColors(mousepad);
+            const chartColors = getMousepadChartColors();
 
             return (
               <Radar
@@ -139,7 +139,7 @@ function ScaleRadar({
 function getChartConfig(mousepads: Mousepad[]) {
   return Object.fromEntries(
     mousepads.map((mousepad) => {
-      const color = getMousepadChartColors(mousepad).stroke;
+      const color = getMousepadChartColors().stroke;
 
       return [
         mousepad.slug,

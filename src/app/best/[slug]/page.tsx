@@ -19,16 +19,14 @@ import {
     getBestPagePicks,
 } from "@/data/best-pages";
 import {
+    formatEnvironmentLabel,
+    formatFeelLabel,
     formatMousepadValue,
     getAllMousepads,
     getMousepadFullName,
 } from "@/lib/mousepads";
 import {
-    JsonLd,
-    buildBreadcrumbJsonLd,
-    buildGuideArticleJsonLd,
     buildMetadata,
-    buildMousepadItemListJsonLd,
 } from "@/lib/seo";
 
 type Props = {
@@ -75,26 +73,6 @@ export default async function BestMousepadsPage({ params }: Props) {
 
     return (
         <main className="min-h-screen bg-background text-foreground">
-            <JsonLd
-                data={[
-                    buildBreadcrumbJsonLd([
-                        { label: "Home", path: "/" },
-                        { label: "Best", path: "/best" },
-                        { label: page.title, path: `/best/${page.slug}` },
-                    ]),
-                    buildGuideArticleJsonLd({
-                        title: page.title,
-                        description: page.description,
-                        path: `/best/${page.slug}`,
-                    }),
-                    buildMousepadItemListJsonLd({
-                        name: page.title,
-                        description: page.description,
-                        path: `/best/${page.slug}`,
-                        mousepads: picks.map((pick) => pick.mousepad),
-                    }),
-                ]}
-            />
             <section className="border-b border-border bg-background">
                 <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
                     <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.55fr)] lg:items-end">
@@ -153,22 +131,31 @@ export default async function BestMousepadsPage({ params }: Props) {
                                 <div className="mt-6 grid grid-cols-2 gap-3">
                                     <MiniStat
                                         label="Control"
-                                        value={topPick.feel.control}
+                                        value={formatFeelLabel(
+                                            topPick.feel.control,
+                                            "control",
+                                        )}
                                     />
                                     <MiniStat
-                                        label="Speed"
-                                        value={topPick.feel.speed}
+                                        label="Glide"
+                                        value={formatFeelLabel(
+                                            topPick.feel.speed,
+                                            "speed",
+                                        )}
                                     />
                                     <MiniStat
                                         label="Humidity"
-                                        value={
+                                        value={formatEnvironmentLabel(
                                             topPick.environment
-                                                .humidityResistance
-                                        }
+                                                .humidityResistance,
+                                        )}
                                     />
                                     <MiniStat
-                                        label="Micro"
-                                        value={topPick.feel.microAdjustments}
+                                        label="Corrections"
+                                        value={formatFeelLabel(
+                                            topPick.feel.microAdjustments,
+                                            "microAdjustments",
+                                        )}
                                     />
                                 </div>
                             </aside>
@@ -230,27 +217,34 @@ export default async function BestMousepadsPage({ params }: Props) {
                                     <SignalStat
                                         icon={Shield}
                                         label="Stop"
-                                        value={pick.mousepad.feel.stoppingPower}
+                                        value={formatFeelLabel(
+                                            pick.mousepad.feel.stoppingPower,
+                                            "stoppingPower",
+                                        )}
                                     />
                                     <SignalStat
                                         icon={Gauge}
-                                        label="Speed"
-                                        value={pick.mousepad.feel.speed}
+                                        label="Glide"
+                                        value={formatFeelLabel(
+                                            pick.mousepad.feel.speed,
+                                            "speed",
+                                        )}
                                     />
                                     <SignalStat
                                         icon={Sparkles}
-                                        label="Micro"
-                                        value={
-                                            pick.mousepad.feel.microAdjustments
-                                        }
+                                        label="Corrections"
+                                        value={formatFeelLabel(
+                                            pick.mousepad.feel.microAdjustments,
+                                            "microAdjustments",
+                                        )}
                                     />
                                     <SignalStat
                                         icon={ThermometerSun}
                                         label="Humidity"
-                                        value={
+                                        value={formatEnvironmentLabel(
                                             pick.mousepad.environment
-                                                .humidityResistance
-                                        }
+                                                .humidityResistance,
+                                        )}
                                     />
                                 </div>
                             </div>
@@ -268,13 +262,13 @@ export default async function BestMousepadsPage({ params }: Props) {
     );
 }
 
-function MiniStat({ label, value }: { label: string; value: number }) {
+function MiniStat({ label, value }: { label: string; value: string }) {
     return (
         <div className="border-t border-border pt-3">
             <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
                 {label}
             </p>
-            <p className="mt-1 text-2xl font-semibold">{value}</p>
+            <p className="mt-1 text-base font-semibold leading-6">{value}</p>
         </div>
     );
 }
@@ -286,7 +280,7 @@ function SignalStat({
 }: {
     icon: typeof Shield;
     label: string;
-    value: number;
+    value: string;
 }) {
     return (
         <div className="rounded-2xl border border-border bg-background/70 px-4 py-3">
@@ -296,7 +290,7 @@ function SignalStat({
                 </p>
                 <Icon className="size-4 text-muted-foreground" />
             </div>
-            <p className="mt-2 text-xl font-semibold">{value}</p>
+            <p className="mt-2 text-sm font-semibold leading-5">{value}</p>
         </div>
     );
 }

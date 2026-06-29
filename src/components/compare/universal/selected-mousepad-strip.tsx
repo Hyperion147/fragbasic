@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  formatFeelLabel,
   formatMousepadValue,
   getDefaultColorway,
   getMousepadFullName,
@@ -34,7 +35,7 @@ export function SelectedMousepadStrip({ mousepads, onRemove }: Props) {
       <CardContent>
         <p className="mb-4 text-sm text-muted-foreground">
           Remove pads here to free a slot, or keep this set and scroll down for
-          the shared feel, position, and environment views.
+          the feel breakdown, glide lane, and desk-condition views.
         </p>
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           {mousepads.map((mousepad) => {
@@ -61,10 +62,10 @@ export function SelectedMousepadStrip({ mousepads, onRemove }: Props) {
                       {formatMousepadValue(mousepad.category)}
                     </Badge>
                     <Badge variant="outline">
-                      {mousepad.feel.speed}/10 speed
+                      {formatFeelLabel(mousepad.feel.speed, "speed")} glide
                     </Badge>
                     <Badge variant="outline">
-                      {mousepad.feel.control}/10 control
+                      {formatFeelLabel(mousepad.feel.control, "control")} control
                     </Badge>
                   </div>
                 </div>

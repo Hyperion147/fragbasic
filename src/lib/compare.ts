@@ -193,5 +193,5 @@ export function getVerdictBody(left: Mousepad, right: Mousepad) {
   const fasterPad = getComparisonWinner(left, right, "speed");
   const humidityWinner = getHumidityWinner(left, right);
 
-  return `If your priority is a steadier tactical FPS feel, ${saferPad.name} makes the cleaner case. If you want more glide freedom and a wider game fit, ${fasterPad.name} opens things up faster, while ${humidityWinner.name} also holds the better humidity score in this matchup.`;
+  return `If your priority is a steadier tactical FPS feel, ${saferPad.name} makes the cleaner case. If you want more glide freedom and a wider game fit, ${fasterPad.name} opens things up faster, while ${humidityWinner.name} also has the better humidity handling in this matchup.`;
 }

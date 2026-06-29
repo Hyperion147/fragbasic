@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card"
 import {
   SPEED_CONTROL_ZONES,
+  formatFeelLabel,
   getCalibratedFeelValue,
   getMousepadSpeedControlPosition,
   getSpeedControlZoneLabel,
@@ -19,14 +20,14 @@ export function SpeedControlPosition({ left, right }: Props) {
   return (
     <Card className="border-border bg-card p-5 md:p-6">
       <div className="mb-8">
-        <p className="text-sm text-muted-foreground">Speed-control position</p>
+        <p className="text-sm text-muted-foreground">Glide feel</p>
         <h2 className="text-2xl font-semibold tracking-tight">
           Where they sit on the glide scale
         </h2>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
-          This is the universal glide scale. Glass and non-glass pads are
-          calibrated before positioning, so glass speed does not share the same
-          raw score meaning as cloth speed.
+          This is the universal glide scale. Feel labels are relative to other
+          pads in the database, so mouse skates, humidity, wear, and surface
+          type can change the result.
         </p>
       </div>
 
@@ -117,10 +118,16 @@ function PositionSummary({
         </div>
 
         <div className="text-right">
-          <p className="text-xl font-semibold">{pad.feel.speed}</p>
-          <p className="text-xs text-muted-foreground">native speed</p>
+          <p className="text-xl font-semibold">
+            {formatFeelLabel(pad.feel.speed, "speed")}
+          </p>
+          <p className="text-xs text-muted-foreground">native glide feel</p>
           <p className="mt-1 text-xs text-muted-foreground">
-            {getCalibratedFeelValue(pad, "speed", "universal")}/10 universal
+            {formatFeelLabel(
+              getCalibratedFeelValue(pad, "speed", "universal"),
+              "speed"
+            )}{" "}
+            universal
           </p>
         </div>
       </div>

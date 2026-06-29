@@ -40,7 +40,7 @@ import {
   getIemFullName,
   getIemScoreTone,
 } from "@/lib/iems";
-import { JsonLd, buildBreadcrumbJsonLd, buildMetadata, getAbsoluteUrl } from "@/lib/seo";
+import { buildMetadata } from "@/lib/seo";
 import type { Iem, IemFrequencyPoint } from "@/types/iem";
 
 type Props = {
@@ -88,17 +88,6 @@ export default async function IemPage({ params }: Props) {
     <main
       className="min-h-screen bg-background text-foreground"
     >
-      <JsonLd
-        data={[
-          buildBreadcrumbJsonLd([
-            { label: "Home", path: "/" },
-            { label: "IEMs", path: "/iems" },
-            { label: getIemFullName(iem), path: `/iems/${iem.slug}` },
-          ]),
-          buildIemProductJsonLd(iem),
-        ]}
-      />
-
       <section className="border-b border-border bg-[radial-gradient(circle_at_78%_18%,color-mix(in_srgb,var(--iem-glow)_12%,transparent),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0))]">
         <div className="w-full px-4 pt-8 md:px-6 lg:px-8 xl:px-10">
           <SiteBreadcrumbs
@@ -796,38 +785,4 @@ function formatReadableDate(value: string) {
     day: "numeric",
     year: "numeric",
   }).format(new Date(value));
-}
-
-function buildIemProductJsonLd(iem: Iem) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: getIemFullName(iem),
-    brand: {
-      "@type": "Brand",
-      name: iem.brand,
-    },
-    image: getAbsoluteUrl(iem.images.main),
-    description: iem.communitySummary,
-    category: "In-ear monitor",
-    url: getAbsoluteUrl(`/iems/${iem.slug}`),
-    additionalProperty: [
-      { "@type": "PropertyValue", name: "Imaging", value: iem.ratings.imaging },
-      { "@type": "PropertyValue", name: "Clarity", value: iem.ratings.clarity },
-      { "@type": "PropertyValue", name: "FPS score", value: iem.ratings.fps },
-      { "@type": "PropertyValue", name: "Sound signature", value: formatIemSoundSignature(iem.soundSignature) },
-    ],
-    offers: iem.buying.priceInr
-      ? {
-          "@type": "Offer",
-          priceCurrency: "INR",
-          price: iem.buying.priceInr,
-          availability:
-            iem.buying.availability === "in-stock"
-              ? "https://schema.org/InStock"
-              : "https://schema.org/LimitedAvailability",
-          url: getAbsoluteUrl(`/iems/${iem.slug}`),
-        }
-      : undefined,
-  };
 }

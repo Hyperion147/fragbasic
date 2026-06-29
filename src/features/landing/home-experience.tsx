@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "motion/react";
 
-import { BrandsSection } from "@/features/landing/brands-section";
 import { FinderSection } from "@/features/landing/finder-section";
 import { HeroSection } from "@/features/landing/hero-section";
 import { LatestAddedSection } from "@/features/landing/latest-added-section";
@@ -17,16 +16,14 @@ export function HomeExperience({
   mousepadCount,
   glasspadCount,
   bestPageCount,
-  brandCount,
   comparisonCount,
-  brands,
   comparisons,
   latestAdded,
 }: LandingProps) {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <RevealSection hero>
-        <HeroSection mousepadCount={mousepadCount} brandCount={brandCount} />
+        <HeroSection mousepadCount={mousepadCount} />
       </RevealSection>
 
       <div className="w-full space-y-12 px-4 py-12 md:space-y-16 md:px-6 md:py-16 lg:px-8 xl:px-10">
@@ -50,15 +47,12 @@ export function HomeExperience({
           <FinderSection />
         </RevealSection>
         <RevealSection delay={0.26}>
-          <BrandsSection brands={brands} />
-        </RevealSection>
-        <RevealSection delay={0.32}>
           <SpectrumSection />
         </RevealSection>
-        <RevealSection delay={0.38}>
+        <RevealSection delay={0.32}>
           <WhySection />
         </RevealSection>
-        <RevealSection delay={0.44}>
+        <RevealSection delay={0.38}>
           <IemsTeaseSection />
         </RevealSection>
       </div>

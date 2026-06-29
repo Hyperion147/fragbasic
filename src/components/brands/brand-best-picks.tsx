@@ -3,7 +3,11 @@ import { ArrowRight } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getDefaultColorway, getMousepadFullName } from "@/lib/mousepads";
+import {
+  formatFeelLabel,
+  getDefaultColorway,
+  getMousepadFullName,
+} from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
 
 type Props = {
@@ -28,12 +32,12 @@ export function BrandBestPicks({ control, speed, value }: Props) {
         <PickCard
           label="Best for control"
           mousepad={control}
-          metric={`${control.feel.control}/10 control`}
+          metric={`${formatFeelLabel(control.feel.control, "control")} control`}
         />
         <PickCard
           label="Best for speed"
           mousepad={speed}
-          metric={`${speed.feel.speed}/10 speed`}
+          metric={`${formatFeelLabel(speed.feel.speed, "speed")} glide`}
         />
         <PickCard
           label="Best for value"

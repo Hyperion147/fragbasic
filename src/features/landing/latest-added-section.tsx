@@ -3,7 +3,11 @@ import { ArrowRight, Sparkles } from "lucide-react";
 
 import { MousepadCard } from "@/components/mousepads/mousepad-card";
 import { Badge } from "@/components/ui/badge";
-import { formatMousepadValue } from "@/lib/mousepads";
+import {
+  formatEnvironmentLabel,
+  formatFeelLabel,
+  formatMousepadValue,
+} from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
 
 type Props = {
@@ -40,10 +44,17 @@ export function LatestAddedSection({ pads }: Props) {
             {visiblePads.length === 1 ? (
               <>
                 A {formatMousepadValue(primaryPad.category)} pad with{" "}
-                {primaryPad.feel.control}/10 control,{" "}
-                {primaryPad.feel.stoppingPower}/10 stopping power, and{" "}
-                {primaryPad.environment.humidityResistance}/10 humidity
-                resistance from the latest community submission.
+                {formatFeelLabel(primaryPad.feel.control, "control").toLowerCase()}{" "}
+                control,{" "}
+                {formatFeelLabel(
+                  primaryPad.feel.stoppingPower,
+                  "stoppingPower",
+                ).toLowerCase()}{" "}
+                stopping power, and{" "}
+                {formatEnvironmentLabel(
+                  primaryPad.environment.humidityResistance,
+                ).toLowerCase()}{" "}
+                humidity handling from the latest community submission.
               </>
             ) : (
               <>

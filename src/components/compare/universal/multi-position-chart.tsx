@@ -7,9 +7,10 @@ import {
 } from "@/components/ui/card";
 import {
   SPEED_CONTROL_ZONES,
+  MOUSEPAD_GRAPH_COLOR,
+  formatFeelLabel,
   formatMousepadValue,
   getCalibratedFeelValue,
-  getDefaultColorway,
   getMousepadFullName,
   getMousepadSpeedControlPosition,
   getSpeedControlZoneLabel,
@@ -25,12 +26,12 @@ export function MultiPositionChart({ mousepads }: Props) {
     <Card className="border-border bg-card">
       <CardHeader>
         <CardTitle className="text-2xl tracking-tight">
-          Speed-control position
+          Glide lane
         </CardTitle>
         <CardDescription>
-          Each pad gets its own lane on the universal glide scale. Glass and
-          non-glass pads are calibrated before positioning, so hard-surface
-          speed is not flattened into the same band as cloth speed.
+          Left means more controlled and planted. Right means easier glide and
+          faster movement. Glass sits far right because its hard surface changes
+          the baseline feel.
         </CardDescription>
       </CardHeader>
 
@@ -40,7 +41,7 @@ export function MultiPositionChart({ mousepads }: Props) {
           <div className="space-y-3">
             {mousepads.map((mousepad) => {
               const position = getMousepadSpeedControlPosition(mousepad);
-              const color = getDefaultColorway(mousepad).color;
+              const color = MOUSEPAD_GRAPH_COLOR;
               const zoneLabel = getSpeedControlZoneLabel(position);
 
               return (
@@ -92,7 +93,10 @@ export function MultiPositionChart({ mousepads }: Props) {
                             style={{ backgroundColor: color }}
                           />
                           <span className="text-xs font-medium text-foreground">
-                            {getCalibratedFeelValue(mousepad, "speed", "universal")}
+                            {formatFeelLabel(
+                              getCalibratedFeelValue(mousepad, "speed", "universal"),
+                              "speed"
+                            )}
                           </span>
                         </div>
                       </div>
@@ -101,21 +105,28 @@ export function MultiPositionChart({ mousepads }: Props) {
                     <div className="grid grid-cols-6 text-[10px] uppercase tracking-[0.14em] text-muted-foreground md:text-[11px]">
                       {SPEED_CONTROL_ZONES.map((zone) => (
                         <span key={zone.label} className="text-center">
-                          {zone.label}
+                          {zone.shortLabel}
                         </span>
                       ))}
                     </div>
                   </div>
 
                   <div className="rounded-2xl border border-border bg-background/70 px-4 py-2">
-                    <p className="mt-1 text-lg font-semibold text-foreground">
-                      {position.toFixed(1)}
+                    <p className="mt-1 text-base font-semibold leading-6 text-foreground">
+                      {zoneLabel}
                     </p>
                     <p className="mt-1 text-xs text-muted-foreground">
-                      {formatMousepadValue(mousepad.category)} / speed{" "}
-                      {getCalibratedFeelValue(mousepad, "speed", "universal")} /
-                      control{" "}
-                      {getCalibratedFeelValue(mousepad, "control", "universal")}
+                      {formatMousepadValue(mousepad.category)} pad,{" "}
+                      {formatFeelLabel(
+                        getCalibratedFeelValue(mousepad, "speed", "universal"),
+                        "speed"
+                      )}{" "}
+                      glide,{" "}
+                      {formatFeelLabel(
+                        getCalibratedFeelValue(mousepad, "control", "universal"),
+                        "control"
+                      )}{" "}
+                      control
                     </p>
                   </div>
                 </div>

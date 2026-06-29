@@ -165,9 +165,10 @@ export function UniversalCompare({ allMousepads }: Props) {
                         Build your own mousepad matchup.
                     </CardTitle>
                     <p className="mt-4 rounded-lg border border-sky-300/40 bg-sky-400/10 px-4 py-3 text-sm leading-6 text-sky-100">
-                        Note: Glasspad and mousepad ratings use different feel
-                        scales. Treat these numbers as comparison values, not
-                        absolute product ratings.
+                        Feel labels are relative to the pads in this database.
+                        Use them as buying guidance, not lab measurements:
+                        skates, humidity, wear, and surface type can shift the
+                        feel on your desk.
                     </p>
                 </CardHeader>
             </Card>
@@ -261,18 +262,18 @@ export function UniversalCompare({ allMousepads }: Props) {
                     <CardContent className="grid gap-3 md:grid-cols-3">
                         <HintCard
                             icon={<SlidersHorizontal className="size-4" />}
-                            title="Feel profile"
-                            body="Compare speed, control, stopping power, and micro-adjustments on one radar."
+                            title="Feel breakdown"
+                            body="See glide, control, stopping, start feel, moving friction, and small corrections together."
                         />
                         <HintCard
                             icon={<Scale className="size-4" />}
-                            title="Positioning"
-                            body="See where each pad sits on a shared mud-to-glass scale with one clean lane per pad."
+                            title="Glide lane"
+                            body="Read the set from controlled on the left to faster, easier glide on the right."
                         />
                         <HintCard
                             icon={<ShieldCheck className="size-4" />}
-                            title="Environment"
-                            body="Check humidity, sweat, and dust resistance without falling back to a giant table."
+                            title="Desk conditions"
+                            body="Check humidity, sweat, and dust or hair handling without digging through a table."
                         />
                     </CardContent>
                 </Card>
