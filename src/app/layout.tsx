@@ -5,7 +5,8 @@ import { cn } from "@/lib/utils"
 import { SiteNavbar } from "@/components/navbar";
 import { SiteFooter } from "@/components/site-footer";
 import { Analytics } from "@vercel/analytics/next";
-import { getRootMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
+import { buildWebsiteJsonLd, getRootMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = getRootMetadata();
 
@@ -29,6 +30,7 @@ export default function RootLayout({
         className="min-h-full flex flex-col"
         suppressHydrationWarning
       >
+        <JsonLd data={buildWebsiteJsonLd()} />
         <Analytics />
         <SiteNavbar />
         {children}

@@ -11,6 +11,7 @@ import {
   Sparkles,
 } from "lucide-react"
 import { ClientShareButton } from "@/components/ClientShareButton"
+import { JsonLd } from "@/components/json-ld"
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs"
 
 import { getRelatedComparisons } from "@/lib/comparisons"
@@ -33,6 +34,7 @@ import {
 } from "@/components/mousepads/related-alternatives"
 import type { Mousepad } from "@/types/mousepad"
 import {
+  buildProductJsonLd,
   buildMetadata,
 } from "@/lib/seo";
 
@@ -80,9 +82,22 @@ export default async function MousepadPage({ params }: PageProps) {
   const publishedComparison = relatedComparisons.find(
     (comparison) => comparison.status === "published"
   )
+  const productDescription = getHeroSummary(pad)
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <JsonLd
+        data={buildProductJsonLd({
+          name: `${pad.brand} ${pad.name}`,
+          description: productDescription,
+          path: `/mousepads/${pad.slug}`,
+          image: pad.images.main,
+          brand: pad.brand,
+          price: pad.price.inr,
+          availability: getSchemaAvailability(pad.availability.india),
+          category: `${formatValue(pad.category)} mousepad`,
+        })}
+      />
       <section className="border-b border-border bg-background">
         <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
           <div className="mx-auto max-w-7xl grid gap-8 md:grid-cols-[1.05fr_0.95fr]">
@@ -119,7 +134,7 @@ export default async function MousepadPage({ params }: PageProps) {
                 </h1>
 
                 <p className="mt-5 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base md:leading-7">
-                  {getHeroSummary(pad)}
+                  {productDescription}
                 </p>
               </div>
 
@@ -244,6 +259,22 @@ export default async function MousepadPage({ params }: PageProps) {
       </div>
     </main>
   )
+}
+
+function getSchemaAvailability(availability: Mousepad["availability"]["india"]) {
+  if (availability === "available") {
+    return "InStock"
+  }
+
+  if (availability === "limited") {
+    return "LimitedAvailability"
+  }
+
+  if (availability === "unavailable") {
+    return "OutOfStock"
+  }
+
+  return undefined
 }
 
 function HeroStat({ label, value }: { label: string; value: string }) {

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { JsonLd } from "@/components/json-ld";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { MousepadBrowser } from "@/components/mousepads/mousepad-browser";
@@ -10,7 +11,7 @@ import {
   getMousepadBrandOptions,
   getMousepadCategoryOptions,
 } from "@/lib/mousepads";
-import { buildMetadata } from "@/lib/seo";
+import { buildCollectionJsonLd, buildMetadata } from "@/lib/seo";
 import type { MousepadCategory } from "@/types/mousepad";
 
 const browseMousepads = getAllMousepads().filter(
@@ -53,6 +54,15 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
 
     return (
         <main className="min-h-screen bg-background text-foreground">
+            <JsonLd
+                data={buildCollectionJsonLd({
+                    name: "FragBasic Mousepad Database",
+                    description:
+                        "Browse FPS mousepads by speed, control, stopping power, surface feel, humidity resistance, and India availability.",
+                    path: "/mousepads",
+                    itemCount: mousepads.length,
+                })}
+            />
             <section className="border-b border-border bg-background">
                 <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
                     <div className="max-w-5xl">

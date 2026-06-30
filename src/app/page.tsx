@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
 import { HomeExperience } from "@/features/landing/home-experience";
 import { getAllBestPages } from "@/data/best-pages";
 import { latestAddedIemSlugs, latestAddedMousepadSlugs } from "@/data/latest-added";
 import { getPublishedComparisons } from "@/lib/comparisons";
 import { getAllIems, getIemBySlug } from "@/lib/iems";
 import { getAllMousepads, getDefaultColorway, getMousepadFullName, getMousepadBySlug } from "@/lib/mousepads";
-import { buildMetadata } from "@/lib/seo";
+import { buildCollectionJsonLd, buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   title: "Mousepad Database, Glasspads, IEMs & Comparisons",
@@ -57,14 +58,25 @@ export default function HomePage() {
     .filter((comparison) => comparison !== null)
     .slice(0, 3);
   return (
-    <HomeExperience
-      mousepadCount={mousepads.length}
-      glasspadCount={glasspadCount}
-      bestPageCount={bestPageCount}
-      iemCount={iems.length}
-      comparisons={comparisons}
-      latestAdded={latestAdded}
-      latestAddedIems={latestAddedIems}
-    />
+    <>
+      <JsonLd
+        data={buildCollectionJsonLd({
+          name: "FragBasic FPS Gear Database",
+          description:
+            "A searchable FPS gear database for mousepads, glasspads, IEMs, mouse skates, best lists, and side-by-side comparisons.",
+          path: "/",
+          itemCount: mousepads.length + iems.length,
+        })}
+      />
+      <HomeExperience
+        mousepadCount={mousepads.length}
+        glasspadCount={glasspadCount}
+        bestPageCount={bestPageCount}
+        iemCount={iems.length}
+        comparisons={comparisons}
+        latestAdded={latestAdded}
+        latestAddedIems={latestAddedIems}
+      />
+    </>
   );
 }

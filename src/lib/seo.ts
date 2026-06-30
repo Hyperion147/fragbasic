@@ -5,6 +5,7 @@ type MetadataOptions = {
   description: string;
   path: string;
   keywords?: string[];
+  image?: string;
 };
 
 const siteName = "FragBasic";
@@ -21,16 +22,27 @@ export function getAbsoluteUrl(path: string) {
   return new URL(path, siteUrl).toString();
 }
 
+export function getSiteName() {
+  return siteName;
+}
+
+export function getDefaultDescription() {
+  return defaultDescription;
+}
+
 export function buildMetadata({
   title,
   description,
   path,
   keywords = [],
+  image = ogImageUrl,
 }: MetadataOptions): Metadata {
   const url = getAbsoluteUrl(path);
   const socialTitle = `${title} | ${siteName}`;
+  const socialImage = image.startsWith("http") ? image : getAbsoluteUrl(image);
 
   return {
+    metadataBase: new URL(siteUrl),
     title,
     description,
     keywords: [
@@ -40,11 +52,28 @@ export function buildMetadata({
       "fps mousepads",
       "mousepad reviews",
       "mousepad comparison",
+      "gaming gear database",
+      "FPS gear",
       "FragBasic",
       ...keywords,
     ],
+    authors: [{ name: siteName, url: siteUrl }],
+    creator: siteName,
+    publisher: siteName,
+    category: "technology",
     alternates: {
       canonical: url,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
     },
     openGraph: {
       type: "website",
@@ -54,7 +83,7 @@ export function buildMetadata({
       description,
       images: [
         {
-          url: ogImageUrl,
+          url: socialImage,
           width: 1200,
           height: 630,
           alt: `${title} on ${siteName}`,
@@ -65,7 +94,7 @@ export function buildMetadata({
       card: "summary_large_image",
       title: socialTitle,
       description,
-      images: [ogImageUrl],
+      images: [socialImage],
     },
   };
 }
@@ -76,8 +105,9 @@ export function getRootMetadata(): Metadata {
     applicationName: siteName,
     creator: siteName,
     publisher: siteName,
-    authors: [{ name: siteName }],
+    authors: [{ name: siteName, url: siteUrl }],
     referrer: "origin-when-cross-origin",
+    manifest: "/manifest.webmanifest",
     title: {
       default: "FragBasic | Mousepad Database, Glasspads & Comparisons",
       template: `%s | ${siteName}`,
@@ -92,13 +122,30 @@ export function getRootMetadata(): Metadata {
       "Artisan Zero review",
       "LGG Saturn Pro review",
     ],
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
     alternates: {
       canonical: siteUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
     },
     openGraph: {
       type: "website",
       url: siteUrl,
       siteName,
+      locale: "en_US",
       title: "FragBasic | Mousepad Database, Glasspads & Comparisons",
       description: defaultDescription,
       images: [
@@ -117,5 +164,101 @@ export function getRootMetadata(): Metadata {
       images: [ogImageUrl],
     },
     category: "technology",
+  };
+}
+
+export function buildWebsiteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteName,
+    url: siteUrl,
+    description: defaultDescription,
+    inLanguage: "en",
+    publisher: {
+      "@type": "Organization",
+      name: siteName,
+      url: siteUrl,
+      logo: getAbsoluteUrl("/logo.png"),
+    },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${siteUrl}/mousepads?query={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+}
+
+export function buildCollectionJsonLd({
+  name,
+  description,
+  path,
+  itemCount,
+}: {
+  name: string;
+  description: string;
+  path: string;
+  itemCount: number;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name,
+    description,
+    url: getAbsoluteUrl(path),
+    isPartOf: {
+      "@type": "WebSite",
+      name: siteName,
+      url: siteUrl,
+    },
+    numberOfItems: itemCount,
+  };
+}
+
+export function buildProductJsonLd({
+  name,
+  description,
+  path,
+  image,
+  brand,
+  price,
+  priceCurrency = "INR",
+  availability,
+  category,
+}: {
+  name: string;
+  description: string;
+  path: string;
+  image: string;
+  brand: string;
+  price?: number;
+  priceCurrency?: string;
+  availability?: string;
+  category: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name,
+    description,
+    url: getAbsoluteUrl(path),
+    image: getAbsoluteUrl(image),
+    category,
+    brand: {
+      "@type": "Brand",
+      name: brand,
+    },
+    offers:
+      price || availability
+        ? {
+            "@type": "Offer",
+            price,
+            priceCurrency,
+            availability: availability
+              ? `https://schema.org/${availability}`
+              : undefined,
+            url: getAbsoluteUrl(path),
+          }
+        : undefined,
   };
 }
