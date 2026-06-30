@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, BarChart3, Flame, Star, Zap } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { IconTooltip } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 import type { ComparisonPreview } from "@/features/landing/types";
@@ -67,7 +68,7 @@ function ComparisonCard({
         <Link
             href={`/mousepads/compare/${comparison.slug}`}
             className={cn(
-                "group overflow-hidden rounded-xl border border-border bg-card/55 transition-colors hover:border-[color:color-mix(in_srgb,var(--brand-hover)_58%,transparent)] hover:shadow-[0_0_28px_color-mix(in_srgb,var(--brand-glow)_12%,transparent)]",
+                "group overflow-hidden rounded-lg bg-card/55 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_4%,transparent)] transition-colors hover:shadow-[inset_0_1px_0_color-mix(in_srgb,var(--brand-hover)_20%,transparent),0_0_28px_color-mix(in_srgb,var(--brand-glow)_10%,transparent)]",
             )}
         >
             <div className="p-4 sm:p-5">
@@ -106,11 +107,13 @@ function ComparisonCard({
                 </div>
             </div>
 
-            <div className="flex items-center justify-between gap-3 border-t border-border bg-background/36 px-4 py-4 sm:px-5">
-                <span className="inline-flex items-center gap-2 text-xs text-muted-foreground sm:text-sm">
-                    <BarChart3 className="size-4 text-foreground/72" />
-                    View full stats
-                </span>
+            <div className="flex items-center justify-between gap-3 bg-background/36 px-4 py-4 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] sm:px-5">
+                <IconTooltip label="Opens the full comparison page with side-by-side feel, surface, and recommendation data.">
+                    <span className="inline-flex cursor-help items-center gap-2 text-xs text-muted-foreground sm:text-sm">
+                        <BarChart3 className="size-4 text-foreground/72" />
+                        View full stats
+                    </span>
+                </IconTooltip>
                 <span className="inline-flex items-center gap-2 text-xs font-semibold text-[color:var(--brand-hover)] sm:text-sm">
                     Compare
                     <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
@@ -166,9 +169,9 @@ function TagChip({
     return (
         <span
             className={cn(
-                "w-fit rounded-md border border-border bg-background/45 px-2.5 py-1 text-xs text-muted-foreground",
+                "w-fit rounded-md bg-background/45 px-2.5 py-1 text-xs text-muted-foreground shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_6%,transparent)]",
                 active &&
-                    "border-[color:color-mix(in_srgb,var(--brand-hover)_55%,transparent)] text-[color:var(--brand-hover)]",
+                    "text-[color:var(--brand-hover)] shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--brand-hover)_45%,transparent)]",
             )}
         >
             {label}

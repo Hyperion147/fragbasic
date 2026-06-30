@@ -95,15 +95,15 @@ export function PagesShowcaseSection({
   ];
 
   return (
-    <section className="space-y-5">
-      <div className="mb-6 text-start md:mb-8">
+    <section className="space-y-5 md:space-y-6">
+      <div className="mb-6 max-w-4xl text-start md:mb-8">
         <Badge
           variant="outline"
           className="rounded-md px-3 py-1 uppercase tracking-[0.14em] text-[10px] text-brand-hover sm:text-[11px] sm:tracking-[0.18em]"
         >
           Core pages
         </Badge>
-        <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:mt-5 md:text-6xl">
+        <h2 className="mt-4 text-balance text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:mt-5 md:text-5xl">
           Start where the question starts.
         </h2>
       </div>
@@ -124,7 +124,7 @@ export function PagesShowcaseSection({
             <Link
               key={item.title}
               href={item.href}
-              className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card/70 p-4 transition-colors hover:border-[color-mix(in_srgb,var(--brand-hover)_48%,transparent)] hover:shadow-[0_0_24px_color-mix(in_srgb,var(--brand-glow)_12%,transparent)] sm:p-5 lg:p-6"
+              className="group relative flex min-h-72 flex-col overflow-hidden rounded-lg bg-card/70 p-4 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_4%,transparent)] transition-colors hover:shadow-[inset_0_1px_0_color-mix(in_srgb,var(--brand-hover)_18%,transparent),0_0_24px_color-mix(in_srgb,var(--brand-glow)_10%,transparent)] sm:p-5 lg:p-6"
             >
               <div
                 className={cn(
@@ -137,7 +137,7 @@ export function PagesShowcaseSection({
                   <Icon className="size-5" />
                 </span>
                 <div className="text-right">
-                  <p className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+                  <p className="text-2xl font-semibold leading-none tracking-tight text-foreground sm:text-3xl">
                     {value}
                   </p>
                   <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground sm:text-xs sm:tracking-[0.16em]">
@@ -146,16 +146,16 @@ export function PagesShowcaseSection({
                 </div>
               </div>
 
-              <div className="relative mt-6 md:mt-8">
-                <p className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+              <div className="relative mt-6 md:mt-7">
+                <p className="text-2xl font-semibold leading-tight tracking-tight text-foreground sm:text-3xl">
                   {item.title}
                 </p>
-                <p className="mt-3 max-w-[30ch] text-sm leading-6 text-muted-foreground sm:mt-4 sm:text-base sm:leading-7">
+                <p className="mt-3 max-w-[32ch] text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
                   {item.description}
                 </p>
               </div>
 
-              <div className="relative mt-auto pt-6 md:pt-8">
+              <div className="relative mt-auto pt-6">
 
                 <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-foreground">
                   Explore
@@ -167,7 +167,7 @@ export function PagesShowcaseSection({
         })}
       </div>
 
-      <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-border/70 md:grid-cols-4">
         {stats.map((stat) => {
           const Icon = stat.icon;
 
@@ -180,7 +180,7 @@ export function PagesShowcaseSection({
                 <Icon className="size-4 sm:size-5" />
               </span>
               <div>
-                <p className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+                <p className="text-2xl font-semibold leading-none tracking-tight text-foreground sm:text-3xl">
                   {stat.value}
                 </p>
                 <p className="text-xs text-muted-foreground sm:text-sm">{stat.label}</p>

@@ -37,7 +37,7 @@ export function LatestAddedIemsSection({ iems }: Props) {
             Latest IEMs
           </Badge>
 
-          <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:mt-5 md:text-6xl">
+          <h2 className="mt-4 max-w-5xl text-balance text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:mt-5 md:text-5xl">
             {visibleIems.length === 1
               ? `${primaryIem.brand} ${primaryIem.name} joins the IEM database.`
               : `${visibleIems.length} fresh IEM additions join the database.`}
@@ -66,7 +66,7 @@ function LatestIemCard({ iem }: { iem: Iem }) {
   return (
     <Link
       href={`/iems/${iem.slug}`}
-      className="group grid overflow-hidden rounded-xl border border-border bg-card/80 transition-colors hover:border-brand-hover/60 md:grid-cols-[minmax(180px,0.42fr)_1fr]"
+      className="group grid overflow-hidden rounded-lg bg-card/80 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_4%,transparent)] transition-colors hover:shadow-[inset_0_1px_0_color-mix(in_srgb,var(--brand-hover)_20%,transparent)] md:grid-cols-[minmax(180px,0.42fr)_1fr]"
     >
       <div className="relative min-h-[220px] bg-background/70 md:min-h-full">
         <Image
@@ -111,7 +111,7 @@ function LatestIemCard({ iem }: { iem: Iem }) {
           <LatestIemStat label="Value" value={iem.ratings.value} />
         </div>
 
-        <div className="mt-5 flex items-end justify-between gap-4 border-t border-border pt-5">
+        <div className="mt-5 flex items-end justify-between gap-4 pt-5 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)]">
           <div>
             <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
               {getIemScoreTone(iem.ratings.fragbasic)}
@@ -132,7 +132,7 @@ function LatestIemCard({ iem }: { iem: Iem }) {
 
 function LatestIemStat({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-lg border border-border bg-background/70 px-3 py-2">
+    <div className="rounded-lg bg-background/70 px-3 py-2 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_4%,transparent)]">
       <p className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
         {label}
       </p>
