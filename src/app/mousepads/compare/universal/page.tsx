@@ -23,7 +23,7 @@ export default function UniversalComparePage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+      <section className="page-section">
         <div className="mb-6">
           <SiteBreadcrumbs
             items={[

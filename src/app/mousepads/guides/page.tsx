@@ -23,7 +23,7 @@ export default function GuidesPage() {
     return (
         <main className="min-h-screen bg-background text-foreground">
             <section className="border-b border-border bg-background">
-                <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+                <div className="page-hero">
                     <div className="max-w-4xl">
                         <SiteBreadcrumbs
                             items={[
@@ -37,18 +37,18 @@ export default function GuidesPage() {
                             <Badge variant="outline">Competitive FPS focus</Badge>
                         </div>
 
-                        <h1 className="mt-5 text-5xl font-semibold tracking-tight md:text-7xl">
+                        <h1 className="page-title mt-5">
                             Learn the feel before you buy the pad.
                         </h1>
 
-                        <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
+                        <p className="body-copy mt-5 max-w-2xl">
                             This is the starter layer of the guide library:
                             quick frameworks for choosing between control,
                             balanced, speed, and humidity-friendly pads before
                             the longer breakdowns land.
                         </p>
 
-                        <div className="mt-8 flex flex-wrap gap-3">
+                        <div className="mt-6 flex flex-wrap gap-3">
                             <Button asChild>
                                 <Link href="/mousepads">Browse mousepads</Link>
                             </Button>
@@ -60,14 +60,14 @@ export default function GuidesPage() {
                 </div>
             </section>
 
-            <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+            <section className="page-section">
                 <div className="grid gap-4 md:grid-cols-3">
                     {guidePreviews.map((guide) => (
                         <article
                             key={guide.title}
-                            className="rounded-3xl border border-border bg-card/70 p-6"
+                            className="border border-border bg-card/70 p-4 sm:p-5"
                         >
-                            <h2 className="text-2xl font-semibold tracking-tight">
+                            <h2 className="panel-title">
                                 {guide.title}
                             </h2>
                             <p className="mt-3 text-sm leading-6 text-muted-foreground">

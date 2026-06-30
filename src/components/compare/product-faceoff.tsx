@@ -54,7 +54,7 @@ function PadCard({ pad }: { pad: Mousepad }) {
             <div className="space-y-5 p-5">
                 <div>
                     <p className="text-sm text-muted-foreground">{pad.brand}</p>
-                    <h2 className="text-2xl font-semibold tracking-tight">
+                    <h2 className="panel-title">
                         {pad.name}
                     </h2>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -110,7 +110,7 @@ function PadCard({ pad }: { pad: Mousepad }) {
 
                 {pad.communityConsensus && (
                     <div className="border-t border-border/60 pt-4 space-y-2">
-                        <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                        <p className="compact-label">
                             Community notes
                         </p>
                         <p className="text-sm leading-6 text-muted-foreground line-clamp-3">

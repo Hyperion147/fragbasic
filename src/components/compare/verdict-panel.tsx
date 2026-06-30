@@ -20,10 +20,10 @@ export function VerdictPanel({
   const versatilePad = getMoreVersatilePad(left, right)
 
   return (
-    <Card className="border-border bg-card p-6 md:p-8">
+    <Card className="border-border bg-card p-5 md:p-6">
       <p className="text-sm text-muted-foreground">Final verdict</p>
 
-      <h2 className="mt-2 max-w-3xl text-3xl font-semibold tracking-tight">
+      <h2 className="section-title mt-2 max-w-3xl">
         {getVerdictHeadline(left, right)}
       </h2>
 
@@ -57,8 +57,8 @@ function TakeawayCard({
   body: string
 }) {
   return (
-    <div className="rounded-3xl border border-border bg-background/70 p-5">
-      <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+    <div className="rounded-md border border-border bg-background/70 p-4">
+      <p className="compact-label">
         {label}
       </p>
       <div className="mt-3 flex items-start justify-between gap-3">

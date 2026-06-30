@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { MetricBar } from "@/components/data-display";
 import {
   formatEnvironmentLabel,
   formatFeelLabel,
@@ -78,43 +72,56 @@ export function CompareSummaryCards({ mousepads }: Props) {
   );
 
   return (
-    <div className="grid gap-2 md:gap-4 md:grid-cols-2 xl:grid-cols-5">
+    <div className="overflow-x-auto border border-border bg-card/45 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <table className="data-table min-w-[760px]">
+        <thead>
+          <tr>
+            <th>Signal</th>
+            <th>Leader</th>
+            <th>Score</th>
+            <th>Read</th>
+          </tr>
+        </thead>
+        <tbody>
       {resolvedItems.map((item) => {
         const winners = getWinningMousepads(mousepads, item.accessor);
         const leadValue = winners.length > 0 ? item.accessor(winners[0]) : 0;
 
         return (
-          <Card key={item.key} className="border-border bg-card/90">
-            <CardHeader className="p-3 pb-2 sm:p-4">
-              <CardTitle className="text-sm sm:text-base">{item.label}</CardTitle>
-              <CardDescription className="text-xs sm:text-sm">
-                Current leader: {item.valueLabel(leadValue)}
-                {useUniversalFeel && item.key === "speed" ? " feel" : ""}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="p-3 pt-0 sm:p-4 sm:pt-0">
-              {winners.map((mousepad) => {
-                const color = getDefaultColorway(mousepad).color;
+          <tr key={item.key}>
+            <td className="font-medium text-foreground">{item.label}</td>
+            <td>
+              <div className="flex flex-wrap gap-2">
+                {winners.map((mousepad) => {
+                  const color = getDefaultColorway(mousepad).color;
 
-                return (
-                  <div
-                    key={mousepad.slug}
-                    className="flex items-center gap-2 rounded-lg border border-border bg-background/80 p-2 sm:rounded-2xl sm:p-3"
-                  >
+                  return (
                     <span
-                      className="size-3 shrink-0 rounded-full border border-border"
-                      style={{ backgroundColor: color }}
-                    />
-                    <p className="truncate text-xs font-medium text-foreground sm:text-sm">
+                      key={mousepad.slug}
+                      className="inline-flex items-center gap-2 text-sm font-medium text-foreground"
+                    >
+                      <span
+                        className="size-2.5 shrink-0 border border-border"
+                        style={{ backgroundColor: color }}
+                      />
                       {getMousepadFullName(mousepad)}
-                    </p>
-                  </div>
-                );
-              })}
-            </CardContent>
-          </Card>
+                    </span>
+                  );
+                })}
+              </div>
+            </td>
+            <td>
+              <MetricBar value={leadValue} className="w-40" />
+            </td>
+            <td className="text-muted-foreground">
+              {item.valueLabel(leadValue)}
+              {useUniversalFeel && item.key === "speed" ? " feel" : ""}
+            </td>
+          </tr>
         );
       })}
+        </tbody>
+      </table>
     </div>
   );
 }

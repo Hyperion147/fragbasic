@@ -21,7 +21,7 @@ export function SpeedControlPosition({ left, right }: Props) {
     <Card className="border-border bg-card p-5 md:p-6">
       <div className="mb-8">
         <p className="text-sm text-muted-foreground">Glide feel</p>
-        <h2 className="text-2xl font-semibold tracking-tight">
+        <h2 className="panel-title">
           Where they sit on the glide scale
         </h2>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">

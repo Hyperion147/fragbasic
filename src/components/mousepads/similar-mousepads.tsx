@@ -27,7 +27,7 @@ export function SimilarMousepads({ source, mousepads }: Props) {
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-sm text-muted-foreground">Similar pads</p>
-          <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+          <h2 className="panel-title mt-1">
             Similar to {source.name}
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">

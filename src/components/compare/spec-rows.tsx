@@ -133,7 +133,7 @@ export function SpecRows({ left, right }: Props) {
     <Card className="overflow-hidden border-border bg-card">
       <div className="border-b border-border p-5 md:p-6">
         <p className="text-sm text-muted-foreground">Spec sheet</p>
-        <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+        <h2 className="panel-title mt-1">
           Specs that actually matter
         </h2>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
@@ -143,7 +143,7 @@ export function SpecRows({ left, right }: Props) {
       </div>
 
       <div className="hidden grid-cols-[220px_1fr_1fr] gap-6 p-5 md:grid border-b-2">
-        <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+        <div className="compact-label">
           Attribute
         </div>
         <div className="text-sm font-medium text-foreground">

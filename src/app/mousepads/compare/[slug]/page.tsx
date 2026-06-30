@@ -66,7 +66,7 @@ export default async function ComparePage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <div className="w-full px-4 pt-8 md:px-6 lg:px-8 xl:px-10">
+      <div className="w-full px-4 pt-6 md:px-6 lg:px-8 xl:px-10">
         <SiteBreadcrumbs
           items={[
             { label: "Home", href: "/" },
@@ -78,7 +78,7 @@ export default async function ComparePage({ params }: PageProps) {
       </div>
       <CompareHero left={left} right={right} comparisonSlug={comparison.slug} />
 
-      <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10 space-y-6">
+      <div className="page-section space-y-6">
         <CompareDisclosure title="Product faceoff" defaultOpen>
           <ProductFaceoff left={left} right={right} />
         </CompareDisclosure>
@@ -117,7 +117,7 @@ function CompareDisclosure({
   return (
     <details
       open={defaultOpen}
-      className="group rounded-xl border border-border bg-card/45"
+      className="group data-panel"
     >
       <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold text-foreground sm:px-5">
         {title}

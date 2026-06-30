@@ -13,6 +13,7 @@ import {
 
 import { MouseSkateDot } from "@/components/accessories/mouse-skates/mouse-skate-dot";
 import { Badge } from "@/components/ui/badge";
+import { IconTooltip } from "@/components/ui/tooltip";
 import {
     formatMouseSkateMaterial,
     formatMouseSkateRating,
@@ -180,16 +181,18 @@ function SpectrumSkateCard({
                 />
             </div>
 
-            <div
-                className="mx-auto mt-1 flex h-8 w-36 max-w-full items-center justify-center rounded-full px-3 text-center text-[11px] font-semibold text-slate-950"
-                style={{
-                    background: `linear-gradient(90deg, ${visual.secondaryHex}, ${visual.primaryHex})`,
-                    color: visual.textHex,
-                }}
-                title={skate.name}
-            >
-                <span className="truncate">{skate.name}</span>
-            </div>
+            <IconTooltip label={skate.name}>
+                <div
+                    className="mx-auto mt-1 flex h-8 w-36 max-w-full items-center justify-center rounded-full px-3 text-center text-[11px] font-semibold text-slate-950"
+                    style={{
+                        background: `linear-gradient(90deg, ${visual.secondaryHex}, ${visual.primaryHex})`,
+                        color: visual.textHex,
+                    }}
+                    tabIndex={0}
+                >
+                    <span className="truncate">{skate.name}</span>
+                </div>
+            </IconTooltip>
 
             <div className="mt-5 space-y-3">
                 <SegmentRow
@@ -257,26 +260,25 @@ function SegmentRow({
     const activeSegments = Math.max(1, Math.round(value / 2.5));
 
     return (
-        <div
-            className="flex items-center gap-3"
-            title={`${label}: ${value}/10`}
-        >
-            <Icon className="size-5 shrink-0 text-violet-200" />
-            <div className="grid flex-1 grid-cols-4 gap-1.5">
-                {Array.from({ length: 4 }).map((_, index) => (
-                    <span
-                        key={index}
-                        className="h-3 rounded-[4px]"
-                        style={{
-                            background:
-                                index < activeSegments
-                                    ? `linear-gradient(90deg, ${tone.light}, ${tone.accent})`
-                                    : "rgba(139, 124, 184, 0.18)",
-                        }}
-                    />
-                ))}
+        <IconTooltip label={`${label}: ${value}/10`}>
+            <div className="flex items-center gap-3" tabIndex={0}>
+                <Icon className="size-5 shrink-0 text-violet-200" />
+                <div className="grid flex-1 grid-cols-4 gap-1.5">
+                    {Array.from({ length: 4 }).map((_, index) => (
+                        <span
+                            key={index}
+                            className="h-3 rounded-[4px]"
+                            style={{
+                                background:
+                                    index < activeSegments
+                                        ? `linear-gradient(90deg, ${tone.light}, ${tone.accent})`
+                                        : "rgba(139, 124, 184, 0.18)",
+                            }}
+                        />
+                    ))}
+                </div>
             </div>
-        </div>
+        </IconTooltip>
     );
 }
 

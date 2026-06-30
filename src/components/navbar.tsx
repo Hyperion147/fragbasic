@@ -165,7 +165,7 @@ export function SiteNavbar() {
                         height={449}
                         className="size-10 transition-opacity group-hover:opacity-88"
                     />
-                    <p className="text-2xl font-semibold tracking-tighter lg:text-[1.35rem]">
+                    <p className="text-xl font-semibold lg:text-[1.25rem]">
                         FRAGBASIC
                         <span className="text-xs text-secondary-foreground">
                             .FUN
@@ -179,12 +179,16 @@ export function SiteNavbar() {
                     {pathname === "/" ? (
                         <Button size="sm" variant="outline" asChild>
                             <Link href="https://forms.gle/5b1QejGptx63eQHw9">
+                                <Sparkles className="size-4" />
                                 Submit a Review
                             </Link>
                         </Button>
                     ) : null}
                     <Button size="sm" asChild>
-                        <Link href={compareHref}>{compareLabel}</Link>
+                        <Link href={compareHref}>
+                            <Gauge className="size-4" />
+                            {compareLabel}
+                        </Link>
                     </Button>
                 </div>
 
@@ -361,7 +365,7 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
 
 function MousepadsMenuHeading({ title }: { title: string }) {
     return (
-        <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+        <p className="compact-label">
             {title}
         </p>
     );

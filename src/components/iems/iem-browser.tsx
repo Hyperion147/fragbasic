@@ -1,11 +1,25 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import type { ReactNode } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { RotateCcw, Search, SlidersHorizontal } from "lucide-react";
+import {
+  Activity,
+  CircleDollarSign,
+  Ear,
+  Eye,
+  Radio,
+  RotateCcw,
+  Search,
+  SlidersHorizontal,
+  Sparkles,
+} from "lucide-react";
 
-import { IemCard } from "@/components/iems/iem-card";
+import { MetricCell } from "@/components/data-display";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { latestAddedIemSlugs } from "@/data/latest-added";
@@ -18,17 +32,14 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
+  formatIemDriverType,
+  formatIemPrice,
   formatIemSoundSignature,
   getIemFullName,
+  getIemScoreTone,
 } from "@/lib/iems";
 import type { Iem, IemSoundSignature } from "@/types/iem";
+import { IconTooltip } from "@/components/ui/tooltip";
 
 const allFilterValue = "all";
 
@@ -189,7 +200,7 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
         <div className="grid gap-4 lg:grid-cols-[minmax(220px,0.9fr)_minmax(280px,1fr)_auto] lg:items-end">
           <div className="min-w-0">
             <p className="text-sm text-muted-foreground">Filters</p>
-            <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
+            <h2 className="panel-title">
               Find IEMs by tuning, price, and FPS score
             </h2>
           </div>
@@ -210,10 +221,16 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
             <p className="text-sm text-muted-foreground">
               {filteredIems.length} IEM{filteredIems.length === 1 ? "" : "s"}
             </p>
-            <Button variant="outline" size="sm" onClick={resetFilters}>
-              <RotateCcw className="size-4" />
-              Reset
-            </Button>
+            <IconTooltip label="Reset all filters" side="left">
+              <Button
+                variant="outline"
+                size="icon-sm"
+                onClick={resetFilters}
+                aria-label="Reset all filters"
+              >
+                <RotateCcw className="size-4" />
+              </Button>
+            </IconTooltip>
           </div>
         </div>
 
@@ -270,16 +287,182 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
         </div>
       </Card>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {filteredIems.map((iem) => (
-          <IemCard
-            key={iem.id}
-            iem={iem}
-            isLatestAdded={latestAddedSlugSet.has(iem.slug)}
-          />
-        ))}
+      <div className="overflow-x-auto border border-border bg-card/45 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <table className="data-table min-w-[1180px]">
+          <thead>
+            <tr>
+              <th className="w-[340px]">
+                <TableHeadLabel
+                  icon={<Ear className="size-3.5" />}
+                  label="IEM"
+                  tooltip="Model, tuning, and overall FragBasic score"
+                />
+              </th>
+              <th>
+                <TableHeadLabel
+                  icon={<Radio className="size-3.5" />}
+                  label="Build"
+                  tooltip="Driver type and cable setup"
+                />
+              </th>
+              <th>
+                <TableHeadLabel
+                  icon={<Activity className="size-3.5" />}
+                  label="FPS"
+                  tooltip="Competitive FPS usefulness"
+                />
+              </th>
+              <th>
+                <TableHeadLabel
+                  icon={<Sparkles className="size-3.5" />}
+                  label="Imaging"
+                  tooltip="Positional accuracy and directional separation"
+                />
+              </th>
+              <th>
+                <TableHeadLabel
+                  icon={<Radio className="size-3.5" />}
+                  label="Clarity"
+                  tooltip="Detail, separation, and clean sound cues"
+                />
+              </th>
+              <th>
+                <TableHeadLabel
+                  icon={<Sparkles className="size-3.5" />}
+                  label="Value"
+                  tooltip="Performance for the asking price"
+                />
+              </th>
+              <th>
+                <TableHeadLabel
+                  icon={<CircleDollarSign className="size-3.5" />}
+                  label="Price"
+                  tooltip="Approximate India or global price band"
+                />
+              </th>
+              <th className="text-right">
+                <span className="sr-only">Profile</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredIems.map((iem) => (
+              <IemTableRow
+                key={iem.id}
+                iem={iem}
+                isLatestAdded={latestAddedSlugSet.has(iem.slug)}
+              />
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
+  );
+}
+
+function IemTableRow({
+  iem,
+  isLatestAdded,
+}: {
+  iem: Iem;
+  isLatestAdded: boolean;
+}) {
+  const fullName = getIemFullName(iem);
+
+  return (
+    <tr>
+      <td>
+        <div className="flex items-center gap-3">
+          <Link
+            href={`/iems/${iem.slug}`}
+            className="relative block size-16 shrink-0 overflow-hidden border border-border bg-background/75"
+          >
+            <Image
+              src={iem.images.main}
+              alt={fullName}
+              fill
+              sizes="64px"
+              className="object-cover object-right"
+            />
+          </Link>
+          <div className="min-w-0">
+            <div className="flex flex-wrap gap-1.5">
+              <Badge className="text-black">
+                {formatIemSoundSignature(iem.soundSignature)}
+              </Badge>
+              {isLatestAdded ? <Badge variant="outline">Latest</Badge> : null}
+            </div>
+            <Link
+              href={`/iems/${iem.slug}`}
+              className="mt-2 block truncate text-base font-semibold tracking-tight text-foreground hover:text-primary"
+            >
+              {fullName}
+            </Link>
+            <p className="truncate text-xs text-muted-foreground">
+              {getIemScoreTone(iem.ratings.fragbasic)} overall
+            </p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div className="space-y-1">
+          <p className="font-medium text-foreground">
+            {formatIemDriverType(iem.driverType)}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            {iem.specs.detachableCable ? "Detachable" : "Fixed"} cable
+          </p>
+        </div>
+      </td>
+      <td>
+        <MetricCell label="FPS" value={iem.ratings.fps} />
+      </td>
+      <td>
+        <MetricCell label="Imaging" value={iem.ratings.imaging} tone="alt" />
+      </td>
+      <td>
+        <MetricCell label="Clarity" value={iem.ratings.clarity} />
+      </td>
+      <td>
+        <MetricCell label="Value" value={iem.ratings.value} tone="muted" />
+      </td>
+      <td>
+        <div className="space-y-1">
+          <p className="font-medium text-foreground">{formatIemPrice(iem)}</p>
+          <p className="text-xs text-muted-foreground">
+            {iem.priceTier.replace("-", " ")}
+          </p>
+        </div>
+      </td>
+      <td className="text-right">
+        <IconTooltip label={`Open ${fullName} profile`} side="left">
+          <Button size="icon-sm" variant="outline" asChild>
+            <Link href={`/iems/${iem.slug}`} aria-label={`Open ${fullName} profile`}>
+              <Eye className="size-4" />
+            </Link>
+          </Button>
+        </IconTooltip>
+      </td>
+    </tr>
+  );
+}
+
+function TableHeadLabel({
+  icon,
+  label,
+  tooltip,
+}: {
+  icon: ReactNode;
+  label: string;
+  tooltip: string;
+}) {
+  return (
+    <IconTooltip label={tooltip}>
+      <span className="inline-flex w-fit items-center gap-1.5">
+        {icon}
+        {label}
+      </span>
+    </IconTooltip>
   );
 }
 
@@ -310,22 +493,20 @@ function IemFilterControls({
 }) {
   return (
     <>
-          <div className="space-y-3">
-            <p className="text-sm text-muted-foreground">Brand</p>
-            <Select value={brand} onValueChange={updateBrand}>
-              <SelectTrigger aria-label="Select IEM brand">
-                <SelectValue placeholder="All brands" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value={allFilterValue}>All brands</SelectItem>
-                {brands.map((option) => (
-                  <SelectItem key={option} value={option}>
-                    {option}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <FilterGroup label="Brand">
+            <FilterButton active={brand === allFilterValue} onClick={() => updateBrand(allFilterValue)}>
+              All
+            </FilterButton>
+            {brands.map((option) => (
+              <FilterButton
+                key={option}
+                active={brand === option}
+                onClick={() => updateBrand(option)}
+              >
+                {option}
+              </FilterButton>
+            ))}
+          </FilterGroup>
 
           <FilterGroup label="Tuning">
             <FilterButton active={signature === allFilterValue} onClick={() => updateSignature(allFilterValue)}>

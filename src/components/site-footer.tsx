@@ -26,8 +26,8 @@ export function SiteFooter() {
 
     return (
         <footer className="mt-20 w-full bg-background">
-            <div className="w-full px-4 py-14 md:px-8 lg:px-12">
-                <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+            <div className="w-full px-4 py-10 md:px-8 lg:px-12">
+                <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
                     <FooterReveal delay={0.08} reduceMotion={reduceMotion}>
                         <div className="space-y-6">
                             <Link href="/" className="group block">
@@ -128,7 +128,7 @@ function FooterLinkGroup({
 }) {
     return (
         <section>
-            <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+            <p className="compact-label">
                 {title}
             </p>
             <div className="mt-4 space-y-3">

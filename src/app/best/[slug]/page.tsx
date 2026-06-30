@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import {
-    ArrowRight,
-    Gauge,
-    Shield,
-    Sparkles,
-    ThermometerSun,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { notFound } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MousepadCard } from "@/components/mousepads/mousepad-card";
+import { MetricCell } from "@/components/data-display";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import {
     getAllBestPages,
@@ -74,7 +69,7 @@ export default async function BestMousepadsPage({ params }: Props) {
     return (
         <main className="min-h-screen bg-background text-foreground">
             <section className="border-b border-border bg-background">
-                <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+                <div className="page-hero">
                     <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.55fr)] lg:items-end">
                         <div className="max-w-5xl">
                             <SiteBreadcrumbs
@@ -94,15 +89,15 @@ export default async function BestMousepadsPage({ params }: Props) {
                                 </Badge>
                             </div>
 
-                            <p className="mt-6 text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">
+                            <p className="compact-label mt-5">
                                 {page.eyebrow}
                             </p>
 
-                            <h1 className="mt-4 text-5xl font-semibold tracking-tight md:text-7xl">
+                            <h1 className="page-title mt-4">
                                 {page.title}
                             </h1>
 
-                            <div className="mt-8 flex flex-wrap gap-3">
+                            <div className="mt-6 flex flex-wrap gap-3">
                                 <Button asChild>
                                     <Link href="#picks">
                                         See the picks
@@ -119,10 +114,10 @@ export default async function BestMousepadsPage({ params }: Props) {
 
                         {topPick ? (
                             <aside className="border-l border-border pl-6">
-                                <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                                <p className="compact-label">
                                     First pick
                                 </p>
-                                <h2 className="mt-3 text-3xl font-semibold tracking-tight">
+                                <h2 className="panel-title mt-3">
                                     {getMousepadFullName(topPick)}
                                 </h2>
                                 <p className="mt-4 text-sm leading-6 text-muted-foreground">
@@ -166,95 +161,23 @@ export default async function BestMousepadsPage({ params }: Props) {
 
             <section
                 id="picks"
-                className="w-full border-t border-border px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10"
+                className="page-section border-t border-border"
             >
                 <div className="max-w-4xl">
                     <Badge variant="outline">Curated shortlist</Badge>
-                    <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">
+                    <h2 className="section-title mt-4">
                         The picks that fit the story.
                     </h2>
-                    <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground">
+                    <p className="body-copy mt-4 max-w-2xl">
                         These are selected from the tracked FragBasic database
                         and ranked for the page theme, not by brand hype or raw
                         spec sheet numbers.
                     </p>
                 </div>
 
-                <div className="mt-10 space-y-12 grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div className="mt-10 border border-border bg-card/45">
                     {picks.map((pick, index) => (
-                        <article key={pick.slug} className="p-8 border gap-4 flex flex-col">
-                            <div className="flex flex-col gap-2">
-                                <div className="flex flex-wrap gap-2">
-                                    <Badge className="text-black">
-                                        #{index + 1}
-                                    </Badge>
-                                    <Badge variant="outline">
-                                        {pick.label}
-                                    </Badge>
-                                    <Badge variant="outline">
-                                        {formatMousepadValue(
-                                            pick.mousepad.category,
-                                        )}
-                                    </Badge>
-                                </div>
-
-                                <h3 className="mt-5 text-3xl font-semibold tracking-tight">
-                                    {getMousepadFullName(pick.mousepad)}
-                                </h3>
-
-                                <p className="mt-4 text-sm leading-6 text-muted-foreground">
-                                    {pick.reason}
-                                </p>
-
-                                <p className="mt-4 text-sm leading-6 text-foreground">
-                                    <span className="font-semibold">
-                                        Best for:{" "}
-                                    </span>
-                                    {pick.bestFor}
-                                </p>
-
-                                <div className="mt-6 grid grid-cols-4 gap-3">
-                                    <SignalStat
-                                        icon={Shield}
-                                        label="Stop"
-                                        value={formatFeelLabel(
-                                            pick.mousepad.feel.stoppingPower,
-                                            "stoppingPower",
-                                        )}
-                                    />
-                                    <SignalStat
-                                        icon={Gauge}
-                                        label="Glide"
-                                        value={formatFeelLabel(
-                                            pick.mousepad.feel.speed,
-                                            "speed",
-                                        )}
-                                    />
-                                    <SignalStat
-                                        icon={Sparkles}
-                                        label="Corrections"
-                                        value={formatFeelLabel(
-                                            pick.mousepad.feel.microAdjustments,
-                                            "microAdjustments",
-                                        )}
-                                    />
-                                    <SignalStat
-                                        icon={ThermometerSun}
-                                        label="Humidity"
-                                        value={formatEnvironmentLabel(
-                                            pick.mousepad.environment
-                                                .humidityResistance,
-                                        )}
-                                    />
-                                </div>
-                            </div>
-                            <div className="max-h-200">
-                                <MousepadCard
-                                    pad={pick.mousepad}
-                                    compact
-                                />
-                            </div>
-                        </article>
+                        <PickRow key={pick.slug} pick={pick} index={index} />
                     ))}
                 </div>
             </section>
@@ -262,35 +185,98 @@ export default async function BestMousepadsPage({ params }: Props) {
     );
 }
 
-function MiniStat({ label, value }: { label: string; value: string }) {
+function PickRow({
+    pick,
+    index,
+}: {
+    pick: ReturnType<typeof getBestPagePicks>[number];
+    index: number;
+}) {
+    const pad = pick.mousepad;
+
     return (
-        <div className="border-t border-border pt-3">
-            <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                {label}
+        <article className="grid gap-5 border-b border-border px-4 py-5 last:border-b-0 lg:grid-cols-[72px_180px_1fr_360px] lg:items-center">
+            <div>
+                <Badge className="text-black">#{index + 1}</Badge>
+            <p className="compact-label mt-3 font-mono">
+                {pick.label}
             </p>
-            <p className="mt-1 text-base font-semibold leading-6">{value}</p>
-        </div>
+            </div>
+
+            <Link
+                href={`/mousepads/${pad.slug}`}
+                className="relative block aspect-[4/3] overflow-hidden border border-border bg-background/70"
+            >
+                <Image
+                    src={pad.images.main}
+                    alt={getMousepadFullName(pad)}
+                    fill
+                    sizes="180px"
+                    className="object-contain p-4"
+                />
+            </Link>
+
+            <div className="min-w-0">
+                <div className="flex flex-wrap gap-2">
+                    <Badge variant="outline">
+                        {formatMousepadValue(pad.category)}
+                    </Badge>
+                    <Badge variant="outline">{formatMousepadValue(pad.surface)}</Badge>
+                </div>
+
+                <Link
+                    href={`/mousepads/${pad.slug}`}
+                    className="panel-title mt-3 block text-foreground hover:text-primary"
+                >
+                    {getMousepadFullName(pad)}
+                </Link>
+
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                    {pick.reason}
+                </p>
+
+                <p className="mt-3 text-sm leading-6 text-foreground">
+                    <span className="font-semibold">Best for: </span>
+                    {pick.bestFor}
+                </p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+                <MetricCell
+                    label={formatFeelLabel(pad.feel.stoppingPower, "stoppingPower")}
+                    value={pad.feel.stoppingPower}
+                />
+                <MetricCell
+                    label={formatFeelLabel(pad.feel.speed, "speed")}
+                    value={pad.feel.speed}
+                    tone="alt"
+                />
+                <MetricCell
+                    label={formatFeelLabel(
+                        pad.feel.microAdjustments,
+                        "microAdjustments",
+                    )}
+                    value={pad.feel.microAdjustments}
+                    tone="muted"
+                />
+                <MetricCell
+                    label={formatEnvironmentLabel(
+                        pad.environment.humidityResistance,
+                    )}
+                    value={pad.environment.humidityResistance}
+                />
+            </div>
+        </article>
     );
 }
 
-function SignalStat({
-    icon: Icon,
-    label,
-    value,
-}: {
-    icon: typeof Shield;
-    label: string;
-    value: string;
-}) {
+function MiniStat({ label, value }: { label: string; value: string }) {
     return (
-        <div className="rounded-2xl border border-border bg-background/70 px-4 py-3">
-            <div className="flex items-center justify-between gap-3">
-                <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                    {label}
-                </p>
-                <Icon className="size-4 text-muted-foreground" />
-            </div>
-            <p className="mt-2 text-sm font-semibold leading-5">{value}</p>
+        <div className="border-t border-border pt-3">
+            <p className="compact-label">
+                {label}
+            </p>
+            <p className="mt-1 text-base font-semibold leading-6">{value}</p>
         </div>
     );
 }

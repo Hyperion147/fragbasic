@@ -42,7 +42,7 @@ export default function GlasspadsPage() {
         })}
       />
       <section className="border-b border-border bg-background">
-        <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+        <div className="page-hero">
           <div className="max-w-5xl">
             <SiteBreadcrumbs
               items={[
@@ -58,14 +58,14 @@ export default function GlasspadsPage() {
               </Badge>
             </div>
 
-            <h1 className="mt-5 text-5xl font-semibold tracking-tight md:text-7xl">
+            <h1 className="page-title mt-5">
               Browse dedicated glass mousepads in one place.
             </h1>
           </div>
         </div>
       </section>
 
-      <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+      <section className="page-section">
         <SiteSection>
           <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading glasspad filters...</div>}>
             <MousepadBrowser
@@ -78,10 +78,10 @@ export default function GlasspadsPage() {
         </SiteSection>
       </section>
 
-      <section className="w-full border-t border-border px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+      <section className="page-section border-t border-border">
         <div className="max-w-4xl">
           <Badge variant="outline">Glasspad review notes</Badge>
-          <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
+          <h2 className="section-title mt-4">
             What to know before choosing a glasspad.
           </h2>
         </div>

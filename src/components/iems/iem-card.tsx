@@ -46,7 +46,7 @@ export function IemCard({
 
                 <div className="relative mt-5">
                     <p className="text-sm text-muted-foreground">{iem.brand}</p>
-                    <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+                    <h2 className="panel-title mt-1">
                         {iem.name}
                     </h2>
                     <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted-foreground">
@@ -74,7 +74,7 @@ export function IemCard({
 
                 <div className="relative mt-5 flex items-end justify-between gap-4 border-t border-border pt-5">
                     <div>
-                        <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                        <p className="compact-label">
                             {getIemScoreTone(iem.ratings.fragbasic)}
                         </p>
                         <p className="mt-1 text-sm font-medium text-foreground">

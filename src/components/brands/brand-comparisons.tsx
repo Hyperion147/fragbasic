@@ -18,7 +18,7 @@ export function BrandComparisons({ comparisons, brandName }: Props) {
   return (
     <section className="space-y-4">
       <div className="max-w-3xl">
-        <h2 className="text-3xl font-semibold tracking-tight">
+        <h2 className="section-title">
           Popular comparisons
         </h2>
         <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -41,7 +41,7 @@ export function BrandComparisons({ comparisons, brandName }: Props) {
       ) : (
         <Card className="border-border bg-card">
           <CardHeader>
-            <CardTitle className="text-xl tracking-tight flex items-center gap-2">
+            <CardTitle className="panel-title flex items-center gap-2">
               No published comparisons yet
             </CardTitle>
           </CardHeader>

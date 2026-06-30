@@ -1,4 +1,4 @@
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, SlidersHorizontal } from "lucide-react";
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
@@ -23,7 +23,7 @@ export function CompareHero({ left, right, comparisonSlug }: Props) {
 
     return (
         <section className="border-b border-border bg-background">
-            <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+            <div className="page-hero">
               <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-[1.2fr_0.8fr]">
                 <div className="space-y-6">
                     <div className="flex flex-wrap gap-2">
@@ -32,9 +32,9 @@ export function CompareHero({ left, right, comparisonSlug }: Props) {
                         <Badge variant="outline">Soft base</Badge>
                     </div>
 
-                    <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-6xl">
+                    <h1 className="page-title-compact max-w-4xl">
                         {left.brand} {left.name}
-                        <div className="flex items-center gap-2 text-muted-foreground text-2xl">
+                        <div className="flex items-center gap-2 text-xl text-muted-foreground">
                             <ArrowUpDown className="size-4" />
                             vs
                         </div>
@@ -50,12 +50,14 @@ export function CompareHero({ left, right, comparisonSlug }: Props) {
                             <Link
                                 href={`/mousepads/compare/universal?pads=${left.slug},${right.slug}`}
                             >
+                                <SlidersHorizontal className="size-4" />
                                 Open in Universal Compare
                             </Link>
                         </Button>
                         <ClientShareButton
                             href={`/mousepads/compare/${comparisonSlug}`}
                             label="Share matchup"
+                            iconOnly
                         />
                     </div>
 
@@ -70,11 +72,11 @@ export function CompareHero({ left, right, comparisonSlug }: Props) {
                     </div>
                 </div>
 
-                <div className="rounded-4xl border border-border bg-card/90 p-6 shadow-lg shadow-black/10 backdrop-blur">
+                <div className="border border-border bg-card/90 p-5 shadow-lg shadow-black/10 backdrop-blur">
                     <p className="text-sm text-muted-foreground">
                         Quick verdict
                     </p>
-                    <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+                    <h2 className="panel-title mt-2">
                         Choose based on how much freedom you want in your glide.
                     </h2>
 
@@ -96,8 +98,8 @@ export function CompareHero({ left, right, comparisonSlug }: Props) {
 
 function HighlightCard({ label, value }: { label: string; value: string }) {
     return (
-        <div className="rounded-3xl border border-border bg-card/60 p-4 backdrop-blur-sm">
-            <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+        <div className="border border-border bg-card/60 p-4 backdrop-blur-sm">
+            <p className="compact-label">
                 {label}
             </p>
             <p className="mt-2 text-sm font-medium text-foreground">{value}</p>
@@ -107,7 +109,7 @@ function HighlightCard({ label, value }: { label: string; value: string }) {
 
 function VerdictRow({ label, value }: { label: string; value: string }) {
     return (
-        <div className="flex items-center justify-between gap-4 rounded-2xl border border-border bg-background/80 px-4 py-3">
+        <div className="flex items-center justify-between gap-4 rounded-md border border-border bg-background/80 px-4 py-3">
             <span className="text-sm text-muted-foreground">{label}</span>
             <span className="text-sm font-medium text-foreground">{value}</span>
         </div>

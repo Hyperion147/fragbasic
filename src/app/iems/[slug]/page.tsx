@@ -16,7 +16,6 @@ import {
     Plug,
     Radio,
     ScanSearch,
-    Share2,
     ShieldCheck,
     Star,
     Weight,
@@ -28,6 +27,7 @@ import { JsonLd } from "@/components/json-ld";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { IconTooltip } from "@/components/ui/tooltip";
 import {
     formatIemAvailability,
     formatIemDriverType,
@@ -102,7 +102,7 @@ export default async function IemPage({ params }: Props) {
                 })}
             />
             <section className="border-b border-border bg-[radial-gradient(circle_at_78%_18%,color-mix(in_srgb,var(--iem-glow)_12%,transparent),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0))]">
-                <div className="w-full px-4 pt-8 md:px-6 lg:px-8 xl:px-10">
+                <div className="w-full px-4 pt-6 md:px-6 lg:px-8 xl:px-10">
                     <SiteBreadcrumbs
                         items={[
                             { label: "Home", href: "/" },
@@ -114,9 +114,9 @@ export default async function IemPage({ params }: Props) {
 
                 <div
                     id="overview"
-                    className="grid w-full gap-10 px-4 py-10 md:px-6 md:py-14 lg:grid-cols-[minmax(0,0.92fr)_minmax(360px,0.88fr)] lg:px-8 xl:px-10"
+                    className="grid w-full gap-8 px-4 py-8 md:px-6 md:py-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(360px,0.88fr)] lg:px-8 xl:px-10"
                 >
-                    <div className="flex flex-col justify-end">
+                    <div className="min-w-0 flex flex-col justify-end">
                         <div className="flex flex-wrap gap-2">
                             <AccentPill>
                                 Under{" "}
@@ -132,11 +132,11 @@ export default async function IemPage({ params }: Props) {
                             </Badge>
                         </div>
 
-                        <h1 className="mt-6 max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl md:text-7xl">
+                        <h1 className="page-title mt-5 max-w-4xl">
                             {getIemFullName(iem)}
                         </h1>
 
-                        <p className="mt-3 text-base text-muted-foreground sm:text-lg">
+                        <p className="body-copy mt-3">
                             {iem.subtitle}
                         </p>
 
@@ -144,12 +144,12 @@ export default async function IemPage({ params }: Props) {
                             <StarRating />
                         </div>
 
-                        <p className="mt-5 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base md:leading-7">
+                        <p className="body-copy mt-4 max-w-2xl">
                             {iem.communitySummary}
                         </p>
 
                         <div className="mt-8 flex flex-wrap items-center gap-3">
-                            <p className="mr-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+                            <p className="mr-2 text-2xl font-semibold">
                                 {formatIemPrice(iem)}
                             </p>
                             <AccentPill>
@@ -165,18 +165,20 @@ export default async function IemPage({ params }: Props) {
                                     href={store.url}
                                 />
                             ))}
-                            <Button variant="outline" size="icon" asChild>
-                                <Link
-                                    href={iem.images.main}
-                                    aria-label="Open product image"
-                                >
-                                    <LinkIcon className="size-4" />
-                                </Link>
-                            </Button>
+                            <IconTooltip label="Open product image">
+                                <Button variant="outline" size="icon" asChild>
+                                    <Link
+                                        href={iem.images.main}
+                                        aria-label="Open product image"
+                                    >
+                                        <LinkIcon className="size-4" />
+                                    </Link>
+                                </Button>
+                            </IconTooltip>
                         </div>
                     </div>
 
-                    <div className="relative min-h-[360px] overflow-hidden rounded-xl border border-border bg-card/45 lg:min-h-[500px]">
+                    <div className="relative min-h-[360px] min-w-0 overflow-hidden rounded-xl border border-border bg-card/45 lg:min-h-[500px]">
                         <Image
                             src={iem.images.main}
                             alt={getIemFullName(iem)}
@@ -190,7 +192,7 @@ export default async function IemPage({ params }: Props) {
                 </div>
             </section>
 
-            <div className="w-full space-y-8 px-4 py-8 md:px-6 md:py-10 lg:px-8 xl:px-10">
+            <div className="page-section space-y-6">
                 <IemDisclosure title="Quick verdict" defaultOpen>
                     <ScorePanel iem={iem} />
                 </IemDisclosure>
@@ -231,14 +233,8 @@ export default async function IemPage({ params }: Props) {
                         <ClientShareButton
                             href={`/iems/${iem.slug}`}
                             label="Share IEM"
+                            iconOnly
                         />
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            aria-label="Share link"
-                        >
-                            <Share2 className="size-4" />
-                        </Button>
                     </div>
                 </footer>
             </div>
@@ -309,7 +305,7 @@ function IemDisclosure({
     return (
         <details
             open={defaultOpen}
-            className="group rounded-xl border border-border bg-card/45"
+            className="group data-panel"
         >
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold text-foreground sm:px-5">
                 {title}
@@ -328,10 +324,10 @@ function ScorePanel({ iem }: { iem: Iem }) {
     ];
 
     return (
-        <section className="grid gap-5 rounded-xl border border-border bg-card/55 p-5 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+        <section className="grid gap-5 border border-border bg-card/45 p-4 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
             <div>
                 <SectionKicker icon={CheckCircle2} label="Quick verdict" />
-                <h2 className="mt-4 text-3xl font-semibold tracking-tight">
+                <h2 className="section-title mt-4">
                     {getIemScoreTone(iem.ratings.fragbasic)}
                 </h2>
                 <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
@@ -350,12 +346,12 @@ function ScorePanel({ iem }: { iem: Iem }) {
                 {scores.map((score) => (
                     <div
                         key={score.label}
-                        className="rounded-lg border border-border bg-background/60 p-4"
+                        className="border border-border bg-background/60 p-3"
                     >
-                        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                        <p className="compact-label font-semibold">
                             {score.label}
                         </p>
-                        <p className="mt-3 text-2xl font-semibold tracking-tight">
+                        <p className="mt-3 text-xl font-semibold">
                             {formatIemScoreLabel(score.value)}
                         </p>
                         <p className="mt-1 text-sm text-muted-foreground">
@@ -373,9 +369,9 @@ function ScorePanel({ iem }: { iem: Iem }) {
 
 function ReviewCard({ iem }: { iem: Iem }) {
     return (
-        <section className="rounded-xl border border-border bg-card/50 p-6">
+        <section className="border border-border bg-card/45 p-4">
             <SectionKicker icon={ShieldCheck} label="Review summary" />
-            <h2 className="mt-4 text-2xl font-semibold tracking-tight">
+            <h2 className="panel-title mt-4">
                 What stands out
             </h2>
             <p className="mt-4 text-sm leading-7 text-muted-foreground">
@@ -465,7 +461,7 @@ function RatingBreakdown({ iem }: { iem: Iem }) {
     ] as const;
 
     return (
-        <section className="rounded-xl border border-border bg-card/50 p-6">
+        <section className="border border-border bg-card/45 p-4">
             <SectionKicker icon={Activity} label="Score breakdown" />
             <div className="mt-5 space-y-4">
                 {ratings.map(([label, value]) => (
@@ -487,7 +483,7 @@ function FrequencyGraphCard({ iem }: { iem: Iem }) {
     const graph = iem.frequencyGraph;
 
     return (
-        <section className="rounded-xl border border-border bg-card/50 p-6">
+        <section className="border border-border bg-card/45 p-4">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                 <SectionKicker
                     icon={Radio}
@@ -510,7 +506,7 @@ function FrequencyGraphCard({ iem }: { iem: Iem }) {
                 </>
             ) : (
                 <div className="mt-6 rounded-lg border border-dashed border-border bg-background/55 p-6">
-                    <h2 className="text-2xl font-semibold tracking-tight">
+                    <h2 className="panel-title">
                         No verified graph yet
                     </h2>
                     <p className="mt-3 text-sm leading-6 text-muted-foreground">
@@ -754,25 +750,26 @@ function SpecsCard({ iem }: { iem: Iem }) {
     ];
 
     return (
-        <section className="rounded-xl border border-border bg-card/50 p-6">
+        <section className="border border-border bg-card/45 p-4">
             <SectionKicker icon={ScanSearch} label="Key specifications" />
-            <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {specs.map((spec) => (
-                    <div
-                        key={`${spec.label}-${spec.value}`}
-                        className="grid grid-cols-[24px_1fr] gap-3"
-                    >
-                        <spec.icon className="mt-0.5 size-4 text-[color:var(--iem-hover)]" />
-                        <div>
-                            <p className="text-xs text-muted-foreground">
-                                {spec.label}
-                            </p>
-                            <p className="mt-1 text-sm text-foreground">
-                                {spec.value}
-                            </p>
-                        </div>
-                    </div>
-                ))}
+            <div className="mt-5 overflow-hidden border border-border bg-background/60">
+                <table className="data-table">
+                    <tbody>
+                        {specs.map((spec) => (
+                            <tr key={`${spec.label}-${spec.value}`}>
+                                <td className="w-10">
+                                    <spec.icon className="size-4 text-[color:var(--iem-hover)]" />
+                                </td>
+                                <td className="w-1/3 text-xs uppercase text-muted-foreground">
+                                    {spec.label}
+                                </td>
+                                <td className="font-medium text-foreground">
+                                    {spec.value}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </section>
     );
@@ -780,7 +777,7 @@ function SpecsCard({ iem }: { iem: Iem }) {
 
 function BuyingCard({ iem }: { iem: Iem }) {
     return (
-        <section className="rounded-xl border border-border bg-card/50 p-6">
+        <section className="border border-border bg-card/45 p-4">
             <SectionKicker icon={CircleDollarSign} label="Buying info" />
             <div className="mt-6 space-y-3">
                 <InfoRow
@@ -811,7 +808,7 @@ function BuyingCard({ iem }: { iem: Iem }) {
 
 function FinalFitPanel({ iem }: { iem: Iem }) {
     return (
-        <section className="grid gap-6 rounded-xl border border-border bg-card/50 p-6 lg:grid-cols-[1fr_1fr_1fr_1fr_0.9fr]">
+        <section className="grid gap-6 border border-border bg-card/45 p-4 lg:grid-cols-[1fr_1fr_1fr_1fr_0.9fr]">
             <ListColumn title="Pros" items={iem.pros} positive />
             <ListColumn title="Cons" items={iem.cons} />
             <ListColumn

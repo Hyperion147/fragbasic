@@ -113,7 +113,7 @@ export function MouseSkateCompare({
                                 className="rounded-2xl border border-border bg-card/70 p-4"
                             >
                                 <div className="flex items-center justify-between gap-3">
-                                    <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                                    <p className="compact-label">
                                         Slot {index + 1}
                                     </p>
                                 </div>
@@ -156,10 +156,10 @@ export function MouseSkateCompare({
             <div className="rounded-2xl border border-border bg-card/60 p-5">
                 <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
                     <div>
-                        <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                        <p className="compact-label">
                             Rating matrix
                         </p>
-                        <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+                        <h2 className="panel-title mt-2">
                             Where each skate wins
                         </h2>
                     </div>
@@ -251,7 +251,7 @@ function SkateComparePanel({ skate }: { skate: MouseSkate }) {
                 <MouseSkateDot skate={skate} size="md" />
             </div>
 
-            <h2 className="mt-4 text-2xl font-semibold tracking-tight">
+            <h2 className="panel-title mt-4">
                 {skate.name}
             </h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
@@ -265,7 +265,7 @@ function SkateComparePanel({ skate }: { skate: MouseSkate }) {
             </div>
 
             <div className="mt-5">
-                <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                <p className="compact-label">
                     Best fit
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">

@@ -7,6 +7,8 @@ import {
   ChevronDown,
   CircleOff,
   Dot,
+  Grid2x2,
+  Plus,
   ShieldCheck,
   Sparkles,
 } from "lucide-react"
@@ -99,7 +101,7 @@ export default async function MousepadPage({ params }: PageProps) {
         })}
       />
       <section className="border-b border-border bg-background">
-        <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+        <div className="page-hero">
           <div className="mx-auto max-w-7xl grid gap-8 md:grid-cols-[1.05fr_0.95fr]">
             <div className="space-y-6">
               <SiteBreadcrumbs
@@ -125,15 +127,15 @@ export default async function MousepadPage({ params }: PageProps) {
               </div>
 
               <div>
-                <p className="text-sm uppercase tracking-[0.18em] text-muted-foreground">
+                <p className="compact-label">
                   {pad.brand}
                 </p>
 
-                <h1 className="mt-3 max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl md:text-7xl">
+                <h1 className="page-title mt-3 max-w-4xl">
                   {pad.name}
                 </h1>
 
-                <p className="mt-5 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base md:leading-7">
+                <p className="body-copy mt-4 max-w-2xl">
                   {productDescription}
                 </p>
               </div>
@@ -185,12 +187,16 @@ export default async function MousepadPage({ params }: PageProps) {
                 </Button>
 
                 <Button variant="outline" asChild>
-                  <Link href="/mousepads">Browse all pads</Link>
+                  <Link href="/mousepads">
+                    <Grid2x2 className="size-4" />
+                    Browse all pads
+                  </Link>
                 </Button>
 
-                <ClientShareButton href={`/mousepads/${pad.slug}`} label="Share pad" />
+                <ClientShareButton href={`/mousepads/${pad.slug}`} label="Share pad" iconOnly />
                 <Button variant="outline" asChild>
                   <Link href={`/mousepads/compare/universal?pads=${pad.slug}`}>
+                    <Plus className="size-4" />
                     Add to compare
                   </Link>
                 </Button>
@@ -208,7 +214,7 @@ export default async function MousepadPage({ params }: PageProps) {
         </div>
       </section>
 
-      <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+      <div className="page-section">
         <div className="mx-auto max-w-7xl grid gap-6 md:grid-cols-[1fr_360px]">
           <div className="space-y-6">
             <ProductDisclosure title="Feel chart" defaultOpen>
@@ -279,8 +285,8 @@ function getSchemaAvailability(availability: Mousepad["availability"]["india"]) 
 
 function HeroStat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-border bg-card/70 p-4 backdrop-blur-sm">
-      <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+    <div className="border-l border-border bg-card/35 px-4 py-3 backdrop-blur-sm">
+      <p className="compact-label">
         {label}
       </p>
       <p className="mt-2 text-xl font-semibold leading-7 text-foreground">{value}</p>
@@ -296,7 +302,7 @@ function HighlightCard({
   value: string
 }) {
   return (
-    <div className="rounded-2xl border border-border bg-background/60 p-4">
+    <div className="border-l border-border bg-background/50 px-4 py-3">
       <p className="text-xs text-muted-foreground">{label}</p>
       <p className="mt-2 text-sm font-medium leading-6 text-foreground">
         {value}
@@ -317,7 +323,7 @@ function ProductDisclosure({
   return (
     <details
       open={defaultOpen}
-      className="group rounded-xl border border-border bg-card/45"
+      className="group data-panel"
     >
       <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold text-foreground sm:px-5">
         {title}
@@ -502,7 +508,7 @@ function SurfaceAndUseCard({ pad }: { pad: Mousepad }) {
     <Card className="border-border bg-card p-5 md:p-6">
       <div className="mb-6">
         <p className="text-sm text-muted-foreground">Use case</p>
-        <h2 className="text-2xl font-semibold tracking-tight">
+        <h2 className="panel-title">
           What to expect day to day
         </h2>
       </div>
@@ -530,7 +536,7 @@ function SurfaceAndUseCard({ pad }: { pad: Mousepad }) {
       </div>
 
       {pad.avoidIf?.length ? (
-        <div className="mt-6 rounded-3xl border border-border bg-background/60 p-5">
+        <div className="mt-6 rounded-md border border-border bg-background/60 p-4">
           <p className="text-sm font-medium text-foreground">Maybe skip it if</p>
 
           <ul className="mt-4 space-y-3">
@@ -554,7 +560,7 @@ function CommunityNotesCard({ pad }: { pad: Mousepad }) {
     <Card className="border-border bg-card p-5 md:p-6">
       <p className="text-sm text-muted-foreground">Community Notes</p>
 
-      <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+      <h2 className="panel-title mt-1">
         What the community says
       </h2>
 
@@ -564,7 +570,7 @@ function CommunityNotesCard({ pad }: { pad: Mousepad }) {
 
       {consensus.commonComparisons?.length ? (
         <div className="mt-5">
-          <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground mb-2">
+          <p className="compact-label mb-2">
             Commonly compared to
           </p>
           <div className="flex flex-wrap gap-2">
@@ -613,7 +619,7 @@ function PersonalNotes({ pad }: { pad: Mousepad }) {
     <Card className="border-border bg-card p-5 md:p-6">
       <p className="text-sm text-muted-foreground">Personal notes</p>
 
-      <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+      <h2 className="panel-title mt-1">
         Tested experience
       </h2>
 
@@ -655,7 +661,7 @@ function SourcesCard({ pad }: { pad: Mousepad }) {
     <Card className="border-border bg-card p-5 md:p-6">
       <p className="text-sm text-muted-foreground">Sources</p>
 
-      <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+      <h2 className="panel-title mt-1">
         Where this information comes from
       </h2>
 
@@ -674,7 +680,7 @@ function SourcesCard({ pad }: { pad: Mousepad }) {
                 <p className="text-sm font-medium text-foreground">
                   {source.label}
                 </p>
-                <p className="mt-1 text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                <p className="compact-label mt-1">
                   {source.type}
                 </p>
               </div>

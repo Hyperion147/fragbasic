@@ -1,21 +1,39 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import type { ReactNode } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { MousepadCard } from "@/components/mousepads/mousepad-card";
+import { MetricCell } from "@/components/data-display";
 import { MousepadFilters } from "@/components/mousepads/mousepad-filters";
 import {
   ALL_FILTER_VALUE,
   filterMousepads,
+  formatFeelLabel,
+  formatMousepadValue,
+  formatPrice,
   getDefaultMousepadFilters,
   type MousepadCategory,
   type MousepadFilters as MousepadFilterState,
 } from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
-import { SearchX, RotateCcw } from "lucide-react";
+import {
+  Crosshair,
+  Eye,
+  Gauge,
+  Layers,
+  MapPin,
+  RotateCcw,
+  SearchX,
+  Shield,
+  Sparkles,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getMousepadFullName } from "@/lib/mousepads";
+import { Badge } from "@/components/ui/badge";
+import { IconTooltip } from "@/components/ui/tooltip";
 
 type Props = {
   mousepads: Mousepad[];
@@ -121,20 +139,80 @@ export function MousepadBrowser({
       />
 
       {filteredMousepads.length > 0 ? (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {filteredMousepads.map((pad) => (
-            <MousepadCard
-              key={pad.slug}
-              pad={pad}
-              isLatestAdded={latestAddedSlugSet.has(pad.slug)}
-            />
-          ))}
+        <div className="overflow-x-auto border border-border bg-card/45 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <table className="data-table min-w-[1280px]">
+            <thead>
+              <tr>
+                <th className="w-[340px]">
+                  <TableHeadLabel
+                    icon={<Crosshair className="size-3.5" />}
+                    label="Mousepad"
+                    tooltip="Model, category, and primary game fit"
+                  />
+                </th>
+                <th>
+                  <TableHeadLabel
+                    icon={<Layers className="size-3.5" />}
+                    label="Surface"
+                    tooltip="Surface material, softness, and base construction"
+                  />
+                </th>
+                <th>
+                  <TableHeadLabel
+                    icon={<Gauge className="size-3.5" />}
+                    label="Glide"
+                    tooltip="How fast the pad feels during broad movement"
+                  />
+                </th>
+                <th>
+                  <TableHeadLabel
+                    icon={<Shield className="size-3.5" />}
+                    label="Control"
+                    tooltip="How planted the pad feels while aiming"
+                  />
+                </th>
+                <th>
+                  <TableHeadLabel
+                    icon={<Shield className="size-3.5" />}
+                    label="Stop"
+                    tooltip="Stopping power for flicks and final corrections"
+                  />
+                </th>
+                <th>
+                  <TableHeadLabel
+                    icon={<Sparkles className="size-3.5" />}
+                    label="Correct"
+                    tooltip="Ease of micro-adjustments after the first movement"
+                  />
+                </th>
+                <th>
+                  <TableHeadLabel
+                    icon={<MapPin className="size-3.5" />}
+                    label="India"
+                    tooltip="India availability and approximate local pricing"
+                  />
+                </th>
+                <th className="text-right">
+                  <span className="sr-only">Profile</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredMousepads.map((pad) => (
+                <MousepadTableRow
+                  key={pad.slug}
+                  pad={pad}
+                  isLatestAdded={latestAddedSlugSet.has(pad.slug)}
+                />
+              ))}
+            </tbody>
+          </table>
         </div>
       ) : (
-        <div className="rounded-4xl border border-dashed border-border bg-card/70 px-6 py-12 text-center">
-          <div className="mx-auto max-w-xs space-y-4">
-            <SearchX className="mx-auto size-10 text-muted-foreground" />
-            <p className="text-xl font-semibold text-foreground">
+        <div className="rounded-md border border-dashed border-border bg-card/70 px-5 py-8 text-center">
+          <div className="mx-auto max-w-xs space-y-3">
+            <SearchX className="mx-auto size-8 text-muted-foreground" />
+            <p className="panel-title text-foreground">
               No mousepads match these filters
             </p>
             <p className="text-sm text-muted-foreground">
@@ -150,6 +228,112 @@ export function MousepadBrowser({
         </div>
       )}
     </div>
+  );
+}
+
+function MousepadTableRow({
+  pad,
+  isLatestAdded,
+}: {
+  pad: Mousepad;
+  isLatestAdded: boolean;
+}) {
+  const fullName = getMousepadFullName(pad);
+
+  return (
+    <tr>
+      <td>
+        <div className="flex items-center gap-3">
+          <Link
+            href={`/mousepads/${pad.slug}`}
+            className="relative block size-16 shrink-0 overflow-hidden border border-border bg-background/75"
+          >
+            <Image
+              src={pad.images.main}
+              alt={fullName}
+              fill
+              sizes="64px"
+              className="object-contain p-2"
+            />
+          </Link>
+          <div className="min-w-0">
+            <div className="flex flex-wrap gap-1.5">
+              <Badge className="text-black">
+                {formatMousepadValue(pad.category)}
+              </Badge>
+              {isLatestAdded ? <Badge variant="outline">Latest</Badge> : null}
+            </div>
+            <Link
+              href={`/mousepads/${pad.slug}`}
+              className="mt-2 block truncate text-base font-semibold tracking-tight text-foreground hover:text-primary"
+            >
+              {fullName}
+            </Link>
+            <p className="truncate text-xs text-muted-foreground">
+              {pad.recommendedFor.games.map(formatMousepadValue).join(", ")}
+            </p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div className="space-y-1">
+          <p className="font-medium text-foreground">
+            {formatMousepadValue(pad.surface)}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            {formatMousepadValue(pad.softness)} / {formatMousepadValue(pad.base)}
+          </p>
+        </div>
+      </td>
+      <td>
+        <MetricCell label={formatFeelLabel(pad.feel.speed, "speed")} value={pad.feel.speed} />
+      </td>
+      <td>
+        <MetricCell label={formatFeelLabel(pad.feel.control, "control")} value={pad.feel.control} tone="alt" />
+      </td>
+      <td>
+        <MetricCell label={formatFeelLabel(pad.feel.stoppingPower, "stoppingPower")} value={pad.feel.stoppingPower} />
+      </td>
+      <td>
+        <MetricCell label={formatFeelLabel(pad.feel.microAdjustments, "microAdjustments")} value={pad.feel.microAdjustments} tone="muted" />
+      </td>
+      <td>
+        <div className="space-y-1">
+          <p className="font-medium text-foreground">
+            {formatMousepadValue(pad.availability.india)}
+          </p>
+          <p className="text-xs text-muted-foreground">{formatPrice(pad.price.inr)}</p>
+        </div>
+      </td>
+      <td className="text-right">
+        <IconTooltip label={`Open ${fullName} profile`} side="left">
+          <Button size="icon-sm" variant="outline" asChild>
+            <Link href={`/mousepads/${pad.slug}`} aria-label={`Open ${fullName} profile`}>
+              <Eye className="size-4" />
+            </Link>
+          </Button>
+        </IconTooltip>
+      </td>
+    </tr>
+  );
+}
+
+function TableHeadLabel({
+  icon,
+  label,
+  tooltip,
+}: {
+  icon: ReactNode;
+  label: string;
+  tooltip: string;
+}) {
+  return (
+    <IconTooltip label={tooltip}>
+      <span className="inline-flex w-fit items-center gap-1.5">
+        {icon}
+        {label}
+      </span>
+    </IconTooltip>
   );
 }
 

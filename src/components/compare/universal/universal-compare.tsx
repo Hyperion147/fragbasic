@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ChevronDown, Copy, Scale, ShieldCheck, SlidersHorizontal } from "lucide-react";
+import { ChevronDown, Copy, Scale, ShieldCheck, SlidersHorizontal, X } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
@@ -20,6 +20,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { IconTooltip } from "@/components/ui/tooltip";
 import { getMousepadBySlug } from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
 
@@ -185,32 +186,34 @@ export function UniversalCompare({ allMousepads }: Props) {
                         </div>
                         <div className="flex flex-wrap gap-2">
                             {selectionCount > 0 && (
-                                <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    onClick={() => {
-                                        replaceUrl([]);
-                                    }}
-                                >
-                                    Clear set
-                                </Button>
+                                <IconTooltip label="Clear comparison set">
+                                    <Button
+                                        size="icon-sm"
+                                        variant="ghost"
+                                        onClick={() => {
+                                            replaceUrl([]);
+                                        }}
+                                        aria-label="Clear comparison set"
+                                    >
+                                        <X className="size-4" />
+                                    </Button>
+                                </IconTooltip>
                             )}
                             {canCompare && (
-                                <Button
-                                    size="sm"
-                                    variant="outline"
-                                    onClick={handleCopyLink}
-                                    className="gap-2"
-                                >
-                                    <Copy className="size-3.5" />
-                                    {copied
-                                        ? "Copied!"
-                                        : "Copy link to this set"}
-                                </Button>
+                                <IconTooltip label={copied ? "Link copied" : "Copy link to this set"}>
+                                    <Button
+                                        size="icon-sm"
+                                        variant="outline"
+                                        onClick={handleCopyLink}
+                                        aria-label={copied ? "Link copied" : "Copy link to this set"}
+                                    >
+                                        <Copy className="size-4" />
+                                    </Button>
+                                </IconTooltip>
                             )}
                         </div>
                     </div>
-                    <CardTitle className="mt-4 text-2xl tracking-tight sm:text-4xl md:text-5xl">
+                    <CardTitle className="page-title-compact mt-4">
                         Build your own mousepad matchup.
                     </CardTitle>
                     <p className="mt-3 rounded-lg border border-sky-300/40 bg-sky-400/10 px-3 py-2 text-xs leading-5 text-sky-100 sm:mt-4 sm:px-4 sm:py-3 sm:text-sm sm:leading-6">
@@ -259,7 +262,7 @@ export function UniversalCompare({ allMousepads }: Props) {
             ) : (
                 <Card className="border-border bg-card">
                     <CardHeader>
-                        <CardTitle className="text-2xl tracking-tight">
+                        <CardTitle className="panel-title">
                             {selectionCount === 0
                                 ? "Select 2–3 mousepads above to start comparing"
                                 : "Add one more mousepad to start comparing"}
@@ -351,7 +354,7 @@ function HintCard({
     body: string;
 }) {
     return (
-        <div className="rounded-3xl border border-border bg-background/80 px-4 py-4">
+        <div className="rounded-md border border-border bg-background/80 px-4 py-4">
             <div className="inline-flex rounded-full border border-border bg-card p-2">
                 {icon}
             </div>
@@ -375,7 +378,7 @@ function CompareDisclosure({
     return (
         <details
             open={defaultOpen}
-            className="group rounded-xl border border-border bg-card/45"
+            className="group data-panel"
         >
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-3 py-2.5 text-sm font-semibold text-foreground sm:px-5 sm:py-3">
                 {title}

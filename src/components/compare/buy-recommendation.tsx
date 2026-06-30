@@ -18,7 +18,7 @@ export function BuyRecommendation({
     <section className="space-y-4">
       <div>
         <p className="text-sm text-muted-foreground">Decision guide</p>
-        <h2 className="text-2xl font-semibold tracking-tight">
+        <h2 className="panel-title">
           Which one should you actually buy?
         </h2>
       </div>

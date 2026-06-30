@@ -67,7 +67,7 @@ export function MultiEnvironmentChart({ mousepads }: Props) {
   return (
     <Card className="border-border bg-card">
       <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-3">
-        <CardTitle className="text-lg tracking-tight sm:text-2xl">
+        <CardTitle className="panel-title">
           Desk-condition handling
         </CardTitle>
         <CardDescription className="hidden sm:block">

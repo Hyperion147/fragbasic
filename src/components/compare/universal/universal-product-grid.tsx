@@ -44,7 +44,7 @@ export function UniversalProductGrid({ mousepads }: Props) {
                         </div>
 
                         <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-3">
-                            <CardTitle className="text-lg tracking-tight sm:text-xl">
+                            <CardTitle className="panel-title">
                                 {mousepad.name}
                             </CardTitle>
                             <p className="text-xs text-muted-foreground sm:text-sm">
