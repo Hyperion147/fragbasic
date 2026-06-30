@@ -66,22 +66,22 @@ export function MultiEnvironmentChart({ mousepads }: Props) {
 
   return (
     <Card className="border-border bg-card">
-      <CardHeader>
-        <CardTitle className="text-2xl tracking-tight">
+      <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-3">
+        <CardTitle className="text-lg tracking-tight sm:text-2xl">
           Desk-condition handling
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="hidden sm:block">
           Compare how the selected pads handle humidity, sweat, and dust or
           hair buildup during normal use.
         </CardDescription>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="p-3 sm:p-6">
         <EvilRadarChart
           data={data}
           config={config}
-          className="mx-auto aspect-square max-h-[30rem] bg-background/20 pb-8"
-          chartProps={{ outerRadius: "72%" }}
+          className="mx-auto aspect-square max-h-[21rem] bg-background/20 pb-4 sm:max-h-[30rem] sm:pb-8"
+          chartProps={{ outerRadius: "68%" }}
         >
           <PolarGrid gridType="circle" />
           <PolarAngleAxis dataKey="metric" />

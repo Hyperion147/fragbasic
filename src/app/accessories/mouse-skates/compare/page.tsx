@@ -53,7 +53,7 @@ export default async function CompareMouseSkatesPage({
               </Badge>
             </div>
 
-            <h1 className="mt-5 text-5xl font-semibold tracking-tight md:text-7xl">
+            <h1 className="mt-5 text-4xl font-semibold tracking-tight sm:text-5xl md:text-7xl">
               Compare mouse skates side by side.
             </h1>
           </div>

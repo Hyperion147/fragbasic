@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Activity,
+  ChevronDown,
   CheckCircle2,
   CircleDollarSign,
   CircleOff,
@@ -106,40 +107,70 @@ export function IemCompare({ iems }: Props) {
         <CompareProductCard iem={right} color={rightColor} />
       </section>
 
-      <CompareVerdict left={left} right={right} />
+      <CompareDisclosure title="Quick verdict" defaultOpen>
+        <CompareVerdict left={left} right={right} />
+      </CompareDisclosure>
 
-      <OverlayFrequencyGraph left={left} right={right} />
+      <CompareDisclosure title="Overlapping frequency response" defaultOpen>
+        <OverlayFrequencyGraph left={left} right={right} />
+      </CompareDisclosure>
 
       <section className="grid gap-6 lg:grid-cols-2">
-        <RatingBreakdown iem={left} color={leftColor} />
-        <RatingBreakdown iem={right} color={rightColor} />
+        <CompareDisclosure title={`${left.shortName} score breakdown`}>
+          <RatingBreakdown iem={left} color={leftColor} />
+        </CompareDisclosure>
+        <CompareDisclosure title={`${right.shortName} score breakdown`}>
+          <RatingBreakdown iem={right} color={rightColor} />
+        </CompareDisclosure>
       </section>
 
-      <ComparisonMatrix left={left} right={right} />
+      <CompareDisclosure title="Comparison matrix">
+        <ComparisonMatrix left={left} right={right} />
+      </CompareDisclosure>
 
       <section className="grid gap-6 lg:grid-cols-2">
-        <ReviewCard iem={left} />
-        <ReviewCard iem={right} />
+        <CompareDisclosure title={`${left.shortName} review summary`}>
+          <ReviewCard iem={left} />
+        </CompareDisclosure>
+        <CompareDisclosure title={`${right.shortName} review summary`}>
+          <ReviewCard iem={right} />
+        </CompareDisclosure>
       </section>
 
       <section className="grid gap-6 lg:grid-cols-2">
-        <CommunityCard iem={left} color={leftColor} />
-        <CommunityCard iem={right} color={rightColor} />
+        <CompareDisclosure title={`${left.shortName} community`}>
+          <CommunityCard iem={left} color={leftColor} />
+        </CompareDisclosure>
+        <CompareDisclosure title={`${right.shortName} community`}>
+          <CommunityCard iem={right} color={rightColor} />
+        </CompareDisclosure>
       </section>
 
       <section className="grid gap-6 lg:grid-cols-2">
-        <SpecsCard iem={left} />
-        <SpecsCard iem={right} />
+        <CompareDisclosure title={`${left.shortName} specifications`}>
+          <SpecsCard iem={left} />
+        </CompareDisclosure>
+        <CompareDisclosure title={`${right.shortName} specifications`}>
+          <SpecsCard iem={right} />
+        </CompareDisclosure>
       </section>
 
       <section className="grid gap-6 lg:grid-cols-2">
-        <BuyingCard iem={left} />
-        <BuyingCard iem={right} />
+        <CompareDisclosure title={`${left.shortName} buying info`}>
+          <BuyingCard iem={left} />
+        </CompareDisclosure>
+        <CompareDisclosure title={`${right.shortName} buying info`}>
+          <BuyingCard iem={right} />
+        </CompareDisclosure>
       </section>
 
       <section className="grid gap-6 lg:grid-cols-2">
-        <FinalFitCard iem={left} />
-        <FinalFitCard iem={right} />
+        <CompareDisclosure title={`${left.shortName} fit guide`}>
+          <FinalFitCard iem={left} />
+        </CompareDisclosure>
+        <CompareDisclosure title={`${right.shortName} fit guide`}>
+          <FinalFitCard iem={right} />
+        </CompareDisclosure>
       </section>
     </div>
   );
@@ -177,6 +208,29 @@ function IemSelect({
   );
 }
 
+function CompareDisclosure({
+  title,
+  children,
+  defaultOpen = false,
+}: {
+  title: string;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+}) {
+  return (
+    <details
+      open={defaultOpen}
+      className="group rounded-xl border border-border bg-card/45"
+    >
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold text-foreground sm:px-5">
+        {title}
+        <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+      </summary>
+      <div className="border-t border-border p-3 sm:p-4">{children}</div>
+    </details>
+  );
+}
+
 function CompareProductCard({ iem, color }: { iem: Iem; color: string }) {
   return (
     <Card className="overflow-hidden border-border bg-card/90">
@@ -196,7 +250,7 @@ function CompareProductCard({ iem, color }: { iem: Iem; color: string }) {
           <Badge variant="outline">{formatIemDriverType(iem.driverType)}</Badge>
           <Badge variant="outline">{formatIemPrice(iem)}</Badge>
         </div>
-        <h2 className="mt-4 text-3xl font-semibold tracking-tight">{getIemFullName(iem)}</h2>
+        <h2 className="mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">{getIemFullName(iem)}</h2>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">{iem.communitySummary}</p>
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
           <MiniScore label="FPS" value={iem.ratings.fps} color={color} />

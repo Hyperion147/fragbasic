@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import {
   ArrowRight,
   Check,
+  ChevronDown,
   CircleOff,
   Dot,
   ShieldCheck,
@@ -113,11 +114,11 @@ export default async function MousepadPage({ params }: PageProps) {
                   {pad.brand}
                 </p>
 
-                <h1 className="mt-3 max-w-4xl text-5xl font-semibold tracking-tight md:text-7xl">
+                <h1 className="mt-3 max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl md:text-7xl">
                   {pad.name}
                 </h1>
 
-                <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
+                <p className="mt-5 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base md:leading-7">
                   {getHeroSummary(pad)}
                 </p>
               </div>
@@ -195,27 +196,49 @@ export default async function MousepadPage({ params }: PageProps) {
       <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
         <div className="mx-auto max-w-7xl grid gap-6 md:grid-cols-[1fr_360px]">
           <div className="space-y-6">
-            <MousepadFeelChart pad={pad} />
-            <MousepadSpecGrid pad={pad} />
-            <SurfaceAndUseCard pad={pad} />
-            <CommunityNotesCard pad={pad} />
-            <PersonalNotes pad={pad} />
-            <SourcesCard pad={pad} />
+            <ProductDisclosure title="Feel chart" defaultOpen>
+              <MousepadFeelChart pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Specifications">
+              <MousepadSpecGrid pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Surface and daily use">
+              <SurfaceAndUseCard pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Community notes">
+              <CommunityNotesCard pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Tested experience">
+              <PersonalNotes pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Sources">
+              <SourcesCard pad={pad} />
+            </ProductDisclosure>
           </div>
 
           <aside className="space-y-6">
-            <RecommendationCard pad={pad} />
-            <AvailabilityCard pad={pad} />
-            <ColorwaysCard pad={pad} />
-            <CompareLinksCard
-              pad={pad}
-              comparisonSlug={publishedComparison?.slug}
-              relatedCount={relatedComparisons.length}
-            />
-            <RelatedAlternatives
-              source={pad}
-              groups={relatedAlternativeGroups}
-            />
+            <ProductDisclosure title="Recommendation" defaultOpen>
+              <RecommendationCard pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Availability">
+              <AvailabilityCard pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Colorways">
+              <ColorwaysCard pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Compare this pad">
+              <CompareLinksCard
+                pad={pad}
+                comparisonSlug={publishedComparison?.slug}
+                relatedCount={relatedComparisons.length}
+              />
+            </ProductDisclosure>
+            <ProductDisclosure title="Related alternatives">
+              <RelatedAlternatives
+                source={pad}
+                groups={relatedAlternativeGroups}
+              />
+            </ProductDisclosure>
           </aside>
         </div>
       </div>
@@ -248,6 +271,29 @@ function HighlightCard({
         {value}
       </p>
     </div>
+  )
+}
+
+function ProductDisclosure({
+  title,
+  children,
+  defaultOpen = false,
+}: {
+  title: string
+  children: React.ReactNode
+  defaultOpen?: boolean
+}) {
+  return (
+    <details
+      open={defaultOpen}
+      className="group rounded-xl border border-border bg-card/45"
+    >
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold text-foreground sm:px-5">
+        {title}
+        <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+      </summary>
+      <div className="border-t border-border p-3 sm:p-4">{children}</div>
+    </details>
   )
 }
 

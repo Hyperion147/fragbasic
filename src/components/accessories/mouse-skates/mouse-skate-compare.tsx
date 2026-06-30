@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ChevronDown } from "lucide-react";
 
 import { MouseSkateDot } from "@/components/accessories/mouse-skates/mouse-skate-dot";
 import { Badge } from "@/components/ui/badge";
@@ -151,6 +152,7 @@ export function MouseSkateCompare({
                 ))}
             </div>
 
+            <SkateCompareDisclosure title="Rating matrix">
             <div className="rounded-2xl border border-border bg-card/60 p-5">
                 <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
                     <div>
@@ -212,7 +214,26 @@ export function MouseSkateCompare({
                     ))}
                 </div>
             </div>
+            </SkateCompareDisclosure>
         </div>
+    );
+}
+
+function SkateCompareDisclosure({
+    title,
+    children,
+}: {
+    title: string;
+    children: React.ReactNode;
+}) {
+    return (
+        <details className="group rounded-xl border border-border bg-card/45">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold text-foreground sm:px-5">
+                {title}
+                <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+            </summary>
+            <div className="border-t border-border p-3 sm:p-4">{children}</div>
+        </details>
     );
 }
 

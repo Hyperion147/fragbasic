@@ -25,26 +25,22 @@ type Props = {
 
 export function SelectedMousepadStrip({ mousepads, onRemove }: Props) {
   return (
-    <Card className="border-border bg-card">
-      <CardHeader>
-        <CardTitle className="text-2xl tracking-tight">
+    <Card className="border-border bg-card/90">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-lg tracking-tight sm:text-2xl">
           Current comparison set
         </CardTitle>
       </CardHeader>
 
-      <CardContent>
-        <p className="mb-4 text-sm text-muted-foreground">
-          Remove pads here to free a slot, or keep this set and scroll down for
-          the feel breakdown, glide lane, and desk-condition views.
-        </p>
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+      <CardContent className="pt-0">
+        <div className="flex gap-3 overflow-x-auto pb-1 [scrollbar-width:none] md:grid md:grid-cols-2 md:overflow-visible md:pb-0 xl:grid-cols-3 [&::-webkit-scrollbar]:hidden">
           {mousepads.map((mousepad) => {
             const colorway = getDefaultColorway(mousepad);
 
             return (
               <div
                 key={mousepad.slug}
-                className="flex items-start justify-between gap-4 rounded-3xl border border-border bg-background/80 px-4 py-4"
+                className="flex min-w-[245px] items-start justify-between gap-3 rounded-xl border border-border bg-background/80 px-3 py-3 md:min-w-0 md:rounded-3xl md:px-4 md:py-4"
               >
                 <div className="min-w-0">
                   <div className="flex items-center gap-3">
@@ -52,12 +48,21 @@ export function SelectedMousepadStrip({ mousepads, onRemove }: Props) {
                       className="size-3 shrink-0 rounded-full border border-border"
                       style={{ backgroundColor: colorway.color }}
                     />
-                    <p className="truncate font-medium text-foreground">
+                    <p className="truncate text-sm font-medium text-foreground md:text-base">
                       {getMousepadFullName(mousepad)}
                     </p>
                   </div>
 
-                  <div className="mt-3 flex flex-wrap gap-2">
+                  <div className="mt-3 flex flex-wrap gap-2 md:hidden">
+                    <Badge variant="outline">
+                      {formatMousepadValue(mousepad.category)}
+                    </Badge>
+                    <Badge variant="outline">
+                      {formatFeelLabel(mousepad.feel.speed, "speed")} glide
+                    </Badge>
+                  </div>
+
+                  <div className="mt-3 hidden flex-wrap gap-2 md:flex">
                     <Badge variant="outline">
                       {formatMousepadValue(mousepad.category)}
                     </Badge>

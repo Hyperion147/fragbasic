@@ -2,13 +2,21 @@
 
 import { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { RotateCcw, Search } from "lucide-react";
+import { RotateCcw, Search, SlidersHorizontal } from "lucide-react";
 
 import { IemCard } from "@/components/iems/iem-card";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { latestAddedIemSlugs } from "@/data/latest-added";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import {
   Select,
   SelectContent,
@@ -177,11 +185,11 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
 
   return (
     <div className="space-y-6">
-      <Card className="border-border bg-card/90 p-5 shadow-lg shadow-black/5">
+      <Card className="border-border bg-card/90 p-4 shadow-lg shadow-black/5 sm:p-5">
         <div className="grid gap-4 lg:grid-cols-[minmax(220px,0.9fr)_minmax(280px,1fr)_auto] lg:items-end">
           <div className="min-w-0">
             <p className="text-sm text-muted-foreground">Filters</p>
-            <h2 className="text-2xl font-semibold tracking-tight">
+            <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
               Find IEMs by tuning, price, and FPS score
             </h2>
           </div>
@@ -209,7 +217,99 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(180px,0.75fr)_1fr_1fr_1fr]">
+        <div className="mt-4 lg:hidden">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" className="w-full justify-center">
+                <SlidersHorizontal className="size-4" />
+                Filter IEMs
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="bottom" className="max-h-[82vh] rounded-t-2xl border-border">
+              <SheetHeader className="px-4 pb-2 pt-5">
+                <SheetTitle>Filter IEMs</SheetTitle>
+                <SheetDescription>
+                  Tune the list by brand, sound signature, price, or ranking.
+                </SheetDescription>
+              </SheetHeader>
+              <div className="overflow-y-auto px-4 pb-6">
+                <div className="grid gap-6">
+                  <IemFilterControls
+                    brand={brand}
+                    brands={brands}
+                    signature={signature}
+                    signatures={signatures}
+                    price={price}
+                    priceTiers={priceTiers}
+                    sort={sort}
+                    updateBrand={updateBrand}
+                    updateSignature={updateSignature}
+                    updatePrice={updatePrice}
+                    updateSort={updateSort}
+                  />
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+
+        <div className="mt-6 hidden gap-6 lg:grid lg:grid-cols-[minmax(180px,0.75fr)_1fr_1fr_1fr]">
+          <IemFilterControls
+            brand={brand}
+            brands={brands}
+            signature={signature}
+            signatures={signatures}
+            price={price}
+            priceTiers={priceTiers}
+            sort={sort}
+            updateBrand={updateBrand}
+            updateSignature={updateSignature}
+            updatePrice={updatePrice}
+            updateSort={updateSort}
+          />
+        </div>
+      </Card>
+
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {filteredIems.map((iem) => (
+          <IemCard
+            key={iem.id}
+            iem={iem}
+            isLatestAdded={latestAddedSlugSet.has(iem.slug)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function IemFilterControls({
+  brand,
+  brands,
+  signature,
+  signatures,
+  price,
+  priceTiers,
+  sort,
+  updateBrand,
+  updateSignature,
+  updatePrice,
+  updateSort,
+}: {
+  brand: BrandFilter;
+  brands: string[];
+  signature: typeof allFilterValue | IemSoundSignature;
+  signatures: IemSoundSignature[];
+  price: PriceFilter;
+  priceTiers: Iem["priceTier"][];
+  sort: SortKey;
+  updateBrand: (next: string) => void;
+  updateSignature: (next: typeof allFilterValue | IemSoundSignature) => void;
+  updatePrice: (next: PriceFilter) => void;
+  updateSort: (next: SortKey) => void;
+}) {
+  return (
+    <>
           <div className="space-y-3">
             <p className="text-sm text-muted-foreground">Brand</p>
             <Select value={brand} onValueChange={updateBrand}>
@@ -273,19 +373,7 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
               </FilterButton>
             ))}
           </FilterGroup>
-        </div>
-      </Card>
-
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {filteredIems.map((iem) => (
-          <IemCard
-            key={iem.id}
-            iem={iem}
-            isLatestAdded={latestAddedSlugSet.has(iem.slug)}
-          />
-        ))}
-      </div>
-    </div>
+    </>
   );
 }
 

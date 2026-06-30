@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ChevronDown } from "lucide-react";
 
 import { BuyRecommendation } from "@/components/compare/buy-recommendation";
 import { CompareFeelRadar } from "@/components/compare/compare-feel-radar";
@@ -78,14 +79,51 @@ export default async function ComparePage({ params }: PageProps) {
       <CompareHero left={left} right={right} comparisonSlug={comparison.slug} />
 
       <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10 space-y-6">
-        <ProductFaceoff left={left} right={right} />
-        <CompareFeelRadar left={left} right={right} />
-        <SpeedControlPosition left={left} right={right} />
-        <FeelMap left={left} right={right} />
-        <SpecRows left={left} right={right} />
-        <BuyRecommendation left={left} right={right} />
-        <VerdictPanel left={left} right={right} />
+        <CompareDisclosure title="Product faceoff" defaultOpen>
+          <ProductFaceoff left={left} right={right} />
+        </CompareDisclosure>
+        <CompareDisclosure title="Feel radar" defaultOpen>
+          <CompareFeelRadar left={left} right={right} />
+        </CompareDisclosure>
+        <CompareDisclosure title="Speed and control position">
+          <SpeedControlPosition left={left} right={right} />
+        </CompareDisclosure>
+        <CompareDisclosure title="Feel map">
+          <FeelMap left={left} right={right} />
+        </CompareDisclosure>
+        <CompareDisclosure title="Specifications">
+          <SpecRows left={left} right={right} />
+        </CompareDisclosure>
+        <CompareDisclosure title="Buying recommendation">
+          <BuyRecommendation left={left} right={right} />
+        </CompareDisclosure>
+        <CompareDisclosure title="Verdict">
+          <VerdictPanel left={left} right={right} />
+        </CompareDisclosure>
       </div>
     </main>
+  );
+}
+
+function CompareDisclosure({
+  title,
+  children,
+  defaultOpen = false,
+}: {
+  title: string;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+}) {
+  return (
+    <details
+      open={defaultOpen}
+      className="group rounded-xl border border-border bg-card/45"
+    >
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold text-foreground sm:px-5">
+        {title}
+        <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+      </summary>
+      <div className="border-t border-border p-3 sm:p-4">{children}</div>
+    </details>
   );
 }

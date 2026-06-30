@@ -24,21 +24,21 @@ type Props = {
 export function MultiPositionChart({ mousepads }: Props) {
   return (
     <Card className="border-border bg-card">
-      <CardHeader>
-        <CardTitle className="text-2xl tracking-tight">
+      <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-3">
+        <CardTitle className="text-lg tracking-tight sm:text-2xl">
           Glide lane
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="hidden sm:block">
           Left means more controlled and planted. Right means easier glide and
           faster movement. Glass sits far right because its hard surface changes
           the baseline feel.
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="space-y-6">
-        <div className="overflow-hidden rounded-3xl bg-background/60">
+      <CardContent className="space-y-4 p-3 sm:space-y-6 sm:p-6">
+        <div className="overflow-hidden rounded-xl bg-background/60 sm:rounded-3xl">
 
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             {mousepads.map((mousepad) => {
               const position = getMousepadSpeedControlPosition(mousepad);
               const color = MOUSEPAD_GRAPH_COLOR;
@@ -47,7 +47,7 @@ export function MultiPositionChart({ mousepads }: Props) {
               return (
                 <div
                   key={mousepad.slug}
-                  className="grid gap-3 rounded-3xl border border-border bg-card/75 px-4 py-4 lg:grid-cols-[240px_1fr_140px]"
+                  className="grid gap-3 rounded-xl border border-border bg-card/75 px-3 py-3 sm:rounded-3xl sm:px-4 sm:py-4 lg:grid-cols-[240px_1fr_140px]"
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-3">
@@ -55,17 +55,17 @@ export function MultiPositionChart({ mousepads }: Props) {
                         className="size-3 shrink-0 rounded-full border border-border"
                         style={{ backgroundColor: color }}
                       />
-                      <p className="truncate font-medium text-foreground">
+                      <p className="truncate text-sm font-medium text-foreground sm:text-base">
                         {getMousepadFullName(mousepad)}
                       </p>
                     </div>
-                    <p className="mt-1 text-sm text-muted-foreground">
+                    <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
                       {zoneLabel}
                     </p>
                   </div>
 
                   <div className="space-y-2">
-                    <div className="relative h-10 overflow-hidden rounded-full border border-border bg-[linear-gradient(90deg,oklch(0.24_0.01_230/0.5),oklch(0.27_0.01_230/0.5),oklch(0.31_0.02_230/0.5),oklch(0.35_0.02_230/0.5),oklch(0.39_0.03_230/0.5),oklch(0.43_0.03_230/0.5))]">
+                    <div className="relative h-8 overflow-hidden rounded-full border border-border bg-[linear-gradient(90deg,oklch(0.24_0.01_230/0.5),oklch(0.27_0.01_230/0.5),oklch(0.31_0.02_230/0.5),oklch(0.35_0.02_230/0.5),oklch(0.39_0.03_230/0.5),oklch(0.43_0.03_230/0.5))] sm:h-10">
                       {SPEED_CONTROL_ZONES.slice(0, -1).map((zone) => (
                         <div
                           key={zone.label}
@@ -87,12 +87,12 @@ export function MultiPositionChart({ mousepads }: Props) {
                         className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2"
                         style={{ left: `${position}%` }}
                       >
-                        <div className="flex items-center gap-2 rounded-full border border-border bg-background px-2 py-1 shadow-md shadow-black/10">
+                        <div className="flex items-center gap-1 rounded-full border border-border bg-background px-1.5 py-1 shadow-md shadow-black/10 sm:gap-2 sm:px-2">
                           <span
                             className="size-3 rounded-full border border-background"
                             style={{ backgroundColor: color }}
                           />
-                          <span className="text-xs font-medium text-foreground">
+                          <span className="text-[10px] font-medium text-foreground sm:text-xs">
                             {formatFeelLabel(
                               getCalibratedFeelValue(mousepad, "speed", "universal"),
                               "speed"
@@ -102,7 +102,7 @@ export function MultiPositionChart({ mousepads }: Props) {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-6 text-[10px] uppercase tracking-[0.14em] text-muted-foreground md:text-[11px]">
+                    <div className="hidden grid-cols-6 text-[10px] uppercase tracking-[0.14em] text-muted-foreground sm:grid md:text-[11px]">
                       {SPEED_CONTROL_ZONES.map((zone) => (
                         <span key={zone.label} className="text-center">
                           {zone.shortLabel}
@@ -111,7 +111,7 @@ export function MultiPositionChart({ mousepads }: Props) {
                     </div>
                   </div>
 
-                  <div className="rounded-2xl border border-border bg-background/70 px-4 py-2">
+                  <div className="hidden rounded-2xl border border-border bg-background/70 px-4 py-2 lg:block">
                     <p className="mt-1 text-base font-semibold leading-6 text-foreground">
                       {zoneLabel}
                     </p>

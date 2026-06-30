@@ -75,12 +75,6 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
                             Browse pads by feel, surface, and India
                             availability.
                         </h1>
-
-                        <p className="mt-6 max-w-3xl text-base leading-7 text-muted-foreground md:text-lg">
-                            Explore cloth and hybrid mousepads for VALORANT,
-                            CS2, Apex, and more, then narrow the list by speed,
-                            control, stopping power, and brand.
-                        </p>
                     </div>
                 </div>
             </section>

@@ -6,6 +6,7 @@ import {
     Activity,
     Cable,
     CheckCircle2,
+    ChevronDown,
     CircleDollarSign,
     CircleOff,
     Gamepad2,
@@ -116,11 +117,11 @@ export default async function IemPage({ params }: Props) {
                             </Badge>
                         </div>
 
-                        <h1 className="mt-6 max-w-4xl text-5xl font-semibold tracking-tight md:text-7xl">
+                        <h1 className="mt-6 max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl md:text-7xl">
                             {getIemFullName(iem)}
                         </h1>
 
-                        <p className="mt-3 text-lg text-muted-foreground">
+                        <p className="mt-3 text-base text-muted-foreground sm:text-lg">
                             {iem.subtitle}
                         </p>
 
@@ -132,12 +133,12 @@ export default async function IemPage({ params }: Props) {
                         </p>
                     </div>
 
-                        <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground">
+                        <p className="mt-5 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base md:leading-7">
                             {iem.communitySummary}
                         </p>
 
                         <div className="mt-8 flex flex-wrap items-center gap-3">
-                            <p className="mr-2 text-4xl font-semibold tracking-tight">
+                    <p className="mr-2 text-3xl font-semibold tracking-tight sm:text-4xl">
                                 {formatIemPrice(iem)}
                             </p>
                             <AccentPill>
@@ -179,28 +180,42 @@ export default async function IemPage({ params }: Props) {
             </section>
 
             <div className="w-full space-y-8 px-4 py-8 md:px-6 md:py-10 lg:px-8 xl:px-10">
-                <ScorePanel iem={iem} />
+                <IemDisclosure title="Quick verdict" defaultOpen>
+                    <ScorePanel iem={iem} />
+                </IemDisclosure>
 
                 <section className="grid gap-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,0.75fr)]">
-                    <ReviewCard iem={iem} />
-                    <RatingBreakdown iem={iem} />
+                    <IemDisclosure title="Review summary">
+                        <ReviewCard iem={iem} />
+                    </IemDisclosure>
+                    <IemDisclosure title="Score breakdown">
+                        <RatingBreakdown iem={iem} />
+                    </IemDisclosure>
                 </section>
 
-                <section>
+                <IemDisclosure title="Frequency response" defaultOpen>
                     <FrequencyGraphCard iem={iem} />
-                </section>
+                </IemDisclosure>
 
-                <CommunityPanel iem={iem} />
+                <IemDisclosure title="Community review">
+                    <CommunityPanel iem={iem} />
+                </IemDisclosure>
 
                 <section
                     id="specs"
                     className="grid gap-6 lg:grid-cols-[1fr_380px]"
                 >
-                    <SpecsCard iem={iem} />
-                    <BuyingCard iem={iem} />
+                    <IemDisclosure title="Key specifications">
+                        <SpecsCard iem={iem} />
+                    </IemDisclosure>
+                    <IemDisclosure title="Buying info">
+                        <BuyingCard iem={iem} />
+                    </IemDisclosure>
                 </section>
 
-                <FinalFitPanel iem={iem} />
+                <IemDisclosure title="Fit guide">
+                    <FinalFitPanel iem={iem} />
+                </IemDisclosure>
 
                 <footer className="flex flex-col gap-4 border-t border-border pt-6 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
                     <p>Last updated: {formatReadableDate(iem.updatedAt)}</p>
@@ -260,6 +275,29 @@ function StorePill({ label, href }: { label: string; href?: string }) {
             <PackageCheck className="size-4 text-[color:var(--iem-hover)]" />
             {label}
         </span>
+    );
+}
+
+function IemDisclosure({
+    title,
+    children,
+    defaultOpen = false,
+}: {
+    title: string;
+    children: React.ReactNode;
+    defaultOpen?: boolean;
+}) {
+    return (
+        <details
+            open={defaultOpen}
+            className="group rounded-xl border border-border bg-card/45"
+        >
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold text-foreground sm:px-5">
+                {title}
+                <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+            </summary>
+            <div className="border-t border-border p-3 sm:p-4">{children}</div>
+        </details>
     );
 }
 
