@@ -30,7 +30,7 @@ export default function BrowseMouseSkatesPage() {
     return (
         <main className="min-h-screen bg-background text-foreground">
             <section className="border-b border-border bg-background">
-                <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10 flex items-end justify-between">
+                <div className="page-hero flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                     <div className="max-w-5xl">
                         <SiteBreadcrumbs
                             items={[
@@ -51,14 +51,14 @@ export default function BrowseMouseSkatesPage() {
                                 {skates.length === 1 ? "" : "s"} tracked
                             </Badge>
                         </div>
-                        <h1 className="mt-5 text-5xl font-semibold tracking-tight md:text-7xl">
+                        <h1 className="page-title mt-5">
                             Browse skates by company, speed, and material.
                         </h1>
                     </div>
                     <div>
                       <Link
                             href="/accessories/mouse-skates/compare"
-                            className="inline-flex items-center gap-2 rounded-2xl border border-border px-4 py-2 text-sm font-semibold text-foreground"
+                            className="inline-flex items-center gap-2 rounded-md border border-border px-4 py-2 text-sm font-semibold text-foreground"
                         >
                             Compare skates
                             <ArrowRight className="size-4" />
@@ -67,7 +67,7 @@ export default function BrowseMouseSkatesPage() {
                 </div>
             </section>
 
-            <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+            <section className="page-section">
                 <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading skate filters...</div>}>
                     <MouseSkateBrowser skates={skates} />
                 </Suspense>

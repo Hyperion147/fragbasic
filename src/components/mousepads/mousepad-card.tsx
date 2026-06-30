@@ -65,14 +65,14 @@ export function MousepadCard({
 
         <div className="space-y-1">
           <p className="text-sm text-muted-foreground">{pad.brand}</p>
-          <p className="text-xl font-semibold tracking-tight text-foreground">
+          <p className="panel-title text-foreground">
             {pad.name}
           </p>
         </div>
 
         <div
           className={cn(
-            "relative rounded-xl border border-border bg-card sm:rounded-3xl",
+            "relative rounded-md border border-border bg-card",
             compact ? "aspect-[16/10]" : "aspect-4/3",
           )}
         >

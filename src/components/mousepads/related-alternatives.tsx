@@ -39,7 +39,7 @@ export function RelatedAlternatives({ source, groups }: Props) {
     <Card className="border-border bg-card p-5 md:p-6">
       <div>
         <p className="text-sm text-muted-foreground">Related alternatives</p>
-        <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+        <h2 className="panel-title mt-1">
           Around {source.name}
         </h2>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">

@@ -20,7 +20,7 @@ export function BrandBestPicks({ control, speed, value }: Props) {
   return (
     <section className="space-y-4">
       <div className="max-w-3xl">
-        <h2 className="text-3xl font-semibold tracking-tight">Best picks</h2>
+        <h2 className="section-title">Best picks</h2>
         <p className="mt-2 text-sm leading-6 text-muted-foreground">
           Quick shortcuts for the three most common brand-level questions:
           which pad controls best, which one moves fastest, and which one gives
@@ -71,7 +71,7 @@ function PickCard({
           <Badge variant="outline" className="w-fit">
             {label}
           </Badge>
-          <CardTitle className="mt-4 text-2xl tracking-tight">
+          <CardTitle className="panel-title mt-4">
             {mousepad.name}
           </CardTitle>
           <p className="text-sm text-muted-foreground">{mousepad.brand}</p>

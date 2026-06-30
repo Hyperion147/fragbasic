@@ -37,7 +37,7 @@ export default async function CompareMouseSkatesPage({
   return (
     <main className="min-h-screen bg-background text-foreground">
       <section className="border-b border-border bg-background">
-        <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+        <div className="page-hero">
           <div className="max-w-5xl">
             <SiteBreadcrumbs
               items={[
@@ -53,14 +53,14 @@ export default async function CompareMouseSkatesPage({
               </Badge>
             </div>
 
-            <h1 className="mt-5 text-4xl font-semibold tracking-tight sm:text-5xl md:text-7xl">
+            <h1 className="page-title-compact mt-5">
               Compare mouse skates side by side.
             </h1>
           </div>
         </div>
       </section>
 
-      <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+      <section className="page-section">
         <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading skate comparison...</div>}>
           <MouseSkateCompare skates={skates} initialLeftSlug={params?.left} />
         </Suspense>

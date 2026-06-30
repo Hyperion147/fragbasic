@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { IconTooltip } from "@/components/ui/tooltip";
 import {
   Card,
   CardContent,
@@ -27,7 +28,7 @@ export function SelectedMousepadStrip({ mousepads, onRemove }: Props) {
   return (
     <Card className="border-border bg-card/90">
       <CardHeader className="pb-3">
-        <CardTitle className="text-lg tracking-tight sm:text-2xl">
+        <CardTitle className="panel-title">
           Current comparison set
         </CardTitle>
       </CardHeader>
@@ -40,7 +41,7 @@ export function SelectedMousepadStrip({ mousepads, onRemove }: Props) {
             return (
               <div
                 key={mousepad.slug}
-                className="flex min-w-[245px] items-start justify-between gap-3 rounded-xl border border-border bg-background/80 px-3 py-3 md:min-w-0 md:rounded-3xl md:px-4 md:py-4"
+                className="flex min-w-[245px] items-start justify-between gap-3 rounded-md border border-border bg-background/80 px-3 py-3 md:min-w-0 md:px-4 md:py-4"
               >
                 <div className="min-w-0">
                   <div className="flex items-center gap-3">
@@ -75,15 +76,17 @@ export function SelectedMousepadStrip({ mousepads, onRemove }: Props) {
                   </div>
                 </div>
 
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon-sm"
-                  onClick={() => onRemove(mousepad.slug)}
-                  aria-label={`Remove ${getMousepadFullName(mousepad)}`}
-                >
-                  <X className="size-4" />
-                </Button>
+                <IconTooltip label={`Remove ${getMousepadFullName(mousepad)}`} side="left">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon-sm"
+                    onClick={() => onRemove(mousepad.slug)}
+                    aria-label={`Remove ${getMousepadFullName(mousepad)}`}
+                  >
+                    <X className="size-4" />
+                  </Button>
+                </IconTooltip>
               </div>
             );
           })}

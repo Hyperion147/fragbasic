@@ -5,6 +5,7 @@ import { RotateCcw, Search, SlidersHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { IconTooltip } from "@/components/ui/tooltip";
 import {
   Sheet,
   SheetContent,
@@ -47,7 +48,7 @@ export function MousepadFilters({
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <p className="text-sm text-muted-foreground">Filters</p>
-          <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
+          <h2 className="panel-title">
             Narrow the shortlist fast
           </h2>
         </div>
@@ -56,10 +57,16 @@ export function MousepadFilters({
           <p className="text-sm text-muted-foreground">
             {resultCount} mousepad{resultCount === 1 ? "" : "s"}
           </p>
-          <Button variant="outline" size="sm" onClick={onReset}>
-            <RotateCcw className="size-4" />
-            Reset
-          </Button>
+          <IconTooltip label="Reset all filters" side="left">
+            <Button
+              variant="outline"
+              size="icon-sm"
+              onClick={onReset}
+              aria-label="Reset all filters"
+            >
+              <RotateCcw className="size-4" />
+            </Button>
+          </IconTooltip>
         </div>
       </div>
 

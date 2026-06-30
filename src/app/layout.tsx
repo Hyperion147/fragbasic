@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { Analytics } from "@vercel/analytics/next";
 import { JsonLd } from "@/components/json-ld";
 import { buildWebsiteJsonLd, getRootMetadata } from "@/lib/seo";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = getRootMetadata();
 
@@ -32,9 +33,11 @@ export default function RootLayout({
       >
         <JsonLd data={buildWebsiteJsonLd()} />
         <Analytics />
-        <SiteNavbar />
-        {children}
-        <SiteFooter />
+        <TooltipProvider>
+          <SiteNavbar />
+          {children}
+          <SiteFooter />
+        </TooltipProvider>
       </body>
     </html>
   );

@@ -40,7 +40,7 @@ export default function IemsPage() {
       />
       <section className="relative overflow-hidden border-b border-border bg-background">
 
-        <div className="relative w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+        <div className="page-hero relative">
           <div className="max-w-5xl">
             <SiteBreadcrumbs
               items={[
@@ -54,14 +54,14 @@ export default function IemsPage() {
               <Badge variant="outline">FPS focused</Badge>
             </div>
 
-            <h1 className="mt-6 max-w-5xl text-5xl font-semibold tracking-tight md:text-7xl">
+            <h1 className="page-title mt-5 max-w-5xl">
               Browse IEMs by imaging, tuning, and value.
             </h1>
           </div>
         </div>
       </section>
 
-      <section id="iems" className="w-full px-4 py-8 md:px-6 md:py-12 lg:px-8 xl:px-10">
+      <section id="iems" className="page-section">
         <SiteSection>
           <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading IEM filters...</div>}>
             <IemBrowser iems={iems} />

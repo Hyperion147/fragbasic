@@ -125,7 +125,7 @@ export function ComparisonBrowser({ comparisons, tags }: Props) {
             ) : (
                 <Card className="border-dashed border-border bg-card/80 p-8 text-center">
                     <div className="mx-auto max-w-xl space-y-4">
-                        <h3 className="text-2xl font-semibold tracking-tight">
+                        <h3 className="panel-title">
                             No published matchups for this filter yet
                         </h3>
                         <p className="text-sm leading-6 text-muted-foreground">

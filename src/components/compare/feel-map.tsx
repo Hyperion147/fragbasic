@@ -27,7 +27,7 @@ export function FeelMap({
     <Card className="border-border bg-card p-5 md:p-6">
       <div className="mb-6">
         <p className="text-sm text-muted-foreground">Feel map</p>
-        <h2 className="text-2xl font-semibold tracking-tight">
+        <h2 className="panel-title">
           How they feel in-game
         </h2>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
@@ -37,7 +37,7 @@ export function FeelMap({
         </p>
       </div>
 
-      <div className="mb-6 grid gap-3 rounded-3xl border border-border bg-background/60 p-4 sm:grid-cols-2">
+      <div className="mb-6 grid gap-3 rounded-md border border-border bg-background/60 p-4 sm:grid-cols-2">
         <LegendChip color={leftColors.solid} label={left.name} />
         <LegendChip color={rightColors.solid} label={right.name} />
       </div>
@@ -72,9 +72,9 @@ function ScaleMap({
   mode: FeelScaleMode
 }) {
   return (
-    <div className="rounded-3xl border border-border bg-background/35 p-4">
+    <div className="rounded-md border border-border bg-background/35 p-4">
       <div className="mb-5">
-        <h3 className="text-lg font-semibold tracking-tight">
+        <h3 className="panel-title">
           {FEEL_SCALE_LABELS[mode]}
         </h3>
         <p className="mt-1 text-sm leading-6 text-muted-foreground">
@@ -84,7 +84,7 @@ function ScaleMap({
 
       <div className="space-y-5">
         {FEEL_METRICS.map(({ label, key }) => (
-          <div key={key} className="rounded-3xl border border-border bg-card/55 p-4">
+          <div key={key} className="rounded-md border border-border bg-card/55 p-4">
             <div className="mb-3 flex items-center justify-between gap-3 text-sm">
               <span className="font-medium text-foreground">{label}</span>
               <span className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">

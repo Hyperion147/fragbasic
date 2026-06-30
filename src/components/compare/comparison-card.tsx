@@ -21,7 +21,7 @@ export function ComparisonCard({ comparison, left, right }: Props) {
                     <Badge className="text-black">Published matchup</Badge>
                     <Badge variant="outline">{comparison.tags[0]}</Badge>
                 </div>
-                <div className="grid gap-3 rounded-3xl md:grid-cols-[1fr_auto_1fr] md:items-center">
+                <div className="grid gap-3 rounded-md md:grid-cols-[1fr_auto_1fr] md:items-center">
                     <PadSummary
                         brand={left.brand}
                         name={left.name}
@@ -31,7 +31,7 @@ export function ComparisonCard({ comparison, left, right }: Props) {
                             "stoppingPower",
                         )} stopping`}
                     />
-                    <div className="text-center text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                    <div className="compact-label text-center">
                         vs
                     </div>
                     <PadSummary
@@ -84,7 +84,7 @@ function PadSummary({
     return (
         <div className={align === "right" ? "text-left md:text-right" : ""}>
             <p className="text-sm text-muted-foreground">{brand}</p>
-            <p className="text-lg font-semibold tracking-tight">{name}</p>
+            <p className="text-base font-semibold">{name}</p>
             <div
                 className={[
                     "mt-3 flex flex-wrap gap-2",

@@ -13,7 +13,6 @@ import {
     ActiveDot,
 } from "@/components/evilcharts/charts/radar-chart";
 
-import { Card } from "@/components/ui/card";
 import {
     getMousepadChartColors,
 } from "@/lib/mousepads";
@@ -65,11 +64,11 @@ export function MousepadFeelChart({ pad }: Props) {
     };
 
     return (
-        <Card className="border-border bg-card p-5 md:p-6">
+        <div>
             <div className="mb-6">
                 <p className="text-sm text-muted-foreground">Feel profile</p>
 
-                <h2 className="text-2xl font-semibold tracking-tight">
+                <h2 className="panel-title">
                     How {pad.name} feels in-game
                 </h2>
 
@@ -144,7 +143,7 @@ export function MousepadFeelChart({ pad }: Props) {
             </EvilRadarChart>
 
             {pad.feelVariants?.length ? (
-                <div className="mt-4 rounded-2xl border border-border bg-background/60 p-4">
+                <div className="mt-4 border border-border bg-background/60 p-4">
                     <p className="text-sm font-medium text-foreground">
                         Variant note
                     </p>
@@ -166,6 +165,6 @@ export function MousepadFeelChart({ pad }: Props) {
                         ))}
                 </div>
             ) : null}
-        </Card>
+        </div>
     );
 }

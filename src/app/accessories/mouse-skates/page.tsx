@@ -70,7 +70,7 @@ export default function MouseSkatesPage() {
     return (
         <main className="min-h-screen bg-background text-foreground">
             <section className="border-b border-border bg-background">
-                <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10 flex items-end justify-between">
+                <div className="page-hero flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                     <div className="max-w-5xl">
                         <SiteBreadcrumbs
                             items={[
@@ -90,21 +90,21 @@ export default function MouseSkatesPage() {
                             <Badge variant="outline">No images yet</Badge>
                         </div>
 
-                        <h1 className="mt-5 text-5xl font-semibold tracking-tight md:text-7xl">
+                        <h1 className="page-title mt-5">
                             Mouse skates ranked from fast to slow.
                         </h1>
                     </div>
                     <div className="mt-7 flex flex-wrap gap-3">
                         <Link
                             href="/accessories/mouse-skates/browse"
-                            className="inline-flex items-center gap-2 rounded-2xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
+                            className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
                         >
                             Browse skates
                             <ArrowRight className="size-4" />
                         </Link>
                         <Link
                             href="/accessories/mouse-skates/compare"
-                            className="inline-flex items-center gap-2 rounded-2xl border border-border px-4 py-2 text-sm font-semibold text-foreground"
+                            className="inline-flex items-center gap-2 rounded-md border border-border px-4 py-2 text-sm font-semibold text-foreground"
                         >
                             Compare skates
                             <ArrowRight className="size-4" />
@@ -113,11 +113,11 @@ export default function MouseSkatesPage() {
                 </div>
             </section>
 
-            <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+            <section className="page-section">
                 <SkateSpectrum skates={fastSlowSkates} />
             </section>
 
-            <section className="border-t border-border w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+            <section className="page-section border-t border-border">
                 <SectionHeading eyebrow="Materials" title="What changes feel" />
                 <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
                     {materialNotes.map((note) => (
@@ -155,10 +155,10 @@ function SectionHeading({
 }) {
     return (
         <div>
-            <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+            <p className="compact-label">
                 {eyebrow}
             </p>
-            <h2 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
+            <h2 className="section-title mt-2">
                 {title}
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">

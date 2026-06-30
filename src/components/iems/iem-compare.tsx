@@ -241,7 +241,7 @@ function CompareProductCard({ iem, color }: { iem: Iem; color: string }) {
           <Badge variant="outline">{formatIemDriverType(iem.driverType)}</Badge>
           <Badge variant="outline">{formatIemPrice(iem)}</Badge>
         </div>
-        <h2 className="mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">{getIemFullName(iem)}</h2>
+        <h2 className="panel-title mt-4">{getIemFullName(iem)}</h2>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">{iem.communitySummary}</p>
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
           <MiniScore label="FPS" value={iem.ratings.fps} color={color} />
@@ -250,7 +250,7 @@ function CompareProductCard({ iem, color }: { iem: Iem; color: string }) {
         </div>
         <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">Verdict</p>
+            <p className="compact-label">Verdict</p>
             <p className="mt-1 font-semibold" style={{ color }}>
               {getIemScoreTone(iem.ratings.fragbasic)}
             </p>
@@ -284,7 +284,7 @@ function CompareVerdict({ left, right }: { left: Iem; right: Iem }) {
 function VerdictTile({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-lg border border-border bg-background/55 p-4">
-      <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">{label}</p>
+      <p className="compact-label">{label}</p>
       <p className="mt-2 text-lg font-semibold leading-6 text-foreground">{value}</p>
     </div>
   );
@@ -503,7 +503,7 @@ function ReviewCard({ iem }: { iem: Iem }) {
   return (
     <Card className="border-border bg-card/90 p-6">
       <SectionKicker icon={ShieldCheck} label={`${iem.shortName} review summary`} />
-      <h2 className="mt-4 text-2xl font-semibold tracking-tight">What stands out</h2>
+      <h2 className="panel-title mt-4">What stands out</h2>
       <p className="mt-4 text-sm leading-7 text-muted-foreground">{iem.officialReview.summary}</p>
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         <ListBlock title="Best parts" items={iem.pros.slice(0, 3)} positive />

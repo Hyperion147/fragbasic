@@ -49,7 +49,7 @@ export default function CompareIndexPage() {
     return (
         <main className="min-h-screen bg-background text-foreground">
             <section className="border-b border-border bg-background">
-                <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10 flex items-end justify-between">
+                <div className="page-hero flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                     <div className="max-w-3xl">
                         <SiteBreadcrumbs
                             items={[
@@ -67,7 +67,7 @@ export default function CompareIndexPage() {
                                 {comparisons.length === 1 ? "" : "s"}
                             </Badge>
                         </div>
-                        <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">
+                        <h1 className="page-title-compact mt-4">
                             Compare mousepads side by side.
                         </h1>
                         <p className="mt-4 rounded-lg border border-sky-300/40 bg-sky-400/10 px-4 py-3 text-sm leading-6 text-sky-100">
@@ -86,6 +86,7 @@ export default function CompareIndexPage() {
                             <ClientShareButton
                                 href="/mousepads/compare"
                                 label="Share hub"
+                                iconOnly
                             />
                         </div>
                         <p className="text-sm text-muted-foreground">
@@ -95,7 +96,7 @@ export default function CompareIndexPage() {
                 </div>
             </section>
 
-            <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+            <section className="page-section">
                 <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading comparison filters...</div>}>
                     <ComparisonBrowser
                         comparisons={comparisons}

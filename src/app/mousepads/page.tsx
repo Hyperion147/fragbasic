@@ -64,7 +64,7 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
                 })}
             />
             <section className="border-b border-border bg-background">
-                <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+                <div className="page-hero">
                     <div className="max-w-5xl">
                         <SiteBreadcrumbs
                             items={[
@@ -81,7 +81,7 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
                             </Badge>
                         </div>
 
-                        <h1 className="mt-5 text-5xl font-semibold tracking-tight md:text-7xl">
+                        <h1 className="page-title mt-5">
                             Browse pads by feel, surface, and India
                             availability.
                         </h1>
@@ -89,7 +89,7 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
                 </div>
             </section>
 
-            <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
+            <section className="page-section">
                 <SiteSection>
                     <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading mousepad filters...</div>}>
                         <MousepadBrowser

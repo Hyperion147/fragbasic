@@ -14,7 +14,7 @@ import type { MouseSkate } from "@/types/accessory";
 
 export function MouseSkateCard({ skate }: { skate: MouseSkate }) {
   return (
-    <article className="flex h-full flex-col rounded-2xl border border-border bg-card/70 p-5">
+    <article className="flex h-full flex-col rounded-md border border-border bg-card/70 p-4">
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-wrap gap-2">
           <Badge>{skate.brand}</Badge>
@@ -26,7 +26,7 @@ export function MouseSkateCard({ skate }: { skate: MouseSkate }) {
 
       <div className="mt-4">
         <p className="text-sm text-muted-foreground">{skate.series}</p>
-        <p className="mt-1 text-xl font-semibold tracking-tight text-foreground">
+        <p className="panel-title mt-1 text-foreground">
           {skate.name}
         </p>
       </div>
@@ -42,7 +42,7 @@ export function MouseSkateCard({ skate }: { skate: MouseSkate }) {
       </div>
 
       <div className="mt-5">
-        <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+        <p className="compact-label">
           Surface fit
         </p>
         <div className="mt-3 flex flex-wrap gap-2">

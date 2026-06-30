@@ -3,6 +3,7 @@
 import { useDeferredValue, useMemo } from "react";
 import { Plus, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { IconTooltip } from "@/components/ui/tooltip";
 import {
   Card,
   CardContent,
@@ -69,7 +70,7 @@ export function MousepadSelector({
   return (
     <Card className="border-border bg-card/90">
       <CardHeader className="pb-3">
-        <CardTitle className="text-lg tracking-tight sm:text-2xl">
+        <CardTitle className="panel-title">
           Pick up to three mousepads ({selectedSlugs.length}/{maxSelected})
         </CardTitle>
       </CardHeader>
@@ -100,7 +101,7 @@ export function MousepadSelector({
             return (
               <div
                 key={mousepad.slug}
-                className="flex items-center justify-between gap-3 rounded-xl border border-border bg-background/70 px-3 py-3 md:rounded-3xl md:px-4 md:py-4"
+                className="flex items-center justify-between gap-3 rounded-md border border-border bg-background/70 px-3 py-3 md:px-4 md:py-4"
               >
                 <div className="min-w-0">
                   <div className="flex items-center gap-3">
@@ -118,23 +119,24 @@ export function MousepadSelector({
                   </p>
                 </div>
 
-                <Button
-                  type="button"
-                  size="sm"
-                  onClick={() => onAdd(mousepad)}
-                  disabled={hasReachedLimit}
-                  aria-label={`Add ${getMousepadFullName(mousepad)} to compare`}
-                >
-                  <Plus className="size-4" />
-                  Add
-                </Button>
+                <IconTooltip label={`Add ${getMousepadFullName(mousepad)} to compare`} side="left">
+                  <Button
+                    type="button"
+                    size="icon-sm"
+                    onClick={() => onAdd(mousepad)}
+                    disabled={hasReachedLimit}
+                    aria-label={`Add ${getMousepadFullName(mousepad)} to compare`}
+                  >
+                    <Plus className="size-4" />
+                  </Button>
+                </IconTooltip>
               </div>
             );
           })}
         </div>
 
         {availableMousepads.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-border bg-background/70 px-5 py-8 text-center">
+          <div className="rounded-md border border-dashed border-border bg-background/70 px-5 py-6 text-center">
             <div className="mx-auto max-w-[220px] space-y-2">
               <p className="font-medium text-foreground">No matching mousepads</p>
               <p className="text-sm text-muted-foreground">

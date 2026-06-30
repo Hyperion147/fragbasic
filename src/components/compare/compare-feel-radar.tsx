@@ -35,7 +35,7 @@ export function CompareFeelRadar({ left, right }: Props) {
         <Card className="border-border bg-card p-5 md:p-6">
             <div className="mb-6">
                 <p className="text-sm text-muted-foreground">Feel profile</p>
-                <h2 className="text-2xl font-semibold tracking-tight">
+                <h2 className="panel-title">
                     Glide feel with calibrated scale context
                 </h2>
                 <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
@@ -88,9 +88,9 @@ function ScaleRadar({
     };
 
     return (
-        <div className="rounded-3xl border border-border bg-background/45 p-4">
+        <div className="rounded-md border border-border bg-background/45 p-4">
             <div className="mb-3">
-                <h3 className="text-lg font-semibold tracking-tight">
+                <h3 className="panel-title">
                     {FEEL_SCALE_LABELS[mode]}
                 </h3>
                 <p className="mt-1 text-sm leading-6 text-muted-foreground">

@@ -18,7 +18,7 @@ export function BrandSpeedOrder({ mousepads }: Props) {
   return (
     <Card className="border-border bg-card">
       <CardHeader>
-        <CardTitle className="text-2xl tracking-tight">
+        <CardTitle className="panel-title">
           Glide feel order
         </CardTitle>
         <p className="text-sm leading-6 text-muted-foreground">
@@ -37,10 +37,10 @@ export function BrandSpeedOrder({ mousepads }: Props) {
           return (
             <div
               key={mousepad.slug}
-              className="grid gap-4 rounded-3xl border border-border bg-background/70 p-4 lg:grid-cols-[56px_240px_1fr_140px]"
+              className="grid gap-4 rounded-md border border-border bg-background/70 p-4 lg:grid-cols-[56px_240px_1fr_140px]"
             >
               <div className="rounded-2xl border border-border bg-card px-3 py-3 text-center">
-                <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                <p className="compact-label">
                   Rank
                 </p>
                 <p className="mt-1 text-lg font-semibold text-foreground">

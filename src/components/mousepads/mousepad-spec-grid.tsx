@@ -1,4 +1,3 @@
-import { Card } from "@/components/ui/card";
 import {
     formatConfidenceLabel,
     formatEnvironmentLabel,
@@ -35,24 +34,29 @@ export function MousepadSpecGrid({ pad }: { pad: Mousepad }) {
     ];
 
     return (
-        <Card className="border-border bg-card p-5 md:p-6">
+        <div>
             <div className="mb-6">
                 <p className="text-sm text-muted-foreground">Spec sheet</p>
-                <h2 className="text-2xl font-semibold tracking-tight">
+                <h2 className="panel-title">
                     Specs that matter
                 </h2>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2">
-                {specs.map(([label, value]) => (
-                    <div
-                        key={label}
-                        className="rounded-xl border border-border bg-background p-4"
-                    >
-                        <p className="text-xs text-muted-foreground">{label}</p>
-                        <p className="mt-1 text-sm font-medium">{value}</p>
-                    </div>
-                ))}
+            <div className="overflow-hidden border border-border bg-background/60">
+                <table className="data-table">
+                    <tbody>
+                        {specs.map(([label, value]) => (
+                            <tr key={label}>
+                                <td className="w-1/3 text-xs uppercase text-muted-foreground">
+                                    {label}
+                                </td>
+                                <td className="font-medium text-foreground">
+                                    {value}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
 
             {pad.environment.notes ? (
@@ -68,7 +72,7 @@ export function MousepadSpecGrid({ pad }: { pad: Mousepad }) {
             ) : null}
 
             {pad.includedAccessories?.length ? (
-                <div className="mt-5 rounded-2xl border border-border bg-background/70 p-4">
+                <div className="mt-5 border border-border bg-background/70 p-4">
                     <p className="text-sm font-medium text-foreground">
                         Included kit mentioned by some listings
                     </p>
@@ -76,7 +80,7 @@ export function MousepadSpecGrid({ pad }: { pad: Mousepad }) {
                         {pad.includedAccessories.map((accessory) => (
                             <span
                                 key={accessory}
-                                className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
+                                className="border border-border px-3 py-1 text-xs text-muted-foreground"
                             >
                                 {accessory}
                             </span>
@@ -84,6 +88,6 @@ export function MousepadSpecGrid({ pad }: { pad: Mousepad }) {
                     </div>
                 </div>
             ) : null}
-        </Card>
+        </div>
     );
 }

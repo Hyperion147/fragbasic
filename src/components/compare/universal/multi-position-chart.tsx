@@ -25,7 +25,7 @@ export function MultiPositionChart({ mousepads }: Props) {
   return (
     <Card className="border-border bg-card">
       <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-3">
-        <CardTitle className="text-lg tracking-tight sm:text-2xl">
+        <CardTitle className="panel-title">
           Glide lane
         </CardTitle>
         <CardDescription className="hidden sm:block">
@@ -36,7 +36,7 @@ export function MultiPositionChart({ mousepads }: Props) {
       </CardHeader>
 
       <CardContent className="space-y-4 p-3 sm:space-y-6 sm:p-6">
-        <div className="overflow-hidden rounded-xl bg-background/60 sm:rounded-3xl">
+        <div className="overflow-hidden rounded-md bg-background/60">
 
           <div className="space-y-2 sm:space-y-3">
             {mousepads.map((mousepad) => {
@@ -47,7 +47,7 @@ export function MultiPositionChart({ mousepads }: Props) {
               return (
                 <div
                   key={mousepad.slug}
-                  className="grid gap-3 rounded-xl border border-border bg-card/75 px-3 py-3 sm:rounded-3xl sm:px-4 sm:py-4 lg:grid-cols-[240px_1fr_140px]"
+                  className="grid gap-3 rounded-md border border-border bg-card/75 px-3 py-3 sm:px-4 sm:py-4 lg:grid-cols-[240px_1fr_140px]"
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-3">
