@@ -11,7 +11,6 @@ import {
     CircleOff,
     Gamepad2,
     Link as LinkIcon,
-    MessageCircle,
     Mic,
     PackageCheck,
     Plug,
@@ -126,19 +125,15 @@ export default async function IemPage({ params }: Props) {
                         </p>
 
                         <div className="mt-4 flex items-center gap-3">
-                        <StarRating />
-                        <p className="text-sm text-muted-foreground">
-                            Community sentiment:{" "}
-                            {formatIemScoreLabel(iem.ratings.community)}
-                        </p>
-                    </div>
+                            <StarRating />
+                        </div>
 
                         <p className="mt-5 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base md:leading-7">
                             {iem.communitySummary}
                         </p>
 
                         <div className="mt-8 flex flex-wrap items-center gap-3">
-                    <p className="mr-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+                            <p className="mr-2 text-3xl font-semibold tracking-tight sm:text-4xl">
                                 {formatIemPrice(iem)}
                             </p>
                             <AccentPill>
@@ -197,10 +192,6 @@ export default async function IemPage({ params }: Props) {
                     <FrequencyGraphCard iem={iem} />
                 </IemDisclosure>
 
-                <IemDisclosure title="Community review">
-                    <CommunityPanel iem={iem} />
-                </IemDisclosure>
-
                 <section
                     id="specs"
                     className="grid gap-6 lg:grid-cols-[1fr_380px]"
@@ -241,7 +232,7 @@ export default async function IemPage({ params }: Props) {
 
 function AccentPill({ children }: { children: React.ReactNode }) {
     return (
-        <span className="inline-flex items-center rounded-md border border-[color:color-mix(in_srgb,var(--iem-hover)_24%,transparent)] bg-[color:color-mix(in_srgb,var(--iem)_16%,transparent)] px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-[color:var(--iem-hover)]">
+        <span className="inline-flex items-center rounded-md border border-[color-mix(in_srgb,var(--iem-hover)_24%,transparent)] bg-[color-mix(in_srgb,var(--iem)_16%,transparent)] px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-iem-hover">
             {children}
         </span>
     );
@@ -249,7 +240,7 @@ function AccentPill({ children }: { children: React.ReactNode }) {
 
 function StarRating() {
     return (
-        <div className="flex items-center gap-1 text-[color:var(--iem-hover)]">
+        <div className="flex items-center gap-1 text-iem-hover">
             {Array.from({ length: 5 }).map((_, index) => (
                 <Star key={index} className="size-4 fill-current" />
             ))}
@@ -342,7 +333,7 @@ function ScorePanel({ iem }: { iem: Iem }) {
                         <p className="mt-1 text-sm text-muted-foreground">
                             {formatIemRating(score.value)}/10
                         </p>
-                        <p className="mt-2 text-xs font-semibold text-[color:var(--iem-hover)]">
+                        <p className="mt-2 text-xs font-semibold text-iem-hover">
                             {score.note}
                         </p>
                     </div>
@@ -423,7 +414,7 @@ function ListBlock({
                         <Icon
                             className={
                                 positive
-                                    ? "mt-0.5 size-4 shrink-0 text-[color:var(--iem-hover)]"
+                                    ? "mt-0.5 size-4 shrink-0 text-iem-hover"
                                     : "mt-0.5 size-4 shrink-0 text-red-400"
                             }
                         />
@@ -458,13 +449,10 @@ function RatingBreakdown({ iem }: { iem: Iem }) {
                 <span className="font-semibold text-foreground">
                     {formatIemScoreLabel(iem.ratings.fragbasic)}
                 </span>{" "}
-                ({formatIemRating(iem.ratings.fragbasic)}/10). Community:{" "}
-        <span className="font-semibold text-foreground">
-            {formatIemScoreLabel(iem.ratings.community)}
-        </span>
-      </p>
-    </section>
-  );
+                ({formatIemRating(iem.ratings.fragbasic)}/10).
+            </p>
+        </section>
+    );
 }
 
 function FrequencyGraphCard({ iem }: { iem: Iem }) {
@@ -481,14 +469,14 @@ function FrequencyGraphCard({ iem }: { iem: Iem }) {
 
             {graph ? (
                 <>
-          <FrequencyResponseChart
-            points={graph.points}
-            target={graph.target}
-            label={iem.shortName}
-          />
-          {graph.note ? (
-            <p className="mt-4 text-sm leading-6 text-muted-foreground">
-              {graph.note}
+                    <FrequencyResponseChart
+                        points={graph.points}
+                        target={graph.target}
+                        label={iem.shortName}
+                    />
+                    {graph.note ? (
+                        <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                            {graph.note}
                         </p>
                     ) : null}
                 </>
@@ -553,203 +541,144 @@ function FrequencyResponseChart({
     const bands = getFrequencyBandSummaries(points);
 
     return (
-        <div className="mt-6 overflow-x-auto overflow-y-hidden rounded-lg border border-border bg-background/60 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="relative w-[880px] max-w-none md:w-full">
-            <svg
-                viewBox={`0 0 ${width} ${height}`}
-                role="img"
-                aria-label={`${label} measured frequency response graph`}
-                className="h-[min(64vh,560px)] min-h-[360px] w-full"
-            >
-                <rect width={width} height={height} fill="transparent" />
-                {dbTicks.map((db) => {
-                    const y = frequencyY(db, {
-                        minDb,
-                        maxDb,
-                        chartHeight,
-                        top: padding.top,
-                    });
-
-                    return (
-                        <g key={db}>
-                            <line
-                                x1={padding.left}
-                                x2={width - padding.right}
-                                y1={y}
-                                y2={y}
-                                stroke="rgba(255,255,255,0.08)"
-                            />
-                            <text
-                                x={padding.left - 12}
-                                y={y + 4}
-                                textAnchor="end"
-                                className="fill-muted-foreground text-[12px]"
-                            >
-                                {db > 0 ? `+${db}` : db}
-                            </text>
-                        </g>
-                    );
-                })}
-                {frequencyTicks.map((hz) => {
-                    const x = frequencyX(hz, {
-                        minHz,
-                        maxHz,
-                        chartWidth,
-                        left: padding.left,
-                    });
-
-                    return (
-                        <g key={hz}>
-                            <line
-                                x1={x}
-                                x2={x}
-                                y1={padding.top}
-                                y2={height - padding.bottom}
-                                stroke="rgba(255,255,255,0.055)"
-                            />
-                            <text
-                                x={x}
-                                y={height - 18}
-                                textAnchor="middle"
-                                className="fill-muted-foreground text-[12px]"
-                            >
-                                {formatFrequencyTick(hz)}
-                            </text>
-                        </g>
-                    );
-                })}
-                <text
-                    x={padding.left - 36}
-                    y={padding.top - 12}
-                    className="fill-muted-foreground text-[12px]"
+        <div className="mt-6 overflow-x-auto overflow-y-hidden rounded-lg border border-border bg-background/60 scrollbar-none [&::-webkit-scrollbar]:hidden">
+            <div className="relative w-240 max-w-none md:w-full">
+                <svg
+                    viewBox={`0 0 ${width} ${height}`}
+                    role="img"
+                    aria-label={`${label} measured frequency response graph`}
+                    className="h-[min(64vh,560px)] min-h-[360px] w-full"
                 >
-                    dB
-                </text>
-                <path
-                    d={targetPath}
-                    fill="none"
-                    stroke="rgba(255,255,255,0.5)"
-                    strokeDasharray="9 7"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2.4"
-                />
-                <path
-                    d={graphPath}
-                    fill="none"
-                    stroke="var(--iem-hover)"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="3.2"
-                />
-                {points.map((point) => (
-                    <circle
-                        key={`${point.hz}-${point.db}`}
-                        cx={frequencyX(point.hz, {
-                            minHz,
-                            maxHz,
-                            chartWidth,
-                            left: padding.left,
-                        })}
-                        cy={frequencyY(point.db, {
+                    <rect width={width} height={height} fill="transparent" />
+                    {dbTicks.map((db) => {
+                        const y = frequencyY(db, {
                             minDb,
                             maxDb,
                             chartHeight,
                             top: padding.top,
-                        })}
-                        r="2.2"
-                        fill="var(--iem-hover)"
-                    />
-                ))}
-                <g
-                    transform={`translate(${padding.left}, ${padding.top - 14})`}
-                >
-                    <line
-                        x1="0"
-                        x2="28"
-                        y1="0"
-                        y2="0"
-                        stroke="var(--iem-hover)"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                    />
-                    <text x="38" y="4" className="fill-foreground text-[13px]">
-                        {label}
-                    </text>
+                        });
+
+                        return (
+                            <g key={db}>
+                                <line
+                                    x1={padding.left}
+                                    x2={width - padding.right}
+                                    y1={y}
+                                    y2={y}
+                                    stroke="rgba(255,255,255,0.08)"
+                                />
+                                <text
+                                    x={padding.left - 12}
+                                    y={y + 4}
+                                    textAnchor="end"
+                                    className="fill-muted-foreground text-[12px]"
+                                >
+                                    {db > 0 ? `+${db}` : db}
+                                </text>
+                            </g>
+                        );
+                    })}
+                    {frequencyTicks.map((hz) => {
+                        const x = frequencyX(hz, {
+                            minHz,
+                            maxHz,
+                            chartWidth,
+                            left: padding.left,
+                        });
+
+                        return (
+                            <g key={hz}>
+                                <line
+                                    x1={x}
+                                    x2={x}
+                                    y1={padding.top}
+                                    y2={height - padding.bottom}
+                                    stroke="rgba(255,255,255,0.055)"
+                                />
+                                <text
+                                    x={x}
+                                    y={height - 18}
+                                    textAnchor="middle"
+                                    className="fill-muted-foreground text-[12px]"
+                                >
+                                    {formatFrequencyTick(hz)}
+                                </text>
+                            </g>
+                        );
+                    })}
                     <text
-                        x="148"
-                        y="4"
-                        className="fill-muted-foreground text-[13px]"
+                        x={padding.left - 36}
+                        y={padding.top - 12}
+                        className="fill-muted-foreground text-[12px]"
                     >
-                        Harman IE 2019 v2
+                        dB
                     </text>
-                </g>
-            </svg>
-            <div className="pointer-events-none absolute inset-x-3 bottom-3 grid grid-cols-6 gap-2">
-                {bands.map((band) => (
-                    <FrequencyBandCard key={band.label} band={band} />
-                ))}
-            </div>
+                    <path
+                        d={targetPath}
+                        fill="none"
+                        stroke="rgba(255,255,255,0.5)"
+                        strokeDasharray="9 7"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2.4"
+                    />
+                    <path
+                        d={graphPath}
+                        fill="none"
+                        stroke="var(--iem-hover)"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="3.2"
+                    />
+                    {points.map((point) => (
+                        <circle
+                            key={`${point.hz}-${point.db}`}
+                            cx={frequencyX(point.hz, {
+                                minHz,
+                                maxHz,
+                                chartWidth,
+                                left: padding.left,
+                            })}
+                            cy={frequencyY(point.db, {
+                                minDb,
+                                maxDb,
+                                chartHeight,
+                                top: padding.top,
+                            })}
+                            r="2.2"
+                            fill="var(--iem-hover)"
+                        />
+                    ))}
+                    <g
+                        transform={`translate(${padding.left}, ${padding.top - 14})`}
+                    >
+                        <line
+                            x1="0"
+                            x2="28"
+                            y1="0"
+                            y2="0"
+                            stroke="var(--iem-hover)"
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                        />
+                        <text
+                            x="38"
+                            y="4"
+                            className="fill-foreground text-[13px]"
+                        >
+                            {label}
+                        </text>
+                        <text
+                            x="148"
+                            y="4"
+                            className="fill-muted-foreground text-[13px]"
+                        >
+                            Harman IE 2019 v2
+                        </text>
+                    </g>
+                </svg>
             </div>
         </div>
-    );
-}
-
-function CommunityPanel({ iem }: { iem: Iem }) {
-    const review = iem.communityReview;
-
-    return (
-        <section
-            id="community"
-            className="rounded-xl border border-border bg-card/50 p-6"
-        >
-            <SectionKicker
-                icon={MessageCircle}
-                label="Community review aggregated"
-            />
-            <div className="mt-6 grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
-                <div className="rounded-lg border border-border bg-background/45 p-5">
-                    <p className="text-sm text-muted-foreground">
-                        Community tone
-                    </p>
-                    <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[color:var(--iem-hover)]">
-                        {formatIemScoreLabel(iem.ratings.community)}
-                    </h2>
-                    <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                        {iem.communitySummary}
-                    </p>
-                    <div className="mt-6 grid gap-3">
-                        <SentimentBar label="Positive" value={review.sentiment.positive} />
-                        <SentimentBar label="Neutral" value={review.sentiment.neutral} muted />
-                        <SentimentBar label="Critical" value={review.sentiment.negative} danger />
-                    </div>
-                </div>
-
-                <div>
-                    <PanelLabel>Seen across</PanelLabel>
-                    <div className="mt-5 flex flex-wrap gap-2">
-                        {review.platforms.map((platform) => (
-                            <CommunitySourcePill
-                                key={platform.name}
-                                name={platform.name}
-                                tone={formatIemScoreLabel(platform.score)}
-                            />
-                        ))}
-                    </div>
-                    <div className="mt-6 grid gap-4 md:grid-cols-2">
-                        <ListBlock
-                            title="Common praise"
-                            items={review.positives}
-                            positive
-                        />
-                        <ListBlock
-                            title="Common complaints"
-                            items={review.negatives}
-                        />
-                    </div>
-                </div>
-            </div>
-        </section>
     );
 }
 
@@ -949,45 +878,6 @@ function ScoreBar({
     );
 }
 
-function CommunitySourcePill({ name, tone }: { name: string; tone: string }) {
-    return (
-        <span className="inline-flex items-center gap-2 rounded-lg border border-border bg-background/55 px-3 py-2 text-sm text-muted-foreground">
-            <span className="font-semibold text-foreground">{name}</span>
-            <span className="text-[color:var(--iem-hover)]">{tone}</span>
-        </span>
-    );
-}
-
-function SentimentBar({
-    label,
-    value,
-    muted = false,
-    danger = false,
-}: {
-    label: string;
-    value: number;
-    muted?: boolean;
-    danger?: boolean;
-}) {
-    const color = danger
-        ? "bg-red-400"
-        : muted
-          ? "bg-yellow-300"
-          : "bg-[color:var(--iem-hover)]";
-
-    return (
-        <div className="grid grid-cols-[72px_1fr] items-center gap-3 text-xs">
-            <span className="text-muted-foreground">{label}</span>
-            <div className="h-1.5 overflow-hidden rounded-full bg-muted">
-                <div
-                    className={`h-full rounded-full ${color}`}
-                    style={{ width: `${value}%` }}
-                />
-            </div>
-        </div>
-    );
-}
-
 function ListColumn({
     title,
     items,
@@ -1085,8 +975,14 @@ function getFrequencyBandSummaries(points: IemFrequencyPoint[]) {
     });
 }
 
-function averageDbInRange(points: IemFrequencyPoint[], minHz: number, maxHz: number) {
-    const matching = points.filter((point) => point.hz >= minHz && point.hz <= maxHz);
+function averageDbInRange(
+    points: IemFrequencyPoint[],
+    minHz: number,
+    maxHz: number,
+) {
+    const matching = points.filter(
+        (point) => point.hz >= minHz && point.hz <= maxHz,
+    );
     const sampled = matching.length > 0 ? matching : points;
     const total = sampled.reduce((sum, point) => sum + point.db, 0);
 

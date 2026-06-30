@@ -138,15 +138,6 @@ export function IemCompare({ iems }: Props) {
       </section>
 
       <section className="grid gap-6 lg:grid-cols-2">
-        <CompareDisclosure title={`${left.shortName} community`}>
-          <CommunityCard iem={left} color={leftColor} />
-        </CompareDisclosure>
-        <CompareDisclosure title={`${right.shortName} community`}>
-          <CommunityCard iem={right} color={rightColor} />
-        </CompareDisclosure>
-      </section>
-
-      <section className="grid gap-6 lg:grid-cols-2">
         <CompareDisclosure title={`${left.shortName} specifications`}>
           <SpecsCard iem={left} />
         </CompareDisclosure>
@@ -522,29 +513,6 @@ function ReviewCard({ iem }: { iem: Iem }) {
   );
 }
 
-function CommunityCard({ iem, color }: { iem: Iem; color: string }) {
-  const review = iem.communityReview;
-
-  return (
-    <Card className="border-border bg-card/90 p-6">
-      <SectionKicker icon={ShieldCheck} label={`${iem.shortName} community`} />
-      <p className="mt-4 text-3xl font-semibold tracking-tight" style={{ color }}>
-        {formatIemScoreLabel(iem.ratings.community)}
-      </p>
-      <p className="mt-3 text-sm leading-7 text-muted-foreground">{iem.communitySummary}</p>
-      <div className="mt-6 grid gap-3">
-        <SentimentBar label="Positive" value={review.sentiment.positive} color={color} />
-        <SentimentBar label="Neutral" value={review.sentiment.neutral} color="rgb(253 224 71)" />
-        <SentimentBar label="Critical" value={review.sentiment.negative} color="rgb(248 113 113)" />
-      </div>
-      <div className="mt-6 grid gap-4 md:grid-cols-2">
-        <ListBlock title="Common praise" items={review.positives} positive />
-        <ListBlock title="Common complaints" items={review.negatives} />
-      </div>
-    </Card>
-  );
-}
-
 function SpecsCard({ iem }: { iem: Iem }) {
   const specs = [
     ["Driver", iem.specs.driver],
@@ -670,17 +638,6 @@ function ScoreBar({ label, value, color }: { label: string; value: number; color
         {formatIemScoreLabel(value)}
         <span className="block text-[11px] text-muted-foreground">{formatIemRating(value)}/10</span>
       </span>
-    </div>
-  );
-}
-
-function SentimentBar({ label, value, color }: { label: string; value: number; color: string }) {
-  return (
-    <div className="grid grid-cols-[72px_1fr] items-center gap-3 text-xs">
-      <span className="text-muted-foreground">{label}</span>
-      <div className="h-1.5 overflow-hidden rounded-full bg-muted">
-        <div className="h-full rounded-full" style={{ width: `${value}%`, backgroundColor: color }} />
-      </div>
     </div>
   );
 }

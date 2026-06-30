@@ -44,7 +44,6 @@ export const iems: Iem[] = [
       "A highly regarded budget IEM known for clean mids, precise imaging, and exceptional value for competitive FPS players.",
     ratings: {
       fragbasic: 9.1,
-      community: 8.8,
       fps: 9.2,
       music: 8.0,
       value: 9.6,
@@ -102,33 +101,6 @@ export const iems: Iem[] = [
         testedGames: ["valorant", "cs2", "apex"],
         testingDuration: "15+ days",
       },
-    },
-    communityReview: {
-      reviewCount: 1287,
-      sourceCount: 18,
-      sentiment: {
-        positive: 82,
-        neutral: 14,
-        negative: 4,
-      },
-      platforms: [
-        { name: "Reddit", score: 9.1 },
-        { name: "Head-Fi", score: 8.7 },
-        { name: "YouTube", score: 8.6 },
-        { name: "Forums", score: 8.6 },
-      ],
-      positives: [
-        "Excellent imaging and positioning",
-        "Very clear vocals",
-        "Great value for money",
-        "Comfortable for long sessions",
-      ],
-      negatives: [
-        "Bass is too light for some",
-        "Treble can be a bit sharp",
-        "Cable feels basic",
-        "Soundstage is average",
-      ],
     },
     frequencyGraph: {
       url: "https://hbb.squig.link/?share=Bad_Guy_Target,7hz_Zero",
@@ -203,7 +175,6 @@ export const iems: Iem[] = [
       "A warmer, smoother gaming and music pick with better bass weight than ultra-lean budget IEMs.",
     ratings: {
       fragbasic: 8.8,
-      community: 8.9,
       fps: 8.7,
       music: 8.8,
       value: 8.9,
@@ -263,18 +234,6 @@ export const iems: Iem[] = [
         testingDuration: "Community aggregate",
       },
     },
-    communityReview: {
-      reviewCount: 940,
-      sourceCount: 14,
-      sentiment: { positive: 78, neutral: 17, negative: 5 },
-      platforms: [
-        { name: "Reddit", score: 8.8 },
-        { name: "Head-Fi", score: 8.9 },
-        { name: "YouTube", score: 9.0 },
-      ],
-      positives: ["Strong bass control", "Smooth treble", "Good imaging"],
-      negatives: ["Large shells", "Nozzle fit can be tricky", "Less bright detail"],
-    },
     frequencyGraph: {
       url: "https://hbb.squig.link/?share=Bad_Guy_Target,Te_Crin_Zero_Red",
       source: "HBB Squiglink",
@@ -333,7 +292,6 @@ export const iems: Iem[] = [
       "A clear, energetic IEM with strong detail retrieval for players who like brighter positional cues.",
     ratings: {
       fragbasic: 8.7,
-      community: 8.6,
       fps: 8.9,
       music: 8.2,
       value: 8.8,
@@ -396,18 +354,6 @@ export const iems: Iem[] = [
         testedGames: ["valorant", "cs2", "apex"],
         testingDuration: "Community aggregate",
       },
-    },
-    communityReview: {
-      reviewCount: 710,
-      sourceCount: 12,
-      sentiment: { positive: 76, neutral: 16, negative: 8 },
-      platforms: [
-        { name: "Reddit", score: 8.7 },
-        { name: "YouTube", score: 8.7 },
-        { name: "Forums", score: 8.4 },
-      ],
-      positives: ["Very crisp detail", "Strong build", "Good imaging"],
-      negatives: ["Treble can fatigue", "Not warm", "Bass is not the focus"],
     },
     frequencyGraph: {
       url: "https://csi-zone.squig.link/?share=SIMGOT_EW200,Harman_IE_2019v2_Target",
@@ -472,7 +418,6 @@ export const iems: Iem[] = [
       "A tiny, comfortable budget set that sounds more musical and relaxed than pure FPS-focused picks.",
     ratings: {
       fragbasic: 8.2,
-      community: 8.4,
       fps: 7.8,
       music: 8.5,
       value: 8.8,
@@ -535,18 +480,6 @@ export const iems: Iem[] = [
         testedGames: ["general-fps", "music"],
         testingDuration: "Community aggregate",
       },
-    },
-    communityReview: {
-      reviewCount: 860,
-      sourceCount: 11,
-      sentiment: { positive: 79, neutral: 15, negative: 6 },
-      platforms: [
-        { name: "Reddit", score: 8.4 },
-        { name: "YouTube", score: 8.5 },
-        { name: "Forums", score: 8.1 },
-      ],
-      positives: ["Very comfortable", "Good bass body", "Great daily value"],
-      negatives: ["Average staging", "Not the sharpest FPS imaging"],
     },
     frequencyGraph: {
       url: "https://csi-zone.squig.link/?share=MOONDROP_CHU_2,Harman_IE_2019v2_Target",
@@ -611,7 +544,6 @@ export const iems: Iem[] = [
       "A smooth, vocal-friendly budget pick for relaxed listening and casual gaming, with less competitive edge than brighter IEMs.",
     ratings: {
       fragbasic: 8.0,
-      community: 8.3,
       fps: 7.6,
       music: 8.6,
       value: 8.7,
@@ -674,18 +606,6 @@ export const iems: Iem[] = [
         testedGames: ["music", "general-fps"],
         testingDuration: "Community aggregate",
       },
-    },
-    communityReview: {
-      reviewCount: 780,
-      sourceCount: 10,
-      sentiment: { positive: 77, neutral: 18, negative: 5 },
-      platforms: [
-        { name: "Reddit", score: 8.2 },
-        { name: "YouTube", score: 8.5 },
-        { name: "Forums", score: 8.1 },
-      ],
-      positives: ["Smooth vocals", "Easy to listen to", "Good value"],
-      negatives: ["Not very technical", "Average positional cues"],
     },
     frequencyGraph: {
       url: "https://csi-zone.squig.link/?share=Tangzu_Waner,Harman_IE_2019v2_Target",
@@ -750,7 +670,6 @@ export const iems: Iem[] = [
       "An energetic budget KZ set with stronger bass and lively treble, better suited to casual gaming and punchy listening than strict neutral FPS work.",
     ratings: {
       fragbasic: 7.8,
-      community: 7.9,
       fps: 7.6,
       music: 8.0,
       value: 8.4,
@@ -807,18 +726,6 @@ export const iems: Iem[] = [
         testedGames: ["general-fps", "music"],
         testingDuration: "Early catalog estimate",
       },
-    },
-    communityReview: {
-      reviewCount: 90,
-      sourceCount: 3,
-      sentiment: { positive: 70, neutral: 22, negative: 8 },
-      platforms: [
-        { name: "Store reviews", score: 8.0 },
-        { name: "YouTube", score: 7.9 },
-        { name: "Forums", score: 7.8 },
-      ],
-      positives: ["Punchy bass", "Low price", "Detachable cable"],
-      negatives: ["Bass can mask footsteps", "Less neutral than FPS-focused sets"],
     },
     frequencyGraph: {
       url: "https://enemyspider.squig.link/?share=Bad_Guy_Target%2CEDXP2",
@@ -882,7 +789,6 @@ export const iems: Iem[] = [
       "A refreshed Wan'er-style budget IEM with a smooth, vocal-forward balance and better comfort appeal for music-first users.",
     ratings: {
       fragbasic: 8.2,
-      community: 8.2,
       fps: 7.8,
       music: 8.7,
       value: 8.8,
@@ -939,18 +845,6 @@ export const iems: Iem[] = [
         testedGames: ["music", "general-fps"],
         testingDuration: "Early catalog estimate",
       },
-    },
-    communityReview: {
-      reviewCount: 110,
-      sourceCount: 4,
-      sentiment: { positive: 76, neutral: 19, negative: 5 },
-      platforms: [
-        { name: "Store reviews", score: 8.3 },
-        { name: "YouTube", score: 8.2 },
-        { name: "Forums", score: 8.0 },
-      ],
-      positives: ["Smooth vocals", "Comfortable shell", "Good budget value"],
-      negatives: ["Not highly technical", "Treble is not very aggressive"],
     },
     frequencyGraph: {
       url: "https://csi-zone.squig.link/?share=Tangzu_Waner_2,Harman_IE_2019v2_Target",
@@ -1009,7 +903,6 @@ export const iems: Iem[] = [
       "A Jade Dragon colorway of the Wan'er S.G 2 with the same smooth, vocal-forward identity and approachable budget tuning.",
     ratings: {
       fragbasic: 8.2,
-      community: 8.2,
       fps: 7.8,
       music: 8.7,
       value: 8.8,
@@ -1066,18 +959,6 @@ export const iems: Iem[] = [
         testedGames: ["music", "general-fps"],
         testingDuration: "Variant catalog estimate",
       },
-    },
-    communityReview: {
-      reviewCount: 110,
-      sourceCount: 4,
-      sentiment: { positive: 76, neutral: 19, negative: 5 },
-      platforms: [
-        { name: "Store reviews", score: 8.3 },
-        { name: "YouTube", score: 8.2 },
-        { name: "Forums", score: 8.0 },
-      ],
-      positives: ["Smooth vocals", "Comfortable shell", "Good budget value"],
-      negatives: ["Not highly technical", "Treble is not very aggressive"],
     },
     frequencyGraph: {
       url: "https://csi-zone.squig.link/?share=Tangzu_Waner_2_Green,Harman_IE_2019v2_Target",
@@ -1136,7 +1017,6 @@ export const iems: Iem[] = [
       "A bass-enhanced Wan'er S.G 2 variant with stronger low-end impact, fuller lower mids, and a smoother upper-treble balance than the Jade Dragon tuning.",
     ratings: {
       fragbasic: 8.2,
-      community: 8.2,
       fps: 7.7,
       music: 8.8,
       value: 8.8,
@@ -1193,18 +1073,6 @@ export const iems: Iem[] = [
         testedGames: ["music", "general-fps"],
         testingDuration: "Variant catalog estimate",
       },
-    },
-    communityReview: {
-      reviewCount: 110,
-      sourceCount: 4,
-      sentiment: { positive: 76, neutral: 19, negative: 5 },
-      platforms: [
-        { name: "Store reviews", score: 8.3 },
-        { name: "YouTube", score: 8.2 },
-        { name: "Forums", score: 8.0 },
-      ],
-      positives: ["More bass authority", "Fuller lower mids", "Smooth vocals", "Good budget value"],
-      negatives: ["Less clean than Jade Dragon", "Treble is not very sparkly", "Can sound warmer"],
     },
     frequencyGraph: {
       url: "https://csi-zone.squig.link/?share=Tangzu_Red_Lion,Harman_IE_2019v2_Target",

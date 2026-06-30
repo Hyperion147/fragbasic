@@ -29,7 +29,6 @@ export type IemRatingConfidence = "community" | "personal-tested" | "estimated";
 
 export interface IemRatings {
   fragbasic: number;
-  community: number;
   fps: number;
   music: number;
   value: number;
@@ -79,22 +78,6 @@ export interface IemBuyingInfo {
   }>;
 }
 
-export interface IemCommunityReview {
-  reviewCount: number;
-  sourceCount: number;
-  sentiment: {
-    positive: number;
-    neutral: number;
-    negative: number;
-  };
-  platforms: Array<{
-    name: string;
-    score: number;
-  }>;
-  positives: string[];
-  negatives: string[];
-}
-
 export interface IemFrequencyPoint {
   hz: number;
   db: number;
@@ -139,7 +122,6 @@ export interface Iem {
   specs: IemSpec;
   buying: IemBuyingInfo;
   officialReview: IemOfficialReview;
-  communityReview: IemCommunityReview;
   frequencyGraph?: IemFrequencyGraph;
   bestFor: IemGame[];
   pros: string[];
