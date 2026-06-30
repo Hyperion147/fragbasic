@@ -83,7 +83,7 @@ export function IemCompare({ iems }: Props) {
 
   return (
     <div className="space-y-8">
-      <Card className="border-border bg-card/90 p-5">
+      <Card className="bg-card/90 p-5">
         <div className="grid gap-4 md:grid-cols-2">
           <IemSelect
             label="First IEM"
@@ -211,20 +211,20 @@ function CompareDisclosure({
   return (
     <details
       open={defaultOpen}
-      className="group rounded-xl border border-border bg-card/45"
+      className="group rounded-xl soft-panel"
     >
       <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold text-foreground sm:px-5">
         {title}
         <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
       </summary>
-      <div className="border-t border-border p-3 sm:p-4">{children}</div>
+      <div className="p-3 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] sm:p-4">{children}</div>
     </details>
   );
 }
 
 function CompareProductCard({ iem, color }: { iem: Iem; color: string }) {
   return (
-    <Card className="overflow-hidden border-border bg-card/90">
+    <Card className="overflow-hidden bg-card/90">
       <div className="relative aspect-[16/9] bg-background/60">
         <Image
           src={iem.images.main}
@@ -248,7 +248,7 @@ function CompareProductCard({ iem, color }: { iem: Iem; color: string }) {
           <MiniScore label="Imaging" value={iem.ratings.imaging} color={color} />
           <MiniScore label="Value" value={iem.ratings.value} color={color} />
         </div>
-        <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
+        <div className="mt-5 flex items-center justify-between pt-4 soft-divider-top">
           <div>
             <p className="compact-label">Verdict</p>
             <p className="mt-1 font-semibold" style={{ color }}>
@@ -270,7 +270,7 @@ function CompareVerdict({ left, right }: { left: Iem; right: Iem }) {
   const valueWinner = left.ratings.value >= right.ratings.value ? left : right;
 
   return (
-    <Card className="border-border bg-card/90 p-6">
+    <Card className="bg-card/90 p-6">
       <SectionKicker icon={ShieldCheck} label="Quick verdict" />
       <div className="mt-5 grid gap-4 md:grid-cols-3">
         <VerdictTile label="FPS edge" value={getIemFullName(fpsWinner)} />
@@ -283,7 +283,7 @@ function CompareVerdict({ left, right }: { left: Iem; right: Iem }) {
 
 function VerdictTile({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-border bg-background/55 p-4">
+    <div className="rounded-lg soft-surface p-4">
       <p className="compact-label">{label}</p>
       <p className="mt-2 text-lg font-semibold leading-6 text-foreground">{value}</p>
     </div>
@@ -296,7 +296,7 @@ function OverlayFrequencyGraph({ left, right }: { left: Iem; right: Iem }) {
 
   if (!leftGraph || !rightGraph) {
     return (
-      <Card className="border-dashed border-border bg-card/80 p-6">
+      <Card className="bg-card/80 p-6 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_6%,transparent)]">
         <SectionKicker icon={Radio} label="Frequency response" />
         <p className="mt-4 text-sm text-muted-foreground">
           A measured overlay will appear once both IEMs have local graph points.
@@ -306,7 +306,7 @@ function OverlayFrequencyGraph({ left, right }: { left: Iem; right: Iem }) {
   }
 
   return (
-    <Card className="border-border bg-card/90 p-6">
+    <Card className="bg-card/90 p-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <SectionKicker icon={Radio} label="Overlapping frequency response" />
         <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
@@ -354,7 +354,7 @@ function FrequencyOverlayChart({
   const bands = getCompareFrequencyBandSummaries(leftPoints, rightPoints);
 
   return (
-    <div className="mt-6 overflow-x-auto overflow-y-hidden rounded-lg border border-border bg-background/60 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div className="mt-6 overflow-x-auto overflow-y-hidden rounded-lg soft-surface [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <div className="relative w-[900px] max-w-none md:w-full">
       <svg
         viewBox={`0 0 ${width} ${height}`}
@@ -448,7 +448,7 @@ function RatingBreakdown({ iem, color }: { iem: Iem; color: string }) {
   ] as const;
 
   return (
-    <Card className="border-border bg-card/90 p-6">
+    <Card className="bg-card/90 p-6">
       <SectionKicker icon={Activity} label={`${iem.shortName} score breakdown`} />
       <div className="mt-5 space-y-4">
         {ratings.map(([label, value]) => (
@@ -477,8 +477,8 @@ function ComparisonMatrix({ left, right }: { left: Iem; right: Iem }) {
   ] as const;
 
   return (
-    <Card className="overflow-hidden border-border bg-card/90">
-      <div className="grid min-w-[720px] grid-cols-[150px_1fr_1fr] border-b border-border bg-background/50 text-sm font-semibold text-foreground">
+    <Card className="overflow-hidden bg-card/90">
+      <div className="grid min-w-[720px] grid-cols-[150px_1fr_1fr] bg-background/50 text-sm font-semibold text-foreground soft-divider-bottom">
         <div className="p-4 text-muted-foreground">Metric</div>
         <div className="p-4">{left.shortName}</div>
         <div className="p-4">{right.shortName}</div>
@@ -487,7 +487,7 @@ function ComparisonMatrix({ left, right }: { left: Iem; right: Iem }) {
         {rows.map(([label, leftValue, rightValue]) => (
           <div
             key={label}
-            className="grid min-w-[720px] grid-cols-[150px_1fr_1fr] border-b border-border/70 text-sm last:border-b-0"
+            className="grid min-w-[720px] grid-cols-[150px_1fr_1fr] text-sm shadow-[inset_0_-1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] last:shadow-none"
           >
             <div className="bg-background/35 p-4 text-muted-foreground">{label}</div>
             <div className="p-4 text-foreground">{leftValue}</div>
@@ -501,7 +501,7 @@ function ComparisonMatrix({ left, right }: { left: Iem; right: Iem }) {
 
 function ReviewCard({ iem }: { iem: Iem }) {
   return (
-    <Card className="border-border bg-card/90 p-6">
+    <Card className="bg-card/90 p-6">
       <SectionKicker icon={ShieldCheck} label={`${iem.shortName} review summary`} />
       <h2 className="panel-title mt-4">What stands out</h2>
       <p className="mt-4 text-sm leading-7 text-muted-foreground">{iem.officialReview.summary}</p>
@@ -530,7 +530,7 @@ function SpecsCard({ iem }: { iem: Iem }) {
   ] as const;
 
   return (
-    <Card className="border-border bg-card/90 p-6">
+    <Card className="bg-card/90 p-6">
       <SectionKicker icon={ScanSearch} label={`${iem.shortName} specifications`} />
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         {specs.map(([label, value]) => (
@@ -543,7 +543,7 @@ function SpecsCard({ iem }: { iem: Iem }) {
 
 function BuyingCard({ iem }: { iem: Iem }) {
   return (
-    <Card className="border-border bg-card/90 p-6">
+    <Card className="bg-card/90 p-6">
       <SectionKicker icon={CircleDollarSign} label={`${iem.shortName} buying info`} />
       <div className="mt-6 space-y-3">
         <InfoRow label="Price" value={`${formatIemPrice(iem)} approx`} />
@@ -564,7 +564,7 @@ function BuyingCard({ iem }: { iem: Iem }) {
 
 function FinalFitCard({ iem }: { iem: Iem }) {
   return (
-    <Card className="border-border bg-card/90 p-6">
+    <Card className="bg-card/90 p-6">
       <SectionKicker icon={PackageCheck} label={`${iem.shortName} fit guide`} />
       <div className="mt-6 grid gap-5 md:grid-cols-2">
         <ListBlock title="Pros" items={iem.pros} positive />
@@ -585,7 +585,7 @@ function FinalFitCard({ iem }: { iem: Iem }) {
 
 function MiniScore({ label, value, color }: { label: string; value: number; color: string }) {
   return (
-    <div className="rounded-lg border border-border bg-background/60 p-3">
+    <div className="rounded-lg soft-surface p-3">
       <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">{label}</p>
       <p className="mt-2 text-lg font-semibold" style={{ color }}>
         {formatIemScoreLabel(value)}
@@ -610,7 +610,7 @@ function ListBlock({
   const ListIcon = Icon ?? DefaultIcon;
 
   return (
-    <div className="rounded-lg border border-border bg-background/45 p-4">
+    <div className="rounded-lg soft-surface p-4">
       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-foreground">{title}</p>
       <ul className="mt-4 space-y-3">
         {items.map((item) => (
@@ -717,7 +717,7 @@ function CompareFrequencyBandCard({
   rightLabel: string;
 }) {
   return (
-    <div className="min-w-0 rounded-md border border-border/80 bg-background/88 p-2 shadow-lg shadow-black/10 backdrop-blur-sm">
+    <div className="min-w-0 rounded-md bg-background/88 p-2 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_7%,transparent),0_10px_24px_rgba(0,0,0,0.10)] backdrop-blur-sm">
       <p className="truncate text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
         {band.label}
       </p>

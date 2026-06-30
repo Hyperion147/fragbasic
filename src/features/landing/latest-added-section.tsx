@@ -29,7 +29,7 @@ export function LatestAddedSection({ pads }: Props) {
             Latest added
           </Badge>
 
-          <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:mt-5 md:text-6xl">
+          <h2 className="mt-4 max-w-5xl text-balance text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:mt-5 md:text-5xl">
             {visiblePads.length === 1
               ? `${primaryPad.brand} ${primaryPad.name} joins the database.`
               : `${visiblePads.length} fresh community additions join the database.`}

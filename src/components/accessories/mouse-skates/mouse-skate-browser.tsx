@@ -254,7 +254,7 @@ export function MouseSkateBrowser({ skates }: { skates: MouseSkate[] }) {
         </div>
       </Card>
 
-      <div className="overflow-x-auto border border-border bg-card/45 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="overflow-x-auto bg-card/35 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <table className="data-table min-w-[1180px]">
           <thead>
             <tr>
@@ -327,26 +327,26 @@ function MouseSkateTableRow({ skate }: { skate: MouseSkate }) {
   return (
     <tr>
       <td>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <MouseSkateDot skate={skate} size="md" />
           <div className="min-w-0">
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               <Badge>{skate.brand}</Badge>
               <Badge variant="outline">{skate.shape}</Badge>
             </div>
-            <p className="mt-2 truncate text-base font-semibold tracking-tight text-foreground">
+            <p className="mt-2.5 truncate text-lg font-semibold leading-6 text-foreground">
               {getMouseSkateFullName(skate)}
             </p>
-            <p className="truncate text-xs text-muted-foreground">{skate.series}</p>
+            <p className="mt-1 truncate text-sm leading-5 text-muted-foreground">{skate.series}</p>
           </div>
         </div>
       </td>
       <td>
         <div className="space-y-1">
-          <p className="font-medium text-foreground">
+          <p className="text-sm font-semibold leading-5 text-foreground">
             {formatMouseSkateMaterial(skate.material)}
           </p>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm leading-5 text-muted-foreground">
             {skate.thicknessMm ? `${skate.thicknessMm}mm` : "Thickness unknown"}
           </p>
         </div>

@@ -56,7 +56,7 @@ function NavigationMenuItem({
 }
 
 const navigationMenuTriggerStyle =
-  "group inline-flex h-9 w-max items-center justify-center rounded-4xl bg-transparent px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted hover:text-foreground focus:bg-muted focus:text-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-active:bg-muted data-[state=open]:bg-muted"
+  "group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-3 py-2 text-sm font-medium leading-none text-foreground/82 transition-colors hover:bg-[color:color-mix(in_srgb,var(--brand)_10%,transparent)] hover:text-foreground focus:bg-[color:color-mix(in_srgb,var(--brand)_10%,transparent)] focus:text-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active=true]:bg-[color:color-mix(in_srgb,var(--brand)_14%,transparent)] data-[active=true]:text-foreground data-[state=open]:bg-[color:color-mix(in_srgb,var(--brand)_12%,transparent)] data-[state=open]:text-foreground"
 
 function NavigationMenuTrigger({
   className,
@@ -102,7 +102,7 @@ function NavigationMenuLink({
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
       className={cn(
-        "block rounded-lg px-3 py-2 text-sm leading-none text-foreground no-underline outline-none transition-colors hover:bg-muted hover:text-foreground focus:bg-muted focus:text-foreground",
+        "block rounded-md px-3 py-2 text-sm leading-5 text-foreground no-underline outline-none transition-colors hover:bg-[color:color-mix(in_srgb,var(--brand)_8%,transparent)] hover:text-foreground focus:bg-[color:color-mix(in_srgb,var(--brand)_8%,transparent)] focus:text-foreground",
         className
       )}
       {...props}
@@ -119,7 +119,7 @@ function NavigationMenuViewport({
       <NavigationMenuPrimitive.Viewport
         data-slot="navigation-menu-viewport"
         className={cn(
-          "origin-top-center relative mt-2 h-[var(--radix-navigation-menu-viewport-height)] w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-lg border border-border bg-popover text-popover-foreground shadow-xl data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:zoom-in-90 md:max-w-[calc(100vw-3rem)] md:w-[var(--radix-navigation-menu-viewport-width)] lg:max-w-[calc(100vw-4rem)]",
+          "origin-top-center relative mt-2 h-[var(--radix-navigation-menu-viewport-height)] w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-lg bg-popover text-popover-foreground shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_6%,transparent),0_22px_70px_rgba(0,0,0,0.34)] data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:zoom-in-90 md:max-w-[calc(100vw-3rem)] md:w-[var(--radix-navigation-menu-viewport-width)] lg:max-w-[calc(100vw-4rem)]",
           className
         )}
         {...props}

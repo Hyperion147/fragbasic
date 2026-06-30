@@ -178,7 +178,7 @@ export default async function IemPage({ params }: Props) {
                         </div>
                     </div>
 
-                    <div className="relative min-h-[360px] min-w-0 overflow-hidden rounded-xl border border-border bg-card/45 lg:min-h-[500px]">
+                    <div className="relative min-h-[360px] min-w-0 overflow-hidden rounded-xl soft-panel lg:min-h-[500px]">
                         <Image
                             src={iem.images.main}
                             alt={getIemFullName(iem)}
@@ -226,7 +226,7 @@ export default async function IemPage({ params }: Props) {
                     <FinalFitPanel iem={iem} />
                 </IemDisclosure>
 
-                <footer className="flex flex-col gap-4 border-t border-border pt-6 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
+                <footer className="flex flex-col gap-4 pt-6 text-sm text-muted-foreground soft-divider-top md:flex-row md:items-center md:justify-between">
                     <p>Last updated: {formatReadableDate(iem.updatedAt)}</p>
                     <div className="flex flex-wrap items-center gap-3">
                         <span>Share:</span>
@@ -274,7 +274,7 @@ function StarRating() {
 
 function StorePill({ label, href }: { label: string; href?: string }) {
     const className =
-        "inline-flex items-center gap-2 rounded-lg border border-border bg-background/65 px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:border-[color:color-mix(in_srgb,var(--iem-hover)_38%,transparent)]";
+        "inline-flex items-center gap-2 rounded-lg border border-transparent bg-background/65 px-4 py-2 text-sm font-semibold text-foreground shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_7%,transparent)] transition-colors hover:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--iem-hover)_30%,transparent)]";
 
     if (href) {
         return (
@@ -311,7 +311,7 @@ function IemDisclosure({
                 {title}
                 <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
             </summary>
-            <div className="border-t border-border p-3 sm:p-4">{children}</div>
+            <div className="p-3 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] sm:p-4">{children}</div>
         </details>
     );
 }
@@ -324,7 +324,7 @@ function ScorePanel({ iem }: { iem: Iem }) {
     ];
 
     return (
-        <section className="grid gap-5 border border-border bg-card/45 p-4 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+        <section className="grid gap-5 soft-panel p-4 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
             <div>
                 <SectionKicker icon={CheckCircle2} label="Quick verdict" />
                 <h2 className="section-title mt-4">
@@ -346,7 +346,7 @@ function ScorePanel({ iem }: { iem: Iem }) {
                 {scores.map((score) => (
                     <div
                         key={score.label}
-                        className="border border-border bg-background/60 p-3"
+                        className="soft-surface p-3"
                     >
                         <p className="compact-label font-semibold">
                             {score.label}
@@ -369,7 +369,7 @@ function ScorePanel({ iem }: { iem: Iem }) {
 
 function ReviewCard({ iem }: { iem: Iem }) {
     return (
-        <section className="border border-border bg-card/45 p-4">
+        <section className="soft-panel p-4">
             <SectionKicker icon={ShieldCheck} label="Review summary" />
             <h2 className="panel-title mt-4">
                 What stands out
@@ -387,7 +387,7 @@ function ReviewCard({ iem }: { iem: Iem }) {
                 <ListBlock title="Watch outs" items={iem.cons.slice(0, 3)} />
             </div>
 
-            <div className="mt-6 grid gap-3 rounded-lg border border-border bg-background/60 p-4 text-sm md:grid-cols-2">
+            <div className="mt-6 grid gap-3 rounded-lg soft-surface p-4 text-sm md:grid-cols-2">
                 <InfoRow
                     label="Source"
                     value={iem.officialReview.testSetup.source}
@@ -425,7 +425,7 @@ function ListBlock({
     const Icon = positive ? CheckCircle2 : XCircle;
 
     return (
-        <div className="rounded-lg border border-border bg-background/45 p-4">
+        <div className="rounded-lg soft-surface p-4">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-foreground">
                 {title}
             </p>
@@ -461,7 +461,7 @@ function RatingBreakdown({ iem }: { iem: Iem }) {
     ] as const;
 
     return (
-        <section className="border border-border bg-card/45 p-4">
+        <section className="soft-panel p-4">
             <SectionKicker icon={Activity} label="Score breakdown" />
             <div className="mt-5 space-y-4">
                 {ratings.map(([label, value]) => (
@@ -483,7 +483,7 @@ function FrequencyGraphCard({ iem }: { iem: Iem }) {
     const graph = iem.frequencyGraph;
 
     return (
-        <section className="border border-border bg-card/45 p-4">
+        <section className="soft-panel p-4">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                 <SectionKicker
                     icon={Radio}
@@ -505,7 +505,7 @@ function FrequencyGraphCard({ iem }: { iem: Iem }) {
                     ) : null}
                 </>
             ) : (
-                <div className="mt-6 rounded-lg border border-dashed border-border bg-background/55 p-6">
+                <div className="mt-6 rounded-lg bg-background/55 p-6 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_6%,transparent)]">
                     <h2 className="panel-title">
                         No verified graph yet
                     </h2>
@@ -564,7 +564,7 @@ function FrequencyResponseChart({
     });
 
     return (
-        <div className="mt-6 overflow-x-auto overflow-y-hidden rounded-lg border border-border bg-background/60 scrollbar-none [&::-webkit-scrollbar]:hidden">
+        <div className="mt-6 overflow-x-auto overflow-y-hidden rounded-lg soft-surface scrollbar-none [&::-webkit-scrollbar]:hidden">
             <div className="relative w-240 max-w-none md:w-full">
                 <svg
                     viewBox={`0 0 ${width} ${height}`}
@@ -750,9 +750,9 @@ function SpecsCard({ iem }: { iem: Iem }) {
     ];
 
     return (
-        <section className="border border-border bg-card/45 p-4">
+        <section className="soft-panel p-4">
             <SectionKicker icon={ScanSearch} label="Key specifications" />
-            <div className="mt-5 overflow-hidden border border-border bg-background/60">
+            <div className="mt-5 overflow-hidden soft-surface">
                 <table className="data-table">
                     <tbody>
                         {specs.map((spec) => (
@@ -777,7 +777,7 @@ function SpecsCard({ iem }: { iem: Iem }) {
 
 function BuyingCard({ iem }: { iem: Iem }) {
     return (
-        <section className="border border-border bg-card/45 p-4">
+        <section className="soft-panel p-4">
             <SectionKicker icon={CircleDollarSign} label="Buying info" />
             <div className="mt-6 space-y-3">
                 <InfoRow
@@ -808,7 +808,7 @@ function BuyingCard({ iem }: { iem: Iem }) {
 
 function FinalFitPanel({ iem }: { iem: Iem }) {
     return (
-        <section className="grid gap-6 border border-border bg-card/45 p-4 lg:grid-cols-[1fr_1fr_1fr_1fr_0.9fr]">
+        <section className="grid gap-6 soft-panel p-4 lg:grid-cols-[1fr_1fr_1fr_1fr_0.9fr]">
             <ListColumn title="Pros" items={iem.pros} positive />
             <ListColumn title="Cons" items={iem.cons} />
             <ListColumn

@@ -329,14 +329,14 @@ function ProductDisclosure({
         {title}
         <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
       </summary>
-      <div className="border-t border-border p-3 sm:p-4">{children}</div>
+      <div className="p-3 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] sm:p-4">{children}</div>
     </details>
   )
 }
 
 function RecommendationCard({ pad }: { pad: Mousepad }) {
   return (
-    <Card className="border-border bg-card p-5">
+    <Card className="bg-card p-5">
       <div className="flex items-center gap-2">
         <ShieldCheck className="size-4 text-primary" />
         <p className="text-sm text-muted-foreground">Best for</p>
@@ -434,7 +434,7 @@ function ColorwaysCard({ pad }: { pad: Mousepad }) {
         {pad.visuals.colorways.map((colorway) => (
           <div
             key={colorway.slug}
-            className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-background/70 p-3"
+            className="flex items-center justify-between gap-3 rounded-2xl soft-surface p-3"
           >
             <div className="flex items-center gap-3">
               <span
@@ -471,7 +471,7 @@ function CompareLinksCard({
   relatedCount: number
 }) {
   return (
-    <Card className="border-border bg-card p-5">
+    <Card className="bg-card p-5">
       <div className="flex items-center gap-2">
         <Sparkles className="size-4 text-primary" />
         <p className="text-sm text-muted-foreground">Compare this pad</p>
@@ -505,7 +505,7 @@ function CompareLinksCard({
 
 function SurfaceAndUseCard({ pad }: { pad: Mousepad }) {
   return (
-    <Card className="border-border bg-card p-5 md:p-6">
+    <Card className="bg-card p-5 md:p-6">
       <div className="mb-6">
         <p className="text-sm text-muted-foreground">Use case</p>
         <h2 className="panel-title">
@@ -514,7 +514,7 @@ function SurfaceAndUseCard({ pad }: { pad: Mousepad }) {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-2xl border border-border bg-background/80 p-4">
+        <div className="rounded-2xl soft-surface p-4">
           <p className="text-sm font-medium text-foreground">Texture and comfort</p>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
             {formatValue(pad.texture.feel)} surface, {pad.texture.noiseLevel} noise,
@@ -523,7 +523,7 @@ function SurfaceAndUseCard({ pad }: { pad: Mousepad }) {
           </p>
         </div>
 
-        <div className="rounded-2xl border border-border bg-background/80 p-4">
+        <div className="rounded-2xl soft-surface p-4">
           <p className="text-sm font-medium text-foreground">Environment fit</p>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
             {formatEnvironmentLabel(pad.environment.humidityResistance)} humidity
@@ -536,7 +536,7 @@ function SurfaceAndUseCard({ pad }: { pad: Mousepad }) {
       </div>
 
       {pad.avoidIf?.length ? (
-        <div className="mt-6 rounded-md border border-border bg-background/60 p-4">
+        <div className="mt-6 rounded-md soft-surface p-4">
           <p className="text-sm font-medium text-foreground">Maybe skip it if</p>
 
           <ul className="mt-4 space-y-3">
@@ -557,7 +557,7 @@ function CommunityNotesCard({ pad }: { pad: Mousepad }) {
   const consensus = pad.communityConsensus
 
   return (
-    <Card className="border-border bg-card p-5 md:p-6">
+    <Card className="bg-card p-5 md:p-6">
       <p className="text-sm text-muted-foreground">Community Notes</p>
 
       <h2 className="panel-title mt-1">
@@ -584,7 +584,7 @@ function CommunityNotesCard({ pad }: { pad: Mousepad }) {
       ) : null}
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
-        <div className="rounded-2xl border border-border bg-background/70 p-4">
+        <div className="rounded-2xl soft-surface p-4">
           <p className="font-medium text-foreground flex items-center gap-2">
             <Check className="size-4 text-primary" /> Strengths
           </p>
@@ -597,7 +597,7 @@ function CommunityNotesCard({ pad }: { pad: Mousepad }) {
           </ul>
         </div>
 
-        <div className="rounded-2xl border border-border bg-background/70 p-4">
+        <div className="rounded-2xl soft-surface p-4">
           <p className="font-medium text-foreground flex items-center gap-2">
             Weaknesses
           </p>
@@ -616,7 +616,7 @@ function CommunityNotesCard({ pad }: { pad: Mousepad }) {
 
 function PersonalNotes({ pad }: { pad: Mousepad }) {
   return (
-    <Card className="border-border bg-card p-5 md:p-6">
+    <Card className="bg-card p-5 md:p-6">
       <p className="text-sm text-muted-foreground">Personal notes</p>
 
       <h2 className="panel-title mt-1">
@@ -628,7 +628,7 @@ function PersonalNotes({ pad }: { pad: Mousepad }) {
       </p>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
-        <div className="rounded-2xl border border-border bg-background/70 p-4">
+        <div className="rounded-2xl soft-surface p-4">
           <p className="font-medium text-foreground">Pros</p>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             {(pad.personal.pros || []).map((pro) => (
@@ -640,7 +640,7 @@ function PersonalNotes({ pad }: { pad: Mousepad }) {
           </ul>
         </div>
 
-        <div className="rounded-2xl border border-border bg-background/70 p-4">
+        <div className="rounded-2xl soft-surface p-4">
           <p className="font-medium text-foreground">Cons</p>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             {(pad.personal.cons || []).map((con) => (
@@ -658,7 +658,7 @@ function PersonalNotes({ pad }: { pad: Mousepad }) {
 
 function SourcesCard({ pad }: { pad: Mousepad }) {
   return (
-    <Card className="border-border bg-card p-5 md:p-6">
+    <Card className="bg-card p-5 md:p-6">
       <p className="text-sm text-muted-foreground">Sources</p>
 
       <h2 className="panel-title mt-1">
@@ -673,7 +673,7 @@ function SourcesCard({ pad }: { pad: Mousepad }) {
         {pad.sources.map((source) => (
           <div
             key={`${source.label}-${source.url ?? source.type}`}
-            className="rounded-2xl border border-border bg-background/70 p-4"
+            className="rounded-2xl soft-surface p-4"
           >
             <div className="flex items-center justify-between gap-3">
               <div>

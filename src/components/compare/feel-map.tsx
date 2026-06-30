@@ -24,7 +24,7 @@ export function FeelMap({
   const scaleModes = getFeelScaleModesForComparison([left, right])
 
   return (
-    <Card className="border-border bg-card p-5 md:p-6">
+    <Card className="bg-card p-5 md:p-6">
       <div className="mb-6">
         <p className="text-sm text-muted-foreground">Feel map</p>
         <h2 className="panel-title">
@@ -37,7 +37,7 @@ export function FeelMap({
         </p>
       </div>
 
-      <div className="mb-6 grid gap-3 rounded-md border border-border bg-background/60 p-4 sm:grid-cols-2">
+      <div className="mb-6 grid gap-3 rounded-md soft-surface p-4 sm:grid-cols-2">
         <LegendChip color={leftColors.solid} label={left.name} />
         <LegendChip color={rightColors.solid} label={right.name} />
       </div>
@@ -72,7 +72,7 @@ function ScaleMap({
   mode: FeelScaleMode
 }) {
   return (
-    <div className="rounded-md border border-border bg-background/35 p-4">
+    <div className="rounded-md bg-background/35 p-4">
       <div className="mb-5">
         <h3 className="panel-title">
           {FEEL_SCALE_LABELS[mode]}
@@ -84,10 +84,10 @@ function ScaleMap({
 
       <div className="space-y-5">
         {FEEL_METRICS.map(({ label, key }) => (
-          <div key={key} className="rounded-md border border-border bg-card/55 p-4">
+          <div key={key} className="rounded-md soft-panel p-4">
             <div className="mb-3 flex items-center justify-between gap-3 text-sm">
               <span className="font-medium text-foreground">{label}</span>
-              <span className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
+              <span className="rounded-full bg-background/70 px-3 py-1 text-xs text-muted-foreground shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_6%,transparent)]">
                 {formatFeelLabel(getCalibratedFeelValue(left, key, mode), key)} /{" "}
                 {formatFeelLabel(getCalibratedFeelValue(right, key, mode), key)}
               </span>
@@ -142,7 +142,7 @@ function Meter({
 
 function LegendChip({ color, label }: { color: string; label: string }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-border bg-card/70 px-4 py-3">
+    <div className="flex items-center gap-3 rounded-2xl soft-panel px-4 py-3">
       <span
         className="size-3 rounded-full"
         style={{ backgroundColor: color }}

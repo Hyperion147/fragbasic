@@ -4,10 +4,11 @@ import { ArrowRight } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { IconTooltip } from "@/components/ui/tooltip";
 
 export function IemsTeaseSection() {
   return (
-    <section className="relative overflow-hidden rounded-2xl border border-border bg-card/40">
+    <section className="relative overflow-hidden rounded-lg bg-card/40 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_4%,transparent)]">
       <div className="relative grid gap-0 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
         <div className="max-w-2xl p-5 sm:p-6 md:p-8">
           <Badge
@@ -16,7 +17,7 @@ export function IemsTeaseSection() {
           >
             New vertical
           </Badge>
-          <h2 className="mt-4 text-2xl font-semibold tracking-tight sm:text-3xl md:mt-5 md:text-4xl">
+          <h2 className="mt-4 text-2xl font-semibold leading-tight tracking-tight sm:text-3xl md:mt-5 md:text-4xl">
             IEMs are now part of FRAGBASIC.
           </h2>
           <p className="mt-3 max-w-xl text-sm leading-6 text-muted-foreground sm:mt-4 sm:text-base sm:leading-7">
@@ -24,12 +25,14 @@ export function IemsTeaseSection() {
             isolation, and tuning so FPS audio picks are easier to compare than
             a pile of forum tabs.
           </p>
-          <Button asChild className="mt-5 w-full sm:mt-6 sm:w-auto">
-            <Link href="/iems">
-              Open IEM database
-              <ArrowRight className="size-4" />
-            </Link>
-          </Button>
+          <IconTooltip label="Browse IEMs by tuning, imaging, clarity, value, and price.">
+            <Button asChild className="mt-5 w-full sm:mt-6 sm:w-auto">
+              <Link href="/iems">
+                Open IEM database
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+          </IconTooltip>
         </div>
 
         <div className="relative min-h-[240px] overflow-hidden sm:min-h-[320px] lg:min-h-[360px] lg:translate-x-12 xl:translate-x-30">

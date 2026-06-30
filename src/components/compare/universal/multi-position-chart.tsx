@@ -23,7 +23,7 @@ type Props = {
 
 export function MultiPositionChart({ mousepads }: Props) {
   return (
-    <Card className="border-border bg-card">
+    <Card className="bg-card">
       <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-3">
         <CardTitle className="panel-title">
           Glide lane
@@ -47,7 +47,7 @@ export function MultiPositionChart({ mousepads }: Props) {
               return (
                 <div
                   key={mousepad.slug}
-                  className="grid gap-3 rounded-md border border-border bg-card/75 px-3 py-3 sm:px-4 sm:py-4 lg:grid-cols-[240px_1fr_140px]"
+                  className="grid gap-3 rounded-md soft-panel px-3 py-3 sm:px-4 sm:py-4 lg:grid-cols-[240px_1fr_140px]"
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-3">
@@ -65,7 +65,7 @@ export function MultiPositionChart({ mousepads }: Props) {
                   </div>
 
                   <div className="space-y-2">
-                    <div className="relative h-8 overflow-hidden rounded-full border border-border bg-[linear-gradient(90deg,oklch(0.24_0.01_230/0.5),oklch(0.27_0.01_230/0.5),oklch(0.31_0.02_230/0.5),oklch(0.35_0.02_230/0.5),oklch(0.39_0.03_230/0.5),oklch(0.43_0.03_230/0.5))] sm:h-10">
+                    <div className="relative h-8 overflow-hidden rounded-full bg-[linear-gradient(90deg,oklch(0.24_0.01_230/0.5),oklch(0.27_0.01_230/0.5),oklch(0.31_0.02_230/0.5),oklch(0.35_0.02_230/0.5),oklch(0.39_0.03_230/0.5),oklch(0.43_0.03_230/0.5))] shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_6%,transparent)] sm:h-10">
                       {SPEED_CONTROL_ZONES.slice(0, -1).map((zone) => (
                         <div
                           key={zone.label}
@@ -111,7 +111,7 @@ export function MultiPositionChart({ mousepads }: Props) {
                     </div>
                   </div>
 
-                  <div className="hidden rounded-2xl border border-border bg-background/70 px-4 py-2 lg:block">
+                  <div className="hidden rounded-2xl soft-surface px-4 py-2 lg:block">
                     <p className="mt-1 text-base font-semibold leading-6 text-foreground">
                       {zoneLabel}
                     </p>

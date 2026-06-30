@@ -26,7 +26,7 @@ type Props = {
 
 export function SelectedMousepadStrip({ mousepads, onRemove }: Props) {
   return (
-    <Card className="border-border bg-card/90">
+    <Card className="bg-card/90">
       <CardHeader className="pb-3">
         <CardTitle className="panel-title">
           Current comparison set
@@ -41,7 +41,7 @@ export function SelectedMousepadStrip({ mousepads, onRemove }: Props) {
             return (
               <div
                 key={mousepad.slug}
-                className="flex min-w-[245px] items-start justify-between gap-3 rounded-md border border-border bg-background/80 px-3 py-3 md:min-w-0 md:px-4 md:py-4"
+                className="flex min-w-[245px] items-start justify-between gap-3 rounded-md soft-surface px-3 py-3 md:min-w-0 md:px-4 md:py-4"
               >
                 <div className="min-w-0">
                   <div className="flex items-center gap-3">

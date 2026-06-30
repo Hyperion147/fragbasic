@@ -139,7 +139,7 @@ export function MousepadBrowser({
       />
 
       {filteredMousepads.length > 0 ? (
-        <div className="overflow-x-auto border border-border bg-card/45 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="overflow-x-auto bg-card/35 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <table className="data-table min-w-[1280px]">
             <thead>
               <tr>
@@ -243,21 +243,21 @@ function MousepadTableRow({
   return (
     <tr>
       <td>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <Link
             href={`/mousepads/${pad.slug}`}
-            className="relative block size-16 shrink-0 overflow-hidden border border-border bg-background/75"
+            className="relative block size-18 shrink-0 overflow-hidden bg-background/75 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_5%,transparent)]"
           >
             <Image
               src={pad.images.main}
               alt={fullName}
               fill
-              sizes="64px"
+              sizes="72px"
               className="object-contain p-2"
             />
           </Link>
           <div className="min-w-0">
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               <Badge className="text-black">
                 {formatMousepadValue(pad.category)}
               </Badge>
@@ -265,11 +265,11 @@ function MousepadTableRow({
             </div>
             <Link
               href={`/mousepads/${pad.slug}`}
-              className="mt-2 block truncate text-base font-semibold tracking-tight text-foreground hover:text-primary"
+              className="mt-2.5 block truncate text-lg font-semibold leading-6 text-foreground hover:text-primary"
             >
               {fullName}
             </Link>
-            <p className="truncate text-xs text-muted-foreground">
+            <p className="mt-1 truncate text-sm leading-5 text-muted-foreground">
               {pad.recommendedFor.games.map(formatMousepadValue).join(", ")}
             </p>
           </div>
@@ -277,10 +277,10 @@ function MousepadTableRow({
       </td>
       <td>
         <div className="space-y-1">
-          <p className="font-medium text-foreground">
+          <p className="text-sm font-semibold leading-5 text-foreground">
             {formatMousepadValue(pad.surface)}
           </p>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm leading-5 text-muted-foreground">
             {formatMousepadValue(pad.softness)} / {formatMousepadValue(pad.base)}
           </p>
         </div>
@@ -299,10 +299,10 @@ function MousepadTableRow({
       </td>
       <td>
         <div className="space-y-1">
-          <p className="font-medium text-foreground">
+          <p className="text-sm font-semibold leading-5 text-foreground">
             {formatMousepadValue(pad.availability.india)}
           </p>
-          <p className="text-xs text-muted-foreground">{formatPrice(pad.price.inr)}</p>
+          <p className="text-sm leading-5 text-muted-foreground">{formatPrice(pad.price.inr)}</p>
         </div>
       </td>
       <td className="text-right">

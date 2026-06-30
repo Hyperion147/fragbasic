@@ -123,7 +123,7 @@ function CompareDisclosure({
         {title}
         <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
       </summary>
-      <div className="border-t border-border p-3 sm:p-4">{children}</div>
+      <div className="p-3 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] sm:p-4">{children}</div>
     </details>
   );
 }

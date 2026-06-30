@@ -161,7 +161,7 @@ export default async function BestMousepadsPage({ params }: Props) {
 
             <section
                 id="picks"
-                className="page-section border-t border-border"
+                className="page-section soft-divider-top"
             >
                 <div className="max-w-4xl">
                     <Badge variant="outline">Curated shortlist</Badge>
@@ -175,7 +175,7 @@ export default async function BestMousepadsPage({ params }: Props) {
                     </p>
                 </div>
 
-                <div className="mt-10 border border-border bg-card/45">
+                <div className="mt-10 soft-panel">
                     {picks.map((pick, index) => (
                         <PickRow key={pick.slug} pick={pick} index={index} />
                     ))}
@@ -195,7 +195,7 @@ function PickRow({
     const pad = pick.mousepad;
 
     return (
-        <article className="grid gap-5 border-b border-border px-4 py-5 last:border-b-0 lg:grid-cols-[72px_180px_1fr_360px] lg:items-center">
+        <article className="grid gap-5 px-4 py-5 shadow-[inset_0_-1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] last:shadow-none lg:grid-cols-[72px_180px_1fr_360px] lg:items-center">
             <div>
                 <Badge className="text-black">#{index + 1}</Badge>
             <p className="compact-label mt-3 font-mono">
@@ -205,7 +205,7 @@ function PickRow({
 
             <Link
                 href={`/mousepads/${pad.slug}`}
-                className="relative block aspect-[4/3] overflow-hidden border border-border bg-background/70"
+                className="relative block aspect-[4/3] overflow-hidden bg-background/70 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_5%,transparent)]"
             >
                 <Image
                     src={pad.images.main}
@@ -272,7 +272,7 @@ function PickRow({
 
 function MiniStat({ label, value }: { label: string; value: string }) {
     return (
-        <div className="border-t border-border pt-3">
+        <div className="pt-3 soft-divider-top">
             <p className="compact-label">
                 {label}
             </p>
