@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { MouseSkateDot } from "@/components/accessories/mouse-skates/mouse-skate-dot";
 import { Badge } from "@/components/ui/badge";
@@ -39,6 +40,9 @@ export function MouseSkateCompare({
     skates: MouseSkate[];
     initialLeftSlug?: string;
 }) {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
     const defaultSlugs = useMemo(() => {
         const sorted = [...skates].sort(
             (left, right) => right.ratings.speed - left.ratings.speed,
@@ -57,8 +61,19 @@ export function MouseSkateCompare({
         };
     }, [initialLeftSlug, skates]);
 
-    const [selected, setSelected] =
-        useState<Record<CompareSlot, string>>(defaultSlugs);
+    const [selected, setSelected] = useState<Record<CompareSlot, string>>(() => {
+        const urlSlugs = (searchParams.get("skates") ?? "")
+            .split(",")
+            .map((slug) => slug.trim())
+            .filter((slug) => skates.some((skate) => skate.slug === slug))
+            .slice(0, 3);
+
+        return {
+            left: urlSlugs[0] ?? defaultSlugs.left,
+            middle: urlSlugs[1] ?? defaultSlugs.middle,
+            right: urlSlugs[2] ?? defaultSlugs.right,
+        };
+    });
 
     const selectedSkates = (["left", "middle", "right"] as CompareSlot[])
         .map((slot) => {
@@ -76,7 +91,13 @@ export function MouseSkateCompare({
         );
 
     const updateSlot = (slot: CompareSlot, slug: string) => {
-        setSelected((current) => ({ ...current, [slot]: slug }));
+        setSelected((current) => {
+            const next = { ...current, [slot]: slug };
+            const params = new URLSearchParams(searchParams.toString());
+            params.set("skates", [next.left, next.middle, next.right].filter(Boolean).join(","));
+            router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+            return next;
+        });
     };
 
     return (

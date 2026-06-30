@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { ComparisonBrowser } from "@/components/compare/comparison-browser";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
@@ -95,12 +96,14 @@ export default function CompareIndexPage() {
             </section>
 
             <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
-                <ComparisonBrowser
-                    comparisons={comparisons}
-                    tags={getComparisonTagOptions(
-                        comparisons.map((entry) => entry.comparison),
-                    )}
-                />
+                <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading comparison filters...</div>}>
+                    <ComparisonBrowser
+                        comparisons={comparisons}
+                        tags={getComparisonTagOptions(
+                            comparisons.map((entry) => entry.comparison),
+                        )}
+                    />
+                </Suspense>
             </section>
         </main>
     );

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { MousepadBrowser } from "@/components/mousepads/mousepad-browser";
@@ -63,12 +64,14 @@ export default function GlasspadsPage() {
 
       <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
         <SiteSection>
-          <MousepadBrowser
-            mousepads={glasspads}
-            categories={[]}
-            searchOnly
-            latestAddedSlugs={latestAddedGlasspadSlugs}
-          />
+          <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading glasspad filters...</div>}>
+            <MousepadBrowser
+              mousepads={glasspads}
+              categories={[]}
+              searchOnly
+              latestAddedSlugs={latestAddedGlasspadSlugs}
+            />
+          </Suspense>
         </SiteSection>
       </section>
 

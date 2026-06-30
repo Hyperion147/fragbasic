@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { MouseSkateCompare } from "@/components/accessories/mouse-skates/mouse-skate-compare";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
@@ -65,7 +66,9 @@ export default async function CompareMouseSkatesPage({
       </section>
 
       <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
-        <MouseSkateCompare skates={skates} initialLeftSlug={params?.left} />
+        <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading skate comparison...</div>}>
+          <MouseSkateCompare skates={skates} initialLeftSlug={params?.left} />
+        </Suspense>
       </section>
     </main>
   );

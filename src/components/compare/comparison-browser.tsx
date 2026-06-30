@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
 import { ComparisonCard } from "@/components/compare/comparison-card";
@@ -22,7 +23,25 @@ type Props = {
 };
 
 export function ComparisonBrowser({ comparisons, tags }: Props) {
-    const [activeTag, setActiveTag] = useState<string>("All");
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const [activeTag, setActiveTag] = useState<string>(
+        () => searchParams.get("tag") ?? "All",
+    );
+
+    const updateTag = (tag: string) => {
+        setActiveTag(tag);
+
+        if (tag === "All") {
+            router.replace(pathname, { scroll: false });
+            return;
+        }
+
+        const params = new URLSearchParams();
+        params.set("tag", tag);
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    };
 
     const visibleComparisons =
         activeTag === "All"
@@ -53,7 +72,7 @@ export function ComparisonBrowser({ comparisons, tags }: Props) {
                                 className={
                                     activeTag === tag ? "text-black" : ""
                                 }
-                                onClick={() => setActiveTag(tag)}
+                                onClick={() => updateTag(tag)}
                             >
                                 {tag}
                             </Button>

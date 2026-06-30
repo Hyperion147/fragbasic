@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Copy, Scale, ShieldCheck, SlidersHorizontal } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -34,12 +34,14 @@ const DEFAULT_SELECTED_SLUGS = [
 ] as const;
 
 const MAX_SELECTED = 3;
+const LAST_COMPARE_STORAGE_KEY = "fragbasic_last_mousepad_compare";
 
 export function UniversalCompare({ allMousepads }: Props) {
     const searchParams = useSearchParams();
     const router = useRouter();
     const padsParam = searchParams.get("pads");
     const hasPadsParam = searchParams.has("pads");
+    const didCheckStoredSelection = useRef(false);
 
     const urlSelectedSlugs = useMemo(() => {
         if (padsParam === null) {
@@ -55,9 +57,13 @@ export function UniversalCompare({ allMousepads }: Props) {
     }, [padsParam]);
 
     const [query, setQuery] = useState("");
-    const selectedSlugs = hasPadsParam
-        ? urlSelectedSlugs
-        : DEFAULT_SELECTED_SLUGS.filter((slug) => getMousepadBySlug(slug));
+    const selectedSlugs = useMemo(
+        () =>
+            hasPadsParam
+                ? urlSelectedSlugs
+                : [],
+        [hasPadsParam, urlSelectedSlugs],
+    );
 
     const selectedMousepads = useMemo(
         () =>
@@ -73,7 +79,7 @@ export function UniversalCompare({ allMousepads }: Props) {
 
     const canCompare = selectedMousepads.length >= 2;
 
-    function replaceUrl(slugs: string[]) {
+    const replaceUrl = useCallback((slugs: string[]) => {
         const params = new URLSearchParams(searchParams.toString());
         params.set("pads", slugs.join(","));
 
@@ -84,7 +90,50 @@ export function UniversalCompare({ allMousepads }: Props) {
                 scroll: false,
             },
         );
-    }
+    }, [router, searchParams]);
+
+    useEffect(() => {
+        if (hasPadsParam || didCheckStoredSelection.current) {
+            return;
+        }
+
+        didCheckStoredSelection.current = true;
+
+        try {
+            const stored = window.localStorage.getItem(LAST_COMPARE_STORAGE_KEY);
+            const parsed = stored ? JSON.parse(stored) : null;
+            const storedSlugs = Array.isArray(parsed)
+                ? parsed
+                      .filter((slug): slug is string => typeof slug === "string")
+                      .filter((slug) => getMousepadBySlug(slug))
+                      .slice(0, MAX_SELECTED)
+                : [];
+
+            if (storedSlugs.length > 0) {
+                replaceUrl(storedSlugs);
+                return;
+            }
+        } catch {
+            // Ignore malformed localStorage and fall back to starter pads.
+        }
+
+        replaceUrl(DEFAULT_SELECTED_SLUGS.filter((slug) => getMousepadBySlug(slug)));
+    }, [hasPadsParam, replaceUrl]);
+
+    useEffect(() => {
+        if (!hasPadsParam) {
+            return;
+        }
+
+        try {
+            window.localStorage.setItem(
+                LAST_COMPARE_STORAGE_KEY,
+                JSON.stringify(selectedSlugs),
+            );
+        } catch {
+            // localStorage can fail in private or restricted contexts.
+        }
+    }, [hasPadsParam, selectedSlugs]);
 
     function handleAdd(mousepad: Mousepad) {
         if (

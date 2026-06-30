@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { IemBrowser } from "@/components/iems/iem-browser";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
@@ -52,7 +53,9 @@ export default function IemsPage() {
 
       <section id="iems" className="w-full px-4 py-8 md:px-6 md:py-12 lg:px-8 xl:px-10">
         <SiteSection>
-          <IemBrowser iems={iems} />
+          <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading IEM filters...</div>}>
+            <IemBrowser iems={iems} />
+          </Suspense>
         </SiteSection>
       </section>
     </main>

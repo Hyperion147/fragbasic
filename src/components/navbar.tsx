@@ -30,6 +30,7 @@ import Image from "next/image";
 const directNavItems = [
     { label: "GlassPads", href: "/mousepads/glasspads" },
     { label: "IEMs", href: "/iems" },
+    { label: "IEM Compare", href: "/iems/compare" },
 ];
 
 const mousepadMenuLinks: Array<{
@@ -148,6 +149,12 @@ const bestGuideLinks = [
 
 export function SiteNavbar() {
     const pathname = usePathname();
+    const compareHref = pathname.startsWith("/iems")
+        ? "/iems/compare"
+        : "/mousepads/compare/universal";
+    const compareLabel = pathname.startsWith("/iems")
+        ? "IEM Compare"
+        : "Universal Compare";
 
     return (
         <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-xl">
@@ -171,13 +178,8 @@ export function SiteNavbar() {
                 <DesktopNavigation pathname={pathname} />
 
                 <div className="hidden items-center gap-4 md:flex">
-                    <Button size="sm" asChild variant="outline">
-                        <Link href="/mousepads/finder">Find My Mousepad</Link>
-                    </Button>
                     <Button size="sm" asChild>
-                        <Link href="/mousepads/compare/universal">
-                            Universal Compare
-                        </Link>
+                        <Link href={compareHref}>{compareLabel}</Link>
                     </Button>
                 </div>
 
@@ -369,6 +371,10 @@ function isActivePath(pathname: string, href: string) {
         return pathname === "/";
     }
 
+    if (href === "/iems" && pathname.startsWith("/iems/compare")) {
+        return false;
+    }
+
     return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -455,7 +461,6 @@ function MobileNavigation() {
             items: [
                 { label: "All Mousepads", href: "/mousepads" },
                 { label: "GlassPads", href: "/mousepads/glasspads" },
-                { label: "Find My Mousepad", href: "/mousepads/finder" },
                 { label: "Universal Compare", href: "/mousepads/compare/universal" },
                 { label: "Best mousepads home", href: "/best" },
                 ...bestGuideLinks
@@ -468,7 +473,10 @@ function MobileNavigation() {
         },
         {
             title: "IEMs",
-            items: [{ label: "Browse IEMs", href: "/iems" }],
+            items: [
+                { label: "Browse IEMs", href: "/iems" },
+                { label: "Compare IEMs", href: "/iems/compare" },
+            ],
         },
         {
             title: "Accessories",

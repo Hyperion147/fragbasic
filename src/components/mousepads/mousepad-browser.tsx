@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { MousepadCard } from "@/components/mousepads/mousepad-card";
 import { MousepadFilters } from "@/components/mousepads/mousepad-filters";
@@ -33,17 +34,45 @@ export function MousepadBrowser({
   searchOnly = false,
   latestAddedSlugs = [],
 }: Props) {
-  const [filters, setFilters] = useState<MousepadFilterState>(
-    () => ({
-      ...getDefaultMousepadFilters(),
-      category: initialCategory ?? getDefaultMousepadFilters().category,
-    })
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [filters, setFilters] = useState<MousepadFilterState>(() =>
+    getInitialMousepadFilters(searchParams, initialCategory)
   );
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(() => searchParams.get("q") ?? "");
 
   const handleReset = () => {
     setFilters(getDefaultMousepadFilters());
     setQuery("");
+    router.replace(pathname, { scroll: false });
+  };
+
+  const updateUrl = (nextFilters: MousepadFilterState, nextQuery: string) => {
+    const defaults = getDefaultMousepadFilters();
+    const params = new URLSearchParams();
+
+    if (nextQuery.trim()) params.set("q", nextQuery.trim());
+    if (!searchOnly && nextFilters.brand !== defaults.brand) params.set("brand", nextFilters.brand);
+    if (!searchOnly && nextFilters.category !== defaults.category) params.set("category", nextFilters.category);
+    if (!searchOnly && nextFilters.surface !== defaults.surface) params.set("surface", nextFilters.surface);
+    if (!searchOnly && nextFilters.indiaAvailability !== defaults.indiaAvailability) {
+      params.set("availability", nextFilters.indiaAvailability);
+    }
+    if (!searchOnly && nextFilters.sort !== defaults.sort) params.set("sort", nextFilters.sort);
+
+    const serialized = params.toString();
+    router.replace(serialized ? `${pathname}?${serialized}` : pathname, { scroll: false });
+  };
+
+  const handleFiltersChange = (next: MousepadFilterState) => {
+    setFilters(next);
+    updateUrl(next, query);
+  };
+
+  const handleQueryChange = (next: string) => {
+    setQuery(next);
+    updateUrl(filters, next);
   };
 
   const filteredMousepads = useMemo(() => {
@@ -86,8 +115,8 @@ export function MousepadBrowser({
         value={filters}
         query={query}
         searchOnly={searchOnly}
-        onChange={setFilters}
-        onQueryChange={setQuery}
+        onChange={handleFiltersChange}
+        onQueryChange={handleQueryChange}
         onReset={handleReset}
       />
 
@@ -122,6 +151,31 @@ export function MousepadBrowser({
       )}
     </div>
   );
+}
+
+function getInitialMousepadFilters(
+  searchParams: ReturnType<typeof useSearchParams>,
+  initialCategory?: MousepadCategory
+): MousepadFilterState {
+  const defaults = getDefaultMousepadFilters();
+
+  return {
+    ...defaults,
+    brand: searchParams.get("brand") ?? defaults.brand,
+    category:
+      (searchParams.get("category") as MousepadFilterState["category"] | null) ??
+      initialCategory ??
+      defaults.category,
+    surface:
+      (searchParams.get("surface") as MousepadFilterState["surface"] | null) ??
+      defaults.surface,
+    indiaAvailability:
+      (searchParams.get("availability") as MousepadFilterState["indiaAvailability"] | null) ??
+      defaults.indiaAvailability,
+    sort:
+      (searchParams.get("sort") as MousepadFilterState["sort"] | null) ??
+      defaults.sort,
+  };
 }
 
 function pinLatestMousepads(

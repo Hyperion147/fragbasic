@@ -512,14 +512,16 @@ function FrequencyResponseChart({
         left: padding.left,
         top: padding.top,
     });
+    const bands = getFrequencyBandSummaries(points);
 
     return (
         <div className="mt-6 overflow-x-auto overflow-y-hidden rounded-lg border border-border bg-background/60 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="relative w-[880px] max-w-none md:w-full">
             <svg
                 viewBox={`0 0 ${width} ${height}`}
                 role="img"
                 aria-label={`${label} measured frequency response graph`}
-                className="h-[min(64vh,560px)] min-h-[360px] w-[880px] max-w-none md:w-full"
+                className="h-[min(64vh,560px)] min-h-[360px] w-full"
             >
                 <rect width={width} height={height} fill="transparent" />
                 {dbTicks.map((db) => {
@@ -645,6 +647,12 @@ function FrequencyResponseChart({
                     </text>
                 </g>
             </svg>
+            <div className="pointer-events-none absolute inset-x-3 bottom-3 grid grid-cols-6 gap-2">
+                {bands.map((band) => (
+                    <FrequencyBandCard key={band.label} band={band} />
+                ))}
+            </div>
+            </div>
         </div>
     );
 }
@@ -990,6 +998,90 @@ type FrequencyChartScale = {
     left: number;
     top: number;
 };
+
+type FrequencyBandSummary = {
+    label: string;
+    range: string;
+    value: number;
+    tone: string;
+};
+
+const frequencyBands = [
+    { label: "Sub-bass", range: "20-60 Hz", min: 20, max: 60 },
+    { label: "Mid-bass", range: "60-200 Hz", min: 60, max: 200 },
+    { label: "Mids", range: "200 Hz-1 kHz", min: 200, max: 1000 },
+    { label: "Upper mids", range: "1-4 kHz", min: 1000, max: 4000 },
+    { label: "Treble", range: "4-10 kHz", min: 4000, max: 10000 },
+    { label: "Air", range: "10-20 kHz", min: 10000, max: 20000 },
+];
+
+function FrequencyBandCard({ band }: { band: FrequencyBandSummary }) {
+    return (
+        <div className="min-w-0 rounded-md border border-border/80 bg-background/88 p-2 shadow-lg shadow-black/10 backdrop-blur-sm">
+            <p className="truncate text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                {band.label}
+            </p>
+            <p className="mt-0.5 truncate text-[10px] text-muted-foreground">
+                {band.range}
+            </p>
+            <p className="mt-2 text-xs font-semibold text-foreground">
+                {band.tone}
+            </p>
+            <p className="mt-0.5 text-[10px] text-muted-foreground">
+                {formatSignedDb(band.value)}
+            </p>
+        </div>
+    );
+}
+
+function getFrequencyBandSummaries(points: IemFrequencyPoint[]) {
+    return frequencyBands.map((band) => {
+        const value = averageDbInRange(points, band.min, band.max);
+
+        return {
+            label: band.label,
+            range: band.range,
+            value,
+            tone: formatFrequencyBandTone(value),
+        };
+    });
+}
+
+function averageDbInRange(points: IemFrequencyPoint[], minHz: number, maxHz: number) {
+    const matching = points.filter((point) => point.hz >= minHz && point.hz <= maxHz);
+    const sampled = matching.length > 0 ? matching : points;
+    const total = sampled.reduce((sum, point) => sum + point.db, 0);
+
+    return Number((total / Math.max(1, sampled.length)).toFixed(1));
+}
+
+function formatFrequencyBandTone(value: number) {
+    if (value >= 7) {
+        return "Very high";
+    }
+
+    if (value >= 4) {
+        return "High";
+    }
+
+    if (value >= 1.5) {
+        return "Lifted";
+    }
+
+    if (value >= -1.5) {
+        return "Neutral";
+    }
+
+    if (value >= -4) {
+        return "Relaxed";
+    }
+
+    return "Recessed";
+}
+
+function formatSignedDb(value: number) {
+    return `${value > 0 ? "+" : ""}${value.toFixed(1)} dB avg`;
+}
 
 function buildFrequencyPath(
     points: IemFrequencyPoint[],

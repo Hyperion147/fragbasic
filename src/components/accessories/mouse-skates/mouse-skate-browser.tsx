@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { RotateCcw, Search } from "lucide-react";
 
 import { MouseSkateCard } from "@/components/accessories/mouse-skates/mouse-skate-card";
@@ -15,12 +16,15 @@ const allFilterValue = "all";
 type SortKey = "fastest" | "slowest";
 
 export function MouseSkateBrowser({ skates }: { skates: MouseSkate[] }) {
-  const [query, setQuery] = useState("");
-  const [brand, setBrand] = useState(allFilterValue);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [query, setQuery] = useState(() => searchParams.get("q") ?? "");
+  const [brand, setBrand] = useState(() => searchParams.get("brand") ?? allFilterValue);
   const [material, setMaterial] = useState<typeof allFilterValue | MouseSkateMaterial>(
-    allFilterValue
+    () => (searchParams.get("material") as MouseSkateMaterial | null) ?? allFilterValue
   );
-  const [sort, setSort] = useState<SortKey>("fastest");
+  const [sort, setSort] = useState<SortKey>(() => (searchParams.get("sort") as SortKey | null) ?? "fastest");
 
   const brands = useMemo(
     () => Array.from(new Set(skates.map((skate) => skate.brand))).sort(),
@@ -80,6 +84,48 @@ export function MouseSkateBrowser({ skates }: { skates: MouseSkate[] }) {
     setBrand(allFilterValue);
     setMaterial(allFilterValue);
     setSort("fastest");
+    router.replace(pathname, { scroll: false });
+  };
+
+  const updateUrl = (next: {
+    query?: string;
+    brand?: string;
+    material?: typeof allFilterValue | MouseSkateMaterial;
+    sort?: SortKey;
+  }) => {
+    const nextQuery = next.query ?? query;
+    const nextBrand = next.brand ?? brand;
+    const nextMaterial = next.material ?? material;
+    const nextSort = next.sort ?? sort;
+    const params = new URLSearchParams();
+
+    if (nextQuery.trim()) params.set("q", nextQuery.trim());
+    if (nextBrand !== allFilterValue) params.set("brand", nextBrand);
+    if (nextMaterial !== allFilterValue) params.set("material", nextMaterial);
+    if (nextSort !== "fastest") params.set("sort", nextSort);
+
+    const serialized = params.toString();
+    router.replace(serialized ? `${pathname}?${serialized}` : pathname, { scroll: false });
+  };
+
+  const updateQuery = (next: string) => {
+    setQuery(next);
+    updateUrl({ query: next });
+  };
+
+  const updateBrand = (next: string) => {
+    setBrand(next);
+    updateUrl({ brand: next });
+  };
+
+  const updateMaterial = (next: typeof allFilterValue | MouseSkateMaterial) => {
+    setMaterial(next);
+    updateUrl({ material: next });
+  };
+
+  const updateSort = (next: SortKey) => {
+    setSort(next);
+    updateUrl({ sort: next });
   };
 
   return (
@@ -110,7 +156,7 @@ export function MouseSkateBrowser({ skates }: { skates: MouseSkate[] }) {
               <Search className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 value={query}
-                onChange={(event) => setQuery(event.target.value)}
+                onChange={(event) => updateQuery(event.target.value)}
                 placeholder="Search brand, series, material"
                 className="pl-10"
                 aria-label="Search mouse skates"
@@ -124,7 +170,7 @@ export function MouseSkateBrowser({ skates }: { skates: MouseSkate[] }) {
               size="sm"
               variant={brand === allFilterValue ? "default" : "outline"}
               className={brand === allFilterValue ? "text-black" : ""}
-              onClick={() => setBrand(allFilterValue)}
+              onClick={() => updateBrand(allFilterValue)}
             >
               All
             </Button>
@@ -135,7 +181,7 @@ export function MouseSkateBrowser({ skates }: { skates: MouseSkate[] }) {
                 size="sm"
                 variant={brand === option ? "default" : "outline"}
                 className={brand === option ? "text-black" : ""}
-                onClick={() => setBrand(option)}
+                onClick={() => updateBrand(option)}
               >
                 {option}
               </Button>
@@ -148,7 +194,7 @@ export function MouseSkateBrowser({ skates }: { skates: MouseSkate[] }) {
               size="sm"
               variant={material === allFilterValue ? "default" : "outline"}
               className={material === allFilterValue ? "text-black" : ""}
-              onClick={() => setMaterial(allFilterValue)}
+              onClick={() => updateMaterial(allFilterValue)}
             >
               All
             </Button>
@@ -159,7 +205,7 @@ export function MouseSkateBrowser({ skates }: { skates: MouseSkate[] }) {
                 size="sm"
                 variant={material === option ? "default" : "outline"}
                 className={material === option ? "text-black" : ""}
-                onClick={() => setMaterial(option)}
+                onClick={() => updateMaterial(option)}
               >
                 {formatMouseSkateMaterial(option)}
               </Button>
@@ -172,7 +218,7 @@ export function MouseSkateBrowser({ skates }: { skates: MouseSkate[] }) {
               size="sm"
               variant={sort === "fastest" ? "default" : "outline"}
               className={sort === "fastest" ? "text-black" : ""}
-              onClick={() => setSort("fastest")}
+              onClick={() => updateSort("fastest")}
             >
               Fastest
             </Button>
@@ -181,7 +227,7 @@ export function MouseSkateBrowser({ skates }: { skates: MouseSkate[] }) {
               size="sm"
               variant={sort === "slowest" ? "default" : "outline"}
               className={sort === "slowest" ? "text-black" : ""}
-              onClick={() => setSort("slowest")}
+              onClick={() => updateSort("slowest")}
             >
               Slowest
             </Button>
