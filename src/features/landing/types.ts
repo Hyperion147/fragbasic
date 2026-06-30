@@ -1,4 +1,5 @@
 import type { Mousepad } from "@/types/mousepad";
+import type { Iem } from "@/types/iem";
 
 export type ComparisonPreview = {
   slug: string;
@@ -15,7 +16,8 @@ export type LandingProps = {
   mousepadCount: number;
   glasspadCount: number;
   bestPageCount: number;
-  comparisonCount: number;
+  iemCount: number;
   comparisons: ComparisonPreview[];
   latestAdded?: Mousepad[];
+  latestAddedIems?: Iem[];
 };

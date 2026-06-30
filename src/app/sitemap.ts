@@ -14,7 +14,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/mousepads",
     "/mousepads/glasspads",
-    "/mousepads/finder",
     "/mousepads/compare",
     "/mousepads/compare/universal",
     "/iems",

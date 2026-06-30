@@ -9,7 +9,6 @@ import {
     Menu,
     Shield,
     Sparkles,
-    Star,
     Zap,
 } from "lucide-react";
 
@@ -23,14 +22,19 @@ import {
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 const directNavItems = [
     { label: "GlassPads", href: "/mousepads/glasspads" },
     { label: "IEMs", href: "/iems" },
-    { label: "IEM Compare", href: "/iems/compare" },
 ];
 
 const mousepadMenuLinks: Array<{
@@ -51,12 +55,6 @@ const mousepadMenuLinks: Array<{
         body: "Build your own 2-3 pad matchup",
         href: "/mousepads/compare/universal",
         icon: Gauge,
-    },
-    {
-        title: "Mousepad Finder",
-        body: "Get personalized recommendations",
-        href: "/mousepads/finder",
-        icon: Star,
     },
 ] as const;
 const accessoryMenuLinks: Array<{
@@ -178,6 +176,13 @@ export function SiteNavbar() {
                 <DesktopNavigation pathname={pathname} />
 
                 <div className="hidden items-center gap-4 md:flex">
+                    {pathname === "/" ? (
+                        <Button size="sm" variant="outline" asChild>
+                            <Link href="https://forms.gle/5b1QejGptx63eQHw9">
+                                Submit a Review
+                            </Link>
+                        </Button>
+                    ) : null}
                     <Button size="sm" asChild>
                         <Link href={compareHref}>{compareLabel}</Link>
                     </Button>
@@ -318,10 +323,6 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                     />
                                 ))}
                             </div>
-                            <p className="mt-4 border-t border-border pt-4 text-xs leading-5 text-muted-foreground">
-                                Starting with skates. More accessory data can
-                                plug into this menu later.
-                            </p>
                         </div>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -455,9 +456,16 @@ function MousepadsMenuFeelLink({
 
 function MobileNavigation() {
     const pathname = usePathname();
+    const compareHref = pathname.startsWith("/iems")
+        ? "/iems/compare"
+        : "/mousepads/compare/universal";
+    const compareLabel = pathname.startsWith("/iems")
+        ? "Compare IEMs"
+        : "Universal Compare";
     const mobileSections = [
         {
             title: "Mousepads",
+            icon: Grid2x2,
             items: [
                 { label: "All Mousepads", href: "/mousepads" },
                 { label: "GlassPads", href: "/mousepads/glasspads" },
@@ -473,6 +481,7 @@ function MobileNavigation() {
         },
         {
             title: "IEMs",
+            icon: Zap,
             items: [
                 { label: "Browse IEMs", href: "/iems" },
                 { label: "Compare IEMs", href: "/iems/compare" },
@@ -480,6 +489,7 @@ function MobileNavigation() {
         },
         {
             title: "Accessories",
+            icon: Sparkles,
             items: [
                 { label: "Mouse Skates", href: "/accessories/mouse-skates" },
                 { label: "Browse Skates", href: "/accessories/mouse-skates/browse" },
@@ -492,64 +502,149 @@ function MobileNavigation() {
         <div className="md:hidden">
             <Sheet>
                 <SheetTrigger asChild>
-                    <Button variant="outline" size="icon">
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        aria-label="Open navigation"
+                    >
                         <Menu className="size-4" />
                     </Button>
                 </SheetTrigger>
 
-                <SheetContent side="right" className="w-80">
-                    <div className="mt-8 space-y-6">
-                        <Link href="/" className="flex items-center gap-3">
-                            <div>
-                                <p className="text-lg font-semibold tracking-tight">
-                                    FRAGBASIC
-                                    <span className="text-[10px] text-secondary-foreground">
-                                        .FUN
-                                    </span>
-                                </p>
-                                <p className="text-xs text-muted-foreground">
-                                    Mousepad data, finder, and compare tools
-                                </p>
-                            </div>
-                        </Link>
+                <SheetContent
+                    side="right"
+                    className="w-[min(92vw,23rem)] overflow-hidden border-border bg-background/98 p-0 backdrop-blur-xl"
+                >
+                    <SheetTitle className="sr-only">Site navigation</SheetTitle>
+                    <div className="border-b border-border px-4 py-5">
+                        <SheetClose asChild>
+                            <Link href="/" className="flex items-center gap-3">
+                                <Image
+                                    src="/logo.png"
+                                    alt="Fragbasic"
+                                    width={195}
+                                    height={449}
+                                    className="size-10"
+                                />
+                                <div>
+                                    <p className="text-lg font-semibold tracking-tight">
+                                        FRAGBASIC
+                                        <span className="text-[10px] text-secondary-foreground">
+                                            .FUN
+                                        </span>
+                                    </p>
+                                    <p className="text-xs text-muted-foreground">
+                                        Gear data and compare tools
+                                    </p>
+                                </div>
+                            </Link>
+                        </SheetClose>
+                    </div>
 
-                        {mobileSections.map((section, index) => (
-                            <div
-                                key={section.title}
-                                className={cn(
-                                    "space-y-3",
-                                    index > 0 && "border-t border-border pt-4",
-                                )}
-                            >
-                                <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
-                                    {section.title}
-                                </p>
-                                <nav className="grid gap-2">
-                                    {section.items.map((item) => (
-                                        <Button
-                                            key={`${section.title}-${item.href}`}
-                                            variant={
-                                                isActivePath(pathname, item.href)
-                                                    ? "secondary"
-                                                    : "ghost"
-                                            }
-                                            className={cn(
-                                                "justify-between rounded-2xl px-4 py-5",
-                                                isActivePath(pathname, item.href)
-                                                    ? "border-[color:color-mix(in_srgb,var(--brand-hover)_26%,transparent)] bg-[color:color-mix(in_srgb,var(--brand)_14%,transparent)] text-foreground shadow-[0_0_18px_color-mix(in_srgb,var(--brand-glow)_12%,transparent)]"
-                                                    : "",
-                                            )}
-                                            asChild
-                                        >
-                                            <Link href={item.href}>
-                                                {item.label}
-                                                <ChevronRight className="size-4 text-muted-foreground" />
-                                            </Link>
-                                        </Button>
-                                    ))}
-                                </nav>
-                            </div>
-                        ))}
+                    <div className="flex-1 overflow-y-auto px-4 py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                        <div className="grid grid-cols-2 gap-2">
+                            <SheetClose asChild>
+                                <Link
+                                    href={compareHref}
+                                    className="inline-flex min-h-18 flex-col justify-between rounded-xl border border-[color:color-mix(in_srgb,var(--brand-hover)_28%,transparent)] bg-[color:color-mix(in_srgb,var(--brand)_12%,transparent)] p-3 text-sm font-semibold text-foreground"
+                                >
+                                    <Gauge className="size-4 text-brand-hover" />
+                                    <span className="mt-3 leading-tight">{compareLabel}</span>
+                                </Link>
+                            </SheetClose>
+
+                            <SheetClose asChild>
+                                <Link
+                                    href="/mousepads"
+                                    className="inline-flex min-h-18 flex-col justify-between rounded-xl border border-border bg-card/70 p-3 text-sm font-semibold text-foreground"
+                                >
+                                    <Grid2x2 className="size-4 text-muted-foreground" />
+                                    <span className="mt-3 leading-tight">Browse Products</span>
+                                </Link>
+                            </SheetClose>
+                        </div>
+
+                        <div className="mt-6 space-y-3">
+                            {mobileSections.map((section) => {
+                                const SectionIcon = section.icon;
+                                const activeSection = section.items.some((item) =>
+                                    isActivePath(pathname, item.href),
+                                );
+
+                                return (
+                                    <details
+                                        key={section.title}
+                                        open={activeSection}
+                                        className="group rounded-xl border border-border bg-card/45"
+                                    >
+                                        <summary className="flex cursor-pointer list-none items-center gap-3 px-3 py-3 [&::-webkit-details-marker]:hidden">
+                                            <span
+                                                className={cn(
+                                                    "flex size-8 shrink-0 items-center justify-center rounded-lg border border-border bg-background/70 text-muted-foreground",
+                                                    activeSection &&
+                                                        "border-[color:color-mix(in_srgb,var(--brand-hover)_32%,transparent)] text-brand-hover",
+                                                )}
+                                            >
+                                                <SectionIcon className="size-4" />
+                                            </span>
+                                            <span className="min-w-0 flex-1">
+                                                <span className="block text-sm font-semibold text-foreground">
+                                                    {section.title}
+                                                </span>
+                                                <span className="block text-[11px] text-muted-foreground">
+                                                    {section.items.length} links
+                                                </span>
+                                            </span>
+                                            <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-90" />
+                                        </summary>
+
+                                        <nav className="grid gap-1 border-t border-border/70 px-2 py-2">
+                                            {section.items.map((item) => {
+                                                const active = isActivePath(pathname, item.href);
+
+                                                return (
+                                                    <SheetClose
+                                                        key={`${section.title}-${item.href}`}
+                                                        asChild
+                                                    >
+                                                        <Link
+                                                            href={item.href}
+                                                            className={cn(
+                                                                "flex items-center rounded-lg px-3 py-2.5 text-sm text-foreground/80 transition-colors hover:bg-background/70 hover:text-foreground",
+                                                                active &&
+                                                                    "bg-[color:color-mix(in_srgb,var(--brand)_14%,transparent)] font-semibold text-foreground",
+                                                            )}
+                                                        >
+                                                            <span className="min-w-0 flex-1 truncate">
+                                                                {item.label}
+                                                            </span>
+                                                        </Link>
+                                                    </SheetClose>
+                                                );
+                                            })}
+                                        </nav>
+                                    </details>
+                                );
+                            })}
+                        </div>
+
+                        <div className="mt-6 rounded-xl border border-border bg-card/50 p-4">
+                            <p className="text-sm font-semibold text-foreground">
+                                Submit a product or review
+                            </p>
+                            <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                                Help keep the database useful with fresh gear notes.
+                            </p>
+                            <SheetClose asChild>
+                                <Link
+                                    href="https://forms.gle/5b1QejGptx63eQHw9"
+                                    className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-hover"
+                                >
+                                    Submit review
+                                    <ArrowRight className="size-4" />
+                                </Link>
+                            </SheetClose>
+                        </div>
                     </div>
                 </SheetContent>
             </Sheet>

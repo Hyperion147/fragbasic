@@ -16,16 +16,16 @@ export function PopularComparisonsSection({ comparisons }: Props) {
         <section className="space-y-6">
             <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
                 <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.36em] text-[color:var(--brand-hover)]">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-hover)] sm:text-xs sm:tracking-[0.36em]">
                         Popular comparisons
                     </p>
-                    <h2 className="mt-4 max-w-4xl text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
+                    <h2 className="mt-3 max-w-4xl text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:mt-4 md:text-5xl">
                         See how top mousepads{" "}
                         <span className="text-[color:var(--brand-hover)]">
                             stack up.
                         </span>
                     </h2>
-                    <p className="mt-3 text-base text-muted-foreground">
+                    <p className="mt-3 text-sm text-muted-foreground sm:text-base">
                         Real data. Side by side.
                     </p>
                 </div>
@@ -70,7 +70,7 @@ function ComparisonCard({
                 "group overflow-hidden rounded-xl border border-border bg-card/55 transition-colors hover:border-[color:color-mix(in_srgb,var(--brand-hover)_58%,transparent)] hover:shadow-[0_0_28px_color-mix(in_srgb,var(--brand-glow)_12%,transparent)]",
             )}
         >
-            <div className="p-5">
+            <div className="p-4 sm:p-5">
                 <Badge
                     variant="outline"
                     className="h-7 gap-2 rounded-md border-border/90 bg-background/60 px-3 text-[11px]"
@@ -79,13 +79,13 @@ function ComparisonCard({
                     {badge.label}
                 </Badge>
 
-                <div className="mt-6 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+                <div className="mt-5 grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:mt-6 sm:gap-3">
                     <ProductPreview
                         name={comparison.leftName}
                         image={comparison.leftImage}
                         color={comparison.leftColor}
                     />
-                    <span className="flex size-10 items-center justify-center rounded-full border border-[color:color-mix(in_srgb,var(--brand-hover)_55%,transparent)] bg-background text-xs font-semibold shadow-[0_0_18px_color-mix(in_srgb,var(--brand-glow)_20%,transparent)]">
+                    <span className="flex size-9 items-center justify-center rounded-full border border-[color:color-mix(in_srgb,var(--brand-hover)_55%,transparent)] bg-background text-[11px] font-semibold shadow-[0_0_18px_color-mix(in_srgb,var(--brand-glow)_20%,transparent)] sm:size-10 sm:text-xs">
                         VS
                     </span>
                     <ProductPreview
@@ -95,23 +95,23 @@ function ComparisonCard({
                     />
                 </div>
 
-                <div className="mt-5 grid grid-cols-2 gap-5">
+                <div className="mt-4 grid grid-cols-2 gap-3 sm:mt-5 sm:gap-5">
                     <MousepadName name={comparison.leftName} />
                     <MousepadName name={comparison.rightName} />
                 </div>
 
-                <div className="mt-5 grid grid-cols-2 gap-5">
+                <div className="mt-4 grid grid-cols-2 gap-3 sm:mt-5 sm:gap-5">
                     <TagChip label={leftTag} active={index === 0} />
                     <TagChip label={rightTag} />
                 </div>
             </div>
 
-            <div className="flex items-center justify-between border-t border-border bg-background/36 px-5 py-4">
-                <span className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="flex items-center justify-between gap-3 border-t border-border bg-background/36 px-4 py-4 sm:px-5">
+                <span className="inline-flex items-center gap-2 text-xs text-muted-foreground sm:text-sm">
                     <BarChart3 className="size-4 text-foreground/72" />
                     View full stats
                 </span>
-                <span className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--brand-hover)]">
+                <span className="inline-flex items-center gap-2 text-xs font-semibold text-[color:var(--brand-hover)] sm:text-sm">
                     Compare
                     <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                 </span>
@@ -150,7 +150,7 @@ function ProductPreview({
 
 function MousepadName({ name }: { name: string }) {
     return (
-        <p className="min-h-12 text-base font-semibold leading-6 tracking-tight text-foreground">
+        <p className="min-h-10 text-sm font-semibold leading-5 tracking-tight text-foreground sm:min-h-12 sm:text-base sm:leading-6">
             {name}
         </p>
     );

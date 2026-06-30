@@ -14,7 +14,13 @@ import {
 } from "@/lib/iems";
 import type { Iem } from "@/types/iem";
 
-export function IemCard({ iem }: { iem: Iem }) {
+export function IemCard({
+    iem,
+    isLatestAdded = false,
+}: {
+    iem: Iem;
+    isLatestAdded?: boolean;
+}) {
     return (
         <Link href={`/iems/${iem.slug}`} className="group block h-full">
             <Card className="relative h-full overflow-hidden border-border bg-card/80 p-5 transition-colors">
@@ -28,6 +34,14 @@ export function IemCard({ iem }: { iem: Iem }) {
                     <Badge variant="outline">
                         {iem.priceTier.replace("-", " ")}
                     </Badge>
+                    {isLatestAdded ? (
+                        <Badge
+                            variant="outline"
+                            className="border-sky-300/70 bg-sky-200/10 text-sky-100"
+                        >
+                            Latest added
+                        </Badge>
+                    ) : null}
                 </div>
 
                 <div className="relative mt-5">

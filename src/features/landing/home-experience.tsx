@@ -2,8 +2,8 @@
 
 import { motion, useReducedMotion } from "motion/react";
 
-import { FinderSection } from "@/features/landing/finder-section";
 import { HeroSection } from "@/features/landing/hero-section";
+import { LatestAddedIemsSection } from "@/features/landing/latest-added-iems-section";
 import { LatestAddedSection } from "@/features/landing/latest-added-section";
 import { PagesShowcaseSection } from "@/features/landing/pages-showcase-section";
 import { PopularComparisonsSection } from "@/features/landing/popular-comparisons-section";
@@ -16,9 +16,10 @@ export function HomeExperience({
   mousepadCount,
   glasspadCount,
   bestPageCount,
-  comparisonCount,
+  iemCount,
   comparisons,
   latestAdded,
+  latestAddedIems,
 }: LandingProps) {
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -26,13 +27,13 @@ export function HomeExperience({
         <HeroSection mousepadCount={mousepadCount} />
       </RevealSection>
 
-      <div className="w-full space-y-12 px-4 py-12 md:space-y-16 md:px-6 md:py-16 lg:px-8 xl:px-10">
+      <div className="w-full space-y-10 px-3 py-8 sm:px-4 md:space-y-16 md:px-6 md:py-16 lg:px-8 xl:px-10">
         <RevealSection delay={0.08}>
           <PagesShowcaseSection
             mousepadCount={mousepadCount}
             glasspadCount={glasspadCount}
+            iemCount={iemCount}
             bestPageCount={bestPageCount}
-            comparisonCount={comparisonCount}
           />
         </RevealSection>
         {latestAdded && latestAdded.length > 0 ? (
@@ -40,19 +41,23 @@ export function HomeExperience({
             <LatestAddedSection pads={latestAdded} />
           </RevealSection>
         ) : null}
+        {latestAddedIems && latestAddedIems.length > 0 ? (
+          <RevealSection delay={0.13}>
+            <LatestAddedIemsSection iems={latestAddedIems} />
+          </RevealSection>
+        ) : null}
         <RevealSection delay={0.14}>
           <PopularComparisonsSection comparisons={comparisons} />
         </RevealSection>
-        <RevealSection delay={0.2}>
-          <FinderSection />
-        </RevealSection>
+        <div className="hidden md:block">
+          <RevealSection delay={0.2}>
+            <SpectrumSection />
+          </RevealSection>
+        </div>
         <RevealSection delay={0.26}>
-          <SpectrumSection />
-        </RevealSection>
-        <RevealSection delay={0.32}>
           <WhySection />
         </RevealSection>
-        <RevealSection delay={0.38}>
+        <RevealSection delay={0.32}>
           <IemsTeaseSection />
         </RevealSection>
       </div>

@@ -1,30 +1,34 @@
 import type { Metadata } from "next";
 import { HomeExperience } from "@/features/landing/home-experience";
 import { getAllBestPages } from "@/data/best-pages";
-import { latestAddedMousepadSlugs } from "@/data/latest-added";
+import { latestAddedIemSlugs, latestAddedMousepadSlugs } from "@/data/latest-added";
 import { getPublishedComparisons } from "@/lib/comparisons";
+import { getAllIems, getIemBySlug } from "@/lib/iems";
 import { getAllMousepads, getDefaultColorway, getMousepadFullName, getMousepadBySlug } from "@/lib/mousepads";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Mousepad Database, Glasspads, Comparisons & FPS Finder",
+  title: "Mousepad Database, Glasspads, IEMs & Comparisons",
   description:
-    "Browse FPS mousepads and glasspads, compare gear side by side, and find picks for VALORANT, CS2, Apex, and more.",
+    "Browse FPS mousepads, glasspads, and IEMs, then compare gear side by side for VALORANT, CS2, Apex, and more.",
   path: "/",
   keywords: [
     "mousepad database india",
     "best mousepads for valorant",
     "best glasspads",
-    "fps mousepad finder",
     "mousepad compare",
   ],
 });
 
 export default function HomePage() {
   const mousepads = getAllMousepads();
+  const iems = getAllIems();
   const latestAdded = latestAddedMousepadSlugs
     .map((slug) => getMousepadBySlug(slug))
     .filter((mousepad) => mousepad !== undefined);
+  const latestAddedIems = latestAddedIemSlugs
+    .map((slug) => getIemBySlug(slug))
+    .filter((iem) => iem !== undefined);
   const glasspadCount = mousepads.filter(
     (mousepad) => mousepad.category === "glass",
   ).length;
@@ -57,9 +61,10 @@ export default function HomePage() {
       mousepadCount={mousepads.length}
       glasspadCount={glasspadCount}
       bestPageCount={bestPageCount}
-      comparisonCount={publishedComparisons.length}
+      iemCount={iems.length}
       comparisons={comparisons}
       latestAdded={latestAdded}
+      latestAddedIems={latestAddedIems}
     />
   );
 }

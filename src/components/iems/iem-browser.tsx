@@ -8,6 +8,7 @@ import { IemCard } from "@/components/iems/iem-card";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { latestAddedIemSlugs } from "@/data/latest-added";
 import {
   Select,
   SelectContent,
@@ -60,6 +61,10 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
         (left, right) => priceTierOrder[left] - priceTierOrder[right],
       ),
     [iems],
+  );
+  const latestAddedSlugSet = useMemo(
+    () => new Set<string>(latestAddedIemSlugs),
+    [],
   );
 
   const filteredIems = useMemo(() => {
@@ -273,7 +278,11 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {filteredIems.map((iem) => (
-          <IemCard key={iem.id} iem={iem} />
+          <IemCard
+            key={iem.id}
+            iem={iem}
+            isLatestAdded={latestAddedSlugSet.has(iem.slug)}
+          />
         ))}
       </div>
     </div>

@@ -277,9 +277,6 @@ function OverlayFrequencyGraph({ left, right }: { left: Iem; right: Iem }) {
         rightPoints={rightGraph.points}
         target={leftGraph.target}
       />
-      <p className="mt-4 text-sm leading-6 text-muted-foreground">
-        Local chart overlay for comparing bass shelf, upper-mid gain, treble energy, and target alignment at a glance.
-      </p>
     </Card>
   );
 }

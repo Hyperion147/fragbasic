@@ -56,11 +56,6 @@ export default async function CompareMouseSkatesPage({
             <h1 className="mt-5 text-5xl font-semibold tracking-tight md:text-7xl">
               Compare mouse skates side by side.
             </h1>
-            <p className="mt-6 max-w-3xl text-base leading-7 text-muted-foreground md:text-lg">
-              Pick two or three skates and compare glide, stopping, smoothness,
-              noise, durability, and surface fit without using the mousepad
-              comparison scale.
-            </p>
           </div>
         </div>
       </section>

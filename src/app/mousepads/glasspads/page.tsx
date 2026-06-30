@@ -51,13 +51,6 @@ export default function GlasspadsPage() {
             <h1 className="mt-5 text-5xl font-semibold tracking-tight md:text-7xl">
               Browse dedicated glass mousepads in one place.
             </h1>
-
-            <p className="mt-6 max-w-3xl text-base leading-7 text-muted-foreground md:text-lg">
-              Fast surfaces, glass-specific tradeoffs, and the current tracked
-              lineup without mixing them into the cloth-first mousepad browser.
-              Useful when you want low-friction aiming, easier cleaning, and
-              better humidity consistency.
-            </p>
           </div>
         </div>
       </section>

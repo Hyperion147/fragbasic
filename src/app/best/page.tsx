@@ -101,11 +101,6 @@ export default function BestPage() {
                                         <ArrowRight className="size-4" />
                                     </Link>
                                 </Button>
-                                <Button variant="outline" asChild>
-                                    <Link href="/mousepads/finder">
-                                        Use the finder
-                                    </Link>
-                                </Button>
                             </div>
                         </div>
 

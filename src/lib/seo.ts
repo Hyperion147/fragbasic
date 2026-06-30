@@ -79,7 +79,7 @@ export function getRootMetadata(): Metadata {
     authors: [{ name: siteName }],
     referrer: "origin-when-cross-origin",
     title: {
-      default: "FragBasic | Mousepad Database, Glasspads, Comparisons & Finder",
+      default: "FragBasic | Mousepad Database, Glasspads & Comparisons",
       template: `%s | ${siteName}`,
     },
     description: defaultDescription,
@@ -88,7 +88,6 @@ export function getRootMetadata(): Metadata {
       "glasspads",
       "cloth mousepads",
       "fps gear",
-      "mousepad finder",
       "mousepad comparisons",
       "Artisan Zero review",
       "LGG Saturn Pro review",
@@ -100,7 +99,7 @@ export function getRootMetadata(): Metadata {
       type: "website",
       url: siteUrl,
       siteName,
-      title: "FragBasic | Mousepad Database, Glasspads, Comparisons & Finder",
+      title: "FragBasic | Mousepad Database, Glasspads & Comparisons",
       description: defaultDescription,
       images: [
         {

@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 
@@ -11,7 +10,6 @@ import RectTipComp from "./ui/rect-tip";
 const primaryLinks = [
     { label: "All Mousepads", href: "/mousepads" },
     { label: "IEMs", href: "/iems" },
-    { label: "Finder", href: "/mousepads/finder" },
     { label: "Compare", href: "/mousepads/compare" },
     { label: "Universal Compare", href: "/mousepads/compare/universal" },
 ] as const;
@@ -45,17 +43,9 @@ export function SiteFooter() {
                             <div className="max-w-2xl space-y-4">
                                 <p className="text-sm leading-7 text-muted-foreground sm:text-base">
                                     Browse mousepad data, compare matchups, and
-                                    jump into the real finder when you want a
-                                    recommendation instead of a guess.
+                                    narrow down the gear that actually fits how
+                                    you play.
                                 </p>
-
-                                <Link
-                                    href="/mousepads/finder"
-                                    className="inline-flex items-center gap-2 text-sm font-medium text-foreground transition-opacity hover:opacity-70"
-                                >
-                                    Open finder
-                                    <ArrowRight className="size-4" />
-                                </Link>
                             </div>
                         </div>
                     </FooterReveal>
