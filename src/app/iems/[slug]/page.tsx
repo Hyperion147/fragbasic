@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 
 import { ClientShareButton } from "@/components/ClientShareButton";
+import { JsonLd } from "@/components/json-ld";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -39,7 +40,7 @@ import {
     getIemFullName,
     getIemScoreTone,
 } from "@/lib/iems";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, buildProductJsonLd } from "@/lib/seo";
 import type { Iem, IemFrequencyPoint } from "@/types/iem";
 
 type Props = {
@@ -82,9 +83,24 @@ export default async function IemPage({ params }: Props) {
     if (!iem) {
         notFound();
     }
+    const fullName = getIemFullName(iem);
 
     return (
         <main className="min-h-screen bg-background text-foreground">
+            <JsonLd
+                data={buildProductJsonLd({
+                    name: fullName,
+                    description: `${iem.subtitle} ${iem.communitySummary}`,
+                    path: `/iems/${iem.slug}`,
+                    image: iem.images.main,
+                    brand: iem.brand,
+                    price: iem.buying.priceInr,
+                    availability: getIemSchemaAvailability(
+                        iem.buying.availability,
+                    ),
+                    category: "gaming IEM",
+                })}
+            />
             <section className="border-b border-border bg-[radial-gradient(circle_at_78%_18%,color-mix(in_srgb,var(--iem-glow)_12%,transparent),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0))]">
                 <div className="w-full px-4 pt-8 md:px-6 lg:px-8 xl:px-10">
                     <SiteBreadcrumbs
@@ -236,6 +252,18 @@ function AccentPill({ children }: { children: React.ReactNode }) {
             {children}
         </span>
     );
+}
+
+function getIemSchemaAvailability(availability: Iem["buying"]["availability"]) {
+    if (availability === "in-stock") {
+        return "InStock";
+    }
+
+    if (availability === "limited") {
+        return "LimitedAvailability";
+    }
+
+    return undefined;
 }
 
 function StarRating() {
@@ -538,7 +566,6 @@ function FrequencyResponseChart({
         left: padding.left,
         top: padding.top,
     });
-    const bands = getFrequencyBandSummaries(points);
 
     return (
         <div className="mt-6 overflow-x-auto overflow-y-hidden rounded-lg border border-border bg-background/60 scrollbar-none [&::-webkit-scrollbar]:hidden">
@@ -926,96 +953,6 @@ type FrequencyChartScale = {
     left: number;
     top: number;
 };
-
-type FrequencyBandSummary = {
-    label: string;
-    range: string;
-    value: number;
-    tone: string;
-};
-
-const frequencyBands = [
-    { label: "Sub-bass", range: "20-60 Hz", min: 20, max: 60 },
-    { label: "Mid-bass", range: "60-200 Hz", min: 60, max: 200 },
-    { label: "Mids", range: "200 Hz-1 kHz", min: 200, max: 1000 },
-    { label: "Upper mids", range: "1-4 kHz", min: 1000, max: 4000 },
-    { label: "Treble", range: "4-10 kHz", min: 4000, max: 10000 },
-    { label: "Air", range: "10-20 kHz", min: 10000, max: 20000 },
-];
-
-function FrequencyBandCard({ band }: { band: FrequencyBandSummary }) {
-    return (
-        <div className="min-w-0 rounded-md border border-border/80 bg-background/88 p-2 shadow-lg shadow-black/10 backdrop-blur-sm">
-            <p className="truncate text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                {band.label}
-            </p>
-            <p className="mt-0.5 truncate text-[10px] text-muted-foreground">
-                {band.range}
-            </p>
-            <p className="mt-2 text-xs font-semibold text-foreground">
-                {band.tone}
-            </p>
-            <p className="mt-0.5 text-[10px] text-muted-foreground">
-                {formatSignedDb(band.value)}
-            </p>
-        </div>
-    );
-}
-
-function getFrequencyBandSummaries(points: IemFrequencyPoint[]) {
-    return frequencyBands.map((band) => {
-        const value = averageDbInRange(points, band.min, band.max);
-
-        return {
-            label: band.label,
-            range: band.range,
-            value,
-            tone: formatFrequencyBandTone(value),
-        };
-    });
-}
-
-function averageDbInRange(
-    points: IemFrequencyPoint[],
-    minHz: number,
-    maxHz: number,
-) {
-    const matching = points.filter(
-        (point) => point.hz >= minHz && point.hz <= maxHz,
-    );
-    const sampled = matching.length > 0 ? matching : points;
-    const total = sampled.reduce((sum, point) => sum + point.db, 0);
-
-    return Number((total / Math.max(1, sampled.length)).toFixed(1));
-}
-
-function formatFrequencyBandTone(value: number) {
-    if (value >= 7) {
-        return "Very high";
-    }
-
-    if (value >= 4) {
-        return "High";
-    }
-
-    if (value >= 1.5) {
-        return "Lifted";
-    }
-
-    if (value >= -1.5) {
-        return "Neutral";
-    }
-
-    if (value >= -4) {
-        return "Relaxed";
-    }
-
-    return "Recessed";
-}
-
-function formatSignedDb(value: number) {
-    return `${value > 0 ? "+" : ""}${value.toFixed(1)} dB avg`;
-}
 
 function buildFrequencyPath(
     points: IemFrequencyPoint[],

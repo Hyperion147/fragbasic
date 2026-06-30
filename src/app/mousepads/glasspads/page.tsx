@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { JsonLd } from "@/components/json-ld";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { MousepadBrowser } from "@/components/mousepads/mousepad-browser";
 import { SiteSection } from "@/components/SiteSection";
 import { latestAddedGlasspadSlugs } from "@/data/latest-added";
 import { getAllMousepads } from "@/lib/mousepads";
-import { buildMetadata } from "@/lib/seo";
+import { buildCollectionJsonLd, buildMetadata } from "@/lib/seo";
 
 const glasspads = getAllMousepads().filter(
   (mousepad) => mousepad.category === "glass",
@@ -31,6 +32,15 @@ export const metadata: Metadata = buildMetadata({
 export default function GlasspadsPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <JsonLd
+        data={buildCollectionJsonLd({
+          name: "FragBasic Glass Mousepad Database",
+          description:
+            "Browse dedicated glass mousepads with fast surfaces, glass-specific tradeoffs, and FPS-focused buying notes.",
+          path: "/mousepads/glasspads",
+          itemCount: glasspads.length,
+        })}
+      />
       <section className="border-b border-border bg-background">
         <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
           <div className="max-w-5xl">

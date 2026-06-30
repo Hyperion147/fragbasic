@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
+import { JsonLd } from "@/components/json-ld";
 import { IemBrowser } from "@/components/iems/iem-browser";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { SiteSection } from "@/components/SiteSection";
 import { Badge } from "@/components/ui/badge";
 import { getAllIems } from "@/lib/iems";
-import { buildMetadata } from "@/lib/seo";
+import { buildCollectionJsonLd, buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   title: "IEM Database for FPS Games",
@@ -28,6 +29,15 @@ export default function IemsPage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <JsonLd
+        data={buildCollectionJsonLd({
+          name: "FragBasic IEM Database",
+          description:
+            "Browse gaming IEMs by imaging, clarity, soundstage, comfort, tuning, value, and India buying notes.",
+          path: "/iems",
+          itemCount: iems.length,
+        })}
+      />
       <section className="relative overflow-hidden border-b border-border bg-background">
 
         <div className="relative w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
