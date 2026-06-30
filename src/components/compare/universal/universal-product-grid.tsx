@@ -28,12 +28,12 @@ export function UniversalProductGrid({ mousepads }: Props) {
                 return (
                     <Card
                         key={mousepad.slug}
-                        className="border-border bg-card/95 shadow-lg shadow-black/10"
+                        className="bg-card/95 shadow-lg shadow-black/10"
                         style={{
                             background: `radial-gradient(circle at top, ${colorway.color}22, transparent 55%)`,
                         }}
                     >
-                        <div className="relative aspect-[16/8] border-b border-border sm:aspect-video">
+                        <div className="relative aspect-[16/8] soft-divider-bottom sm:aspect-video">
                             <Image
                                 src={mousepad.images.main}
                                 alt={getMousepadFullName(mousepad)}
@@ -92,14 +92,14 @@ export function UniversalProductGrid({ mousepads }: Props) {
                                 />
                             </div>
 
-                            <details className="group rounded-lg border border-border bg-background/50 md:hidden">
+                            <details className="group rounded-lg soft-surface md:hidden">
                                 <summary className="flex cursor-pointer list-none items-center justify-between px-3 py-2 text-xs font-semibold text-foreground">
                                     More details
                                     <span className="text-muted-foreground transition-transform group-open:rotate-180">
                                         v
                                     </span>
                                 </summary>
-                                <div className="grid gap-2 border-t border-border p-3">
+                                <div className="grid gap-2 p-3 soft-divider-top">
                                     <DetailPill
                                         label="Texture"
                                         value={formatMousepadValue(mousepad.texture.feel)}
@@ -235,7 +235,7 @@ export function UniversalProductGrid({ mousepads }: Props) {
 
 function StatPill({ label, value }: { label: string; value: string }) {
     return (
-        <div className="rounded-lg border border-border bg-background p-2 sm:rounded-2xl sm:p-3">
+        <div className="rounded-lg soft-surface p-2 sm:rounded-2xl sm:p-3">
             <p className="text-xs text-muted-foreground">{label}</p>
             <p className="mt-1 text-xs font-semibold leading-5 text-foreground sm:text-sm">
                 {value}
@@ -246,7 +246,7 @@ function StatPill({ label, value }: { label: string; value: string }) {
 
 function DetailPill({ label, value }: { label: string; value: string }) {
     return (
-        <div className="rounded-lg border border-border bg-background/70 px-3 py-2 sm:rounded-2xl sm:px-4 sm:py-3">
+        <div className="rounded-lg soft-surface px-3 py-2 sm:rounded-2xl sm:px-4 sm:py-3">
             <p className="text-xs text-muted-foreground">{label}</p>
             <p className="mt-1 text-xs font-medium text-foreground sm:text-sm">{value}</p>
         </div>

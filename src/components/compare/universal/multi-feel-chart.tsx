@@ -36,7 +36,7 @@ export function MultiFeelChart({ mousepads }: Props) {
   const config = getChartConfig(mousepads);
 
   return (
-    <Card className="border-border bg-card">
+    <Card className="bg-card">
       <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-3">
         <CardTitle className="panel-title">Feel breakdown</CardTitle>
       </CardHeader>
@@ -79,7 +79,7 @@ function ScaleRadar({
   });
 
   return (
-    <div className="rounded-md border border-border bg-background/35 p-3 sm:p-4">
+    <div className="rounded-md bg-background/35 p-3 sm:p-4">
       <div className="mb-3">
         <h3 className="panel-title">
           {FEEL_SCALE_LABELS[mode]}

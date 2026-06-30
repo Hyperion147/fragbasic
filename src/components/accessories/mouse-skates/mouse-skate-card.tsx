@@ -14,7 +14,7 @@ import type { MouseSkate } from "@/types/accessory";
 
 export function MouseSkateCard({ skate }: { skate: MouseSkate }) {
   return (
-    <article className="flex h-full flex-col rounded-md border border-border bg-card/70 p-4">
+    <article className="flex h-full flex-col rounded-md soft-panel p-4">
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-wrap gap-2">
           <Badge>{skate.brand}</Badge>
@@ -76,7 +76,7 @@ export function MouseSkateCard({ skate }: { skate: MouseSkate }) {
 
 function StatPill({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-xl border border-border bg-background/60 px-3 py-2">
+    <div className="rounded-xl soft-surface px-3 py-2">
       <p className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
         {label}
       </p>

@@ -42,7 +42,7 @@ export function MousepadSpecGrid({ pad }: { pad: Mousepad }) {
                 </h2>
             </div>
 
-            <div className="overflow-hidden border border-border bg-background/60">
+            <div className="overflow-hidden soft-surface">
                 <table className="data-table">
                     <tbody>
                         {specs.map(([label, value]) => (
@@ -72,7 +72,7 @@ export function MousepadSpecGrid({ pad }: { pad: Mousepad }) {
             ) : null}
 
             {pad.includedAccessories?.length ? (
-                <div className="mt-5 border border-border bg-background/70 p-4">
+                <div className="mt-5 soft-surface p-4">
                     <p className="text-sm font-medium text-foreground">
                         Included kit mentioned by some listings
                     </p>
@@ -80,7 +80,7 @@ export function MousepadSpecGrid({ pad }: { pad: Mousepad }) {
                         {pad.includedAccessories.map((accessory) => (
                             <span
                                 key={accessory}
-                                className="border border-border px-3 py-1 text-xs text-muted-foreground"
+                                className="bg-background/70 px-3 py-1 text-xs text-muted-foreground shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_6%,transparent)]"
                             >
                                 {accessory}
                             </span>

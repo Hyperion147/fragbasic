@@ -110,7 +110,7 @@ export function MouseSkateCompare({
                         return (
                             <div
                                 key={slot}
-                                className="rounded-2xl border border-border bg-card/70 p-4"
+                                className="rounded-2xl soft-panel p-4"
                             >
                                 <div className="flex items-center justify-between gap-3">
                                     <p className="compact-label">
@@ -153,7 +153,7 @@ export function MouseSkateCompare({
             </div>
 
             <SkateCompareDisclosure title="Rating matrix">
-            <div className="rounded-2xl border border-border bg-card/60 p-5">
+            <div className="rounded-2xl soft-panel p-5">
                 <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
                     <div>
                         <p className="compact-label">
@@ -186,7 +186,7 @@ export function MouseSkateCompare({
                                     return (
                                         <div
                                             key={`${slot}-${skate.id}-${rating.key}`}
-                                            className="rounded-xl border border-border bg-background/55 p-3"
+                                            className="rounded-xl soft-surface p-3"
                                         >
                                             <div className="flex items-center justify-between gap-3 text-xs">
                                                 <span className="truncate text-muted-foreground">
@@ -227,19 +227,19 @@ function SkateCompareDisclosure({
     children: React.ReactNode;
 }) {
     return (
-        <details className="group rounded-xl border border-border bg-card/45">
+        <details className="group rounded-xl soft-panel">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold text-foreground sm:px-5">
                 {title}
                 <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
             </summary>
-            <div className="border-t border-border p-3 sm:p-4">{children}</div>
+            <div className="p-3 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] sm:p-4">{children}</div>
         </details>
     );
 }
 
 function SkateComparePanel({ skate }: { skate: MouseSkate }) {
     return (
-        <article className="rounded-2xl border border-border bg-card/70 p-5">
+        <article className="rounded-2xl soft-panel p-5">
             <div className="flex items-start justify-between gap-4">
                 <div className="flex flex-wrap gap-2">
                     <Badge>{skate.brand}</Badge>
@@ -288,7 +288,7 @@ function SkateComparePanel({ skate }: { skate: MouseSkate }) {
 
 function Stat({ label, value }: { label: string; value: number }) {
     return (
-        <div className="rounded-xl border border-border bg-background/60 px-3 py-2">
+        <div className="rounded-xl soft-surface px-3 py-2">
             <p className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
                 {label}
             </p>

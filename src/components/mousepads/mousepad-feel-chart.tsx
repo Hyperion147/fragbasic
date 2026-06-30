@@ -143,7 +143,7 @@ export function MousepadFeelChart({ pad }: Props) {
             </EvilRadarChart>
 
             {pad.feelVariants?.length ? (
-                <div className="mt-4 border border-border bg-background/60 p-4">
+                <div className="mt-4 soft-surface p-4">
                     <p className="text-sm font-medium text-foreground">
                         Variant note
                     </p>

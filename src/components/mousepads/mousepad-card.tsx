@@ -35,7 +35,7 @@ export function MousepadCard({
     >
       <Card
         className={cn(
-          "group border-border bg-card/95 p-4 transition-all duration-200 hover:border-primary/45 hover:shadow-lg hover:shadow-black/10 sm:p-5",
+          "group bg-card/95 p-4 transition-all duration-200 hover:shadow-lg hover:shadow-black/10 sm:p-5",
           compact ? "h-auto" : "h-full",
         )}
       >
@@ -72,7 +72,7 @@ export function MousepadCard({
 
         <div
           className={cn(
-            "relative rounded-md border border-border bg-card",
+            "relative rounded-md bg-card shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_5%,transparent)]",
             compact ? "aspect-[16/10]" : "aspect-4/3",
           )}
         >
@@ -120,7 +120,7 @@ export function MousepadCard({
 
 function StatPill({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-border bg-background/80 px-3 py-2.5 sm:rounded-2xl sm:px-4 sm:py-3">
+    <div className="rounded-xl soft-surface px-3 py-2.5 sm:rounded-2xl sm:px-4 sm:py-3">
       <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground sm:text-xs sm:tracking-[0.16em]">
         {label}
       </p>

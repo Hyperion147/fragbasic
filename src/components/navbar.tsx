@@ -7,7 +7,6 @@ import {
     Gauge,
     Grid2x2,
     Menu,
-    Shield,
     Sparkles,
     Zap,
 } from "lucide-react";
@@ -84,26 +83,6 @@ const accessoryMenuLinks: Array<{
         icon: Gauge,
     },
 ] as const;
-const feelLinks = [
-    {
-        title: "Control",
-        body: "More stopping power",
-        href: "/mousepads?category=control",
-        icon: Shield,
-    },
-    {
-        title: "Balanced",
-        body: "Even speed & control",
-        href: "/mousepads?category=balanced-control",
-        icon: Gauge,
-    },
-    {
-        title: "Speed",
-        body: "More glide & fast feel",
-        href: "/mousepads?category=speed",
-        icon: Zap,
-    },
-] as const;
 const comparisonLinks = [
     {
         title: "Artisan Zero vs LGG Saturn Pro",
@@ -155,7 +134,7 @@ export function SiteNavbar() {
         : "Universal Compare";
 
     return (
-        <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-xl">
+        <header className="sticky top-0 z-40 bg-background/94 shadow-[inset_0_-1px_0_color-mix(in_srgb,var(--foreground)_6%,transparent)] backdrop-blur-xl">
             <div className="flex h-16 w-full items-center justify-between px-4 md:px-6 lg:px-10">
                 <Link href="/" className="group flex items-center gap-3">
                     <Image
@@ -165,9 +144,9 @@ export function SiteNavbar() {
                         height={449}
                         className="size-10 transition-opacity group-hover:opacity-88"
                     />
-                    <p className="text-xl font-semibold lg:text-[1.25rem]">
+                    <p className="text-lg font-semibold leading-none tracking-tight lg:text-[1.2rem]">
                         FRAGBASIC
-                        <span className="text-xs text-secondary-foreground">
+                        <span className="ml-0.5 text-[10px] font-semibold text-secondary-foreground">
                             .FUN
                         </span>
                     </p>
@@ -203,15 +182,18 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
         <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
                 <NavigationMenuItem>
-                    <NavigationMenuTrigger className="px-3 py-1.5 tracking-tight">
+                    <NavigationMenuTrigger
+                        data-active={pathname.startsWith("/mousepads") || pathname.startsWith("/best")}
+                        className="px-3 py-1.5"
+                    >
                         Mousepads
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                        <div className="w-full overflow-hidden rounded-3xl border border-border bg-card/40 ring-1 ring-border/50 shadow-2xl shadow-black/10">
-                            <div className="grid grid-cols-[1.1fr_1fr_1.2fr_1fr]">
-                                <div className="border-r border-border p-4">
+                        <div className="w-[min(880px,calc(100vw-4rem))] overflow-hidden rounded-lg bg-card/72 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)]">
+                            <div className="grid grid-cols-[1.12fr_1.38fr_1.05fr]">
+                                <div className="p-5 shadow-[inset_-1px_0_0_color-mix(in_srgb,var(--foreground)_5%,transparent)]">
                                     <MousepadsMenuHeading title="Mousepads" />
-                                    <div className="mt-4 space-y-3">
+                                    <div className="mt-4 space-y-2.5">
                                         {mousepadMenuLinks.map((item) => (
                                             <MousepadsMenuFeatureLink
                                                 key={item.title}
@@ -225,24 +207,9 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                     </div>
                                 </div>
 
-                                <div className="border-r border-border/70 p-4 w-60">
-                                    <MousepadsMenuHeading title="Browse by feel" />
-                                    <div className="mt-4 space-y-3">
-                                        {feelLinks.map((item) => (
-                                            <MousepadsMenuFeelLink
-                                                key={item.title}
-                                                href={item.href}
-                                                title={item.title}
-                                                body={item.body}
-                                                icon={item.icon}
-                                            />
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="border-r border-border/70 p-4 w-90">
+                                <div className="p-5 shadow-[inset_-1px_0_0_color-mix(in_srgb,var(--foreground)_5%,transparent)]">
                                     <MousepadsMenuHeading title="Popular comparisons" />
-                                    <div className="mt-4 space-y-3">
+                                    <div className="mt-4 space-y-1.5">
                                         {comparisonLinks.map((item) => (
                                             <NavigationMenuLink
                                                 key={item.title}
@@ -250,7 +217,7 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                             >
                                                 <Link
                                                     href={item.href}
-                                                    className="rounded-md px-0 py-1.5 text-sm leading-6 text-foreground/78 hover:bg-transparent hover:text-foreground focus:bg-transparent flex justify-between"
+                                                    className="flex justify-between rounded-md px-2 py-2 text-sm leading-5 text-foreground/76 hover:bg-[color:color-mix(in_srgb,var(--brand)_8%,transparent)] hover:text-foreground focus:bg-[color:color-mix(in_srgb,var(--brand)_8%,transparent)]"
                                                 >
                                                     <span>{item.title}</span>
                                                     <ChevronRight className="size-4 text-muted-foreground" />
@@ -271,10 +238,10 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                     </Button>
                                 </div>
 
-                                <div className="border-r border-border/70 p-4 w-60">
+                                <div className="p-5">
                                     <MousepadsMenuHeading title="Best pages" />
                                     <div className="mt-4 space-y-4">
-                                        <div className="space-y-2">
+                                        <div className="space-y-1.5">
                                             {bestGuideLinks.map((item) => (
                                                 <NavigationMenuLink
                                                     key={item.href}
@@ -282,7 +249,7 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                                 >
                                                     <Link
                                                         href={item.href}
-                                                        className="flex items-center justify-between rounded-md px-0 py-1.5 text-sm text-foreground/85 hover:bg-transparent hover:text-foreground focus:bg-transparent"
+                                                        className="flex items-center justify-between rounded-md px-2 py-2 text-sm leading-5 text-foreground/78 hover:bg-[color:color-mix(in_srgb,var(--brand)_8%,transparent)] hover:text-foreground focus:bg-[color:color-mix(in_srgb,var(--brand)_8%,transparent)]"
                                                     >
                                                         <span>{item.title}</span>
                                                         <ChevronRight className="size-4 text-muted-foreground" />
@@ -309,13 +276,16 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                    <NavigationMenuTrigger className="px-3 py-1.5 tracking-tight">
+                    <NavigationMenuTrigger
+                        data-active={pathname.startsWith("/accessories")}
+                        className="px-3 py-1.5"
+                    >
                         Accessories
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                        <div className="w-[420px] overflow-hidden rounded-3xl border border-border bg-card/40 p-4 ring-1 ring-border/50 shadow-2xl shadow-black/10">
+                        <div className="w-[420px] overflow-hidden rounded-lg bg-card/72 p-5 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)]">
                             <MousepadsMenuHeading title="Accessories" />
-                            <div className="mt-4 space-y-3">
+                            <div className="mt-4 space-y-2.5">
                                 {accessoryMenuLinks.map((item) => (
                                     <MousepadsMenuFeatureLink
                                         key={item.title}
@@ -337,7 +307,7 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                             asChild
                             className={cn(
                                 navigationMenuTriggerStyle,
-                                "brand-nav-link px-3 py-1.5 tracking-tight text-foreground/80",
+                                "brand-nav-link px-3 py-1.5 text-foreground/80",
                             )}
                         >
                             <Link
@@ -365,7 +335,7 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
 
 function MousepadsMenuHeading({ title }: { title: string }) {
     return (
-        <p className="compact-label">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
             {title}
         </p>
     );
@@ -400,56 +370,21 @@ function MousepadsMenuFeatureLink({
         <NavigationMenuLink asChild>
             <Link
                 href={href}
-                className="flex items-start gap-3 rounded-xl px-0 py-1.5 hover:bg-transparent focus:bg-transparent w-90"
+                className="flex w-full items-start gap-3 rounded-md px-2 py-2.5 hover:bg-[color:color-mix(in_srgb,var(--brand)_8%,transparent)] focus:bg-[color:color-mix(in_srgb,var(--brand)_8%,transparent)]"
             >
-                {/* Unified icon per prior Implementation Defaults (size-8 rounded-xl border) */}
-                <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl border border-border/80 bg-white/[0.03]">
-                    <Icon className="size-4 text-foreground/82" />
+                <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md bg-white/[0.035] shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_6%,transparent)]">
+                    <Icon className="size-4 text-brand-hover" />
                 </span>
                 <span className="min-w-0">
-                    <span className="flex items-center gap-2 text-sm font-medium text-foreground">
+                    <span className="flex items-center gap-2 text-sm font-semibold leading-5 text-foreground">
                         {title}
                         {badge ? (
-                            <span className="rounded-md border border-border px-1.5 py-0.5 text-[10px] uppercase tracking-[0.18em] text-foreground/76">
+                            <span className="rounded-sm bg-[color:color-mix(in_srgb,var(--brand)_16%,transparent)] px-1.5 py-0.5 text-[10px] uppercase tracking-[0.16em] text-brand-hover">
                                 {badge}
                             </span>
                         ) : null}
                     </span>
-                    <span className="mt-1 block text-xs leading-5 text-muted-foreground">
-                        {body}
-                    </span>
-                </span>
-            </Link>
-        </NavigationMenuLink>
-    );
-}
-
-function MousepadsMenuFeelLink({
-    href,
-    title,
-    body,
-    icon: Icon,
-}: {
-    href: string;
-    title: string;
-    body: string;
-    icon: typeof Shield;
-}) {
-    return (
-        <NavigationMenuLink asChild>
-            <Link
-                href={href}
-                className="flex items-start gap-3 rounded-xl px-0 py-1.5 hover:bg-transparent focus:bg-transparent"
-            >
-                {/* Unified to prior Implementation Defaults (size-8 rounded-xl) */}
-                <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl border border-border/80">
-                    <Icon className="size-4 text-foreground/84" />
-                </span>
-                <span>
-                    <span className="block text-sm font-medium text-foreground">
-                        {title}
-                    </span>
-                    <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+                    <span className="mt-1 block text-xs leading-5 text-muted-foreground/92">
                         {body}
                     </span>
                 </span>
@@ -517,10 +452,10 @@ function MobileNavigation() {
 
                 <SheetContent
                     side="right"
-                    className="w-[min(92vw,23rem)] overflow-hidden border-border bg-background/98 p-0 backdrop-blur-xl"
+                    className="w-[min(92vw,23rem)] overflow-hidden border-transparent bg-background/98 p-0 shadow-[inset_1px_0_0_color-mix(in_srgb,var(--foreground)_6%,transparent)] backdrop-blur-xl"
                 >
                     <SheetTitle className="sr-only">Site navigation</SheetTitle>
-                    <div className="border-b border-border px-4 py-5">
+                    <div className="px-4 py-5 shadow-[inset_0_-1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)]">
                         <SheetClose asChild>
                             <Link href="/" className="flex items-center gap-3">
                                 <Image
@@ -531,9 +466,9 @@ function MobileNavigation() {
                                     className="size-10"
                                 />
                                 <div>
-                                    <p className="text-lg font-semibold tracking-tight">
+                                    <p className="text-lg font-semibold leading-none tracking-tight">
                                         FRAGBASIC
-                                        <span className="text-[10px] text-secondary-foreground">
+                                        <span className="ml-0.5 text-[10px] font-semibold text-secondary-foreground">
                                             .FUN
                                         </span>
                                     </p>
@@ -550,7 +485,7 @@ function MobileNavigation() {
                             <SheetClose asChild>
                                 <Link
                                     href={compareHref}
-                                    className="inline-flex min-h-18 flex-col justify-between rounded-xl border border-[color:color-mix(in_srgb,var(--brand-hover)_28%,transparent)] bg-[color:color-mix(in_srgb,var(--brand)_12%,transparent)] p-3 text-sm font-semibold text-foreground"
+                                    className="inline-flex min-h-18 flex-col justify-between rounded-lg bg-[color:color-mix(in_srgb,var(--brand)_12%,transparent)] p-3 text-sm font-semibold leading-5 text-foreground shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--brand-hover)_24%,transparent)]"
                                 >
                                     <Gauge className="size-4 text-brand-hover" />
                                     <span className="mt-3 leading-tight">{compareLabel}</span>
@@ -560,7 +495,7 @@ function MobileNavigation() {
                             <SheetClose asChild>
                                 <Link
                                     href="/mousepads"
-                                    className="inline-flex min-h-18 flex-col justify-between rounded-xl border border-border bg-card/70 p-3 text-sm font-semibold text-foreground"
+                                    className="inline-flex min-h-18 flex-col justify-between rounded-lg soft-panel p-3 text-sm font-semibold leading-5 text-foreground"
                                 >
                                     <Grid2x2 className="size-4 text-muted-foreground" />
                                     <span className="mt-3 leading-tight">Browse Products</span>
@@ -579,14 +514,14 @@ function MobileNavigation() {
                                     <details
                                         key={section.title}
                                         open={activeSection}
-                                        className="group rounded-xl border border-border bg-card/45"
+                                        className="group rounded-lg soft-panel"
                                     >
                                         <summary className="flex cursor-pointer list-none items-center gap-3 px-3 py-3 [&::-webkit-details-marker]:hidden">
                                             <span
                                                 className={cn(
-                                                    "flex size-8 shrink-0 items-center justify-center rounded-lg border border-border bg-background/70 text-muted-foreground",
+                                                    "flex size-8 shrink-0 items-center justify-center rounded-md bg-background/70 text-muted-foreground shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_6%,transparent)]",
                                                     activeSection &&
-                                                        "border-[color:color-mix(in_srgb,var(--brand-hover)_32%,transparent)] text-brand-hover",
+                                                        "text-brand-hover shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--brand-hover)_28%,transparent)]",
                                                 )}
                                             >
                                                 <SectionIcon className="size-4" />
@@ -602,7 +537,7 @@ function MobileNavigation() {
                                             <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-90" />
                                         </summary>
 
-                                        <nav className="grid gap-1 border-t border-border/70 px-2 py-2">
+                                        <nav className="grid gap-1 px-2 py-2 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)]">
                                             {section.items.map((item) => {
                                                 const active = isActivePath(pathname, item.href);
 
@@ -614,7 +549,7 @@ function MobileNavigation() {
                                                         <Link
                                                             href={item.href}
                                                             className={cn(
-                                                                "flex items-center rounded-lg px-3 py-2.5 text-sm text-foreground/80 transition-colors hover:bg-background/70 hover:text-foreground",
+                                                                "flex items-center rounded-md px-3 py-2.5 text-sm leading-5 text-foreground/80 transition-colors hover:bg-background/70 hover:text-foreground",
                                                                 active &&
                                                                     "bg-[color:color-mix(in_srgb,var(--brand)_14%,transparent)] font-semibold text-foreground",
                                                             )}
@@ -632,7 +567,7 @@ function MobileNavigation() {
                             })}
                         </div>
 
-                        <div className="mt-6 rounded-xl border border-border bg-card/50 p-4">
+                        <div className="mt-6 rounded-lg soft-panel p-4">
                             <p className="text-sm font-semibold text-foreground">
                                 Submit a product or review
                             </p>

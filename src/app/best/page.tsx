@@ -104,7 +104,7 @@ export default function BestPage() {
                             </div>
                         </div>
 
-                        <div className="relative min-h-[320px] overflow-hidden border border-border bg-card/70 p-5">
+                        <div className="relative min-h-[320px] overflow-hidden soft-panel p-5">
                             <div className="flex items-center justify-between gap-4">
                                 <div>
                                     <p className="compact-label">
@@ -122,7 +122,7 @@ export default function BestPage() {
                                     <Link
                                         key={page.slug}
                                         href={`/best/${page.slug}`}
-                                        className="group grid grid-cols-[72px_1fr_auto] items-center gap-4 border border-border bg-background/70 p-3 transition-colors hover:border-[color:var(--brand-hover)]"
+                                        className="group grid grid-cols-[72px_1fr_auto] items-center gap-4 soft-surface p-3 transition-colors hover:bg-background/90"
                                     >
                                         <div className="relative aspect-square overflow-hidden bg-card">
                                             {pick ? (
@@ -165,7 +165,7 @@ export default function BestPage() {
                     </h2>
                 </div>
 
-                <div className="mt-10 border border-border bg-card/45">
+                <div className="mt-10 soft-panel">
                     {pages.map((page, index) => {
                         const Icon = pageIcons[page.slug];
                         const firstPick = getBestPagePicks(page, mousepads)[0];
@@ -174,10 +174,10 @@ export default function BestPage() {
                             <Link
                                 key={page.slug}
                                 href={`/best/${page.slug}`}
-                                className="group grid gap-4 border-b border-border px-4 py-4 transition-colors last:border-b-0 hover:bg-foreground/[0.035] md:grid-cols-[72px_1fr_180px_260px_auto] md:items-center"
+                                className="group grid gap-4 px-4 py-4 shadow-[inset_0_-1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] transition-colors last:shadow-none hover:bg-foreground/[0.035] md:grid-cols-[72px_1fr_180px_260px_auto] md:items-center"
                             >
                                 <div className="flex items-center gap-3 md:block">
-                                    <span className="flex size-10 items-center justify-center border border-border bg-background/80 text-primary">
+                                    <span className="flex size-10 items-center justify-center bg-background/80 text-primary shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_6%,transparent)]">
                                         <Icon className="size-5" />
                                     </span>
                                     <p className="compact-label font-mono md:mt-2">

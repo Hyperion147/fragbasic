@@ -354,8 +354,8 @@ function HintCard({
     body: string;
 }) {
     return (
-        <div className="rounded-md border border-border bg-background/80 px-4 py-4">
-            <div className="inline-flex rounded-full border border-border bg-card p-2">
+        <div className="rounded-md soft-surface px-4 py-4">
+            <div className="inline-flex rounded-full bg-card p-2 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_6%,transparent)]">
                 {icon}
             </div>
             <p className="mt-3 font-medium text-foreground">{title}</p>
@@ -384,7 +384,7 @@ function CompareDisclosure({
                 {title}
                 <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
             </summary>
-            <div className="border-t border-border p-2 sm:p-4">{children}</div>
+            <div className="p-2 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] sm:p-4">{children}</div>
         </details>
     );
 }

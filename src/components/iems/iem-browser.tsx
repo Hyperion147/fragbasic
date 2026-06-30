@@ -22,6 +22,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select";
 import { latestAddedIemSlugs } from "@/data/latest-added";
 import {
   Sheet,
@@ -270,7 +276,7 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
           </Sheet>
         </div>
 
-        <div className="mt-6 hidden gap-6 lg:grid lg:grid-cols-[minmax(180px,0.75fr)_1fr_1fr_1fr]">
+        <div className="mt-6 hidden gap-4 lg:grid lg:grid-cols-4">
           <IemFilterControls
             brand={brand}
             brands={brands}
@@ -287,7 +293,7 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
         </div>
       </Card>
 
-      <div className="overflow-x-auto border border-border bg-card/45 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="overflow-x-auto bg-card/35 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <table className="data-table min-w-[1180px]">
           <thead>
             <tr>
@@ -372,21 +378,21 @@ function IemTableRow({
   return (
     <tr>
       <td>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <Link
             href={`/iems/${iem.slug}`}
-            className="relative block size-16 shrink-0 overflow-hidden border border-border bg-background/75"
+            className="relative block size-18 shrink-0 overflow-hidden bg-background/75 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_5%,transparent)]"
           >
             <Image
               src={iem.images.main}
               alt={fullName}
               fill
-              sizes="64px"
+              sizes="72px"
               className="object-cover object-right"
             />
           </Link>
           <div className="min-w-0">
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               <Badge className="text-black">
                 {formatIemSoundSignature(iem.soundSignature)}
               </Badge>
@@ -394,11 +400,11 @@ function IemTableRow({
             </div>
             <Link
               href={`/iems/${iem.slug}`}
-              className="mt-2 block truncate text-base font-semibold tracking-tight text-foreground hover:text-primary"
+              className="mt-2.5 block truncate text-lg font-semibold leading-6 text-foreground hover:text-primary"
             >
               {fullName}
             </Link>
-            <p className="truncate text-xs text-muted-foreground">
+            <p className="mt-1 truncate text-sm leading-5 text-muted-foreground">
               {getIemScoreTone(iem.ratings.fragbasic)} overall
             </p>
           </div>
@@ -493,105 +499,86 @@ function IemFilterControls({
 }) {
   return (
     <>
-          <FilterGroup label="Brand">
-            <FilterButton active={brand === allFilterValue} onClick={() => updateBrand(allFilterValue)}>
-              All
-            </FilterButton>
-            {brands.map((option) => (
-              <FilterButton
-                key={option}
-                active={brand === option}
-                onClick={() => updateBrand(option)}
-              >
-                {option}
-              </FilterButton>
-            ))}
-          </FilterGroup>
+      <FilterSelect
+        label="Brand"
+        value={brand}
+        onValueChange={updateBrand}
+        options={[
+          { value: allFilterValue, label: "All brands" },
+          ...brands.map((option) => ({ value: option, label: option })),
+        ]}
+      />
 
-          <FilterGroup label="Tuning">
-            <FilterButton active={signature === allFilterValue} onClick={() => updateSignature(allFilterValue)}>
-              All
-            </FilterButton>
-            {signatures.map((option) => (
-              <FilterButton
-                key={option}
-                active={signature === option}
-                onClick={() => updateSignature(option)}
-              >
-                {formatIemSoundSignature(option)}
-              </FilterButton>
-            ))}
-          </FilterGroup>
+      <FilterSelect
+        label="Tuning"
+        value={signature}
+        onValueChange={(next) => updateSignature(next as typeof allFilterValue | IemSoundSignature)}
+        options={[
+          { value: allFilterValue, label: "All tunings" },
+          ...signatures.map((option) => ({
+            value: option,
+            label: formatIemSoundSignature(option),
+          })),
+        ]}
+      />
 
-          <FilterGroup label="Price">
-            <FilterButton active={price === allFilterValue} onClick={() => updatePrice(allFilterValue)}>
-              All
-            </FilterButton>
-            {priceTiers.map((option) => (
-              <FilterButton
-                key={option}
-                active={price === option}
-                onClick={() => updatePrice(option)}
-              >
-                {formatPriceTier(option)}
-              </FilterButton>
-            ))}
-          </FilterGroup>
+      <FilterSelect
+        label="Price"
+        value={price}
+        onValueChange={(next) => updatePrice(next as PriceFilter)}
+        options={[
+          { value: allFilterValue, label: "All prices" },
+          ...priceTiers.map((option) => ({
+            value: option,
+            label: formatPriceTier(option),
+          })),
+        ]}
+      />
 
-          <FilterGroup label="Sort">
-            {[
-              ["score", "Score"],
-              ["fps", "FPS"],
-              ["value", "Value"],
-              ["price", "Price"],
-            ].map(([value, label]) => (
-              <FilterButton
-                key={value}
-                active={sort === value}
-                onClick={() => updateSort(value as SortKey)}
-              >
-                {label}
-              </FilterButton>
-            ))}
-          </FilterGroup>
+      <FilterSelect
+        label="Sort"
+        value={sort}
+        onValueChange={(next) => updateSort(next as SortKey)}
+        options={[
+          { value: "score", label: "Score" },
+          { value: "fps", label: "FPS" },
+          { value: "value", label: "Value" },
+          { value: "price", label: "Price" },
+        ]}
+      />
     </>
   );
 }
 
-function FilterGroup({
+function FilterSelect({
   label,
-  children,
+  value,
+  onValueChange,
+  options,
 }: {
   label: string;
-  children: React.ReactNode;
+  value: string;
+  onValueChange: (next: string) => void;
+  options: Array<{ value: string; label: string }>;
 }) {
-  return (
-    <div className="space-y-3">
-      <p className="text-sm text-muted-foreground">{label}</p>
-      <div className="flex flex-wrap gap-2">{children}</div>
-    </div>
-  );
-}
+  const selectedLabel = options.find((option) => option.value === value)?.label ?? options[0]?.label;
 
-function FilterButton({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
   return (
-    <Button
-      type="button"
-      size="sm"
-      variant={active ? "default" : "outline"}
-      className={active ? "text-black" : ""}
-      onClick={onClick}
-    >
-      {children}
-    </Button>
+    <div className="space-y-2">
+      <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{label}</p>
+      <Select value={value} onValueChange={onValueChange}>
+        <SelectTrigger aria-label={label}>
+          <span className="truncate">{selectedLabel}</span>
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 }
 

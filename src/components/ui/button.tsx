@@ -12,9 +12,9 @@ const buttonVariants = cva(
         default:
           "border-[color:color-mix(in_srgb,var(--brand-hover)_24%,transparent)] bg-[color:color-mix(in_srgb,var(--foreground)_94%,transparent)] text-background shadow-sm hover:border-[color:color-mix(in_srgb,var(--brand-hover)_55%,transparent)] hover:shadow-[0_0_0_1px_color-mix(in_srgb,var(--brand-hover)_18%,transparent),0_0_22px_color-mix(in_srgb,var(--brand-glow)_18%,transparent)]",
         outline:
-          "border-border bg-background hover:border-[color:color-mix(in_srgb,var(--brand-hover)_32%,transparent)] hover:bg-muted hover:text-foreground hover:shadow-[0_0_18px_color-mix(in_srgb,var(--brand-glow)_12%,transparent)] aria-expanded:bg-muted aria-expanded:text-foreground dark:bg-transparent dark:hover:bg-input/30",
+          "border-transparent bg-background/78 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_8%,transparent)] hover:bg-muted hover:text-foreground hover:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--brand-hover)_28%,transparent),0_0_18px_color-mix(in_srgb,var(--brand-glow)_10%,transparent)] aria-expanded:bg-muted aria-expanded:text-foreground dark:bg-transparent dark:hover:bg-input/30",
         secondary:
-          "bg-secondary text-secondary-foreground hover:border-[color:color-mix(in_srgb,var(--brand-hover)_24%,transparent)] hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+          "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:
           "hover:bg-[color:color-mix(in_srgb,var(--brand)_10%,transparent)] hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         destructive:
