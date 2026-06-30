@@ -95,6 +95,21 @@ export interface IemCommunityReview {
   negatives: string[];
 }
 
+export interface IemFrequencyPoint {
+  hz: number;
+  db: number;
+}
+
+export interface IemFrequencyGraph {
+  url: string;
+  source: string;
+  sourceUrl: string;
+  rig: string;
+  points: IemFrequencyPoint[];
+  target: IemFrequencyPoint[];
+  note?: string;
+}
+
 export interface IemTestSetup {
   source: string;
   motherboard?: string;
@@ -106,12 +121,6 @@ export interface IemOfficialReview {
   summary: string;
   verdict: string;
   testSetup: IemTestSetup;
-}
-
-export interface IemFrequencyPoint {
-  hz: string;
-  db: number;
-  target: number;
 }
 
 export interface Iem {
@@ -131,7 +140,7 @@ export interface Iem {
   buying: IemBuyingInfo;
   officialReview: IemOfficialReview;
   communityReview: IemCommunityReview;
-  frequencyResponse: IemFrequencyPoint[];
+  frequencyGraph?: IemFrequencyGraph;
   bestFor: IemGame[];
   pros: string[];
   cons: string[];
