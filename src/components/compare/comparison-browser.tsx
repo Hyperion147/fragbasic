@@ -2,11 +2,20 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ArrowRight, SlidersHorizontal } from "lucide-react";
 
 import { ComparisonCard } from "@/components/compare/comparison-card";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet";
 import type { MousepadComparison } from "@/data/comparisons";
 import type { Mousepad } from "@/types/mousepad";
 
@@ -22,7 +31,25 @@ type Props = {
 };
 
 export function ComparisonBrowser({ comparisons, tags }: Props) {
-    const [activeTag, setActiveTag] = useState<string>("All");
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const [activeTag, setActiveTag] = useState<string>(
+        () => searchParams.get("tag") ?? "All",
+    );
+
+    const updateTag = (tag: string) => {
+        setActiveTag(tag);
+
+        if (tag === "All") {
+            router.replace(pathname, { scroll: false });
+            return;
+        }
+
+        const params = new URLSearchParams();
+        params.set("tag", tag);
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    };
 
     const visibleComparisons =
         activeTag === "All"
@@ -33,7 +60,7 @@ export function ComparisonBrowser({ comparisons, tags }: Props) {
 
     return (
         <div className="space-y-6">
-            <Card className="border-border bg-card/90 p-5 shadow-lg shadow-black/5">
+            <Card className="border-border bg-card/90 p-4 shadow-lg shadow-black/5 sm:p-5">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                     <div className="space-y-3">
                         <div>
@@ -41,23 +68,37 @@ export function ComparisonBrowser({ comparisons, tags }: Props) {
                                 Filter by playstyle or matchup type
                             </p>
                         </div>
-                        <div className="flex flex-wrap gap-2">
-                        {["All", ...tags].map((tag) => (
-                            <Button
-                                key={tag}
-                                type="button"
-                                variant={
-                                    activeTag === tag ? "default" : "outline"
-                                }
-                                size="sm"
-                                className={
-                                    activeTag === tag ? "text-black" : ""
-                                }
-                                onClick={() => setActiveTag(tag)}
-                            >
-                                {tag}
-                            </Button>
-                        ))}
+                        <div className="hidden flex-wrap gap-2 lg:flex">
+                            <ComparisonTagButtons
+                                activeTag={activeTag}
+                                tags={tags}
+                                updateTag={updateTag}
+                            />
+                        </div>
+                        <div className="lg:hidden">
+                            <Sheet>
+                                <SheetTrigger asChild>
+                                    <Button variant="outline" className="w-full justify-center">
+                                        <SlidersHorizontal className="size-4" />
+                                        Filter comparisons
+                                    </Button>
+                                </SheetTrigger>
+                                <SheetContent side="bottom" className="max-h-[82vh] rounded-t-2xl border-border">
+                                    <SheetHeader className="px-4 pb-2 pt-5">
+                                        <SheetTitle>Filter comparisons</SheetTitle>
+                                        <SheetDescription>
+                                            Choose the matchup type you want to see.
+                                        </SheetDescription>
+                                    </SheetHeader>
+                                    <div className="flex flex-wrap gap-2 overflow-y-auto px-4 pb-6">
+                                        <ComparisonTagButtons
+                                            activeTag={activeTag}
+                                            tags={tags}
+                                            updateTag={updateTag}
+                                        />
+                                    </div>
+                                </SheetContent>
+                            </Sheet>
                         </div>
                     </div>
                     <div className="space-y-2 text-sm text-muted-foreground lg:text-right">
@@ -101,5 +142,32 @@ export function ComparisonBrowser({ comparisons, tags }: Props) {
                 </Card>
             )}
         </div>
+    );
+}
+
+function ComparisonTagButtons({
+    activeTag,
+    tags,
+    updateTag,
+}: {
+    activeTag: string;
+    tags: string[];
+    updateTag: (tag: string) => void;
+}) {
+    return (
+        <>
+            {["All", ...tags].map((tag) => (
+                <Button
+                    key={tag}
+                    type="button"
+                    variant={activeTag === tag ? "default" : "outline"}
+                    size="sm"
+                    className={activeTag === tag ? "text-black" : ""}
+                    onClick={() => updateTag(tag)}
+                >
+                    {tag}
+                </Button>
+            ))}
+        </>
     );
 }

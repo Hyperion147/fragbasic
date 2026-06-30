@@ -129,25 +129,25 @@ const spectrumNotes = [
 
 export function SpectrumSection() {
   return (
-    <section className="overflow-hidden rounded-2xl border border-border bg-card/40 p-5 md:p-8">
+    <section className="overflow-hidden rounded-2xl border border-border bg-card/40 p-4 sm:p-5 md:p-8">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div>
-          <p className="text-sm uppercase tracking-[0.18em] text-brand-hover">
+          <p className="text-[10px] uppercase tracking-[0.16em] text-brand-hover sm:text-sm sm:tracking-[0.18em]">
             Mousepad feel map
           </p>
-          <h2 className="mt-3 max-w-4xl text-4xl font-semibold md:text-6xl">
+          <h2 className="mt-3 max-w-4xl text-3xl font-semibold sm:text-4xl md:text-6xl">
             The Speed-Control Spectrum
           </h2>
         </div>
 
-        <div className="flex flex-wrap gap-3 lg:justify-end">
-          <Button variant="outline" asChild>
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
+          <Button variant="outline" asChild className="w-full sm:w-auto">
             <Link href="/mousepads/compare/universal">
               <Scale className="size-4" />
               Compare surfaces
             </Link>
           </Button>
-          <Button variant="ghost" asChild>
+          <Button variant="ghost" asChild className="w-full sm:w-auto">
             <Link href="/mousepads">
               Explore all mousepads
               <ArrowRight className="size-4" />
@@ -156,8 +156,8 @@ export function SpectrumSection() {
         </div>
       </div>
 
-      <div className="mt-10 overflow-x-auto pb-3">
-        <div className="min-w-[1120px]">
+      <div className="mt-8 overflow-x-auto pb-3 [scrollbar-width:none] md:mt-10 [&::-webkit-scrollbar]:hidden">
+        <div className="min-w-[920px] md:min-w-[1120px]">
           <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-1 text-xs font-semibold uppercase tracking-[0.16em]">
             <span className="inline-flex items-center gap-2 text-brand-glow">
               <ArrowLeft className="size-4" />
@@ -175,7 +175,7 @@ export function SpectrumSection() {
               <Link
                 key={pad.slug}
                 href={`/mousepads/${pad.slug}`}
-                className="group relative flex min-h-[300px] flex-col rounded-lg border border-border bg-background/70 p-3 transition-colors hover:border-[color:color-mix(in_srgb,var(--brand-hover)_46%,transparent)] hover:bg-background hover:shadow-[0_0_24px_color-mix(in_srgb,var(--brand-glow)_10%,transparent)]"
+                className="group relative flex min-h-[270px] flex-col rounded-lg border border-border bg-background/70 p-2.5 transition-colors hover:border-[color:color-mix(in_srgb,var(--brand-hover)_46%,transparent)] hover:bg-background hover:shadow-[0_0_24px_color-mix(in_srgb,var(--brand-glow)_10%,transparent)] md:min-h-[300px] md:p-3"
               >
                 <span className="absolute top-[-32px] left-1/2 flex size-4 -translate-x-1/2 items-center justify-center rounded-full border border-[color:color-mix(in_srgb,var(--brand-glow)_72%,transparent)] bg-background shadow-[0_0_18px_color-mix(in_srgb,var(--brand-glow)_30%,transparent)]">
                   <span
@@ -195,7 +195,7 @@ export function SpectrumSection() {
                 </div>
 
                 <div className="mt-4 flex flex-1 flex-col">
-                  <p className="text-lg font-semibold leading-6 text-foreground">
+                  <p className="text-base font-semibold leading-5 text-foreground md:text-lg md:leading-6">
                     {pad.name}
                   </p>
                   <span className="mt-3 w-fit rounded-md border border-[color:color-mix(in_srgb,var(--brand-hover)_28%,transparent)] bg-[color:color-mix(in_srgb,var(--brand)_14%,transparent)] px-2 py-1 text-xs font-semibold text-brand-glow">
@@ -213,14 +213,14 @@ export function SpectrumSection() {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-px overflow-hidden rounded-lg border border-border bg-border md:grid-cols-3">
+      <div className="mt-5 grid gap-px overflow-hidden rounded-lg border border-border bg-border md:mt-6 md:grid-cols-3">
         {spectrumNotes.map((note) => {
           const Icon = note.icon;
 
           return (
             <div
               key={note.title}
-              className="flex gap-4 bg-background/80 px-5 py-5"
+              className="flex gap-3 bg-background/80 px-4 py-4 sm:gap-4 sm:px-5 sm:py-5"
             >
               <span className="flex size-11 shrink-0 items-center justify-center rounded-lg border border-[color:color-mix(in_srgb,var(--brand-hover)_28%,transparent)] bg-[color:color-mix(in_srgb,var(--brand)_10%,transparent)] text-brand-hover">
                 <Icon className="size-5" />
@@ -239,7 +239,7 @@ export function SpectrumSection() {
       </div>
 
       <div className="mt-6 flex justify-center">
-        <Button variant="outline" asChild>
+        <Button variant="outline" asChild className="w-full sm:w-auto">
           <Link href="/mousepads">
             Show all mousepads
             <ArrowRight className="size-4" />

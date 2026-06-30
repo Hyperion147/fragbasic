@@ -3,14 +3,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
     ArrowRight,
-    BookOpenText,
     ChevronRight,
     Gauge,
     Grid2x2,
     Menu,
     Shield,
     Sparkles,
-    Star,
     Zap,
 } from "lucide-react";
 
@@ -24,35 +22,21 @@ import {
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { brandConfig } from "@/lib/brands";
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-const brandLinks = Object.values(brandConfig).map((brand) => ({
-    label: brand.name,
-    href: `/mousepads/brands/${brand.slug}`,
-}));
-
 const directNavItems = [
     { label: "GlassPads", href: "/mousepads/glasspads" },
-    { label: "Best", href: "/best" },
-    { label: "Compare", href: "/mousepads/compare" },
-    { label: "Brands", href: "/mousepads/brands" },
+    { label: "IEMs", href: "/iems" },
 ];
 
-const mobileNavItems = [
-    { label: "All Mousepads", href: "/mousepads" },
-    { label: "GlassPads", href: "/mousepads/glasspads" },
-    { label: "Mouse Skates", href: "/accessories/mouse-skates" },
-    { label: "Browse Skates", href: "/accessories/mouse-skates/browse" },
-    { label: "Compare Skates", href: "/accessories/mouse-skates/compare" },
-    { label: "Best Picks", href: "/best" },
-    { label: "Universal Compare", href: "/mousepads/compare/universal" },
-    { label: "Find My Mousepad", href: "/mousepads/finder" },
-    { label: "Compare Hub", href: "/mousepads/compare" },
-    { label: "Brands", href: "/mousepads/brands" },
-];
 const mousepadMenuLinks: Array<{
     title: string;
     body: string;
@@ -71,18 +55,6 @@ const mousepadMenuLinks: Array<{
         body: "Build your own 2-3 pad matchup",
         href: "/mousepads/compare/universal",
         icon: Gauge,
-    },
-    {
-        title: "Mousepad Finder",
-        body: "Get personalized recommendations",
-        href: "/mousepads/finder",
-        icon: Star,
-    },
-    {
-        title: "Compare Hub",
-        body: "Published head-to-heads",
-        href: "/mousepads/compare",
-        icon: Sparkles,
     },
 ] as const;
 const accessoryMenuLinks: Array<{
@@ -175,6 +147,12 @@ const bestGuideLinks = [
 
 export function SiteNavbar() {
     const pathname = usePathname();
+    const compareHref = pathname.startsWith("/iems")
+        ? "/iems/compare"
+        : "/mousepads/compare/universal";
+    const compareLabel = pathname.startsWith("/iems")
+        ? "IEM Compare"
+        : "Universal Compare";
 
     return (
         <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-xl">
@@ -198,13 +176,15 @@ export function SiteNavbar() {
                 <DesktopNavigation pathname={pathname} />
 
                 <div className="hidden items-center gap-4 md:flex">
-                    <Button size="sm" asChild variant="outline">
-                        <Link href="/mousepads/finder">Find My Mousepad</Link>
-                    </Button>
+                    {pathname === "/" ? (
+                        <Button size="sm" variant="outline" asChild>
+                            <Link href="https://forms.gle/5b1QejGptx63eQHw9">
+                                Submit a Review
+                            </Link>
+                        </Button>
+                    ) : null}
                     <Button size="sm" asChild>
-                        <Link href="/mousepads/compare/universal">
-                            Universal Compare
-                        </Link>
+                        <Link href={compareHref}>{compareLabel}</Link>
                     </Button>
                 </div>
 
@@ -280,8 +260,8 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                         asChild
                                         className="mt-4 w-full"
                                     >
-                                        <Link href="/mousepads/compare">
-                                            View all comparisons
+                                        <Link href="/mousepads/compare/universal">
+                                            Open Universal Compare
                                             <ArrowRight className="size-4" />
                                         </Link>
                                     </Button>
@@ -343,10 +323,6 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                     />
                                 ))}
                             </div>
-                            <p className="mt-4 border-t border-border pt-4 text-xs leading-5 text-muted-foreground">
-                                Starting with skates. More accessory data can
-                                plug into this menu later.
-                            </p>
                         </div>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -368,6 +344,8 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                     className={cn(
                                         item.href === "/mousepads/glasspads" &&
                                             "glasspads-wave-link",
+                                        item.href === "/iems" &&
+                                            "iems-wave-link",
                                     )}
                                 >
                                     {item.label}
@@ -392,6 +370,10 @@ function MousepadsMenuHeading({ title }: { title: string }) {
 function isActivePath(pathname: string, href: string) {
     if (href === "/") {
         return pathname === "/";
+    }
+
+    if (href === "/iems" && pathname.startsWith("/iems/compare")) {
+        return false;
     }
 
     return pathname === href || pathname.startsWith(`${href}/`);
@@ -474,102 +456,194 @@ function MousepadsMenuFeelLink({
 
 function MobileNavigation() {
     const pathname = usePathname();
+    const compareHref = pathname.startsWith("/iems")
+        ? "/iems/compare"
+        : "/mousepads/compare/universal";
+    const compareLabel = pathname.startsWith("/iems")
+        ? "Compare IEMs"
+        : "Universal Compare";
+    const mobileSections = [
+        {
+            title: "Mousepads",
+            icon: Grid2x2,
+            items: [
+                { label: "All Mousepads", href: "/mousepads" },
+                { label: "GlassPads", href: "/mousepads/glasspads" },
+                { label: "Universal Compare", href: "/mousepads/compare/universal" },
+                { label: "Best mousepads home", href: "/best" },
+                ...bestGuideLinks
+                    .filter((item) => item.href !== "/best")
+                    .map((item) => ({
+                        label: item.title,
+                        href: item.href,
+                    })),
+            ],
+        },
+        {
+            title: "IEMs",
+            icon: Zap,
+            items: [
+                { label: "Browse IEMs", href: "/iems" },
+                { label: "Compare IEMs", href: "/iems/compare" },
+            ],
+        },
+        {
+            title: "Accessories",
+            icon: Sparkles,
+            items: [
+                { label: "Mouse Skates", href: "/accessories/mouse-skates" },
+                { label: "Browse Skates", href: "/accessories/mouse-skates/browse" },
+                { label: "Compare Skates", href: "/accessories/mouse-skates/compare" },
+            ],
+        },
+    ] as const;
 
     return (
         <div className="md:hidden">
             <Sheet>
                 <SheetTrigger asChild>
-                    <Button variant="outline" size="icon">
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        aria-label="Open navigation"
+                    >
                         <Menu className="size-4" />
                     </Button>
                 </SheetTrigger>
 
-                <SheetContent side="right" className="w-80">
-                    <div className="mt-8 space-y-6">
-                        <Link href="/" className="flex items-center gap-3">
-                            <div>
-                                <p className="text-lg font-semibold tracking-tight">
-                                    FRAGBASIC
-                                    <span className="text-[10px] text-secondary-foreground">
-                                        .FUN
-                                    </span>
-                                </p>
-                                <p className="text-xs text-muted-foreground">
-                                    Mousepad data, finder, and compare tools
-                                </p>
-                            </div>
-                        </Link>
+                <SheetContent
+                    side="right"
+                    className="w-[min(92vw,23rem)] overflow-hidden border-border bg-background/98 p-0 backdrop-blur-xl"
+                >
+                    <SheetTitle className="sr-only">Site navigation</SheetTitle>
+                    <div className="border-b border-border px-4 py-5">
+                        <SheetClose asChild>
+                            <Link href="/" className="flex items-center gap-3">
+                                <Image
+                                    src="/logo.png"
+                                    alt="Fragbasic"
+                                    width={195}
+                                    height={449}
+                                    className="size-10"
+                                />
+                                <div>
+                                    <p className="text-lg font-semibold tracking-tight">
+                                        FRAGBASIC
+                                        <span className="text-[10px] text-secondary-foreground">
+                                            .FUN
+                                        </span>
+                                    </p>
+                                    <p className="text-xs text-muted-foreground">
+                                        Gear data and compare tools
+                                    </p>
+                                </div>
+                            </Link>
+                        </SheetClose>
+                    </div>
 
-                        <div className="space-y-3">
-                            <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
-                                Explore
-                            </p>
-                            <nav className="grid gap-2">
-                                {mobileNavItems.map((item) => (
-                                    <Button
-                                        key={item.href}
-                                        variant={
-                                            isActivePath(pathname, item.href)
-                                                ? "secondary"
-                                                : "ghost"
-                                        }
-                                        className={cn(
-                                            "justify-between rounded-2xl px-4 py-5",
-                                            isActivePath(pathname, item.href)
-                                                ? "border-[color:color-mix(in_srgb,var(--brand-hover)_26%,transparent)] bg-[color:color-mix(in_srgb,var(--brand)_14%,transparent)] text-foreground shadow-[0_0_18px_color-mix(in_srgb,var(--brand-glow)_12%,transparent)]"
-                                                : "",
-                                        )}
-                                        asChild
-                                    >
-                                        <Link href={item.href}>
-                                            {item.label}
-                                            <ChevronRight className="size-4 text-muted-foreground" />
-                                        </Link>
-                                    </Button>
-                                ))}
-                            </nav>
+                    <div className="flex-1 overflow-y-auto px-4 py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                        <div className="grid grid-cols-2 gap-2">
+                            <SheetClose asChild>
+                                <Link
+                                    href={compareHref}
+                                    className="inline-flex min-h-18 flex-col justify-between rounded-xl border border-[color:color-mix(in_srgb,var(--brand-hover)_28%,transparent)] bg-[color:color-mix(in_srgb,var(--brand)_12%,transparent)] p-3 text-sm font-semibold text-foreground"
+                                >
+                                    <Gauge className="size-4 text-brand-hover" />
+                                    <span className="mt-3 leading-tight">{compareLabel}</span>
+                                </Link>
+                            </SheetClose>
+
+                            <SheetClose asChild>
+                                <Link
+                                    href="/mousepads"
+                                    className="inline-flex min-h-18 flex-col justify-between rounded-xl border border-border bg-card/70 p-3 text-sm font-semibold text-foreground"
+                                >
+                                    <Grid2x2 className="size-4 text-muted-foreground" />
+                                    <span className="mt-3 leading-tight">Browse Products</span>
+                                </Link>
+                            </SheetClose>
                         </div>
 
-                        <div className="space-y-3 border-t border-border pt-4">
-                            <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
-                                Best pages
-                            </p>
-                            <div className="grid gap-2">
-                                {bestGuideLinks.map((item) => (
-                                    <Button
-                                        key={item.href}
-                                        variant="outline"
-                                        className="justify-between rounded-2xl px-4 py-5"
-                                        asChild
+                        <div className="mt-6 space-y-3">
+                            {mobileSections.map((section) => {
+                                const SectionIcon = section.icon;
+                                const activeSection = section.items.some((item) =>
+                                    isActivePath(pathname, item.href),
+                                );
+
+                                return (
+                                    <details
+                                        key={section.title}
+                                        open={activeSection}
+                                        className="group rounded-xl border border-border bg-card/45"
                                     >
-                                        <Link href={item.href}>
-                                            {item.title}
-                                            <BookOpenText className="size-4 text-primary" />
-                                        </Link>
-                                    </Button>
-                                ))}
-                            </div>
+                                        <summary className="flex cursor-pointer list-none items-center gap-3 px-3 py-3 [&::-webkit-details-marker]:hidden">
+                                            <span
+                                                className={cn(
+                                                    "flex size-8 shrink-0 items-center justify-center rounded-lg border border-border bg-background/70 text-muted-foreground",
+                                                    activeSection &&
+                                                        "border-[color:color-mix(in_srgb,var(--brand-hover)_32%,transparent)] text-brand-hover",
+                                                )}
+                                            >
+                                                <SectionIcon className="size-4" />
+                                            </span>
+                                            <span className="min-w-0 flex-1">
+                                                <span className="block text-sm font-semibold text-foreground">
+                                                    {section.title}
+                                                </span>
+                                                <span className="block text-[11px] text-muted-foreground">
+                                                    {section.items.length} links
+                                                </span>
+                                            </span>
+                                            <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-90" />
+                                        </summary>
+
+                                        <nav className="grid gap-1 border-t border-border/70 px-2 py-2">
+                                            {section.items.map((item) => {
+                                                const active = isActivePath(pathname, item.href);
+
+                                                return (
+                                                    <SheetClose
+                                                        key={`${section.title}-${item.href}`}
+                                                        asChild
+                                                    >
+                                                        <Link
+                                                            href={item.href}
+                                                            className={cn(
+                                                                "flex items-center rounded-lg px-3 py-2.5 text-sm text-foreground/80 transition-colors hover:bg-background/70 hover:text-foreground",
+                                                                active &&
+                                                                    "bg-[color:color-mix(in_srgb,var(--brand)_14%,transparent)] font-semibold text-foreground",
+                                                            )}
+                                                        >
+                                                            <span className="min-w-0 flex-1 truncate">
+                                                                {item.label}
+                                                            </span>
+                                                        </Link>
+                                                    </SheetClose>
+                                                );
+                                            })}
+                                        </nav>
+                                    </details>
+                                );
+                            })}
                         </div>
 
-                        <div className="space-y-3 border-t border-border pt-4">
-                            <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
-                                Browse brands
+                        <div className="mt-6 rounded-xl border border-border bg-card/50 p-4">
+                            <p className="text-sm font-semibold text-foreground">
+                                Submit a product or review
                             </p>
-                            <div className="grid gap-2">
-                                {brandLinks.map((item) => (
-                                    <Button
-                                        key={item.href}
-                                        variant="outline"
-                                        className="justify-between rounded-2xl px-4 py-5"
-                                        asChild
-                                    >
-                                        <Link href={item.href}>
-                                            {item.label}
-                                            <ChevronRight className="size-4 text-muted-foreground" />
-                                        </Link>
-                                    </Button>
-                                ))}
-                            </div>
+                            <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                                Help keep the database useful with fresh gear notes.
+                            </p>
+                            <SheetClose asChild>
+                                <Link
+                                    href="https://forms.gle/5b1QejGptx63eQHw9"
+                                    className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-hover"
+                                >
+                                    Submit review
+                                    <ArrowRight className="size-4" />
+                                </Link>
+                            </SheetClose>
                         </div>
                     </div>
                 </SheetContent>

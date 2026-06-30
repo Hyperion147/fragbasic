@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import {
+  formatFeelLabel,
   formatMousepadValue,
   getMousepadFullName,
 } from "@/lib/mousepads";
@@ -34,7 +35,7 @@ export function MousepadCard({
     >
       <Card
         className={cn(
-          "group border-border bg-card/95 p-5 transition-all duration-200 hover:border-primary/45 hover:shadow-lg hover:shadow-black/10",
+          "group border-border bg-card/95 p-4 transition-all duration-200 hover:border-primary/45 hover:shadow-lg hover:shadow-black/10 sm:p-5",
           compact ? "h-auto" : "h-full",
         )}
       >
@@ -71,7 +72,7 @@ export function MousepadCard({
 
         <div
           className={cn(
-            "relative rounded-3xl border border-border bg-card",
+            "relative rounded-xl border border-border bg-card sm:rounded-3xl",
             compact ? "aspect-[16/10]" : "aspect-4/3",
           )}
         >
@@ -87,16 +88,22 @@ export function MousepadCard({
           />
         </div>
 
-        <div className={cn("grid gap-3", compact ? "grid-cols-4" : "grid-cols-2")}>
-          <StatPill label="Control" value={pad.feel.control} />
-          <StatPill label="Speed" value={pad.feel.speed} />
-          <StatPill label="Stopping" value={pad.feel.stoppingPower} />
-          <StatPill label="Micro" value={pad.feel.microAdjustments} />
+        <div className={cn("grid gap-2 sm:gap-3", compact ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-2")}>
+          <StatPill label="Control" value={formatFeelLabel(pad.feel.control, "control")} />
+          <StatPill label="Glide" value={formatFeelLabel(pad.feel.speed, "speed")} />
+          <StatPill
+            label="Stopping"
+            value={formatFeelLabel(pad.feel.stoppingPower, "stoppingPower")}
+          />
+          <StatPill
+            label="Corrections"
+            value={formatFeelLabel(pad.feel.microAdjustments, "microAdjustments")}
+          />
         </div>
 
         <div
           className={cn(
-            "flex items-center justify-between gap-3 text-sm text-muted-foreground",
+            "flex flex-col items-start justify-between gap-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:gap-3",
             compact ? "" : "mt-auto",
           )}
         >
@@ -111,13 +118,13 @@ export function MousepadCard({
   );
 }
 
-function StatPill({ label, value }: { label: string; value: number }) {
+function StatPill({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-border bg-background/80 px-4 py-3">
-      <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+    <div className="rounded-xl border border-border bg-background/80 px-3 py-2.5 sm:rounded-2xl sm:px-4 sm:py-3">
+      <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground sm:text-xs sm:tracking-[0.16em]">
         {label}
       </p>
-      <p className="mt-1 text-lg font-semibold text-foreground">{value}</p>
+      <p className="mt-1 text-sm font-semibold leading-5 text-foreground">{value}</p>
     </div>
   );
 }

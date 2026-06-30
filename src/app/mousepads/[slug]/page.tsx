@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import {
   ArrowRight,
   Check,
+  ChevronDown,
   CircleOff,
   Dot,
   ShieldCheck,
@@ -13,8 +14,9 @@ import { ClientShareButton } from "@/components/ClientShareButton"
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs"
 
 import { getRelatedComparisons } from "@/lib/comparisons"
-import { getBrandSlugFromMousepad } from "@/lib/brands"
 import {
+  formatEnvironmentLabel,
+  formatFeelLabel,
   getAllMousepads,
   getMousepadBySlug,
 } from "@/lib/mousepads"
@@ -31,10 +33,7 @@ import {
 } from "@/components/mousepads/related-alternatives"
 import type { Mousepad } from "@/types/mousepad"
 import {
-  JsonLd,
-  buildBreadcrumbJsonLd,
   buildMetadata,
-  buildMousepadReviewJsonLd,
 } from "@/lib/seo";
 
 type PageProps = {
@@ -77,7 +76,6 @@ export default async function MousepadPage({ params }: PageProps) {
   if (!pad) notFound()
 
   const relatedComparisons = getRelatedComparisons(pad.slug)
-  const brandSlug = getBrandSlugFromMousepad(pad)
   const relatedAlternativeGroups = getRelatedAlternativeGroups(pad)
   const publishedComparison = relatedComparisons.find(
     (comparison) => comparison.status === "published"
@@ -85,16 +83,6 @@ export default async function MousepadPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <JsonLd
-        data={[
-          buildBreadcrumbJsonLd([
-            { label: "Home", path: "/" },
-            { label: "Mousepads", path: "/mousepads" },
-            { label: `${pad.brand} ${pad.name}`, path: `/mousepads/${pad.slug}` },
-          ]),
-          buildMousepadReviewJsonLd(pad),
-        ]}
-      />
       <section className="border-b border-border bg-background">
         <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
           <div className="mx-auto max-w-7xl grid gap-8 md:grid-cols-[1.05fr_0.95fr]">
@@ -126,19 +114,28 @@ export default async function MousepadPage({ params }: PageProps) {
                   {pad.brand}
                 </p>
 
-                <h1 className="mt-3 max-w-4xl text-5xl font-semibold tracking-tight md:text-7xl">
+                <h1 className="mt-3 max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl md:text-7xl">
                   {pad.name}
                 </h1>
 
-                <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
+                <p className="mt-5 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base md:leading-7">
                   {getHeroSummary(pad)}
                 </p>
               </div>
 
               <div className="grid gap-3 sm:grid-cols-3">
-                <HeroStat label="Speed" value={pad.feel.speed} />
-                <HeroStat label="Control" value={pad.feel.control} />
-                <HeroStat label="Stopping" value={pad.feel.stoppingPower} />
+                <HeroStat
+                  label="Glide speed"
+                  value={formatFeelLabel(pad.feel.speed, "speed")}
+                />
+                <HeroStat
+                  label="Aim control"
+                  value={formatFeelLabel(pad.feel.control, "control")}
+                />
+                <HeroStat
+                  label="Stopping"
+                  value={formatFeelLabel(pad.feel.stoppingPower, "stoppingPower")}
+                />
               </div>
 
               <div className="grid gap-3 sm:grid-cols-3">
@@ -148,7 +145,9 @@ export default async function MousepadPage({ params }: PageProps) {
                 />
                 <HighlightCard
                   label="Humidity fit"
-                  value={`${pad.environment.humidityResistance}/10 resistance`}
+                  value={`${formatEnvironmentLabel(
+                    pad.environment.humidityResistance
+                  )} handling`}
                 />
                 <HighlightCard
                   label={pad.category === "glass" ? "Glass finish" : "Price in India"}
@@ -174,12 +173,6 @@ export default async function MousepadPage({ params }: PageProps) {
                   <Link href="/mousepads">Browse all pads</Link>
                 </Button>
 
-                {brandSlug ? (
-                  <Button variant="secondary" asChild>
-                    <Link href={`/mousepads/brands/${brandSlug}`}>Visit brand</Link>
-                  </Button>
-                ) : null}
-
                 <ClientShareButton href={`/mousepads/${pad.slug}`} label="Share pad" />
                 <Button variant="outline" asChild>
                   <Link href={`/mousepads/compare/universal?pads=${pad.slug}`}>
@@ -203,27 +196,49 @@ export default async function MousepadPage({ params }: PageProps) {
       <div className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
         <div className="mx-auto max-w-7xl grid gap-6 md:grid-cols-[1fr_360px]">
           <div className="space-y-6">
-            <MousepadFeelChart pad={pad} />
-            <MousepadSpecGrid pad={pad} />
-            <SurfaceAndUseCard pad={pad} />
-            <CommunityNotesCard pad={pad} />
-            <PersonalNotes pad={pad} />
-            <SourcesCard pad={pad} />
+            <ProductDisclosure title="Feel chart" defaultOpen>
+              <MousepadFeelChart pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Specifications">
+              <MousepadSpecGrid pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Surface and daily use">
+              <SurfaceAndUseCard pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Community notes">
+              <CommunityNotesCard pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Tested experience">
+              <PersonalNotes pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Sources">
+              <SourcesCard pad={pad} />
+            </ProductDisclosure>
           </div>
 
           <aside className="space-y-6">
-            <RecommendationCard pad={pad} />
-            <AvailabilityCard pad={pad} />
-            <ColorwaysCard pad={pad} />
-            <CompareLinksCard
-              pad={pad}
-              comparisonSlug={publishedComparison?.slug}
-              relatedCount={relatedComparisons.length}
-            />
-            <RelatedAlternatives
-              source={pad}
-              groups={relatedAlternativeGroups}
-            />
+            <ProductDisclosure title="Recommendation" defaultOpen>
+              <RecommendationCard pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Availability">
+              <AvailabilityCard pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Colorways">
+              <ColorwaysCard pad={pad} />
+            </ProductDisclosure>
+            <ProductDisclosure title="Compare this pad">
+              <CompareLinksCard
+                pad={pad}
+                comparisonSlug={publishedComparison?.slug}
+                relatedCount={relatedComparisons.length}
+              />
+            </ProductDisclosure>
+            <ProductDisclosure title="Related alternatives">
+              <RelatedAlternatives
+                source={pad}
+                groups={relatedAlternativeGroups}
+              />
+            </ProductDisclosure>
           </aside>
         </div>
       </div>
@@ -231,13 +246,13 @@ export default async function MousepadPage({ params }: PageProps) {
   )
 }
 
-function HeroStat({ label, value }: { label: string; value: number }) {
+function HeroStat({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-border bg-card/70 p-4 backdrop-blur-sm">
       <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
         {label}
       </p>
-      <p className="mt-2 text-3xl font-semibold text-foreground">{value}</p>
+      <p className="mt-2 text-xl font-semibold leading-7 text-foreground">{value}</p>
     </div>
   )
 }
@@ -256,6 +271,29 @@ function HighlightCard({
         {value}
       </p>
     </div>
+  )
+}
+
+function ProductDisclosure({
+  title,
+  children,
+  defaultOpen = false,
+}: {
+  title: string
+  children: React.ReactNode
+  defaultOpen?: boolean
+}) {
+  return (
+    <details
+      open={defaultOpen}
+      className="group rounded-xl border border-border bg-card/45"
+    >
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold text-foreground sm:px-5">
+        {title}
+        <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+      </summary>
+      <div className="border-t border-border p-3 sm:p-4">{children}</div>
+    </details>
   )
 }
 
@@ -443,7 +481,7 @@ function SurfaceAndUseCard({ pad }: { pad: Mousepad }) {
           <p className="text-sm font-medium text-foreground">Texture and comfort</p>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
             {formatValue(pad.texture.feel)} surface, {pad.texture.noiseLevel} noise,
-            skin comfort rated {pad.texture.skinComfort}/10, and{" "}
+            {formatEnvironmentLabel(pad.texture.skinComfort)} skin comfort and{" "}
             {pad.texture.sleeveFriendly ? "good sleeve compatibility." : "less sleeve-friendly behavior."}
           </p>
         </div>
@@ -451,9 +489,10 @@ function SurfaceAndUseCard({ pad }: { pad: Mousepad }) {
         <div className="rounded-2xl border border-border bg-background/80 p-4">
           <p className="text-sm font-medium text-foreground">Environment fit</p>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
-            Humidity {pad.environment.humidityResistance}/10, sweat{" "}
-            {pad.environment.sweatResistance}/10, dust and hair{" "}
-            {pad.environment.dustHairResistance}/10, and{" "}
+            {formatEnvironmentLabel(pad.environment.humidityResistance)} humidity
+            handling, {formatEnvironmentLabel(pad.environment.sweatResistance)}{" "}
+            sweat handling, {formatEnvironmentLabel(pad.environment.dustHairResistance)}{" "}
+            dust and hair handling, and{" "}
             {pad.environment.washable ? "washable for easier maintenance." : "not ideal for regular washing."}
           </p>
         </div>
@@ -626,7 +665,16 @@ function SourcesCard({ pad }: { pad: Mousepad }) {
 
 function getHeroSummary(pad: Mousepad) {
   const games = pad.recommendedFor.games.slice(0, 2).map(formatValue).join(" and ")
-  return `${pad.brand} ${pad.name} is a ${formatValue(pad.category)} pad built for ${games}. It balances ${pad.feel.control}/10 control, ${pad.feel.speed}/10 speed, and ${pad.feel.stoppingPower}/10 stopping power for players who care about gear feel, not just marketing labels.`
+  return `${pad.brand} ${pad.name} is a ${formatValue(pad.category)} pad built for ${games}. It balances ${formatFeelLabel(
+    pad.feel.control,
+    "control"
+  ).toLowerCase()} control, ${formatFeelLabel(
+    pad.feel.speed,
+    "speed"
+  ).toLowerCase()} glide, and ${formatFeelLabel(
+    pad.feel.stoppingPower,
+    "stoppingPower"
+  ).toLowerCase()} stopping power for players who care about gear feel, not just marketing labels.`
 }
 
 function getRelatedAlternativeGroups(

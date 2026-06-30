@@ -9,3 +9,8 @@ export const latestAddedGlasspadSlugs = [
   "xraypad-nod-sp-x1",
   "infinitymice-tora",
 ] as const;
+
+export const latestAddedIemSlugs = [
+  "tangzu-waner-sg-2-jade-dragon",
+  "tangzu-waner-sg-2-red-lion",
+] as const;

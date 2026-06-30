@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { MousepadBrowser } from "@/components/mousepads/mousepad-browser";
@@ -74,25 +75,21 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
                             Browse pads by feel, surface, and India
                             availability.
                         </h1>
-
-                        <p className="mt-6 max-w-3xl text-base leading-7 text-muted-foreground md:text-lg">
-                            Explore cloth and hybrid mousepads for VALORANT,
-                            CS2, Apex, and more, then narrow the list by speed,
-                            control, stopping power, and brand.
-                        </p>
                     </div>
                 </div>
             </section>
 
             <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
                 <SiteSection>
-                    <MousepadBrowser
-                        mousepads={mousepads}
-                        brands={brands}
-                        categories={categories}
-                        initialCategory={initialCategory}
-                        latestAddedSlugs={latestAddedMousepadSlugs}
-                    />
+                    <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading mousepad filters...</div>}>
+                        <MousepadBrowser
+                            mousepads={mousepads}
+                            brands={brands}
+                            categories={categories}
+                            initialCategory={initialCategory}
+                            latestAddedSlugs={latestAddedMousepadSlugs}
+                        />
+                    </Suspense>
                 </SiteSection>
             </section>
         </main>

@@ -6,6 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  formatEnvironmentLabel,
+  formatFeelLabel,
   getDefaultColorway,
   getCalibratedFeelValue,
   hasMixedFeelScaleFamilies,
@@ -28,27 +30,37 @@ const summaryItems: Array<{
   label: string;
   key: SummaryKey;
   accessor: (mousepad: Mousepad) => number;
+  valueLabel: (value: number) => string;
 }> = [
-  { label: "Fastest", key: "speed", accessor: (mousepad) => mousepad.feel.speed },
   {
-    label: "Most control",
+    label: "Easiest glide",
+    key: "speed",
+    accessor: (mousepad) => mousepad.feel.speed,
+    valueLabel: (value) => formatFeelLabel(value, "speed"),
+  },
+  {
+    label: "Most locked-in",
     key: "control",
     accessor: (mousepad) => mousepad.feel.control,
+    valueLabel: (value) => formatFeelLabel(value, "control"),
   },
   {
-    label: "Best stopping power",
+    label: "Strongest stop",
     key: "stoppingPower",
     accessor: (mousepad) => mousepad.feel.stoppingPower,
+    valueLabel: (value) => formatFeelLabel(value, "stoppingPower"),
   },
   {
-    label: "Best humidity resistance",
+    label: "Best humidity handling",
     key: "humidityResistance",
     accessor: (mousepad) => mousepad.environment.humidityResistance,
+    valueLabel: formatEnvironmentLabel,
   },
   {
-    label: "Best micro-adjustments",
+    label: "Easiest corrections",
     key: "microAdjustments",
     accessor: (mousepad) => mousepad.feel.microAdjustments,
+    valueLabel: (value) => formatFeelLabel(value, "microAdjustments"),
   },
 ];
 
@@ -58,7 +70,7 @@ export function CompareSummaryCards({ mousepads }: Props) {
     item.key === "speed" && useUniversalFeel
       ? {
           ...item,
-          label: "Fastest overall",
+          label: "Easiest overall glide",
           accessor: (mousepad: Mousepad) =>
             getCalibratedFeelValue(mousepad, "speed", "universal"),
         }
@@ -66,33 +78,34 @@ export function CompareSummaryCards({ mousepads }: Props) {
   );
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+    <div className="grid gap-2 md:gap-4 md:grid-cols-2 xl:grid-cols-5">
       {resolvedItems.map((item) => {
         const winners = getWinningMousepads(mousepads, item.accessor);
         const leadValue = winners.length > 0 ? item.accessor(winners[0]) : 0;
 
         return (
-          <Card key={item.key} className="border-border bg-card">
-            <CardHeader>
-              <CardTitle className="text-base">{item.label}</CardTitle>
-              <CardDescription>
-                {leadValue}/10 {useUniversalFeel && item.key === "speed" ? "universal" : "lead"} score
+          <Card key={item.key} className="border-border bg-card/90">
+            <CardHeader className="p-3 pb-2 sm:p-4">
+              <CardTitle className="text-sm sm:text-base">{item.label}</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">
+                Current leader: {item.valueLabel(leadValue)}
+                {useUniversalFeel && item.key === "speed" ? " feel" : ""}
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-3 pt-0 sm:p-4 sm:pt-0">
               {winners.map((mousepad) => {
                 const color = getDefaultColorway(mousepad).color;
 
                 return (
                   <div
                     key={mousepad.slug}
-                    className="flex items-center gap-2 rounded-2xl border border-border bg-background/80 p-3"
+                    className="flex items-center gap-2 rounded-lg border border-border bg-background/80 p-2 sm:rounded-2xl sm:p-3"
                   >
                     <span
                       className="size-3 shrink-0 rounded-full border border-border"
                       style={{ backgroundColor: color }}
                     />
-                    <p className="text-sm font-medium text-foreground truncate">
+                    <p className="truncate text-xs font-medium text-foreground sm:text-sm">
                       {getMousepadFullName(mousepad)}
                     </p>
                   </div>

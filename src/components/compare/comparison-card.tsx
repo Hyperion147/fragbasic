@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import type { MousepadComparison } from "@/data/comparisons";
+import { formatFeelLabel } from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
 
 type Props = {
@@ -24,8 +25,11 @@ export function ComparisonCard({ comparison, left, right }: Props) {
                     <PadSummary
                         brand={left.brand}
                         name={left.name}
-                        topMetric={`${left.feel.control}/10 control`}
-                        secondMetric={`${left.feel.stoppingPower}/10 stop`}
+                        topMetric={`${formatFeelLabel(left.feel.control, "control")} control`}
+                        secondMetric={`${formatFeelLabel(
+                            left.feel.stoppingPower,
+                            "stoppingPower",
+                        )} stopping`}
                     />
                     <div className="text-center text-xs uppercase tracking-[0.22em] text-muted-foreground">
                         vs
@@ -33,8 +37,11 @@ export function ComparisonCard({ comparison, left, right }: Props) {
                     <PadSummary
                         brand={right.brand}
                         name={right.name}
-                        topMetric={`${right.feel.speed}/10 speed`}
-                        secondMetric={`${right.feel.microAdjustments}/10 micro`}
+                        topMetric={`${formatFeelLabel(right.feel.speed, "speed")} glide`}
+                        secondMetric={`${formatFeelLabel(
+                            right.feel.microAdjustments,
+                            "microAdjustments",
+                        )} corrections`}
                         align="right"
                     />
                 </div>

@@ -67,14 +67,14 @@ export function MousepadSelector({
   }, [allMousepads, normalizedQuery, selectedSlugs]);
 
   return (
-    <Card className="border-border bg-card">
-      <CardHeader>
-        <CardTitle className="text-2xl tracking-tight">
+    <Card className="border-border bg-card/90">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-lg tracking-tight sm:text-2xl">
           Pick up to three mousepads ({selectedSlugs.length}/{maxSelected})
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-3 pt-0 sm:space-y-4">
         <div className="relative">
           <Search className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -93,14 +93,14 @@ export function MousepadSelector({
           </div>
         ) : null}
         
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid gap-2 md:gap-3 lg:grid-cols-2">
           {availableMousepads.map((mousepad) => {
             const colorway = getDefaultColorway(mousepad);
 
             return (
               <div
                 key={mousepad.slug}
-                className="flex items-center justify-between gap-4 rounded-3xl border border-border bg-background/70 px-4 py-4"
+                className="flex items-center justify-between gap-3 rounded-xl border border-border bg-background/70 px-3 py-3 md:rounded-3xl md:px-4 md:py-4"
               >
                 <div className="min-w-0">
                   <div className="flex items-center gap-3">
@@ -108,11 +108,11 @@ export function MousepadSelector({
                       className="size-3 shrink-0 rounded-full border border-border"
                       style={{ backgroundColor: colorway.color }}
                     />
-                    <p className="truncate font-medium text-foreground">
+                    <p className="truncate text-sm font-medium text-foreground sm:text-base">
                       {getMousepadFullName(mousepad)}
                     </p>
                   </div>
-                  <p className="mt-2 text-sm text-muted-foreground">
+                  <p className="mt-1 text-xs text-muted-foreground sm:mt-2 sm:text-sm">
                     {formatMousepadValue(mousepad.category)} /{" "}
                     {formatMousepadValue(mousepad.surface)}
                   </p>

@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Copy, Scale, ShieldCheck, SlidersHorizontal } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ChevronDown, Copy, Scale, ShieldCheck, SlidersHorizontal } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
@@ -34,12 +34,14 @@ const DEFAULT_SELECTED_SLUGS = [
 ] as const;
 
 const MAX_SELECTED = 3;
+const LAST_COMPARE_STORAGE_KEY = "fragbasic_last_mousepad_compare";
 
 export function UniversalCompare({ allMousepads }: Props) {
     const searchParams = useSearchParams();
     const router = useRouter();
     const padsParam = searchParams.get("pads");
     const hasPadsParam = searchParams.has("pads");
+    const didCheckStoredSelection = useRef(false);
 
     const urlSelectedSlugs = useMemo(() => {
         if (padsParam === null) {
@@ -55,9 +57,13 @@ export function UniversalCompare({ allMousepads }: Props) {
     }, [padsParam]);
 
     const [query, setQuery] = useState("");
-    const selectedSlugs = hasPadsParam
-        ? urlSelectedSlugs
-        : DEFAULT_SELECTED_SLUGS.filter((slug) => getMousepadBySlug(slug));
+    const selectedSlugs = useMemo(
+        () =>
+            hasPadsParam
+                ? urlSelectedSlugs
+                : [],
+        [hasPadsParam, urlSelectedSlugs],
+    );
 
     const selectedMousepads = useMemo(
         () =>
@@ -73,7 +79,7 @@ export function UniversalCompare({ allMousepads }: Props) {
 
     const canCompare = selectedMousepads.length >= 2;
 
-    function replaceUrl(slugs: string[]) {
+    const replaceUrl = useCallback((slugs: string[]) => {
         const params = new URLSearchParams(searchParams.toString());
         params.set("pads", slugs.join(","));
 
@@ -84,7 +90,50 @@ export function UniversalCompare({ allMousepads }: Props) {
                 scroll: false,
             },
         );
-    }
+    }, [router, searchParams]);
+
+    useEffect(() => {
+        if (hasPadsParam || didCheckStoredSelection.current) {
+            return;
+        }
+
+        didCheckStoredSelection.current = true;
+
+        try {
+            const stored = window.localStorage.getItem(LAST_COMPARE_STORAGE_KEY);
+            const parsed = stored ? JSON.parse(stored) : null;
+            const storedSlugs = Array.isArray(parsed)
+                ? parsed
+                      .filter((slug): slug is string => typeof slug === "string")
+                      .filter((slug) => getMousepadBySlug(slug))
+                      .slice(0, MAX_SELECTED)
+                : [];
+
+            if (storedSlugs.length > 0) {
+                replaceUrl(storedSlugs);
+                return;
+            }
+        } catch {
+            // Ignore malformed localStorage and fall back to starter pads.
+        }
+
+        replaceUrl(DEFAULT_SELECTED_SLUGS.filter((slug) => getMousepadBySlug(slug)));
+    }, [hasPadsParam, replaceUrl]);
+
+    useEffect(() => {
+        if (!hasPadsParam) {
+            return;
+        }
+
+        try {
+            window.localStorage.setItem(
+                LAST_COMPARE_STORAGE_KEY,
+                JSON.stringify(selectedSlugs),
+            );
+        } catch {
+            // localStorage can fail in private or restricted contexts.
+        }
+    }, [hasPadsParam, selectedSlugs]);
 
     function handleAdd(mousepad: Mousepad) {
         if (
@@ -121,9 +170,9 @@ export function UniversalCompare({ allMousepads }: Props) {
     const selectionCount = selectedSlugs.length;
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
             <Card className="border-border bg-card">
-                <CardHeader>
+                <CardHeader className="p-4 sm:p-6">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                         <div className="flex flex-wrap gap-2">
                             <Badge className="text-black">
@@ -161,13 +210,14 @@ export function UniversalCompare({ allMousepads }: Props) {
                             )}
                         </div>
                     </div>
-                    <CardTitle className="mt-4 text-4xl tracking-tight md:text-5xl">
+                    <CardTitle className="mt-4 text-2xl tracking-tight sm:text-4xl md:text-5xl">
                         Build your own mousepad matchup.
                     </CardTitle>
-                    <p className="mt-4 rounded-lg border border-sky-300/40 bg-sky-400/10 px-4 py-3 text-sm leading-6 text-sky-100">
-                        Note: Glasspad and mousepad ratings use different feel
-                        scales. Treat these numbers as comparison values, not
-                        absolute product ratings.
+                    <p className="mt-3 rounded-lg border border-sky-300/40 bg-sky-400/10 px-3 py-2 text-xs leading-5 text-sky-100 sm:mt-4 sm:px-4 sm:py-3 sm:text-sm sm:leading-6">
+                        Feel labels are relative to the pads in this database.
+                        Use them as buying guidance, not lab measurements:
+                        skates, humidity, wear, and surface type can shift the
+                        feel on your desk.
                     </p>
                 </CardHeader>
             </Card>
@@ -190,11 +240,21 @@ export function UniversalCompare({ allMousepads }: Props) {
 
             {canCompare ? (
                 <>
-                    <CompareSummaryCards mousepads={selectedMousepads} />
-                    <UniversalProductGrid mousepads={selectedMousepads} />
-                    <MultiFeelChart mousepads={selectedMousepads} />
-                    <MultiPositionChart mousepads={selectedMousepads} />
-                    <MultiEnvironmentChart mousepads={selectedMousepads} />
+                    <CompareDisclosure title="Summary" defaultOpen>
+                        <CompareSummaryCards mousepads={selectedMousepads} />
+                    </CompareDisclosure>
+                    <CompareDisclosure title="Selected products">
+                        <UniversalProductGrid mousepads={selectedMousepads} />
+                    </CompareDisclosure>
+                    <CompareDisclosure title="Feel chart" defaultOpen>
+                        <MultiFeelChart mousepads={selectedMousepads} />
+                    </CompareDisclosure>
+                    <CompareDisclosure title="Position chart">
+                        <MultiPositionChart mousepads={selectedMousepads} />
+                    </CompareDisclosure>
+                    <CompareDisclosure title="Desk conditions">
+                        <MultiEnvironmentChart mousepads={selectedMousepads} />
+                    </CompareDisclosure>
                 </>
             ) : (
                 <Card className="border-border bg-card">
@@ -258,21 +318,21 @@ export function UniversalCompare({ allMousepads }: Props) {
                         </CardContent>
                     )}
 
-                    <CardContent className="grid gap-3 md:grid-cols-3">
+                    <CardContent className="grid gap-3 p-4 sm:p-6 md:grid-cols-3">
                         <HintCard
                             icon={<SlidersHorizontal className="size-4" />}
-                            title="Feel profile"
-                            body="Compare speed, control, stopping power, and micro-adjustments on one radar."
+                            title="Feel breakdown"
+                            body="See glide, control, stopping, start feel, moving friction, and small corrections together."
                         />
                         <HintCard
                             icon={<Scale className="size-4" />}
-                            title="Positioning"
-                            body="See where each pad sits on a shared mud-to-glass scale with one clean lane per pad."
+                            title="Glide lane"
+                            body="Read the set from controlled on the left to faster, easier glide on the right."
                         />
                         <HintCard
                             icon={<ShieldCheck className="size-4" />}
-                            title="Environment"
-                            body="Check humidity, sweat, and dust resistance without falling back to a giant table."
+                            title="Desk conditions"
+                            body="Check humidity, sweat, and dust or hair handling without digging through a table."
                         />
                     </CardContent>
                 </Card>
@@ -300,5 +360,28 @@ function HintCard({
                 {body}
             </p>
         </div>
+    );
+}
+
+function CompareDisclosure({
+    title,
+    children,
+    defaultOpen = false,
+}: {
+    title: string;
+    children: React.ReactNode;
+    defaultOpen?: boolean;
+}) {
+    return (
+        <details
+            open={defaultOpen}
+            className="group rounded-xl border border-border bg-card/45"
+        >
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-3 py-2.5 text-sm font-semibold text-foreground sm:px-5 sm:py-3">
+                {title}
+                <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+            </summary>
+            <div className="border-t border-border p-2 sm:p-4">{children}</div>
+        </details>
     );
 }

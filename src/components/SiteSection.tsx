@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
  * Introduced per OQ3 user decision ("Introduce light shared SiteSection / ContentPanel").
  * Use for major list/detail sections to unify with homepage panels (PopularComparisons, FinderPanel, etc.).
  * No heavy props — simple passthrough + optional className.
- * Density Preservation Rules (from design): do NOT use on micro cards/grids that must retain current internal density (e.g. mousepad grid gap-4, finder-option p-4, StatPill, etc.).
+ * Density Preservation Rules (from design): do NOT use on micro cards/grids that must retain current internal density (e.g. mousepad grid gap-4, StatPill, etc.).
  * See finalized design doc for full rules, before/after, and when to prefer outer vs. direct.
  */
 export function SiteSection({

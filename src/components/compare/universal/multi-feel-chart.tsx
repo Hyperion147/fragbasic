@@ -11,13 +11,7 @@ import {
   Radar,
   Tooltip,
 } from "@/components/evilcharts/charts/radar-chart";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   FEEL_METRICS,
   FEEL_SCALE_DESCRIPTIONS,
@@ -43,16 +37,11 @@ export function MultiFeelChart({ mousepads }: Props) {
 
   return (
     <Card className="border-border bg-card">
-      <CardHeader>
-        <CardTitle className="text-2xl tracking-tight">Feel profile</CardTitle>
-        <CardDescription>
-          {scaleModes.length > 1
-            ? "Mixed glass and non-glass sets show native surface-family ratings plus a universal glide calibration."
-            : "Compare core glide behavior across speed, control, stopping power, friction, and micro-adjustment freedom."}
-        </CardDescription>
+      <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-3">
+        <CardTitle className="text-lg tracking-tight sm:text-2xl">Feel breakdown</CardTitle>
       </CardHeader>
 
-      <CardContent className={scaleModes.length > 1 ? "grid gap-5 xl:grid-cols-2" : ""}>
+      <CardContent className={scaleModes.length > 1 ? "grid gap-3 p-3 sm:gap-5 sm:p-6 xl:grid-cols-2" : "p-3 sm:p-6"}>
         {scaleModes.map((mode) => (
           <ScaleRadar
             key={mode}
@@ -90,20 +79,20 @@ function ScaleRadar({
   });
 
   return (
-    <div className="rounded-3xl border border-border bg-background/35 p-4">
+    <div className="rounded-xl border border-border bg-background/35 p-3 sm:rounded-3xl sm:p-4">
       <div className="mb-3">
-        <h3 className="text-lg font-semibold tracking-tight">
+        <h3 className="text-base font-semibold tracking-tight sm:text-lg">
           {FEEL_SCALE_LABELS[mode]}
         </h3>
-        <p className="mt-1 text-sm leading-6 text-muted-foreground">
+        <p className="mt-1 hidden text-sm leading-6 text-muted-foreground sm:block">
           {FEEL_SCALE_DESCRIPTIONS[mode]}
         </p>
       </div>
         <EvilRadarChart
           data={data}
           config={config}
-          className="mx-auto aspect-square max-h-[36rem] pb-8"
-          chartProps={{ outerRadius: "72%" }}
+          className="mx-auto aspect-square max-h-[22rem] pb-4 sm:max-h-[36rem] sm:pb-8"
+          chartProps={{ outerRadius: "68%" }}
         >
           <PolarGrid gridType="circle" />
           <PolarAngleAxis dataKey="metric" />
@@ -112,7 +101,7 @@ function ScaleRadar({
           <Tooltip variant="frosted-glass" />
 
           {mousepads.map((mousepad, index) => {
-            const chartColors = getMousepadChartColors(mousepad);
+            const chartColors = getMousepadChartColors();
 
             return (
               <Radar
@@ -139,7 +128,7 @@ function ScaleRadar({
 function getChartConfig(mousepads: Mousepad[]) {
   return Object.fromEntries(
     mousepads.map((mousepad) => {
-      const color = getMousepadChartColors(mousepad).stroke;
+      const color = getMousepadChartColors().stroke;
 
       return [
         mousepad.slug,

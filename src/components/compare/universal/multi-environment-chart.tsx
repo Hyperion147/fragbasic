@@ -18,7 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getDefaultColorway } from "@/lib/mousepads";
+import { MOUSEPAD_GRAPH_COLOR } from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
 
 type Props = {
@@ -32,7 +32,7 @@ type EnvironmentChartRow = {
 const environmentRows = [
   { label: "Humidity", key: "humidityResistance" },
   { label: "Sweat", key: "sweatResistance" },
-  { label: "Dust / Hair", key: "dustHairResistance" },
+  { label: "Dust / hair", key: "dustHairResistance" },
 ] as const;
 
 export function MultiEnvironmentChart({ mousepads }: Props) {
@@ -52,14 +52,12 @@ export function MultiEnvironmentChart({ mousepads }: Props) {
     { label: string; colors: { light: string[] } }
   > = Object.fromEntries(
     mousepads.map((mousepad) => {
-      const color = getDefaultColorway(mousepad).color;
-
       return [
         mousepad.slug,
         {
           label: mousepad.name,
           colors: {
-            light: [color],
+            light: [MOUSEPAD_GRAPH_COLOR],
           },
         },
       ];
@@ -68,22 +66,22 @@ export function MultiEnvironmentChart({ mousepads }: Props) {
 
   return (
     <Card className="border-border bg-card">
-      <CardHeader>
-        <CardTitle className="text-2xl tracking-tight">
-          Environment behavior
+      <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-3">
+        <CardTitle className="text-lg tracking-tight sm:text-2xl">
+          Desk-condition handling
         </CardTitle>
-        <CardDescription>
-          Compare how the selected pads hold up against humidity, sweat, and
-          dust or hair buildup.
+        <CardDescription className="hidden sm:block">
+          Compare how the selected pads handle humidity, sweat, and dust or
+          hair buildup during normal use.
         </CardDescription>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="p-3 sm:p-6">
         <EvilRadarChart
           data={data}
           config={config}
-          className="mx-auto aspect-square max-h-[30rem] bg-background/20 pb-8"
-          chartProps={{ outerRadius: "72%" }}
+          className="mx-auto aspect-square max-h-[21rem] bg-background/20 pb-4 sm:max-h-[30rem] sm:pb-8"
+          chartProps={{ outerRadius: "68%" }}
         >
           <PolarGrid gridType="circle" />
           <PolarAngleAxis dataKey="metric" />
@@ -92,16 +90,14 @@ export function MultiEnvironmentChart({ mousepads }: Props) {
           <Tooltip variant="frosted-glass" />
 
           {mousepads.map((mousepad) => {
-            const color = getDefaultColorway(mousepad).color;
-
             return (
               <Radar
                 key={mousepad.slug}
                 dataKey={mousepad.slug}
                 variant="lines"
                 radarProps={{
-                  stroke: color,
-                  fill: color,
+                  stroke: MOUSEPAD_GRAPH_COLOR,
+                  fill: MOUSEPAD_GRAPH_COLOR,
                 }}
                 isClickable
               >

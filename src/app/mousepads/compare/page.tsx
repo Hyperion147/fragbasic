@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { ComparisonBrowser } from "@/components/compare/comparison-browser";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
@@ -70,9 +71,9 @@ export default function CompareIndexPage() {
                             Compare mousepads side by side.
                         </h1>
                         <p className="mt-4 rounded-lg border border-sky-300/40 bg-sky-400/10 px-4 py-3 text-sm leading-6 text-sky-100">
-                            Note: Glasspad and mousepad ratings use different
-                            feel scales. Treat these numbers as comparison
-                            values, not absolute product ratings.
+                            Note: Feel labels are relative to other pads in the
+                            database. Mouse skates, humidity, wear, and surface
+                            type can change how a pad feels on your desk.
                         </p>
                     </div>
                     <div className="flex flex-col items-end gap-2">
@@ -95,12 +96,14 @@ export default function CompareIndexPage() {
             </section>
 
             <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:px-8 xl:px-10">
-                <ComparisonBrowser
-                    comparisons={comparisons}
-                    tags={getComparisonTagOptions(
-                        comparisons.map((entry) => entry.comparison),
-                    )}
-                />
+                <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading comparison filters...</div>}>
+                    <ComparisonBrowser
+                        comparisons={comparisons}
+                        tags={getComparisonTagOptions(
+                            comparisons.map((entry) => entry.comparison),
+                        )}
+                    />
+                </Suspense>
             </section>
         </main>
     );

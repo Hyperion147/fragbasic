@@ -2,16 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 
-import { brandConfig } from "@/lib/brands";
 import RectTipComp from "./ui/rect-tip";
 
 const primaryLinks = [
     { label: "All Mousepads", href: "/mousepads" },
-    { label: "Finder", href: "/mousepads/finder" },
+    { label: "IEMs", href: "/iems" },
     { label: "Compare", href: "/mousepads/compare" },
     { label: "Universal Compare", href: "/mousepads/compare/universal" },
 ] as const;
@@ -22,11 +20,6 @@ const browseLinks = [
     { label: "Balanced", href: "/mousepads?category=balanced-control" },
     { label: "Speed", href: "/mousepads?category=speed" },
 ] as const;
-
-const brandLinks = Object.values(brandConfig).map((brand) => ({
-    label: brand.name,
-    href: `/mousepads/brands/${brand.slug}`,
-}));
 
 export function SiteFooter() {
     const reduceMotion = useReducedMotion();
@@ -50,23 +43,15 @@ export function SiteFooter() {
                             <div className="max-w-2xl space-y-4">
                                 <p className="text-sm leading-7 text-muted-foreground sm:text-base">
                                     Browse mousepad data, compare matchups, and
-                                    jump into the real finder when you want a
-                                    recommendation instead of a guess.
+                                    narrow down the gear that actually fits how
+                                    you play.
                                 </p>
-
-                                <Link
-                                    href="/mousepads/finder"
-                                    className="inline-flex items-center gap-2 text-sm font-medium text-foreground transition-opacity hover:opacity-70"
-                                >
-                                    Open finder
-                                    <ArrowRight className="size-4" />
-                                </Link>
                             </div>
                         </div>
                     </FooterReveal>
 
                     <FooterReveal delay={0.16} reduceMotion={reduceMotion}>
-                        <div className="grid gap-8 sm:grid-cols-3">
+                        <div className="grid gap-8 sm:grid-cols-2">
                             <FooterLinkGroup
                                 title="Explore"
                                 links={primaryLinks}
@@ -74,10 +59,6 @@ export function SiteFooter() {
                             <FooterLinkGroup
                                 title="Browse"
                                 links={browseLinks}
-                            />
-                            <FooterLinkGroup
-                                title="Brands"
-                                links={brandLinks}
                             />
                         </div>
                     </FooterReveal>

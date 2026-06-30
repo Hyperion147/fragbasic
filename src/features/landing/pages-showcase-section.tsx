@@ -2,7 +2,7 @@ import Link from "next/link";
 import {
   ArrowRight,
   Boxes,
-  Scale,
+  Headphones,
   Sparkles,
   SquareStack,
 } from "lucide-react";
@@ -13,12 +13,12 @@ import { cn } from "@/lib/utils";
 type Props = {
   mousepadCount: number;
   glasspadCount: number;
+  iemCount: number;
   bestPageCount: number;
-  comparisonCount: number;
 };
 
 type Destination = {
-  title: "Mousepads" | "Glasspads" | "Best" | "Compare";
+  title: "Mousepads" | "Glasspads" | "IEMs" | "Best";
   href: string;
   description: string;
   statLabel: string;
@@ -46,6 +46,15 @@ const destinations: readonly Destination[] = [
     accent: "from-[color:color-mix(in_srgb,var(--brand)_18%,transparent)] to-transparent",
   },
   {
+    title: "IEMs",
+    href: "/iems",
+    description:
+      "Browse in-ear monitors by tuning, imaging, comfort, and FPS audio fit.",
+    statLabel: "Audio picks",
+    icon: Headphones,
+    accent: "from-[color:color-mix(in_srgb,var(--brand)_14%,transparent)] to-transparent",
+  },
+  {
     title: "Best",
     href: "/best",
     description:
@@ -54,22 +63,13 @@ const destinations: readonly Destination[] = [
     icon: Sparkles,
     accent: "from-white/6 to-transparent",
   },
-  {
-    title: "Compare",
-    href: "/mousepads/compare",
-    description:
-      "Read published matchups or build your own side-by-side set when the shortlist gets tight.",
-    statLabel: "Published writeups",
-    icon: Scale,
-    accent: "from-[color:color-mix(in_srgb,var(--brand)_14%,transparent)] to-transparent",
-  },
 ] as const;
 
 export function PagesShowcaseSection({
   mousepadCount,
   glasspadCount,
+  iemCount,
   bestPageCount,
-  comparisonCount,
 }: Props) {
   const stats = [
     {
@@ -83,32 +83,32 @@ export function PagesShowcaseSection({
       icon: SquareStack,
     },
     {
+      label: "IEMs",
+      value: iemCount.toString(),
+      icon: Headphones,
+    },
+    {
       label: "Best guides",
       value: bestPageCount.toString(),
       icon: Sparkles,
-    },
-    {
-      label: "Published comparisons",
-      value: comparisonCount.toString(),
-      icon: Scale,
     },
   ];
 
   return (
     <section className="space-y-5">
-      <div className="text-start mb-8">
+      <div className="mb-6 text-start md:mb-8">
         <Badge
           variant="outline"
-          className="rounded-md px-3 py-1 uppercase tracking-[0.18em] text-[11px] text-brand-hover"
+          className="rounded-md px-3 py-1 uppercase tracking-[0.14em] text-[10px] text-brand-hover sm:text-[11px] sm:tracking-[0.18em]"
         >
           Core pages
         </Badge>
-        <h2 className="mt-5 text-balance text-4xl font-semibold tracking-tight md:text-6xl">
+        <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:mt-5 md:text-6xl">
           Start where the question starts.
         </h2>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-4">
+      <div className="grid gap-3 sm:grid-cols-2 lg:gap-4 xl:grid-cols-4">
         {destinations.map((item) => {
           const Icon = item.icon;
           const value =
@@ -116,15 +116,15 @@ export function PagesShowcaseSection({
               ? mousepadCount
               : item.title === "Glasspads"
                 ? glasspadCount
-                : item.title === "Best"
-                  ? bestPageCount
-                  : comparisonCount;
+                : item.title === "IEMs"
+                  ? iemCount
+                  : bestPageCount;
 
           return (
             <Link
               key={item.title}
               href={item.href}
-              className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card/70 p-6 transition-colors hover:border-[color-mix(in_srgb,var(--brand-hover)_48%,transparent)] hover:shadow-[0_0_24px_color-mix(in_srgb,var(--brand-glow)_12%,transparent)]"
+              className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card/70 p-4 transition-colors hover:border-[color-mix(in_srgb,var(--brand-hover)_48%,transparent)] hover:shadow-[0_0_24px_color-mix(in_srgb,var(--brand-glow)_12%,transparent)] sm:p-5 lg:p-6"
             >
               <div
                 className={cn(
@@ -137,25 +137,25 @@ export function PagesShowcaseSection({
                   <Icon className="size-5" />
                 </span>
                 <div className="text-right">
-                  <p className="text-3xl font-semibold tracking-tight text-foreground">
+                  <p className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
                     {value}
                   </p>
-                  <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                  <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground sm:text-xs sm:tracking-[0.16em]">
                     {item.statLabel}
                   </p>
                 </div>
               </div>
 
-              <div className="relative mt-8">
-                <p className="text-3xl font-semibold tracking-tight text-foreground">
+              <div className="relative mt-6 md:mt-8">
+                <p className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
                   {item.title}
                 </p>
-                <p className="mt-4 max-w-[30ch] text-base leading-7 text-muted-foreground">
+                <p className="mt-3 max-w-[30ch] text-sm leading-6 text-muted-foreground sm:mt-4 sm:text-base sm:leading-7">
                   {item.description}
                 </p>
               </div>
 
-              <div className="relative mt-auto pt-8">
+              <div className="relative mt-auto pt-6 md:pt-8">
 
                 <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-foreground">
                   Explore
@@ -167,23 +167,23 @@ export function PagesShowcaseSection({
         })}
       </div>
 
-      <div className="grid gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-4">
         {stats.map((stat) => {
           const Icon = stat.icon;
 
           return (
             <div
               key={stat.label}
-              className="flex items-center gap-4 bg-background/92 px-5 py-5"
+              className="flex items-center gap-3 bg-background/92 px-3 py-4 sm:gap-4 sm:px-5 sm:py-5"
             >
-              <span className="flex size-10 items-center justify-center rounded-lg border border-[color-mix(in_srgb,var(--brand-hover)_24%,transparent)] bg-[color-mix(in_srgb,var(--brand)_10%,transparent)] text-brand-hover">
-                <Icon className="size-5" />
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-[color-mix(in_srgb,var(--brand-hover)_24%,transparent)] bg-[color-mix(in_srgb,var(--brand)_10%,transparent)] text-brand-hover sm:size-10">
+                <Icon className="size-4 sm:size-5" />
               </span>
               <div>
-                <p className="text-3xl font-semibold tracking-tight text-foreground">
+                <p className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
                   {stat.value}
                 </p>
-                <p className="text-sm text-muted-foreground">{stat.label}</p>
+                <p className="text-xs text-muted-foreground sm:text-sm">{stat.label}</p>
               </div>
             </div>
           );
