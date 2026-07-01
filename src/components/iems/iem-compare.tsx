@@ -1,5 +1,6 @@
 "use client";
 
+import { useCallback, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -49,21 +50,32 @@ export function IemCompare({ iems }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const fallbackLeft = iems[0]?.slug ?? "";
-  const fallbackRight = iems.find((iem) => iem.slug !== fallbackLeft)?.slug ?? fallbackLeft;
-  const leftSlug = getValidSlug(searchParams.get("left"), iems) ?? fallbackLeft;
-  const rightSlug =
-    getValidSlug(searchParams.get("right"), iems.filter((iem) => iem.slug !== leftSlug)) ??
-    fallbackRight;
+  const requestedLeft = searchParams.get("left");
+  const requestedRight = searchParams.get("right");
+  const { leftSlug, rightSlug } = getValidComparePair({
+    iems,
+    requestedLeft,
+    requestedRight,
+  });
   const left = iems.find((iem) => iem.slug === leftSlug) ?? iems[0];
   const right = iems.find((iem) => iem.slug === rightSlug && iem.slug !== leftSlug) ?? iems[1];
 
-  const replacePair = (nextLeft: string, nextRight: string) => {
+  const replacePair = useCallback((nextLeft: string, nextRight: string) => {
     const params = new URLSearchParams();
     params.set("left", nextLeft);
     params.set("right", nextRight);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  };
+  }, [pathname, router]);
+
+  useEffect(() => {
+    if (!leftSlug || !rightSlug) {
+      return;
+    }
+
+    if (requestedLeft !== leftSlug || requestedRight !== rightSlug) {
+      replacePair(leftSlug, rightSlug);
+    }
+  }, [leftSlug, replacePair, requestedLeft, requestedRight, rightSlug]);
 
   const handleLeftChange = (nextLeft: string) => {
     const nextRight =
@@ -845,4 +857,24 @@ function getValidSlug(slug: string | null, iems: Iem[]) {
   }
 
   return iems.some((iem) => iem.slug === slug) ? slug : null;
+}
+
+function getValidComparePair({
+  iems,
+  requestedLeft,
+  requestedRight,
+}: {
+  iems: Iem[];
+  requestedLeft: string | null;
+  requestedRight: string | null;
+}) {
+  const fallbackLeft = iems[0]?.slug ?? "";
+  const leftSlug = getValidSlug(requestedLeft, iems) ?? fallbackLeft;
+  const rightOptions = iems.filter((iem) => iem.slug !== leftSlug);
+  const rightSlug =
+    getValidSlug(requestedRight, rightOptions) ??
+    rightOptions[0]?.slug ??
+    leftSlug;
+
+  return { leftSlug, rightSlug };
 }
