@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BarChart3, Flame, Star, Zap } from "lucide-react";
+import { ArrowRight, BarChart3, Flame, GitCompareArrows, Grid2X2, Star, Zap } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { IconTooltip } from "@/components/ui/tooltip";
@@ -20,27 +20,71 @@ export function PopularComparisonsSection({ comparisons }: Props) {
                     <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-hover)] sm:text-xs sm:tracking-[0.36em]">
                         Popular comparisons
                     </p>
-                    <h2 className="mt-3 max-w-4xl text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:mt-4 md:text-5xl">
-                        See how top mousepads{" "}
-                        <span className="text-[color:var(--brand-hover)]">
-                            stack up.
+                    <h2 className="mt-3 max-w-4xl text-2xl font-semibold leading-tight tracking-tight sm:text-4xl md:mt-4 md:text-5xl">
+                        <span className="sm:hidden">Popular matchups.</span>
+                        <span className="hidden sm:inline">
+                            See how top mousepads{" "}
+                            <span className="text-[color:var(--brand-hover)]">stack up.</span>
                         </span>
                     </h2>
-                    <p className="mt-3 text-sm text-muted-foreground sm:text-base">
+                    <p className="mt-3 hidden text-sm text-muted-foreground sm:block sm:text-base">
                         Real data. Side by side.
                     </p>
                 </div>
 
                 <Link
                     href="/mousepads/compare"
-                    className="group inline-flex w-fit items-center gap-2 text-sm font-semibold text-[color:var(--brand-hover)] transition-colors hover:text-foreground"
+                    className="group hidden w-fit items-center gap-2 text-sm font-semibold text-[color:var(--brand-hover)] transition-colors hover:text-foreground sm:inline-flex"
                 >
                     View all comparisons
                     <ArrowRight className="size-4 transition-transform" />
                 </Link>
             </div>
 
-            <div className="grid gap-4 lg:grid-cols-3">
+            <div className="grid grid-cols-2 gap-px overflow-hidden border border-white/8 bg-white/8 sm:hidden">
+                {comparisons.slice(0, 3).map((comparison) => (
+                    <Link
+                        key={comparison.slug}
+                        href={`/mousepads/compare/${comparison.slug}`}
+                        className="group flex min-h-40 min-w-0 flex-col bg-[#0d0d11] p-4"
+                    >
+                        <span className="w-fit rounded-full border border-brand-hover/30 px-2 py-1 text-[9px] font-semibold text-brand-hover">
+                            VS
+                        </span>
+                        <div className="mt-auto space-y-1">
+                            <p className="truncate text-sm font-semibold">{comparison.leftName}</p>
+                            <p className="truncate text-sm font-semibold text-white/55">{comparison.rightName}</p>
+                        </div>
+                    </Link>
+                ))}
+                {comparisons.length < 2 ? (
+                    <Link
+                        href="/mousepads"
+                        className="flex min-h-40 flex-col justify-between bg-[#17131f] p-4 text-white"
+                    >
+                        <Grid2X2 className="ml-auto size-5 text-brand-hover" />
+                        <span className="max-w-[8ch] text-base font-semibold leading-tight">Browse pads</span>
+                    </Link>
+                ) : null}
+                {comparisons.length < 3 ? (
+                    <Link
+                        href="/mousepads/compare/universal"
+                        className="flex min-h-40 flex-col justify-between bg-[#17131f] p-4 text-white"
+                    >
+                        <GitCompareArrows className="ml-auto size-5 text-brand-hover" />
+                        <span className="max-w-[8ch] text-base font-semibold leading-tight">Build a matchup</span>
+                    </Link>
+                ) : null}
+                <Link
+                    href="/mousepads/compare"
+                    className="flex min-h-40 flex-col justify-between bg-brand p-4 text-white"
+                >
+                    <ArrowRight className="ml-auto size-5" />
+                    <span className="max-w-[8ch] text-base font-semibold leading-tight">View all comparisons</span>
+                </Link>
+            </div>
+
+            <div className="hidden gap-4 sm:grid lg:grid-cols-3">
                 {comparisons.map((comparison, index) => (
                     <ComparisonCard
                         key={comparison.slug}

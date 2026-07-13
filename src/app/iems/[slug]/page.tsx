@@ -99,6 +99,16 @@ export default async function IemPage({ params }: Props) {
                         iem.buying.availability,
                     ),
                     category: "gaming IEM",
+                    review: {
+                        name: `${fullName} review`,
+                        body: iem.officialReview.verdict,
+                        author: "FragBasic Review Team",
+                        datePublished: iem.updatedAt,
+                        rating: iem.ratings.fragbasic,
+                        bestRating: 10,
+                        positiveNotes: iem.pros,
+                        negativeNotes: iem.cons,
+                    },
                 })}
             />
             <section className="border-b border-border bg-[radial-gradient(circle_at_78%_18%,color-mix(in_srgb,var(--iem-glow)_12%,transparent),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0))]">

@@ -7,7 +7,7 @@ import { LatestAddedIemsSection } from "@/features/landing/latest-added-iems-sec
 import { LatestAddedSection } from "@/features/landing/latest-added-section";
 import { PagesShowcaseSection } from "@/features/landing/pages-showcase-section";
 import { PopularComparisonsSection } from "@/features/landing/popular-comparisons-section";
-import { IemsTeaseSection } from "@/features/landing/iems-tease-section";
+import { MethodologySection } from "@/features/landing/methodology-section";
 import type { LandingProps } from "@/features/landing/types";
 import { WhySection } from "@/features/landing/why-section";
 
@@ -21,12 +21,17 @@ export function HomeExperience({
   latestAddedIems,
 }: LandingProps) {
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen overflow-hidden bg-background text-foreground">
       <RevealSection hero>
-        <HeroSection mousepadCount={mousepadCount} />
+        <HeroSection
+          mousepadCount={mousepadCount}
+          glasspadCount={glasspadCount}
+          iemCount={iemCount}
+          bestPageCount={bestPageCount}
+        />
       </RevealSection>
 
-      <div className="w-full space-y-12 px-4 py-10 sm:px-5 md:space-y-18 md:px-6 md:py-14 lg:px-8 xl:px-10">
+      <div className="w-full space-y-10 px-4 py-10 sm:space-y-20 sm:px-5 sm:py-16 md:space-y-28 md:px-6 md:py-24 lg:px-8">
         <RevealSection delay={0.08}>
           <PagesShowcaseSection
             mousepadCount={mousepadCount}
@@ -34,6 +39,9 @@ export function HomeExperience({
             iemCount={iemCount}
             bestPageCount={bestPageCount}
           />
+        </RevealSection>
+        <RevealSection>
+          <MethodologySection />
         </RevealSection>
         {latestAdded && latestAdded.length > 0 ? (
           <RevealSection delay={0.11}>
@@ -45,14 +53,11 @@ export function HomeExperience({
             <LatestAddedIemsSection iems={latestAddedIems} />
           </RevealSection>
         ) : null}
-        <RevealSection delay={0.14}>
+        <RevealSection>
           <PopularComparisonsSection comparisons={comparisons} />
         </RevealSection>
-        <RevealSection delay={0.26}>
+        <RevealSection>
           <WhySection />
-        </RevealSection>
-        <RevealSection delay={0.32}>
-          <IemsTeaseSection />
         </RevealSection>
       </div>
     </main>
@@ -78,7 +83,7 @@ function RevealSection({
     <motion.div
       initial={{ opacity: 0, y: hero ? -8 : 18 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: hero ? 0.35 : 0.2 }}
+      viewport={{ once: true, amount: hero ? 0.35 : 0.16 }}
       transition={{
         duration: hero ? 0.55 : 0.72,
         delay,

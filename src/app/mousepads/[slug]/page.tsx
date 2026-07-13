@@ -98,6 +98,13 @@ export default async function MousepadPage({ params }: PageProps) {
           price: pad.price.inr,
           availability: getSchemaAvailability(pad.availability.india),
           category: `${formatValue(pad.category)} mousepad`,
+          review: {
+            name: `${pad.brand} ${pad.name} review`,
+            body: productDescription,
+            author: "FragBasic Review Team",
+            positiveNotes: pad.communityConsensus.strengths,
+            negativeNotes: pad.communityConsensus.weaknesses,
+          },
         })}
       />
       <section className="border-b border-border bg-background">

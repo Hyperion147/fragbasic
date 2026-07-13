@@ -1,14 +1,11 @@
 import Link from "next/link";
 import {
-  ArrowRight,
+  ArrowUpRight,
   Boxes,
   Headphones,
   Sparkles,
   SquareStack,
 } from "lucide-react";
-
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 
 type Props = {
   mousepadCount: number;
@@ -18,50 +15,50 @@ type Props = {
 };
 
 type Destination = {
-  title: "Mousepads" | "Glasspads" | "IEMs" | "Best";
+  title: string;
+  eyebrow: string;
   href: string;
   description: string;
   statLabel: string;
   icon: typeof Boxes;
-  accent: string;
 };
 
 const destinations: readonly Destination[] = [
   {
     title: "Mousepads",
+    eyebrow: "Find your surface",
     href: "/mousepads",
     description:
-      "Browse the full cloth-pad database and narrow the field by feel, game fit, and brand.",
-    statLabel: "Tracked pads",
+      "Filter the full cloth-pad database by real glide, stopping power, texture, game fit, and availability.",
+    statLabel: "pads mapped",
     icon: Boxes,
-    accent: "from-white/6 to-transparent",
   },
   {
     title: "Glasspads",
+    eyebrow: "Explore pure speed",
     href: "/mousepads/glasspads",
     description:
-      "Go straight to the hard-surface lineup when speed, cleanliness, and climate stability matter.",
-    statLabel: "Dedicated lineup",
+      "Compare hard surfaces where speed, consistency, finish, and climate stability matter most.",
+    statLabel: "glass surfaces",
     icon: SquareStack,
-    accent: "from-[color:color-mix(in_srgb,var(--brand)_18%,transparent)] to-transparent",
   },
   {
     title: "IEMs",
+    eyebrow: "Hear the difference",
     href: "/iems",
     description:
-      "Browse in-ear monitors by tuning, imaging, comfort, and FPS audio fit.",
-    statLabel: "Audio picks",
+      "Research in-ear monitors through imaging, clarity, tuning, comfort, and competitive FPS performance.",
+    statLabel: "audio picks",
     icon: Headphones,
-    accent: "from-[color:color-mix(in_srgb,var(--brand)_14%,transparent)] to-transparent",
   },
   {
-    title: "Best",
+    title: "Best lists",
+    eyebrow: "Skip to the shortlist",
     href: "/best",
     description:
-      "Use curated shortlists for control, speed, tac FPS, glass, and humid-room consistency.",
-    statLabel: "Guide routes",
+      "Start with focused picks for control, speed, tactical FPS, glass, and difficult room conditions.",
+    statLabel: "expert guides",
     icon: Sparkles,
-    accent: "from-white/6 to-transparent",
   },
 ] as const;
 
@@ -71,121 +68,60 @@ export function PagesShowcaseSection({
   iemCount,
   bestPageCount,
 }: Props) {
-  const stats = [
-    {
-      label: "Mousepads",
-      value: mousepadCount.toString(),
-      icon: Boxes,
-    },
-    {
-      label: "Glasspads",
-      value: glasspadCount.toString(),
-      icon: SquareStack,
-    },
-    {
-      label: "IEMs",
-      value: iemCount.toString(),
-      icon: Headphones,
-    },
-    {
-      label: "Best guides",
-      value: bestPageCount.toString(),
-      icon: Sparkles,
-    },
-  ];
+  const values = [mousepadCount, glasspadCount, iemCount, bestPageCount];
 
   return (
-    <section className="space-y-5 md:space-y-6">
-      <div className="mb-6 max-w-4xl text-start md:mb-8">
-        <Badge
-          variant="outline"
-          className="rounded-md px-3 py-1 uppercase tracking-[0.14em] text-[10px] text-brand-hover sm:text-[11px] sm:tracking-[0.18em]"
-        >
-          Core pages
-        </Badge>
-        <h2 className="mt-4 text-balance text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:mt-5 md:text-5xl">
-          Start where the question starts.
-        </h2>
-      </div>
+    <section className="landing-noise relative isolate overflow-hidden border-y border-white/8 bg-[#0b0b0f]">
+      <div className="landing-hero-lines absolute inset-0 -z-10 opacity-20" />
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:gap-4 xl:grid-cols-4">
-        {destinations.map((item) => {
+      <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-4">
+        {destinations.map((item, index) => {
           const Icon = item.icon;
-          const value =
-            item.title === "Mousepads"
-              ? mousepadCount
-              : item.title === "Glasspads"
-                ? glasspadCount
-                : item.title === "IEMs"
-                  ? iemCount
-                  : bestPageCount;
 
           return (
             <Link
               key={item.title}
               href={item.href}
-              className="group relative flex min-h-72 flex-col overflow-hidden rounded-lg bg-card/70 p-4 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_4%,transparent)] transition-colors hover:shadow-[inset_0_1px_0_color-mix(in_srgb,var(--brand-hover)_18%,transparent),0_0_24px_color-mix(in_srgb,var(--brand-glow)_10%,transparent)] sm:p-5 lg:p-6"
+              className="group relative flex min-h-52 flex-col overflow-hidden border-b border-white/8 p-4 transition-colors duration-500 odd:border-r hover:bg-[color:color-mix(in_srgb,var(--brand)_9%,transparent)] sm:min-h-[25rem] sm:p-8 xl:min-h-[31rem] xl:border-b-0 xl:border-r xl:p-10 xl:last:border-r-0"
             >
-              <div
-                className={cn(
-                  "pointer-events-none absolute inset-0 bg-linear-to-b opacity-90",
-                  item.accent,
-                )}
-              />
+              <div className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-brand-hover transition-transform duration-500 group-hover:scale-x-100" />
+              <div className="absolute -right-20 -top-20 size-56 rounded-full bg-brand/0 blur-[70px] transition-colors duration-500 group-hover:bg-brand/16" />
+
               <div className="relative flex items-start justify-between gap-4">
-                <span className="flex size-11 items-center justify-center rounded-lg border border-[color-mix(in_srgb,var(--brand-hover)_28%,transparent)] bg-[color-mix(in_srgb,var(--brand)_10%,transparent)] text-brand-hover">
-                  <Icon className="size-5" />
+                <span className="flex size-9 items-center justify-center rounded-full border border-white/10 bg-white/[.025] text-white/55 transition-all duration-500 group-hover:border-brand-hover/30 group-hover:bg-brand/12 group-hover:text-brand-hover sm:size-12">
+                  <Icon className="size-4 sm:size-5" />
                 </span>
-                <div className="text-right">
-                  <p className="text-2xl font-semibold leading-none tracking-tight text-foreground sm:text-3xl">
-                    {value}
-                  </p>
-                  <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground sm:text-xs sm:tracking-[0.16em]">
-                    {item.statLabel}
-                  </p>
-                </div>
+                <span className="font-mono text-[10px] text-white/24 sm:text-xs">
+                  0{index + 1} / 04
+                </span>
               </div>
 
-              <div className="relative mt-6 md:mt-7">
-                <p className="text-2xl font-semibold leading-tight tracking-tight text-foreground sm:text-3xl">
-                  {item.title}
+              <div className="relative mt-8 sm:mt-16 xl:mt-24">
+                <p className="hidden text-[10px] font-medium uppercase text-brand-hover sm:block sm:text-xs">
+                  {item.eyebrow}
                 </p>
-                <p className="mt-3 max-w-[32ch] text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
+                <h3 className="text-lg font-semibold tracking-[-.04em] text-white sm:mt-3 sm:text-4xl">
+                  {item.title}
+                </h3>
+                <p className="mt-4 hidden max-w-sm text-sm leading-6 text-white/45 sm:block sm:text-base sm:leading-7">
                   {item.description}
                 </p>
               </div>
 
-              <div className="relative mt-auto pt-6">
-
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-foreground">
-                  Explore
-                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+              <div className="relative mt-auto flex items-end justify-between gap-3 pt-5 sm:gap-5 sm:pt-12">
+                <div>
+                  <p className="text-2xl font-semibold leading-none tracking-[-.055em] text-white sm:text-5xl">
+                    {values[index]}
+                  </p>
+                  <p className="mt-2 hidden text-[10px] font-medium uppercase text-white/32 sm:block sm:text-xs">
+                    {item.statLabel}
+                  </p>
+                </div>
+                <span className="flex size-8 items-center justify-center rounded-full border border-white/10 text-white transition-all duration-300 group-hover:border-white group-hover:bg-white group-hover:text-black sm:size-11">
+                  <ArrowUpRight className="size-4" />
                 </span>
               </div>
             </Link>
-          );
-        })}
-      </div>
-
-      <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-border/70 md:grid-cols-4">
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-
-          return (
-            <div
-              key={stat.label}
-              className="flex items-center gap-3 bg-background/92 px-3 py-4 sm:gap-4 sm:px-5 sm:py-5"
-            >
-              <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-[color-mix(in_srgb,var(--brand-hover)_24%,transparent)] bg-[color-mix(in_srgb,var(--brand)_10%,transparent)] text-brand-hover sm:size-10">
-                <Icon className="size-4 sm:size-5" />
-              </span>
-              <div>
-                <p className="text-2xl font-semibold leading-none tracking-tight text-foreground sm:text-3xl">
-                  {stat.value}
-                </p>
-                <p className="text-xs text-muted-foreground sm:text-sm">{stat.label}</p>
-              </div>
-            </div>
           );
         })}
       </div>

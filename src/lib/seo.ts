@@ -225,6 +225,7 @@ export function buildProductJsonLd({
   priceCurrency = "INR",
   availability,
   category,
+  review,
 }: {
   name: string;
   description: string;
@@ -235,7 +236,20 @@ export function buildProductJsonLd({
   priceCurrency?: string;
   availability?: string;
   category: string;
+  review: {
+    name: string;
+    body: string;
+    author: string;
+    datePublished?: string;
+    rating?: number;
+    bestRating?: number;
+    positiveNotes?: string[];
+    negativeNotes?: string[];
+  };
 }) {
+  const hasValidPrice =
+    typeof price === "number" && Number.isFinite(price) && price > 0;
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -248,17 +262,58 @@ export function buildProductJsonLd({
       "@type": "Brand",
       name: brand,
     },
-    offers:
-      price || availability
-        ? {
-            "@type": "Offer",
-            price,
-            priceCurrency,
-            availability: availability
-              ? `https://schema.org/${availability}`
-              : undefined,
-            url: getAbsoluteUrl(path),
-          }
-        : undefined,
+    review: {
+      "@type": "Review",
+      name: review.name,
+      reviewBody: review.body,
+      author: {
+        "@type": "Team",
+        name: review.author,
+      },
+      publisher: {
+        "@type": "Organization",
+        name: siteName,
+        url: siteUrl,
+      },
+      datePublished: review.datePublished,
+      reviewRating:
+        typeof review.rating === "number"
+          ? {
+              "@type": "Rating",
+              ratingValue: review.rating,
+              bestRating: review.bestRating ?? 10,
+              worstRating: 1,
+            }
+          : undefined,
+      positiveNotes: buildReviewNotes(review.positiveNotes),
+      negativeNotes: buildReviewNotes(review.negativeNotes),
+    },
+    offers: hasValidPrice
+      ? {
+          "@type": "Offer",
+          price,
+          priceCurrency,
+          availability: availability
+            ? `https://schema.org/${availability}`
+            : undefined,
+          url: getAbsoluteUrl(path),
+          itemCondition: "https://schema.org/NewCondition",
+        }
+      : undefined,
+  };
+}
+
+function buildReviewNotes(notes?: string[]) {
+  if (!notes?.length) {
+    return undefined;
+  }
+
+  return {
+    "@type": "ItemList",
+    itemListElement: notes.map((note, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: note,
+    })),
   };
 }

@@ -1,147 +1,91 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
-import type { ReactNode } from "react";
+import { ArrowUpRight } from "lucide-react";
 
-import RectTipComp from "./ui/rect-tip";
-
-const primaryLinks = [
-    { label: "All Mousepads", href: "/mousepads" },
-    { label: "IEMs", href: "/iems" },
-    { label: "Compare", href: "/mousepads/compare" },
-    { label: "Universal Compare", href: "/mousepads/compare/universal" },
-] as const;
-
-const browseLinks = [
-    { label: "Glasspads", href: "/mousepads/glasspads" },
-    { label: "Control", href: "/mousepads?category=control" },
-    { label: "Balanced", href: "/mousepads?category=balanced-control" },
-    { label: "Speed", href: "/mousepads?category=speed" },
+const footerGroups = [
+    {
+        title: "Explore",
+        links: [
+            { label: "All mousepads", href: "/mousepads" },
+            { label: "Glasspads", href: "/mousepads/glasspads" },
+            { label: "IEMs", href: "/iems" },
+            { label: "Mouse skates", href: "/accessories/mouse-skates" },
+        ],
+    },
+    {
+        title: "Research",
+        links: [
+            {
+                label: "Universal compare",
+                href: "/mousepads/compare/universal",
+            },
+            { label: "Popular comparisons", href: "/mousepads/compare" },
+            { label: "Compare IEMs", href: "/iems/compare" },
+            { label: "Best gear lists", href: "/best" },
+        ],
+    },
+    {
+        title: "Community",
+        links: [
+            {
+                label: "Submit a review",
+                href: "https://forms.gle/5b1QejGptx63eQHw9",
+            },
+            { label: "Follow on X", href: "https://x.com/suryansu87" },
+        ],
+    },
 ] as const;
 
 export function SiteFooter() {
-    const reduceMotion = useReducedMotion();
 
     return (
-        <footer className="mt-20 w-full bg-background">
-            <div className="w-full px-4 py-10 md:px-8 lg:px-12">
-                <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
-                    <FooterReveal delay={0.08} reduceMotion={reduceMotion}>
-                        <div className="space-y-6">
-                            <Link href="/" className="group block">
-                                <Image
-                                    src="/footer.png"
-                                    alt="Fragbasic"
-                                    width={1695}
-                                    height={449}
-                                    className="h-auto w-full max-w-[280px] invert transition-opacity group-hover:opacity-88"
-                                />
-                            </Link>
-
-                            <div className="max-w-2xl space-y-4">
-                                <p className="text-sm leading-7 text-muted-foreground sm:text-base">
-                                    Browse mousepad data, compare matchups, and
-                                    narrow down the gear that actually fits how
-                                    you play.
-                                </p>
-                            </div>
-                        </div>
-                    </FooterReveal>
-
-                    <FooterReveal delay={0.16} reduceMotion={reduceMotion}>
-                        <div className="grid gap-8 sm:grid-cols-2">
-                            <FooterLinkGroup
-                                title="Explore"
-                                links={primaryLinks}
-                            />
-                            <FooterLinkGroup
-                                title="Browse"
-                                links={browseLinks}
-                            />
-                        </div>
-                    </FooterReveal>
-                </div>
-
-                <FooterReveal delay={0.22} reduceMotion={reduceMotion}>
-                    <div className="mt-12 mr-12 lg:mr-40 flex flex-col gap-3 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between font-heading">
-                        <p>
-                            FRAGBASIC.FUN helps players research mousepads
-                            faster.
-                        </p>
-                        <div className="flex flex-wrap items-center gap-4">
-                            <Link href="https://forms.gle/5b1QejGptx63eQHw9">
-                                Submit Review
-                            </Link>
-                            <RectTipComp
-                                heading="@x.com/suryansu87"
-                                description="Drop a follow!"
-                                photo="/profile.jpg"
-                                width="w-48"
-                                link="https://x.com/suryansu87"
-                                className="text-xs font-medium bg-background"
-                            />
-                        </div>
-                    </div>
-                </FooterReveal>
-            </div>
-        </footer>
-    );
-}
-
-function FooterReveal({
-    children,
-    delay = 0,
-    reduceMotion,
-}: {
-    children: ReactNode;
-    delay?: number;
-    reduceMotion: boolean | null;
-}) {
-    if (reduceMotion) {
-        return <>{children}</>;
-    }
-
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: -12, filter: "blur(14px)" }}
-            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{
-                duration: 1,
-                delay,
-                ease: [0.22, 1, 0.36, 1],
-            }}
-        >
-            {children}
-        </motion.div>
-    );
-}
-
-function FooterLinkGroup({
-    title,
-    links,
-}: {
-    title: string;
-    links: ReadonlyArray<{ label: string; href: string }>;
-}) {
-    return (
-        <section>
-            <p className="compact-label">
-                {title}
-            </p>
-            <div className="mt-4 space-y-3">
-                {links.map((link) => (
-                    <Link
-                        key={link.href}
-                        href={link.href}
-                        className="block text-sm text-foreground/88 transition-opacity hover:opacity-70"
+        <footer className="landing-noise relative isolate overflow-hidden border-y border-white/8 bg-[#08080b] text-white">
+            <div className="grid border-y border-white/8 sm:grid-cols-3 lg:border-l lg:border-t-0 px-6">
+                {footerGroups.map((group) => (
+                    <section
+                        key={group.title}
+                        className="border-b border-white/8 p-5 last:border-b-0 sm:border-b-0 sm:border-r sm:p-7 sm:last:border-r-0 lg:p-9"
                     >
-                        {link.label}
-                    </Link>
+                        <p className="text-[10px] font-semibold uppercase text-white/32 sm:text-xs">
+                            {group.title}
+                        </p>
+                        <nav className="mt-6 space-y-4">
+                            {group.links.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className="group flex items-center justify-between gap-3 text-sm text-white/66 transition-colors hover:text-white sm:text-[15px]"
+                                >
+                                    {link.label}
+                                    <ArrowUpRight className="size-3.5 -translate-x-1 translate-y-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
+                                </Link>
+                            ))}
+                        </nav>
+                    </section>
                 ))}
             </div>
-        </section>
+
+            <div className="flex flex-col gap-4 px-5 py-6 text-xs text-white/32 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12 xl:px-16">
+                <p>© 2026 FragBasic. Independent FPS gear research.</p>
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+                    <span>No sponsored rankings</span>
+                    <span>Built in India</span>
+                    <Link
+                        href="/sitemap.xml"
+                        className="transition-colors hover:text-white"
+                    >
+                        Sitemap
+                    </Link>
+                </div>
+            </div>
+
+            <p
+                aria-hidden="true"
+                className="select-none overflow-hidden border-t border-white/8 px-3 pb-2 pt-4 text-center text-[clamp(4.5rem,14.4vw,17rem)] font-semibold leading-[.72] tracking-[-.085em] text-white/[.035]"
+            >
+                FRAGBASIC
+            </p>
+        </footer>
     );
 }

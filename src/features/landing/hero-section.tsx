@@ -1,102 +1,162 @@
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, CheckCircle2, CircleDot, Crosshair } from "lucide-react";
+"use client";
 
-import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Check, Database, ScanSearch } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
+
 import { Button } from "@/components/ui/button";
-import { IconTooltip } from "@/components/ui/tooltip";
 
 type Props = {
-  mousepadCount: number;
+    mousepadCount: number;
+    glasspadCount: number;
+    iemCount: number;
+    bestPageCount: number;
 };
 
-export function HeroSection({ mousepadCount }: Props) {
-  return (
-    <section className="relative min-h-[calc(100svh-4rem)] overflow-hidden bg-background shadow-[inset_0_-1px_0_color-mix(in_srgb,var(--foreground)_6%,transparent)]">
-      <div className="relative z-10 grid min-h-[calc(100svh-4rem)] w-full gap-8 md:grid-cols-[0.9fr_1.1fr] md:gap-10">
-        <div className="flex flex-col justify-center px-4 py-12 sm:px-6 md:ml-10 md:px-6 md:py-0 lg:ml-20 lg:px-8">
-          <Badge
-            variant="outline"
-            className="w-fit gap-2 rounded-md bg-background/60 px-3 py-2 text-[10px] uppercase tracking-[0.14em] text-brand-hover sm:text-[11px] sm:tracking-[0.16em]"
-          >
-            <span className="size-2 rounded-full bg-[color:var(--brand)]" />
-            Competitive gaming gear database
-          </Badge>
+const ease = [0.22, 1, 0.36, 1] as const;
 
-          <h1 className="mt-6 max-w-3xl text-4xl font-semibold leading-[1.02] tracking-tight text-foreground sm:text-5xl md:mt-7 md:text-6xl lg:text-7xl">
-            Find the gear that matches how you play.
-          </h1>
+export function HeroSection({}: Props) {
+    const reduceMotion = useReducedMotion();
 
-          <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground md:mt-6 md:text-lg md:leading-8">
-            In-depth data. Real-world experience. No fluff. Just gear that
-            fits.
-          </p>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-9">
-            <IconTooltip label="Build a side-by-side mousepad comparison from the database.">
-              <Button size="lg" asChild className="w-full sm:w-auto">
-                <Link href="/mousepads/compare/universal">
-                  Compare Gear
-                  <ArrowRight className="size-4" />
-                </Link>
-              </Button>
-            </IconTooltip>
-            <IconTooltip label="Open the full mousepad browser with filters for feel, surface, and availability.">
-              <Button size="lg" variant="outline" asChild className="w-full sm:w-auto">
-                <Link href="/mousepads">Browse Mousepads</Link>
-              </Button>
-            </IconTooltip>
-          </div>
-
-          <div className="mt-8 grid max-w-2xl gap-2.5 text-sm text-muted-foreground sm:grid-cols-3 md:mt-10">
-            <Metric
-              icon={CheckCircle2}
-              label={`${mousepadCount} mousepads`}
-              tooltip="Tracked mousepads with surface, feel, availability, and use-case data."
+    return (
+        <section className="landing-noise relative isolate overflow-hidden border-b border-white/8 bg-[#09090c] lg:min-h-[calc(100svh-4rem)]">
+            <motion.div
+                initial={reduceMotion ? false : { opacity: 0, scale: 1.025 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.15, ease }}
+                className="absolute inset-0 z-0 hidden lg:block"
+            >
+                <Image
+                    src="/hero-bg.png"
+                    alt=""
+                    fill
+                    priority
+                    sizes="100vw"
+                    className="object-cover object-[90%_center]"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,11,.98)_0%,rgba(8,8,11,.92)_28%,rgba(8,8,11,.46)_51%,rgba(8,8,11,.08)_78%,rgba(8,8,11,.2)_100%),linear-gradient(0deg,rgba(8,8,11,.72)_0%,transparent_38%,rgba(8,8,11,.12)_100%)]" />
+            </motion.div>
+            <motion.div
+                aria-hidden="true"
+                animate={
+                    reduceMotion
+                        ? undefined
+                        : { x: [0, 26, 0], y: [0, -18, 0], scale: [1, 1.05, 1] }
+                }
+                transition={{
+                    duration: 16,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                }}
+                className="absolute -right-24 top-[8%] -z-20 hidden size-[48rem] rounded-full bg-brand/18 blur-[150px] lg:block"
             />
-            <Metric
-              icon={CircleDot}
-              label="Product-first browsing"
-              tooltip="Browse actual products and tables first, not marketing copy."
-            />
-            <Metric
-              icon={Crosshair}
-              label="Community + personal data"
-              tooltip="Notes combine personal testing, community consensus, and source links."
-            />
-          </div>
-        </div>
+            <div className="landing-hero-lines absolute inset-0 -z-10 opacity-40" />
 
-        <div className="relative min-h-[260px] overflow-hidden sm:min-h-[340px] md:min-h-full">
-          <Image
-            src="/hero-bg.png"
-            alt="hero background"
-            fill
-            sizes="(max-width: 768px) 100vw, 54vw"
-            loading="eager"
-            className="object-cover object-center md:object-contain md:object-right"
-          />
-        </div>
-      </div>
-    </section>
-  );
+            <div className="relative z-10 mx-auto flex flex-col px-5 sm:px-8 lg:min-h-[calc(100svh-4rem)] lg:px-12 xl:px-16">
+                <div className="grid flex-1 items-center gap-0 pb-0 pt-6 sm:gap-4 sm:pb-8 sm:pt-10 lg:grid-cols-[.9fr_1.1fr] lg:gap-8 lg:pb-4 lg:pt-8 xl:grid-cols-[.82fr_1.18fr]">
+                    <div className="relative z-20 py-7 sm:py-10 lg:py-16">
+                        <motion.div
+                            initial={
+                                reduceMotion ? false : { opacity: 0, y: 16 }
+                            }
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.65, ease }}
+                            className="inline-flex items-center gap-2 rounded-full border border-brand-hover/30 bg-brand/10 px-3 py-1.5 text-[10px] font-semibold uppercase text-brand-hover backdrop-blur-sm sm:text-[11px]"
+                        >
+                            <span className="size-1.5 rounded-full bg-brand-hover shadow-[0_0_12px_var(--brand-glow)]" />
+                            Independent FPS gear intelligence
+                        </motion.div>
+
+                        <motion.h1
+                            initial={
+                                reduceMotion ? false : { opacity: 0, y: 28 }
+                            }
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.82, delay: 0.06, ease }}
+                            className="mt-6 max-w-[10ch] text-[clamp(3.15rem,15vw,5rem)] font-semibold leading-[.9] tracking-[-.065em] text-white sm:mt-7 lg:text-[clamp(3.75rem,7vw,7.8rem)]"
+                        >
+                            Gear that feels made for{" "}
+                            <span className="text-brand-hover">you.</span>
+                        </motion.h1>
+
+                        <motion.div
+                            initial={
+                                reduceMotion ? false : { opacity: 0, y: 18 }
+                            }
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.72, delay: 0.21, ease }}
+                            className="mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row"
+                        >
+                            <Button
+                                size="lg"
+                                asChild
+                                className="h-12 w-full rounded-full bg-white px-6 text-black shadow-[0_16px_55px_rgba(0,0,0,.32)] hover:bg-white/85 sm:w-auto"
+                            >
+                                <Link href="/mousepads/compare/universal">
+                                    Find my next pad
+                                    <ArrowRight className="size-4" />
+                                </Link>
+                            </Button>
+                            <Button
+                                size="lg"
+                                variant="outline"
+                                asChild
+                                className="h-12 w-full rounded-full border-white/14 bg-black/15 px-6 text-white backdrop-blur-md hover:bg-white/8 hover:text-white sm:w-auto"
+                            >
+                                <Link href="/mousepads">
+                                    <Database className="size-4" />
+                                    Explore the database
+                                </Link>
+                            </Button>
+                        </motion.div>
+
+                        <motion.div
+                            initial={reduceMotion ? false : { opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.7, delay: 0.3 }}
+                            className="mt-7 flex flex-col items-start gap-3 text-xs text-white/46 sm:mt-9 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:text-sm"
+                        >
+                            <Proof label="No sponsored rankings" />
+                            <Proof label="Community + hands-on data" />
+                        </motion.div>
+                    </div>
+
+                    <div className="relative z-10 hidden h-full min-h-[640px] lg:block">
+                        <motion.div
+                            initial={
+                                reduceMotion ? false : { opacity: 0, y: 16 }
+                            }
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.7, delay: 0.68, ease }}
+                            className="absolute right-0 top-5 hidden w-fit items-center gap-3 rounded-2xl border border-white/10 bg-black/35 px-4 py-3 text-xs text-white/70 shadow-2xl backdrop-blur-xl md:flex lg:right-40 lg:top-[4%]"
+                        >
+                            <span className="flex size-9 items-center justify-center rounded-full bg-brand/18 text-brand-hover">
+                                <ScanSearch className="size-4" />
+                            </span>
+                            <span>
+                                <span className="block font-semibold text-white">
+                                    Built to compare
+                                </span>
+                                <span className="mt-0.5 block text-white/42">
+                                    Feel, surface, fit, value
+                                </span>
+                            </span>
+                        </motion.div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
 }
 
-function Metric({
-  icon: Icon,
-  label,
-  tooltip,
-}: {
-  icon: typeof CheckCircle2;
-  label: string;
-  tooltip: string;
-}) {
-  return (
-    <IconTooltip label={tooltip}>
-      <span className="inline-flex min-h-11 cursor-help items-center gap-2 rounded-md bg-card/45 px-3 py-2 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_4%,transparent)]">
-        <Icon className="size-4 text-brand-hover" />
-        <span className="leading-5">{label}</span>
-      </span>
-    </IconTooltip>
-  );
+function Proof({ label }: { label: string }) {
+    return (
+        <span className="inline-flex items-center gap-2">
+            <span className="flex size-4 items-center justify-center rounded-full bg-brand/20 text-brand-hover">
+                <Check className="size-2.5" />
+            </span>
+            {label}
+        </span>
+    );
 }
