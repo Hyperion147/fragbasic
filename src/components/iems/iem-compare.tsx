@@ -434,7 +434,8 @@ function FrequencyOverlayChart({
           <circle key={`right-${point.hz}`} cx={frequencyX(point.hz, scale)} cy={frequencyY(point.db, scale)} r="2" fill={rightColor} />
         ))}
       </svg>
-      <div className="pointer-events-none absolute inset-x-3 bottom-3 grid grid-cols-6 gap-2">
+      </div>
+      <div className="pointer-events-none pb-4 px-24 grid grid-cols-6 gap-2">
         {bands.map((band) => (
           <CompareFrequencyBandCard
             key={band.label}
@@ -443,7 +444,6 @@ function FrequencyOverlayChart({
             rightLabel={rightLabel}
           />
         ))}
-      </div>
       </div>
     </div>
   );

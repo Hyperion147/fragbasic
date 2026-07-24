@@ -265,7 +265,7 @@ function MousepadTableRow({
             </div>
             <Link
               href={`/mousepads/${pad.slug}`}
-              className="mt-2.5 block truncate text-lg font-semibold leading-6 text-foreground hover:text-primary"
+              className="mt-2 block truncate text-lg font-semibold leading-6 text-foreground hover:text-primary"
             >
               {fullName}
             </Link>
