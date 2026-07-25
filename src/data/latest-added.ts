@@ -5,9 +5,9 @@ export const latestAddedMousepadSlugs = [
 ] as const;
 
 export const latestAddedGlasspadSlugs = [
-  "xraypad-nod-cr-x1",
-  "xraypad-nod-sp-x1",
-  "infinitymice-tora",
+  "dysphoria-maki",
+  "yuki-aim-monokuro",
+  "dysphoria-rin",
 ] as const;
 
 export const latestAddedIemSlugs = [
