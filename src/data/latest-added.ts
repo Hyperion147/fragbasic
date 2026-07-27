@@ -1,5 +1,5 @@
 export const latestAddedMousepadSlugs = [
-  "xraypad-origin-pro-cerberus-soft",
+  "glidex-nebula",
 ] as const;
 
 export const latestAddedGlasspadSlugs = [

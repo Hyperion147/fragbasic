@@ -249,6 +249,17 @@ export const relatedAlternativesBySlug: Record<
     moreControl: ["artisan-hayate-otsu-soft", "xraypad-aqua-control-ii"],
     moreSpeed: ["lgg-neptune-pro-soft", "artisan-raiden-soft"],
   },
+  "glidex-nebula": {
+    similarFeeling: [
+      "xraypad-aqua-control-plus",
+      "esptiger-wuxiang-pioneer",
+      "matrova-scarlet",
+    ],
+    moreControl: ["matrova-scarlet", "xraypad-aqua-control-zero"],
+    moreSpeed: ["esptiger-wuxiang-pioneer", "lgg-neptune-pro-soft"],
+    notes:
+      "Nebula sits as a smooth hybrid balanced-speed option with easy starts and modest stopping. AC+ and Wu Xiang are the closest hybrid peers; Scarlet/AC Zero add control; Neptune leans faster.",
+  },
   "zpad-v1-xl": {
     similarFeeling: [
       "tekkusai-singularity",

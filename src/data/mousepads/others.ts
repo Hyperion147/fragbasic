@@ -944,4 +944,158 @@ export const othersMousepads: Mousepad[] = [
       },
     ],
   },
+
+  // GlideX Nebula
+  {
+    id: "glidex-nebula",
+    slug: "glidex-nebula",
+
+    brand: "GlideX",
+    name: "Nebula",
+    series: "Nebula",
+
+    category: "balanced-speed",
+    surface: "hybrid",
+    base: "poron",
+    softness: "soft",
+
+    sizes: [
+      {
+        label: "L",
+        width: 470,
+        height: 390,
+        thickness: 4,
+        unit: "mm",
+      },
+    ],
+
+    visuals: {
+      defaultColorway: "nebula",
+      colorways: [
+        {
+          name: "Nebula",
+          slug: "nebula",
+          color: "#1a1630",
+          available: true,
+        },
+      ],
+    },
+
+    feel: {
+      speed: 6.6,
+      control: 5.2,
+      stoppingPower: 5.1,
+      staticFriction: 4.2,
+      dynamicFriction: 5.7,
+      microAdjustments: 7.1,
+      ratingConfidence: "community",
+    },
+
+    environment: {
+      humidityResistance: 8.0,
+      sweatResistance: 4.5,
+      dustHairResistance: 9.2,
+      washable: true,
+      notes:
+        "Treated hybrid surface is marketed as easier to keep clean than traditional cloth. Submitted testing rates dust/hair resistance extremely high and humidity well, but sweat can still slow the pad more than expected for a coated hybrid.",
+    },
+
+    texture: {
+      feel: "smooth",
+      skinComfort: 8.0,
+      sleeveFriendly: true,
+      noiseLevel: "quiet",
+    },
+
+    recommendedFor: {
+      games: ["apex", "overwatch", "valorant", "general-fps"],
+      aimStyles: ["hybrid", "tracking", "switching"],
+      sensitivity: ["low", "medium"],
+    },
+
+    avoidIf: [
+      "You need strong stopping power for tac FPS",
+      "You sweat heavily and want a pad that stays consistent when damp",
+      "You want a slow control or mud surface",
+      "You need multiple colorways or larger desk-pad sizes",
+    ],
+
+    price: {
+      inr: 2999,
+    },
+
+    availability: {
+      global: false,
+      india: "available",
+      stores: ["GlideX"],
+      notes:
+        "Sold direct via GlideX (getglidex.com) at about Rs. 2,999. India-focused brand; broader global retail is limited.",
+    },
+
+    images: {
+      main: "/mousepads/others/glidex-nebula.webp",
+    },
+
+    personal: {
+      owned: false,
+      tested: false,
+      notes:
+        "Added from Bluee_weeb's community submission (July 2026) and GlideX product copy. Official positioning is hybrid/speed with fast glide and balanced feedback on a plush 4mm Poron base. Raw submitted scores were lightly calibrated against dataset peers (Matrova Scarlet, Aqua Control Plus, ESPTiger Wu Xiang, LGG Neptune Firm) so control is not unrealistically low for a mid-speed hybrid, while keeping the reviewer's low sweat resistance and high dust resistance.",
+      pros: [
+        "Smooth hybrid glide with easy starts",
+        "Plush 4mm Poron base comfort",
+        "Strong dust/hair resistance and easy cleaning",
+        "Good humidity stability for the class",
+        "Competitive India pricing with local availability",
+      ],
+      cons: [
+        "Sweat can muddy the surface more than expected",
+        "Limited stopping power for pure tac FPS",
+        "Only one size and colorway so far",
+        "Thin long-term community data",
+        "Product image still needs to be added to the site assets",
+      ],
+    },
+
+    communityConsensus: {
+      summary:
+        "GlideX Nebula is an India-available hybrid speed-leaning pad on soft Poron. It aims at fast, smooth glide with moderate feedback rather than locked-in control. Early testing points to excellent debris resistance and easy sleeve use, with sweat consistency as the main weakness.",
+      commonComparisons: [
+        "Xraypad Aqua Control Plus",
+        "ESPTiger Wu Xiang",
+        "Matrova Scarlet",
+        "LGG Venus Pro",
+        "LGG Neptune Pro",
+      ],
+      strengths: [
+        "Smooth, free-starting hybrid surface",
+        "Comfortable soft Poron base",
+        "High dust and hair resistance",
+        "Solid humidity performance",
+        "Local India stock and fair price",
+      ],
+      weaknesses: [
+        "Weak sweat resistance relative to other hybrids",
+        "Modest control and stopping power",
+        "Limited size/colorway options",
+        "Early-stage brand with sparse long-term reviews",
+      ],
+    },
+
+    sources: [
+      {
+        label: "Bluee_weeb community review submitted July 2026",
+        type: "personal",
+      },
+      {
+        label: "Glide X Nebula official product page",
+        type: "official",
+        url: "https://getglidex.com/products/glidex-nebula/",
+      },
+      {
+        label: "GlideX Instagram product specs (470x390x4mm Poron)",
+        type: "review",
+      },
+    ],
+  },
 ];
