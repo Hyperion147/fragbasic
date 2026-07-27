@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { MetricCell } from "@/components/data-display";
+import { MousepadCard } from "@/components/mousepads/mousepad-card";
 import { MousepadFilters } from "@/components/mousepads/mousepad-filters";
 import {
   ALL_FILTER_VALUE,
@@ -123,6 +124,23 @@ export function MousepadBrowser({
     () => new Set(latestAddedSlugs),
     [latestAddedSlugs]
   );
+  const isDefaultBrowse =
+    !query.trim() &&
+    filters.brand === ALL_FILTER_VALUE &&
+    filters.category === ALL_FILTER_VALUE &&
+    filters.surface === ALL_FILTER_VALUE &&
+    filters.indiaAvailability === ALL_FILTER_VALUE &&
+    filters.sort === getDefaultMousepadFilters().sort;
+  const latestMousepads = useMemo(
+    () =>
+      latestAddedSlugs
+        .map((slug) => mousepads.find((pad) => pad.slug === slug))
+        .filter((pad): pad is Mousepad => Boolean(pad)),
+    [latestAddedSlugs, mousepads],
+  );
+  const tableMousepads = isDefaultBrowse
+    ? filteredMousepads.filter((pad) => !latestAddedSlugSet.has(pad.slug))
+    : filteredMousepads;
 
   return (
     <div className="space-y-6">
@@ -138,8 +156,21 @@ export function MousepadBrowser({
         onReset={handleReset}
       />
 
+      {isDefaultBrowse && latestMousepads.length > 0 ? (
+        <section aria-labelledby="latest-mousepads-heading">
+          <div className="">
+            {latestMousepads.map((pad) => (
+              <div key={pad.slug}>
+                <MousepadCard pad={pad} featured />
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
       {filteredMousepads.length > 0 ? (
-        <div className="overflow-x-auto bg-card/35 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        tableMousepads.length > 0 ? (
+          <div className="overflow-x-auto bg-card/35 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <table className="data-table min-w-[1280px]">
             <thead>
               <tr>
@@ -198,7 +229,7 @@ export function MousepadBrowser({
               </tr>
             </thead>
             <tbody>
-              {filteredMousepads.map((pad) => (
+              {tableMousepads.map((pad) => (
                 <MousepadTableRow
                   key={pad.slug}
                   pad={pad}
@@ -207,7 +238,8 @@ export function MousepadBrowser({
               ))}
             </tbody>
           </table>
-        </div>
+          </div>
+        ) : null
       ) : (
         <div className="rounded-md border border-dashed border-border bg-card/70 px-5 py-8 text-center">
           <div className="mx-auto max-w-xs space-y-3">

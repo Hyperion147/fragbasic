@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 
 import { MetricCell } from "@/components/data-display";
+import { IemCard } from "@/components/iems/iem-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -141,6 +142,23 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
         return right.ratings.fragbasic - left.ratings.fragbasic;
       });
   }, [brand, iems, price, query, signature, sort]);
+
+  const isDefaultBrowse =
+    !query.trim() &&
+    brand === allFilterValue &&
+    signature === allFilterValue &&
+    price === allFilterValue &&
+    sort === "score";
+  const latestIems = useMemo(
+    () =>
+      latestAddedIemSlugs
+        .map((slug) => iems.find((iem) => iem.slug === slug))
+        .filter((iem): iem is Iem => Boolean(iem)),
+    [iems],
+  );
+  const tableIems = isDefaultBrowse
+    ? filteredIems.filter((iem) => !latestAddedSlugSet.has(iem.slug))
+    : filteredIems;
 
   const resetFilters = () => {
     setQuery("");
@@ -293,6 +311,21 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
         </div>
       </Card>
 
+      {isDefaultBrowse && latestIems.length > 0 ? (
+        <section aria-labelledby="latest-iems-heading">
+          <h2 id="latest-iems-heading" className="sr-only">
+            Latest IEM review
+          </h2>
+          <div className="">
+            {latestIems.map((iem) => (
+              <div key={iem.slug}>
+                <IemCard iem={iem} featured />
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
       <div className="overflow-x-auto bg-card/35 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <table className="data-table min-w-[1180px]">
           <thead>
@@ -352,7 +385,7 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
             </tr>
           </thead>
           <tbody>
-            {filteredIems.map((iem) => (
+            {tableIems.map((iem) => (
               <IemTableRow
                 key={iem.id}
                 iem={iem}

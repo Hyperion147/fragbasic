@@ -31,6 +31,124 @@ function withHarmanTarget(points: IemFrequencyPoint[]) {
 
 export const iems: Iem[] = [
   {
+    id: "dunu-titan-x",
+    slug: "dunu-titan-x",
+    brand: "DUNU",
+    name: "Titan X",
+    shortName: "Titan X",
+    subtitle: "Fun V-shaped 10 mm dynamic driver IEM with an all-metal shell",
+    driverType: "single-dd",
+    soundSignature: "v-shape",
+    priceTier: "under-5000",
+    communitySummary:
+      "A remarkably well-built budget IEM with punchy, textured bass, warm mids, and energetic treble. It is a music-first all-rounder rather than a neutral or competitive-FPS specialist.",
+    ratings: {
+      fragbasic: 8.3,
+      fps: 7.5,
+      music: 8.8,
+      value: 9.1,
+      imaging: 7.5,
+      clarity: 8.0,
+      bass: 8.8,
+      soundstage: 7.2,
+      comfort: 8.5,
+      build: 9.4,
+      ratingConfidence: "estimated",
+    },
+    soundProfile: {
+      label: "Fun V-Shape",
+      description:
+        "Impactful mid- and sub-bass, warm lower mids, and lively treble make for a full, engaging listen. The trade-off is less neutral vocal accuracy and occasional sharpness at high volume.",
+      bass: 4.4,
+      mids: 3.2,
+      treble: 3.8,
+      warmth: 3.7,
+      brightness: 3.6,
+    },
+    specs: {
+      driver: "10 mm dual-magnetic, dual-chamber dynamic driver",
+      impedance: "16 ohm",
+      sensitivity: "123 dB/Vrms at 1 kHz",
+      frequencyResponse: "5 Hz - 40 kHz",
+      connector: "0.78 mm 2-pin",
+      cableType: "4-strand high-purity silver-plated OCC copper",
+      cableTermination: "3.5 mm (standard) / USB-C DSP with mic",
+      shellMaterial: "High-density alloy",
+      nozzleMaterial: "Metal",
+      detachableCable: true,
+      mic: true,
+      weightPerEarpiece: "13 g",
+    },
+    buying: {
+      priceInr: 3999,
+      priceUsd: 35,
+      availability: "in-stock",
+      shipsFrom: "India",
+      warranty: "1 year",
+      stores: [
+        {
+          label: "Headphone Zone",
+          url: "https://www.headphonezone.in/products/dunu-titan-x",
+        },
+        {
+          label: "HiFiGo",
+          url: "https://hifigo.com/products/dunu-titan-x",
+        },
+      ],
+    },
+    officialReview: {
+      summary:
+        "Damian Cooper tested the USB-C Titan X with a MacBook and iPhone for roughly a month. He found it easy to drive, comfortable, and especially strong for bassy, energetic music, while noting that it is not a neutral set and can become sharp with wide-bore tips at higher volume.",
+      verdict:
+        "A standout value for listeners who want a compact, extremely solid all-metal IEM with punchy bass and an exciting music presentation. Look elsewhere for neutral tuning, classical music, or serious competitive-FPS positioning.",
+      testSetup: {
+        source: "MacBook and iPhone (USB-C version)",
+        testedGames: ["music", "general-fps"],
+        testingDuration: "Roughly 1 month",
+      },
+    },
+    bestFor: ["music", "general-fps"],
+    pros: [
+      "Exceptional all-metal build for the price",
+      "Punchy, textured bass with satisfying weight",
+      "Flexible detachable silver-plated cable",
+      "Generous tip selection and comfortable compact fit",
+      "Easy to drive from a phone or basic dongle",
+    ],
+    cons: [
+      "Not neutral; bass can bleed into the lower mids on dense tracks",
+      "Treble can turn sharp at high volume with wide-bore tips",
+      "Average separation and soundstage for competitive play",
+      "Female vocals can sound less accurate than male vocals",
+    ],
+    avoidIf: [
+      "You want a neutral or analytical sound signature",
+      "You need top-tier imaging for competitive FPS",
+      "You are sensitive to energetic upper treble",
+      "Classical music is your main listening genre",
+    ],
+    tags: ["Under 5000", "DUNU", "V-Shape", "Bass", "All-Metal", "Music"],
+    images: { main: "/iems/dunu-titan-x.webp" },
+    sources: [
+      {
+        label: "Damian Cooper review",
+        type: "review",
+        url: "https://damiancooper.medium.com/dunu-x-iems-review-good-sound-good-build-good-price-dcf95dc16034",
+      },
+      {
+        label: "Headphone Zone listing",
+        type: "store",
+        url: "https://www.headphonezone.in/products/dunu-titan-x",
+      },
+      {
+        label: "Prime Audio review",
+        type: "review",
+        url: "https://primeaudio.org/dunu-titan-x-review/",
+      },
+    ],
+    updatedAt: "2026-07-27",
+  },
+  {
     id: "7hz-salnotes-zero",
     slug: "7hz-salnotes-zero",
     brand: "7Hz",

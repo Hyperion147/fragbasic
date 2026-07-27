@@ -12,18 +12,32 @@ import {
     getIemFullName,
     getIemScoreTone,
 } from "@/lib/iems";
+import { cn } from "@/lib/utils";
 import type { Iem } from "@/types/iem";
 
 export function IemCard({
     iem,
     isLatestAdded = false,
+    featured = false,
 }: {
     iem: Iem;
     isLatestAdded?: boolean;
+    featured?: boolean;
 }) {
+    if (featured) {
+        return <FeaturedIemCard iem={iem} />;
+    }
+
     return (
-        <Link href={`/iems/${iem.slug}`} className="group block h-full">
-            <Card className="relative h-full overflow-hidden border-border bg-card/80 p-5 transition-colors">
+        <Link
+            href={`/iems/${iem.slug}`}
+            className={cn("group block h-full")}
+        >
+            <Card
+                className={cn(
+                    "relative h-full overflow-hidden border-border bg-card/80 p-5 transition-colors",
+                )}
+            >
                 <div className="relative flex flex-wrap gap-2">
                     <Badge className="text-black">
                         {formatIemSoundSignature(iem.soundSignature)}
@@ -85,6 +99,51 @@ export function IemCard({
                         View IEM
                         <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                     </span>
+                </div>
+            </Card>
+        </Link>
+    );
+}
+
+function FeaturedIemCard({ iem }: { iem: Iem }) {
+    return (
+        <Link href={`/iems/${iem.slug}`} className="group relative z-10 block">
+            <Card className="overflow-hidden border-violet-400/40 bg-card/90 p-4 ring-2 ring-violet-400/90 ring-offset-2 ring-offset-background transition-shadow hover:shadow-lg hover:shadow-violet-500/10 sm:p-5">
+                <div className="grid gap-4 md:grid-cols-[minmax(0,0.8fr)_minmax(100px,0.4fr)_minmax(220px,0.4fr)] md:items-center md:gap-6">
+                    <div className="min-w-0 flex flex-col gap-4">
+                        <div className="flex flex-wrap gap-2">
+                            <Badge className="text-black">Latest review</Badge>
+                            <Badge variant="outline">{formatIemSoundSignature(iem.soundSignature)}</Badge>
+                            <Badge variant="outline">{formatIemDriverType(iem.driverType)}</Badge>
+                        </div>
+                        <div>
+                            <p className="mt-4 text-sm text-muted-foreground">{iem.brand}</p>
+                            <h2 className="panel-title mt-1 text-2xl sm:text-3xl">{iem.name}</h2>
+                        </div>
+                        <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">
+                            {iem.communitySummary}
+                        </p>
+                        <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-hover">
+                            View latest review
+                            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                        </span>
+                    </div>
+                    <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4">
+                            <MiniStat label="FPS" value={iem.ratings.fps} />
+                            <MiniStat label="Music" value={iem.ratings.music} />
+                            <MiniStat label="Value" value={iem.ratings.value} />
+                        </div>
+                    </div>
+                    <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-border bg-background/70">
+                        <Image
+                            src={iem.images.main}
+                            alt={getIemFullName(iem)}
+                            fill
+                            sizes="(min-width: 768px) 32vw, 100vw"
+                            className="object-cover object-right transition-transform duration-300 group-hover:scale-[1.03]"
+                        />
+                    </div>
                 </div>
             </Card>
         </Link>
