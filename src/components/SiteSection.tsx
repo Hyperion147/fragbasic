@@ -10,7 +10,7 @@ export function SiteSection({
   return (
     <div
       className={cn(
-        "data-panel p-3 md:p-4",
+        "data-panel p-2",
         className
       )}
     >

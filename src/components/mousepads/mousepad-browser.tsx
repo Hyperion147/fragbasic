@@ -143,7 +143,7 @@ export function MousepadBrowser({
     : filteredMousepads;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <MousepadFilters
         brands={brands}
         categories={categories}
