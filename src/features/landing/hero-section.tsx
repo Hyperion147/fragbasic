@@ -129,7 +129,7 @@ export function HeroSection({}: Props) {
                             }
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.7, delay: 0.68, ease }}
-                            className="absolute right-0 top-5 hidden w-fit items-center gap-3 rounded-2xl border border-white/10 bg-black/35 px-4 py-3 text-xs text-white/70 shadow-2xl backdrop-blur-xl md:flex lg:right-40 lg:top-[4%]"
+                            className="absolute right-0 top-5 hidden w-fit items-center gap-3 rounded-2xl border border-white/10 bg-black/35 px-4 py-3 text-xs text-white/70 shadow-2xl backdrop-blur-xl md:flex lg:left-40 lg:top-[4%]"
                         >
                             <span className="flex size-9 items-center justify-center rounded-full bg-brand/18 text-brand-hover">
                                 <ScanSearch className="size-4" />
