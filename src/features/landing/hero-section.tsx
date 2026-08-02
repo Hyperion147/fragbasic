@@ -29,13 +29,13 @@ export function HeroSection({}: Props) {
             >
                 <Image
                     src="/hero-bg.png"
-                    alt=""
+                    alt="hero-bg-image"
                     fill
                     priority
                     sizes="100vw"
                     className="object-cover object-[90%_center]"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,11,.98)_0%,rgba(8,8,11,.92)_28%,rgba(8,8,11,.46)_51%,rgba(8,8,11,.08)_78%,rgba(8,8,11,.2)_100%),linear-gradient(0deg,rgba(8,8,11,.72)_0%,transparent_38%,rgba(8,8,11,.12)_100%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,11,.98)_0%,rgba(8,8,11,.2)_28%,rgba(8,8,11,.16)_51%,rgba(8,8,11,.08)_78%,rgba(8,8,11,.2)_100%),linear-gradient(0deg,rgba(8,8,11,.72)_0%,transparent_38%,rgba(8,8,11,.12)_100%)]" />
             </motion.div>
             <motion.div
                 aria-hidden="true"
