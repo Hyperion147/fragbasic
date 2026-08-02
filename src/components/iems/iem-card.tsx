@@ -108,7 +108,7 @@ export function IemCard({
 function FeaturedIemCard({ iem }: { iem: Iem }) {
     return (
         <Link href={`/iems/${iem.slug}`} className="group relative z-10 block">
-            <Card className="overflow-hidden border-violet-400/40 bg-card/90 p-4 ring-2 ring-violet-400/90 ring-offset-2 ring-offset-background transition-shadow hover:shadow-lg hover:shadow-violet-500/10 sm:p-5">
+            <Card className="overflow-hidden bg-card/90 p-4 inset-ring-2 inset-ring-violet-400/90 ring-offset-background transition-shadow hover:shadow-lg hover:shadow-violet-500/10    sm:p-5">
                 <div className="grid gap-4 md:grid-cols-[minmax(0,0.8fr)_minmax(100px,0.4fr)_minmax(220px,0.4fr)] md:items-center md:gap-6">
                     <div className="min-w-0 flex flex-col gap-4">
                         <div className="flex flex-wrap gap-2">

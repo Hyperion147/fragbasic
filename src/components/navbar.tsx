@@ -134,7 +134,7 @@ export function SiteNavbar() {
         : "Universal Compare";
 
     return (
-        <header className="sticky top-0 z-40 bg-background/94 shadow-[inset_0_-1px_0_color-mix(in_srgb,var(--foreground)_6%,transparent)] backdrop-blur-xl">
+        <header className="sticky top-0 z-40 shadow-[inset_0_-1px_0_color-mix(in_srgb,var(--foreground)_6%,transparent)] backdrop-blur-xl">
             <div className="flex h-16 w-full items-center justify-between px-4 md:px-6 lg:px-10">
                 <Link href="/" className="group flex items-center gap-3">
                     <Image

@@ -91,7 +91,7 @@ export function HeroSection({}: Props) {
                             <Button
                                 size="lg"
                                 asChild
-                                className="h-12 w-full rounded-full bg-white px-6 text-black shadow-[0_16px_55px_rgba(0,0,0,.32)] hover:bg-white/85 sm:w-auto"
+                                className="h-12 w-full rounded-full bg-white px-6 text-black hover:bg-white/85 sm:w-auto inset-shadow-[-2px_-2px_12px_#0000004c]"
                             >
                                 <Link href="/mousepads/compare/universal">
                                     Find my next pad
@@ -102,11 +102,11 @@ export function HeroSection({}: Props) {
                                 size="lg"
                                 variant="outline"
                                 asChild
-                                className="h-12 w-full rounded-full border-white/14 bg-black/15 px-6 text-white backdrop-blur-md hover:bg-white/8 hover:text-white sm:w-auto"
+                                className="h-12 w-full rounded-full border-white/14 bg-black/15 px-6 text-white backdrop-blur-md hover:bg-white/8 hover:text-white sm:w-auto inset-shadow-[-2px_-2px_8px_#a78bfa4b]"
                             >
                                 <Link href="/mousepads">
                                     <Database className="size-4" />
-                                    Explore the database
+                                    Explore peripherals
                                 </Link>
                             </Button>
                         </motion.div>

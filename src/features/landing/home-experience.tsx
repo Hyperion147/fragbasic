@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "motion/react";
 
 import { HeroSection } from "@/features/landing/hero-section";
-import { LatestAddedIemsSection } from "@/features/landing/latest-added-iems-section";
 import { LatestAddedSection } from "@/features/landing/latest-added-section";
 import { PagesShowcaseSection } from "@/features/landing/pages-showcase-section";
 import { PopularComparisonsSection } from "@/features/landing/popular-comparisons-section";
@@ -43,14 +42,13 @@ export function HomeExperience({
         <RevealSection>
           <MethodologySection />
         </RevealSection>
-        {latestAdded && latestAdded.length > 0 ? (
+        {(latestAdded && latestAdded.length > 0) ||
+        (latestAddedIems && latestAddedIems.length > 0) ? (
           <RevealSection delay={0.11}>
-            <LatestAddedSection pads={latestAdded} />
-          </RevealSection>
-        ) : null}
-        {latestAddedIems && latestAddedIems.length > 0 ? (
-          <RevealSection delay={0.13}>
-            <LatestAddedIemsSection iems={latestAddedIems} />
+            <LatestAddedSection
+              pads={latestAdded}
+              iems={latestAddedIems}
+            />
           </RevealSection>
         ) : null}
         <RevealSection>
