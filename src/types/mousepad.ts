@@ -25,7 +25,7 @@ export type MousepadSoftness =
     | "unknown";
 
 export type MousepadGame =
-    | "valorant"
+    | "valorant"    
     | "cs2"
     | "apex"
     | "quake"

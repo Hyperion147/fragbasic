@@ -176,7 +176,7 @@ URL /mousepads
 
 | Surface | Fields (owner summary) |
 |---------|-------------------------|
-| **Card** | image, name, description, type/category, control / glide(speed) / stopping power |
+| **Card** | image, name, descrip tion, type/category, control / glide(speed) / stopping power |
 | **Detail** | full schema (feel, environment, texture, price, availability, notes, sources, visuals, …) |
 | **Compare** | comparable feel + spec fields used by compare components |
 | **Filters** | companies/brands, speed/control/mud-style categories, price, etc. |

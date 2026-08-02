@@ -82,7 +82,7 @@ export function PagesShowcaseSection({
             <Link
               key={item.title}
               href={item.href}
-              className="group relative flex min-h-52 flex-col overflow-hidden border-b border-white/8 p-4 transition-colors duration-500 odd:border-r hover:bg-[color:color-mix(in_srgb,var(--brand)_9%,transparent)] sm:min-h-[25rem] sm:p-8 xl:min-h-[31rem] xl:border-b-0 xl:border-r xl:p-10 xl:last:border-r-0"
+              className="group relative flex min-h-52 flex-col overflow-hidden border-b border-white/8 p-4 transition-colors duration-500 odd:border-r hover:bg-[color:color-mix(in_srgb,var(--brand)_9%,transparent)] sm:min-h-[25rem] sm:p-8 xl:min-h-[31rem] xl:border-b-0 xl:border-r xl:p-10 xl:last:border-r-1 xl:first:border-l-1"
             >
               <div className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-brand-hover transition-transform duration-500 group-hover:scale-x-100" />
               <div className="absolute -right-20 -top-20 size-56 rounded-full bg-brand/0 blur-[70px] transition-colors duration-500 group-hover:bg-brand/16" />

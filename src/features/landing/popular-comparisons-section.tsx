@@ -15,7 +15,7 @@ type Props = {
 export function PopularComparisonsSection({ comparisons }: Props) {
     return (
         <section className="space-y-6">
-            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <div className="flex flex-col justify-between md:flex-row md:items-end">
                 <div>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-hover)] sm:text-xs sm:tracking-[0.36em]">
                         Popular comparisons
@@ -84,7 +84,7 @@ export function PopularComparisonsSection({ comparisons }: Props) {
                 </Link>
             </div>
 
-            <div className="hidden gap-4 sm:grid lg:grid-cols-3">
+            <div className="hidden sm:grid lg:grid-cols-3">
                 {comparisons.map((comparison, index) => (
                     <ComparisonCard
                         key={comparison.slug}
@@ -112,7 +112,7 @@ function ComparisonCard({
         <Link
             href={`/mousepads/compare/${comparison.slug}`}
             className={cn(
-                "group overflow-hidden rounded-lg bg-card/55 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_4%,transparent)] transition-colors hover:shadow-[inset_0_1px_0_color-mix(in_srgb,var(--brand-hover)_20%,transparent),0_0_28px_color-mix(in_srgb,var(--brand-glow)_10%,transparent)]",
+                "group overflow-hidden rounded-lg bg-card/55 border",
             )}
         >
             <div className="p-4 sm:p-5">

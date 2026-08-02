@@ -260,10 +260,10 @@
 
     .page-title {
         font-family: var(--font-heading);
-        font-size: 2.125rem;
-        line-height: 1.05;
+        font-size: 2rem;
+        line-height: 1.1;
         letter-spacing: 0;
-        font-weight: 700;
+        font-weight: 600;
         text-wrap: balance;
     }
 
@@ -339,7 +339,7 @@
     }
 
     .data-panel {
-        @apply bg-card/42 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_4%,transparent)];
+        @apply bg-card/32 ring ring-accent;
     }
 
     .soft-panel {

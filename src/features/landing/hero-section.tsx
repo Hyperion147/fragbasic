@@ -29,13 +29,13 @@ export function HeroSection({}: Props) {
             >
                 <Image
                     src="/hero-bg.png"
-                    alt=""
+                    alt="hero-bg-image"
                     fill
                     priority
                     sizes="100vw"
                     className="object-cover object-[90%_center]"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,11,.98)_0%,rgba(8,8,11,.92)_28%,rgba(8,8,11,.46)_51%,rgba(8,8,11,.08)_78%,rgba(8,8,11,.2)_100%),linear-gradient(0deg,rgba(8,8,11,.72)_0%,transparent_38%,rgba(8,8,11,.12)_100%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,11,.98)_0%,rgba(8,8,11,.2)_28%,rgba(8,8,11,.16)_51%,rgba(8,8,11,.08)_78%,rgba(8,8,11,.2)_100%),linear-gradient(0deg,rgba(8,8,11,.72)_0%,transparent_38%,rgba(8,8,11,.12)_100%)]" />
             </motion.div>
             <motion.div
                 aria-hidden="true"
@@ -91,7 +91,7 @@ export function HeroSection({}: Props) {
                             <Button
                                 size="lg"
                                 asChild
-                                className="h-12 w-full rounded-full bg-white px-6 text-black shadow-[0_16px_55px_rgba(0,0,0,.32)] hover:bg-white/85 sm:w-auto"
+                                className="h-12 w-full rounded-full bg-white px-6 text-black hover:bg-white/85 sm:w-auto inset-shadow-[-2px_-2px_12px_#0000004c]"
                             >
                                 <Link href="/mousepads/compare/universal">
                                     Find my next pad
@@ -102,11 +102,11 @@ export function HeroSection({}: Props) {
                                 size="lg"
                                 variant="outline"
                                 asChild
-                                className="h-12 w-full rounded-full border-white/14 bg-black/15 px-6 text-white backdrop-blur-md hover:bg-white/8 hover:text-white sm:w-auto"
+                                className="h-12 w-full rounded-full border-white/14 bg-black/15 px-6 text-white backdrop-blur-md hover:bg-white/8 hover:text-white sm:w-auto inset-shadow-[-2px_-2px_8px_#a78bfa4b]"
                             >
                                 <Link href="/mousepads">
                                     <Database className="size-4" />
-                                    Explore the database
+                                    Explore peripherals
                                 </Link>
                             </Button>
                         </motion.div>
@@ -129,7 +129,7 @@ export function HeroSection({}: Props) {
                             }
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.7, delay: 0.68, ease }}
-                            className="absolute right-0 top-5 hidden w-fit items-center gap-3 rounded-2xl border border-white/10 bg-black/35 px-4 py-3 text-xs text-white/70 shadow-2xl backdrop-blur-xl md:flex lg:right-40 lg:top-[4%]"
+                            className="absolute right-0 top-5 hidden w-fit items-center gap-3 rounded-2xl border border-white/10 bg-black/35 px-4 py-3 text-xs text-white/70 shadow-2xl backdrop-blur-xl md:flex lg:left-40 lg:top-[4%]"
                         >
                             <span className="flex size-9 items-center justify-center rounded-full bg-brand/18 text-brand-hover">
                                 <ScanSearch className="size-4" />
