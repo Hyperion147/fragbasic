@@ -1,5 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { mousepadFeelRatingSchema, mousepadCategorySchema } from "./mousepad";
+import {
+    aimStyleSchema,
+    glassSurfaceFinishSchema,
+    indiaAvailabilitySchema,
+    mousepadBaseSchema,
+    mousepadCategorySchema,
+    mousepadFeelRatingSchema,
+    mousepadGameSchema,
+    mousepadSoftnessSchema,
+    mousepadSurfaceSchema,
+    ratingConfidenceSchema,
+    sensitivitySchema,
+} from "./mousepad";
 
 describe("mousepadCategorySchema", () => {
     it("accepts a valid category", () => {
@@ -9,6 +21,114 @@ describe("mousepadCategorySchema", () => {
 
     it("rejects an unknown category", () => {
         const result = mousepadCategorySchema.safeParse("super-speed");
+        expect(result.success).toBe(false);
+    });
+});
+
+describe("mousepadSurfaceSchema", () => {
+    it("accepts a valid surface", () => {
+        const result = mousepadSurfaceSchema.safeParse("cloth");
+        expect(result.success).toBe(true);
+    });
+
+    it("rejects an unknown surface", () => {
+        const result = mousepadSurfaceSchema.safeParse("plastic");
+        expect(result.success).toBe(false);
+    });
+});
+
+describe("glassSurfaceFinishSchema", () => {
+    it("accepts a valid glass surface finish", () => {
+        const result = glassSurfaceFinishSchema.safeParse("coated");
+        expect(result.success).toBe(true);
+    });
+
+    it("rejects an unknown glass surface finish", () => {
+        const result = glassSurfaceFinishSchema.safeParse("polished");
+        expect(result.success).toBe(false);
+    });
+});
+
+describe("mousepadBaseSchema", () => {
+    it("accepts a valid base", () => {
+        const result = mousepadBaseSchema.safeParse("poron");
+        expect(result.success).toBe(true);
+    });
+
+    it("rejects an unknown base", () => {
+        const result = mousepadBaseSchema.safeParse("foam");
+        expect(result.success).toBe(false);
+    });
+});
+
+describe("mousepadSoftnessSchema", () => {
+    it("accepts a valid softness", () => {
+        const result = mousepadSoftnessSchema.safeParse("xsoft");
+        expect(result.success).toBe(true);
+    });
+
+    it("rejects an unknown softness", () => {
+        const result = mousepadSoftnessSchema.safeParse("extra-soft");
+        expect(result.success).toBe(false);
+    });
+});
+
+describe("mousepadGameSchema", () => {
+    it("accepts a valid game", () => {
+        const result = mousepadGameSchema.safeParse("valorant");
+        expect(result.success).toBe(true);
+    });
+
+    it("rejects an unknown game", () => {
+        const result = mousepadGameSchema.safeParse("minecraft");
+        expect(result.success).toBe(false);
+    });
+});
+
+describe("aimStyleSchema", () => {
+    it("accepts a valid aim style", () => {
+        const result = aimStyleSchema.safeParse("tracking");
+        expect(result.success).toBe(true);
+    });
+
+    it("rejects an unknown aim style", () => {
+        const result = aimStyleSchema.safeParse("spray");
+        expect(result.success).toBe(false);
+    });
+});
+
+describe("sensitivitySchema", () => {
+    it("accepts a valid sensitivity", () => {
+        const result = sensitivitySchema.safeParse("medium");
+        expect(result.success).toBe(true);
+    });
+
+    it("rejects an unknown sensitivity", () => {
+        const result = sensitivitySchema.safeParse("ultra");
+        expect(result.success).toBe(false);
+    });
+});
+
+describe("ratingConfidenceSchema", () => {
+    it("accepts a valid rating confidence", () => {
+        const result = ratingConfidenceSchema.safeParse("community");
+        expect(result.success).toBe(true);
+    });
+
+    it("rejects an unknown rating confidence", () => {
+        const result = ratingConfidenceSchema.safeParse("guess");
+        expect(result.success).toBe(false);
+    });
+});
+
+describe("indiaAvailabilitySchema", () => {
+    it("accepts a valid india availability", () => {
+        const result = indiaAvailabilitySchema.safeParse("import-only");
+        expect(result.success).toBe(true);
+    });
+
+    it("rejects an unknown india availability", () => {
+        const result = indiaAvailabilitySchema.safeParse("backorder");
         expect(result.success).toBe(false);
     });
 });
