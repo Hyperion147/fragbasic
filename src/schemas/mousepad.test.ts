@@ -165,6 +165,14 @@ describe("mousepadFeelRatingSchema", () => {
         expect(result.success).toBe(false);
     });
 
+    it("accepts zero scores (valid worst-case ratings)", () => {
+        const result = mousepadFeelRatingSchema.safeParse({
+            ...valid,
+            dynamicFriction: 0,
+        });
+        expect(result.success).toBe(true);
+    });
+
     it("rejects missing control", () => {
         const { control: _removed, ...rest } = valid;
         const result = mousepadFeelRatingSchema.safeParse(rest);
