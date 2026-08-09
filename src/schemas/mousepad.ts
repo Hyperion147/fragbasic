@@ -75,7 +75,6 @@ export const indiaAvailabilitySchema = z.enum([
     "unknown",
 ]);
 
-/** 0–10 inclusive. 0 is valid (e.g. community "worst" / ice-glide friction). */
 const feelScore = z.number().min(0).max(10);
 
 export const mousepadFeelRatingSchema = z.object({
@@ -258,3 +257,10 @@ export const mousepadSchema = z.object({
 
 export type MousepadSizeInput = z.infer<typeof mousepadSizeSchema>;
 export type MousepadInput = z.infer<typeof mousepadSchema>;
+
+export const mousepadWriteSchema = z.object({
+  status: z.enum(["draft", "published"]).default("published"),
+  data: mousepadSchema,
+});
+
+export type MousepadWriteInput = z.infer<typeof mousepadWriteSchema>;
