@@ -19,22 +19,34 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             },
 
             async authorize(raw) {
-                const parsed = credentialsSchema.safeParse(raw);
+                const parsed = credentialsSchema.safeParse({
+                    email:
+                        typeof raw?.email === "string" ? raw.email.trim() : raw?.email,
+                    password:
+                        typeof raw?.password === "string"
+                            ? raw.password
+                            : raw?.password,
+                });
                 if (!parsed.success) return null;
 
-                const adminEmail = process.env.ADMIN_EMAIL;
-                const hash = process.env.ADMIN_PASSWORD_HASH;
-                if (!adminEmail || !hash) return null;
+                const { getAdminCredentials } = await import(
+                    "@/server/admin-credentials"
+                );
+                const creds = getAdminCredentials();
+                if (!creds.ok) {
+                    console.error("[auth]", creds.message);
+                    return null;
+                }
 
                 const { email, password } = parsed.data;
                 const emailOk =
-                    email.toLowerCase() === adminEmail.toLowerCase();
-                const passOk = await bcrypt.compare(password, hash);
+                    email.toLowerCase() === creds.email.toLowerCase();
+                const passOk = await bcrypt.compare(password, creds.hash);
                 if (!emailOk || !passOk) return null;
 
                 return {
                     id: "admin",
-                    email: adminEmail,
+                    email: creds.email,
                     role: "admin",
                 };
             },

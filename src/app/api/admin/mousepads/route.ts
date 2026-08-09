@@ -3,10 +3,6 @@ import { jsonError, jsonOk, zodError } from "@/server/api";
 import { mousepadWriteSchema } from "@/schemas/mousepad";
 import * as repo from "@/server/mousepads/repo";
 
-/**
- * GET  /api/admin/mousepads — list all (admin)
- * POST /api/admin/mousepads — create one
- */
 export async function GET() {
   const session = await requireAdmin();
   if (!session) return jsonError("Unauthorized", 401);
