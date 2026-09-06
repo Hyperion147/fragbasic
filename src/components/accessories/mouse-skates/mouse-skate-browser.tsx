@@ -254,7 +254,7 @@ export function MouseSkateBrowser({ skates }: { skates: MouseSkate[] }) {
         </div>
       </Card>
 
-      <div className="overflow-x-auto bg-card/35 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="data-scroll-container min-w-0 max-w-full overflow-x-auto bg-card/35 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <table className="data-table min-w-[1180px]">
           <thead>
             <tr>

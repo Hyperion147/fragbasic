@@ -217,7 +217,7 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                             >
                                                 <Link
                                                     href={item.href}
-                                                    className="flex justify-between rounded-md px-2 py-2 text-sm leading-5 text-foreground/76 hover:bg-[color:color-mix(in_srgb,var(--brand)_8%,transparent)] hover:text-foreground focus:bg-[color:color-mix(in_srgb,var(--brand)_8%,transparent)]"
+                                                    className="flex justify-between rounded-md px-2 py-2 text-sm leading-5 text-foreground/76 hover:bg-[color-mix(in_srgb,var(--brand)_8%,transparent)] hover:text-foreground focus:bg-[color-mix(in_srgb,var(--brand)_8%,transparent)]"
                                                 >
                                                     <span>{item.title}</span>
                                                     <ChevronRight className="size-4 text-muted-foreground" />
@@ -249,7 +249,7 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                                                 >
                                                     <Link
                                                         href={item.href}
-                                                        className="flex items-center justify-between rounded-md px-2 py-2 text-sm leading-5 text-foreground/78 hover:bg-[color:color-mix(in_srgb,var(--brand)_8%,transparent)] hover:text-foreground focus:bg-[color:color-mix(in_srgb,var(--brand)_8%,transparent)]"
+                                                        className="flex items-center justify-between rounded-md px-2 py-2 text-sm leading-5 text-foreground/78 hover:bg-[color-mix(in_srgb,var(--brand)_8%,transparent)] hover:text-foreground focus:bg-[color-mix(in_srgb,var(--brand)_8%,transparent)]"
                                                     >
                                                         <span>{item.title}</span>
                                                         <ChevronRight className="size-4 text-muted-foreground" />
@@ -452,7 +452,7 @@ function MobileNavigation() {
 
                 <SheetContent
                     side="right"
-                    className="w-[min(92vw,23rem)] overflow-hidden border-transparent bg-background/98 p-0 shadow-[inset_1px_0_0_color-mix(in_srgb,var(--foreground)_6%,transparent)] backdrop-blur-xl"
+                    className="right-0 left-auto max-w-[100vw] w-[min(92vw,23rem)] overflow-hidden border-transparent bg-background/98 p-0 shadow-[inset_1px_0_0_color-mix(in_srgb,var(--foreground)_6%,transparent)] backdrop-blur-xl"
                 >
                     <SheetTitle className="sr-only">Site navigation</SheetTitle>
                     <div className="px-4 py-5 shadow-[inset_0_-1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)]">

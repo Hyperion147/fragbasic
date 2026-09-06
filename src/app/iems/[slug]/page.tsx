@@ -111,7 +111,7 @@ export default async function IemPage({ params }: Props) {
                     },
                 })}
             />
-            <section className="border-b border-border bg-[radial-gradient(circle_at_78%_18%,color-mix(in_srgb,var(--iem-glow)_12%,transparent),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0))]">
+            <section className="border-b border-border bg-background">
                 <div className="w-full px-4 pt-6 md:px-6 lg:px-8 xl:px-10">
                     <SiteBreadcrumbs
                         items={[
@@ -574,7 +574,7 @@ function FrequencyResponseChart({
     });
 
     return (
-        <div className="mt-6 overflow-x-auto overflow-y-hidden rounded-lg soft-surface scrollbar-none [&::-webkit-scrollbar]:hidden">
+        <div className="data-scroll-container mt-6 min-w-0 max-w-full overflow-x-auto overflow-y-hidden rounded-lg soft-surface scrollbar-none [&::-webkit-scrollbar]:hidden">
             <div className="relative w-240 max-w-none md:w-full">
                 <svg
                     viewBox={`0 0 ${width} ${height}`}
