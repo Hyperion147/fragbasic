@@ -1,3 +1,5 @@
+import { MousepadWriteInput } from "@/schemas/mousepad";
+
 export type AdminMousepadRow = {
     id: string;
     slug: string;
@@ -51,6 +53,55 @@ export function fetchAdminMousepads() {
     );
 }
 
+export function fetchAdminMousepad(id: string) {
+    return adminFetch<{ mousepad: AdminMousepadRow }>(
+        `/api/admin/mousepads/${encodeURIComponent(id)}`,
+    );
+}
+
 export function logoutAdmin() {
     return adminFetch<{ ok: true }>("/api/admin/logout", { method: "POST" });
+}
+
+export function createMousepad(payload: MousepadWriteInput) {
+    return adminFetch<{ mousepad: AdminMousepadRow }>("/api/admin/mousepads", {
+        method: "POST",
+        body: JSON.stringify(payload),
+    });
+}
+
+export function updateMousepad(id: string, payload: MousepadWriteInput) {
+    return adminFetch<{ mousepad: AdminMousepadRow }>(
+        `/api/admin/mousepads/${encodeURIComponent(id)}`,
+        { method: "PATCH", body: JSON.stringify(payload) },
+    );
+}
+
+export function deleteMousepad(id: string) {
+    return adminFetch<{ ok: true; id: string }>(
+        `/api/admin/mousepads/${encodeURIComponent(id)}`,
+        { method: "DELETE" },
+    );
+}
+
+export async function uploadMousepadImage(id: string, file: File) {
+    const formData = new FormData();
+    formData.append("mousepadId", id);
+    formData.append("file", file);
+
+    const res = await fetch("/api/admin/uploads/mousepads", {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+    });
+    const body = (await res.json().catch(() => null)) as {
+        url?: string;
+        error?: string;
+    } | null;
+
+    if (!res.ok || !body?.url) {
+        throw new AdminApiError(res.status, body?.error ?? "Image upload failed");
+    }
+
+    return body;
 }

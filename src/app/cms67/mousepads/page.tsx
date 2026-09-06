@@ -88,10 +88,9 @@ export default function CmsMousepadsPage() {
           <Button variant="outline" size="sm" asChild>
             <Link href="/cms67/dashboard">Dashboard</Link>
           </Button>
-          {/* Enable when you build create */}
-          {/* <Button size="sm" asChild>
+          <Button size="sm" asChild>
             <Link href="/cms67/mousepads/new">Add mousepad</Link>
-          </Button> */}
+          </Button>
         </div>
       </div>
 
