@@ -95,6 +95,20 @@ export default function CmsDashboardPage() {
 
         <Card className="border border-border/80 bg-card/80">
           <CardHeader>
+            <CardTitle>IEMs</CardTitle>
+            <CardDescription>
+              Browse and edit IEM catalog rows stored in the database.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/cms67/iems">Open IEMs</Link>
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card className="border border-border/80 bg-card/80">
+          <CardHeader>
             <CardTitle>Public site</CardTitle>
             <CardDescription>
               Preview how visitors see FragBasic.

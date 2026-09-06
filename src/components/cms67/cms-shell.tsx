@@ -33,6 +33,9 @@ export function CmsShell({ children }: { children: ReactNode }) {
                 <Button variant="ghost" size="sm" asChild>
                   <Link href="/cms67/mousepads">Mousepads</Link>
                 </Button>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link href="/cms67/iems">IEMs</Link>
+                </Button>
               </>
             )}
             <Button variant="outline" size="sm" asChild>
