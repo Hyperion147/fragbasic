@@ -123,6 +123,20 @@ export default function CmsDashboardPage() {
 
         <Card className="border border-border/80 bg-card/80">
           <CardHeader>
+            <CardTitle>Mouse-skates</CardTitle>
+            <CardDescription>
+              Browse and edit mouse-skate catalog rows stored in the database.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/cms67/mouse-skates">Open mouse-skates</Link>
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card className="border border-border/80 bg-card/80">
+          <CardHeader>
             <CardTitle>Public site</CardTitle>
             <CardDescription>
               Preview how visitors see FragBasic.
