@@ -95,6 +95,20 @@ export default function CmsDashboardPage() {
 
         <Card className="border border-border/80 bg-card/80">
           <CardHeader>
+            <CardTitle>Glasspads</CardTitle>
+            <CardDescription>
+              Browse and edit dedicated glasspad catalog rows.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/cms67/glasspads">Open glasspads</Link>
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card className="border border-border/80 bg-card/80">
+          <CardHeader>
             <CardTitle>IEMs</CardTitle>
             <CardDescription>
               Browse and edit IEM catalog rows stored in the database.

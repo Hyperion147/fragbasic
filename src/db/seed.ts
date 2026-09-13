@@ -95,7 +95,7 @@ async function main() {
 
     await db.delete(mousepads);
 
-    for (const pad of catalog) {
+    for (const pad of catalog.filter((item) => item.category !== "glass")) {
         const parsed = mousepadSchema.safeParse(pad);
         if (!parsed.success) {
             console.error("Skip invalid: ", pad.slug, parsed.error);

@@ -23,6 +23,18 @@ export const mousepads = pgTable("mousepads", {
         .defaultNow(),
 });
 
+export const glasspadStatusEnum = pgEnum("glasspad_status", ["draft", "published"]);
+export const glasspads = pgTable("glasspads", {
+    id: text("id").primaryKey(),
+    slug: text("slug").notNull().unique(),
+    brand: text("brand").notNull(),
+    name: text("name").notNull(),
+    status: glasspadStatusEnum("status").notNull().default("published"),
+    data: jsonb("data").$type<MousepadInput>().notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 export const iemStatusEnum = pgEnum("iem_status", ["draft", "published"]);
 export const iems = pgTable("iems", {
     id: text("id").primaryKey(),
@@ -49,6 +61,8 @@ export const mouseSkates = pgTable("mouse_skates", {
 
 export type MousepadRow = typeof mousepads.$inferSelect;
 export type NewMousepadRow = typeof mousepads.$inferInsert;
+export type GlasspadRow = typeof glasspads.$inferSelect;
+export type NewGlasspadRow = typeof glasspads.$inferInsert;
 export type IemRow = typeof iems.$inferSelect;
 export type NewIemRow = typeof iems.$inferInsert;
 export type MouseSkateRow = typeof mouseSkates.$inferSelect;

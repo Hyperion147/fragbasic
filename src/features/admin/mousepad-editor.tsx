@@ -15,6 +15,8 @@ type Props = {
     pending?: boolean;
     error?: string | null;
     imageUploadId: string;
+    uploadEndpoint?: string;
+    cancelHref?: string;
     onSubmit: (payload: MousepadWriteInput) => void;
 };
 
@@ -25,6 +27,8 @@ export function MousepadEditor({
     pending = false,
     error,
     imageUploadId,
+    uploadEndpoint = "/api/admin/uploads/mousepads",
+    cancelHref = "/cms67/mousepads",
     onSubmit,
 }: Props) {
     const [data, setData] = useState(() => JSON.stringify(initialData, null, 2));
@@ -77,7 +81,7 @@ export function MousepadEditor({
             const formData = new FormData();
             formData.append("mousepadId", imageUploadId);
             formData.append("file", file);
-            const response = await fetch("/api/admin/uploads/mousepads", {
+            const response = await fetch(uploadEndpoint, {
                 method: "POST",
                 credentials: "include",
                 body: formData,
@@ -144,7 +148,7 @@ export function MousepadEditor({
 
             <div className="flex flex-wrap justify-end gap-2">
                 <Button type="button" variant="outline" asChild>
-                    <Link href="/cms67/mousepads">Cancel</Link>
+                    <Link href={cancelHref}>Cancel</Link>
                 </Button>
                 <Button type="submit" disabled={pending}>{pending ? "Saving..." : submitLabel}</Button>
             </div>

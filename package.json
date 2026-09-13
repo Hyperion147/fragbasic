@@ -16,6 +16,7 @@
     "db:seed": "tsx --env-file=.env src/db/seed.ts"
     ,"db:seed:iems": "tsx --env-file=.env src/db/seed-iems.ts"
     ,"db:seed:accessories": "tsx --env-file=.env src/db/seed-accessories.ts"
+    ,"db:seed:glasspads": "tsx --env-file=.env src/db/seed-glasspads.ts"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.101.4",
