@@ -14,6 +14,7 @@ import {
 } from "lucide-react"
 import { ClientShareButton } from "@/components/ClientShareButton"
 import { JsonLd } from "@/components/json-ld"
+import { AiDefinition, AiFaq, AiSpecTable } from "@/components/seo/ai-blocks"
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs"
 
 import { getRelatedComparisons } from "@/lib/comparisons"
@@ -36,8 +37,10 @@ import {
 } from "@/components/mousepads/related-alternatives"
 import type { Mousepad } from "@/types/mousepad"
 import {
+  buildFaqJsonLd,
   buildProductJsonLd,
   buildMetadata,
+  getSiteUrl,
 } from "@/lib/seo";
 
 type PageProps = {
@@ -102,11 +105,13 @@ export default async function MousepadPage({ params }: PageProps) {
             name: `${pad.brand} ${pad.name} review`,
             body: productDescription,
             author: "FragBasic Review Team",
+            authorUrl: `${getSiteUrl()}/about`,
             positiveNotes: pad.communityConsensus.strengths,
             negativeNotes: pad.communityConsensus.weaknesses,
           },
         })}
       />
+      <JsonLd data={buildFaqJsonLd(getAiFaqs(pad))} />
       <section className="border-b border-border bg-background">
         <div className="page-hero">
           <div className="mx-auto max-w-7xl grid gap-8 md:grid-cols-[1.05fr_0.95fr]">
@@ -220,6 +225,21 @@ export default async function MousepadPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      <div className="page-section">
+        <div className="mx-auto max-w-7xl space-y-6">
+          <AiDefinition
+            heading={`What is ${pad.brand} ${pad.name}?`}
+            definition={productDescription}
+            bottomLine={getBottomLine(pad)}
+          />
+          <AiSpecTable
+            heading={`${pad.brand} ${pad.name} specs at a glance`}
+            rows={getAiSpecRows(pad)}
+          />
+          <AiFaq items={getAiFaqs(pad)} />
+        </div>
+      </div>
 
       <div className="page-section">
         <div className="mx-auto max-w-7xl grid gap-6 md:grid-cols-[1fr_360px]">
@@ -705,6 +725,84 @@ function SourcesCard({ pad }: { pad: Mousepad }) {
       </div>
     </Card>
   )
+}
+
+function getBottomLine(pad: Mousepad) {
+  const games = pad.recommendedFor.games.slice(0, 2).map(formatValue).join(" and ")
+  return `Choose ${pad.brand} ${pad.name} if you play ${games} and want ${formatFeelLabel(
+    pad.feel.control,
+    "control"
+  ).toLowerCase()} control with ${formatEnvironmentLabel(
+    pad.environment.humidityResistance
+  ).toLowerCase()} humidity handling. Skip it if you want a faster tracking-first glide.`
+}
+
+function getAiSpecRows(pad: Mousepad) {
+  return [
+    { feature: "Category", value: `${formatValue(pad.category)} / ${formatValue(pad.surface)}` },
+    {
+      feature: "Speed / Control / Stopping",
+      value: `${formatFeelLabel(pad.feel.speed, "speed")} glide, ${formatFeelLabel(
+        pad.feel.control,
+        "control"
+      ).toLowerCase()} control, ${formatFeelLabel(
+        pad.feel.stoppingPower,
+        "stoppingPower"
+      ).toLowerCase()} stopping power.`,
+    },
+    {
+      feature: "Best for",
+      value: `${pad.recommendedFor.games.map(formatValue).join(", ")} — ${pad.recommendedFor.aimStyles
+        .map(formatValue)
+        .join(", ")} aim, ${pad.recommendedFor.sensitivity.map(formatValue).join("/")} sensitivity.`,
+    },
+    {
+      feature: "Humidity / daily use",
+      value: `${formatEnvironmentLabel(pad.environment.humidityResistance)} humidity handling, ${formatValue(
+        pad.texture.feel
+      ).toLowerCase()} texture.`,
+    },
+    {
+      feature: "Price / availability",
+      value: `${formatPrice(pad.price.inr)} — ${formatValue(pad.availability.india)} in India.`,
+    },
+  ]
+}
+
+function getAiFaqs(pad: Mousepad) {
+  const fullName = `${pad.brand} ${pad.name}`
+  const games = pad.recommendedFor.games.map(formatValue).join(", ")
+  return [
+    {
+      q: `Is ${fullName} good for ${pad.recommendedFor.games.slice(0, 1).map(formatValue).join("") || "FPS"}?`,
+      a: `${fullName} suits ${games} players who want ${formatFeelLabel(
+        pad.feel.control,
+        "control"
+      ).toLowerCase()} control. It is listed for ${pad.recommendedFor.aimStyles
+        .map(formatValue)
+        .join(", ")} aim styles at ${pad.recommendedFor.sensitivity.map(formatValue).join("/")} sensitivity.`,
+    },
+    {
+      q: `How does ${fullName} handle humidity?`,
+      a: `${fullName} has ${formatEnvironmentLabel(
+        pad.environment.humidityResistance
+      ).toLowerCase()} humidity handling with a ${formatValue(
+        pad.texture.feel
+      ).toLowerCase()} texture. Humid-room players should weigh this above the broad category label.`,
+    },
+    {
+      q: `Who should skip ${fullName}?`,
+      a:
+        pad.avoidIf?.[0] ??
+        `Skip ${fullName} if you want maximum glide speed — this pad prioritizes control and stopping over effortless tracking.`,
+    },
+    {
+      q: `What is the price and availability of ${fullName} in India?`,
+      a: `${fullName} is ${formatValue(pad.availability.india)} in India at ${formatPrice(
+        pad.price.inr
+      )}. Check the availability panel for current stores before buying.`,
+    },
+  ]
 }
 
 function getHeroSummary(pad: Mousepad) {

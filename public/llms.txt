@@ -26,3 +26,5 @@
 ## Machine-readable
 - Sitemap: https://fragbasic.fun/sitemap.xml
 - Robots: https://fragbasic.fun/robots.txt (allows GPTBot, ChatGPT-User, PerplexityBot, ClaudeBot, anthropic-ai, Google-Extended, Bingbot)
+- Pricing: https://fragbasic.fun/pricing.md
+- Knowledge bundle (OKF): https://fragbasic.fun/okf/index.md

@@ -7,6 +7,8 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MetricCell } from "@/components/data-display";
+import { JsonLd } from "@/components/json-ld";
+import { AiDefinition, AiFaq, AiSpecTable } from "@/components/seo/ai-blocks";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import {
     getAllBestPages,
@@ -21,6 +23,7 @@ import {
     getMousepadFullName,
 } from "@/lib/mousepads";
 import {
+    buildFaqJsonLd,
     buildMetadata,
 } from "@/lib/seo";
 
@@ -42,15 +45,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         return {};
     }
 
+    const picks = getBestPagePicks(page, getAllMousepads());
+    const pickNames = picks
+        .slice(0, 3)
+        .map((p) => getMousepadFullName(p.mousepad))
+        .join(", ");
+
     return buildMetadata({
         title: page.title,
-        description: `${page.description} See curated picks, best-use cases, and FPS-focused reasoning for each recommendation.`,
+        description: `${page.description} ${picks.length} tested picks including ${pickNames}. Best-use cases and FPS reasoning for each.`,
         path: `/best/${page.slug}`,
         keywords: [
             ...page.keywords,
             "best gaming mousepads",
             "fps mousepad guide",
             `best ${page.badge.toLowerCase()} mousepads`,
+            `best ${page.badge.toLowerCase()} mousepad`,
         ],
     });
 }
@@ -65,9 +75,11 @@ export default async function BestMousepadsPage({ params }: Props) {
 
     const picks = getBestPagePicks(page, getAllMousepads());
     const topPick = picks[0]?.mousepad;
+    const bestFaqs = getBestFaqs(page.title, page.badge, page.thesis);
 
     return (
         <main className="min-h-screen bg-background text-foreground">
+            <JsonLd data={buildFaqJsonLd(bestFaqs)} />
             <section className="border-b border-border bg-background">
                 <div className="page-hero">
                     <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.55fr)] lg:items-end">
@@ -157,6 +169,22 @@ export default async function BestMousepadsPage({ params }: Props) {
                         ) : null}
                     </div>
                 </div>
+            </section>
+
+            <section className="page-section space-y-6">
+                <AiDefinition
+                    heading={`What is the best mousepad for ${page.badge}?`}
+                    definition={`${page.description} ${page.thesis}`}
+                    bottomLine={`${picks[0] ? `${getMousepadFullName(picks[0].mousepad)} is the safest default (${picks[0].bestFor})` : page.thesis}`}
+                />
+                <AiSpecTable
+                    heading={`${page.title}: picks at a glance`}
+                    rows={picks.map((pick, index) => ({
+                        feature: `#${index + 1} ${getMousepadFullName(pick.mousepad)}`,
+                        value: `${pick.reason} Best for: ${pick.bestFor}`,
+                    }))}
+                />
+                <AiFaq items={bestFaqs} />
             </section>
 
             <section
@@ -268,6 +296,27 @@ function PickRow({
             </div>
         </article>
     );
+}
+
+function getBestFaqs(title: string, badge: string, thesis: string) {
+    return [
+        {
+            q: `What is the best mousepad for ${badge}?`,
+            a: `${title} picks balance stopping power, micro-adjustments, and comfort. ${thesis}`,
+        },
+        {
+            q: `Should I pick control or speed for ${badge}?`,
+            a: `Pick control if you overflick or hold angles; pick balanced-control if you clear wide or track fast. The picks table above lists which pads suit each style.`,
+        },
+        {
+            q: `How were these ${badge} picks chosen?`,
+            a: `Picks are ranked from the tracked FragBasic database for the page theme — feel data and FPS use case, not brand hype. Each pick lists best-for and reasoning.`,
+        },
+        {
+            q: `What if I play in a humid room?`,
+            a: `Check the humidity rating on each pick's review page. High humidity resistance matters more than the broad control/speed label for sweaty hands.`,
+        },
+    ];
 }
 
 function MiniStat({ label, value }: { label: string; value: string }) {

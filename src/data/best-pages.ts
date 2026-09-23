@@ -203,6 +203,10 @@ export const bestPages = [
     ],
     keywords: [
       "best valorant mousepads",
+      "best valorant mousepad",
+      "best mousepads for valorant",
+      "best mousepad for valorant",
+      "best mouse pad for valorant",
       "valorant mousepad",
       "tac fps mousepad",
       "best mousepad for valorant",
