@@ -8,8 +8,11 @@ import { getBestPageSlugs } from "@/data/best-pages";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
-  const now = new Date();
 
+  // NOTE: only emit lastModified where we have a real source date (IEMs).
+  // Emitting `new Date()` for every URL fakes freshness and hurts AI/trust
+  // signals. Mousepads/comparisons/best-pages have no updatedAt field yet —
+  // omit lastModified until one is added rather than lying.
   const staticRoutes = [
     "",
     "/mousepads",
@@ -24,14 +27,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/best",
   ].map((path) => ({
     url: `${siteUrl}${path}`,
-    lastModified: now,
     changeFrequency: "weekly" as const,
     priority: path === "" ? 1 : 0.8,
   }));
 
   const mousepadRoutes = getAllMousepads().map((mousepad) => ({
     url: `${siteUrl}/mousepads/${mousepad.slug}`,
-    lastModified: now,
     changeFrequency: "weekly" as const,
     priority: 0.9,
     images: [`${siteUrl}${mousepad.images.main}`],
@@ -39,7 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const iemRoutes = getAllIems().map((iem) => ({
     url: `${siteUrl}/iems/${iem.slug}`,
-    lastModified: now,
+    lastModified: iem.updatedAt,
     changeFrequency: "weekly" as const,
     priority: 0.86,
     images: [`${siteUrl}${iem.images.main}`],
@@ -47,14 +48,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const comparisonRoutes = getAllComparisons().map((comparison) => ({
     url: `${siteUrl}/mousepads/compare/${comparison.slug}`,
-    lastModified: now,
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
 
   const bestRoutes = getBestPageSlugs().map((slug) => ({
     url: `${siteUrl}/best/${slug}`,
-    lastModified: now,
     changeFrequency: "weekly" as const,
     priority: 0.85,
   }));

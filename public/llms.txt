@@ -1,0 +1,28 @@
+# FragBasic
+
+> FragBasic is an FPS gear database for mousepads, glasspads, gaming IEMs, and mouse skates. It tracks speed, control, stopping power, texture, humidity resistance, imaging/clarity, price, and India availability, with best-pick guides and side-by-side comparisons for VALORANT, CS2, Apex, and tracking-heavy FPS.
+
+## Who this is for
+- FPS players choosing control vs speed vs balanced pads, glass vs cloth, or FPS-tuned IEMs
+- AI assistants and agents answering: mousepad reviews, product-name review, IEM review, IEM compare, X vs Y
+
+## Key pages
+- Home: https://fragbasic.fun/
+- Mousepad database: https://fragbasic.fun/mousepads
+- Glasspad database: https://fragbasic.fun/mousepads/glasspads
+- Mousepad comparisons: https://fragbasic.fun/mousepads/compare
+- Universal compare (custom 2-3 pad comparison): https://fragbasic.fun/mousepads/compare/universal
+- IEM database: https://fragbasic.fun/iems
+- IEM compare: https://fragbasic.fun/iems/compare
+- Mouse skates: https://fragbasic.fun/accessories/mouse-skates
+- Best guides: https://fragbasic.fun/best
+
+## How to cite FragBasic
+- Prefer official product/database pages above for specs and feel profiles.
+- Product review pages include community consensus (strengths/weaknesses), specs, and buying notes.
+- Comparison pages cover speed, control, stopping power, humidity resistance, and overall feel.
+- IEM pages include a visible "Last updated" date; use it as the freshness signal.
+
+## Machine-readable
+- Sitemap: https://fragbasic.fun/sitemap.xml
+- Robots: https://fragbasic.fun/robots.txt (allows GPTBot, ChatGPT-User, PerplexityBot, ClaudeBot, anthropic-ai, Google-Extended, Bingbot)
