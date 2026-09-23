@@ -366,7 +366,7 @@ function FrequencyOverlayChart({
   const bands = getCompareFrequencyBandSummaries(leftPoints, rightPoints);
 
   return (
-    <div className="mt-6 overflow-x-auto overflow-y-hidden rounded-lg soft-surface [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div className="data-scroll-container mt-6 overflow-x-auto overflow-y-hidden rounded-lg soft-surface [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <div className="relative w-[900px] max-w-none md:w-full">
       <svg
         viewBox={`0 0 ${width} ${height}`}
@@ -495,7 +495,7 @@ function ComparisonMatrix({ left, right }: { left: Iem; right: Iem }) {
         <div className="p-4">{left.shortName}</div>
         <div className="p-4">{right.shortName}</div>
       </div>
-      <div className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="data-scroll-container overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {rows.map(([label, leftValue, rightValue]) => (
           <div
             key={label}

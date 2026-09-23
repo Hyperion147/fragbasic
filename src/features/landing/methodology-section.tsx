@@ -25,7 +25,7 @@ const steps = [
 export function MethodologySection() {
   return (
     <>
-      <section className="landing-noise overflow-hidden border border-white/7 bg-[#101014] sm:hidden">
+      <section className="overflow-hidden border border-white/7 bg-[#101014] sm:hidden">
         <div className="col-span-2 border-b border-white/7 p-4">
           <p className="text-[10px] font-medium uppercase text-brand-hover">The FragBasic method</p>
           <h2 className="mt-2 text-2xl font-semibold leading-none tracking-[-.04em]">

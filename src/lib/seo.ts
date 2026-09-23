@@ -240,6 +240,7 @@ export function buildProductJsonLd({
     name: string;
     body: string;
     author: string;
+    authorUrl?: string;
     datePublished?: string;
     rating?: number;
     bestRating?: number;
@@ -267,8 +268,9 @@ export function buildProductJsonLd({
       name: review.name,
       reviewBody: review.body,
       author: {
-        "@type": "Team",
+        "@type": "Person",
         name: review.author,
+        url: review.authorUrl ?? getAbsoluteUrl("/about"),
       },
       publisher: {
         "@type": "Organization",
@@ -314,6 +316,21 @@ function buildReviewNotes(notes?: string[]) {
       "@type": "ListItem",
       position: index + 1,
       name: note,
+    })),
+  };
+}
+
+export function buildFaqJsonLd(items: Array<{ q: string; a: string }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
     })),
   };
 }

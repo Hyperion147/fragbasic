@@ -40,7 +40,7 @@ const footerGroups = [
 export function SiteFooter() {
 
     return (
-        <footer className="landing-noise relative isolate overflow-hidden border-y border-white/8 bg-[#08080b] text-white">
+        <footer className="relative isolate overflow-hidden border-y border-white/8 bg-[#08080b] text-white">
             <div className="grid border-y border-white/8 sm:grid-cols-3 lg:border-l lg:border-t-0 px-6">
                 {footerGroups.map((group) => (
                     <section

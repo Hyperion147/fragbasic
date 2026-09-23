@@ -24,6 +24,7 @@ import {
 
 import { ClientShareButton } from "@/components/ClientShareButton";
 import { JsonLd } from "@/components/json-ld";
+import { AiDefinition, AiFaq, AiSpecTable } from "@/components/seo/ai-blocks";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -40,7 +41,7 @@ import {
     getIemFullName,
     getIemScoreTone,
 } from "@/lib/iems";
-import { buildMetadata, buildProductJsonLd } from "@/lib/seo";
+import { buildFaqJsonLd, buildMetadata, buildProductJsonLd, getSiteUrl } from "@/lib/seo";
 import type { Iem, IemFrequencyPoint } from "@/types/iem";
 
 type Props = {
@@ -84,6 +85,24 @@ export default async function IemPage({ params }: Props) {
         notFound();
     }
     const fullName = getIemFullName(iem);
+    const iemFaqs = [
+        {
+            q: `Is ${fullName} good for Valorant and CS2?`,
+            a: `${fullName} is rated FPS ${formatIemRating(iem.ratings.fps)} with imaging ${formatIemRating(iem.ratings.imaging)}. It is listed for ${iem.bestFor.map(formatIemGame).join(", ")}, so shortlist it when footsteps and positioning matter most.`,
+        },
+        {
+            q: `What does ${fullName} sound like?`,
+            a: `${fullName} uses a ${formatIemDriverType(iem.driverType)} driver with a ${formatIemSoundSignature(iem.soundSignature).toLowerCase()} tuning. ${iem.communitySummary}`,
+        },
+        {
+            q: `What is the price of ${fullName} in India?`,
+            a: `${fullName} costs ${formatIemPrice(iem)} and is ${formatIemAvailability(iem.buying.availability)}. Check the buying panel for current stores.`,
+        },
+        {
+            q: `Should I buy ${fullName} for competitive FPS?`,
+            a: `${iem.officialReview.verdict} Avoid it if you need ${iem.avoidIf.slice(0, 2).join("; ") || "a different fit or tuning"}.`,
+        },
+    ];
 
     return (
         <main className="min-h-screen bg-background text-foreground">
@@ -103,6 +122,7 @@ export default async function IemPage({ params }: Props) {
                         name: `${fullName} review`,
                         body: iem.officialReview.verdict,
                         author: "FragBasic Review Team",
+                        authorUrl: `${getSiteUrl()}/about`,
                         datePublished: iem.updatedAt,
                         rating: iem.ratings.fragbasic,
                         bestRating: 10,
@@ -111,7 +131,8 @@ export default async function IemPage({ params }: Props) {
                     },
                 })}
             />
-            <section className="border-b border-border bg-[radial-gradient(circle_at_78%_18%,color-mix(in_srgb,var(--iem-glow)_12%,transparent),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0))]">
+            <JsonLd data={buildFaqJsonLd(iemFaqs)} />
+            <section className="border-b border-border bg-background">
                 <div className="w-full px-4 pt-6 md:px-6 lg:px-8 xl:px-10">
                     <SiteBreadcrumbs
                         items={[
@@ -203,6 +224,31 @@ export default async function IemPage({ params }: Props) {
             </section>
 
             <div className="page-section space-y-6">
+                <AiDefinition
+                    heading={`What is ${fullName}?`}
+                    definition={`${fullName} is a ${formatIemDriverType(iem.driverType)} IEM with a ${formatIemSoundSignature(iem.soundSignature).toLowerCase()} signature for FPS. ${iem.subtitle} ${iem.communitySummary}`}
+                    bottomLine={`${iem.officialReview.verdict} Best for ${iem.bestFor.slice(0, 3).map(formatIemGame).join(", ")}.`}
+                />
+                <AiSpecTable
+                    heading={`${fullName} specs at a glance`}
+                    rows={[
+                        { feature: "Driver", value: formatIemDriverType(iem.driverType) },
+                        { feature: "Sound signature", value: formatIemSoundSignature(iem.soundSignature) },
+                        {
+                            feature: "FPS ratings",
+                            value: `FPS ${formatIemRating(iem.ratings.fps)}, imaging ${formatIemRating(iem.ratings.imaging)}, value ${formatIemRating(iem.ratings.value)}.`,
+                        },
+                        {
+                            feature: "Best for",
+                            value: iem.bestFor.map(formatIemGame).join(", "),
+                        },
+                        {
+                            feature: "Price / availability",
+                            value: `${formatIemPrice(iem)} — ${formatIemAvailability(iem.buying.availability)}.`,
+                        },
+                    ]}
+                />
+                <AiFaq items={iemFaqs} />
                 <IemDisclosure title="Quick verdict" defaultOpen>
                     <ScorePanel iem={iem} />
                 </IemDisclosure>
@@ -574,7 +620,7 @@ function FrequencyResponseChart({
     });
 
     return (
-        <div className="mt-6 overflow-x-auto overflow-y-hidden rounded-lg soft-surface scrollbar-none [&::-webkit-scrollbar]:hidden">
+        <div className="data-scroll-container mt-6 min-w-0 max-w-full overflow-x-auto overflow-y-hidden rounded-lg soft-surface scrollbar-none [&::-webkit-scrollbar]:hidden">
             <div className="relative w-240 max-w-none md:w-full">
                 <svg
                     viewBox={`0 0 ${width} ${height}`}

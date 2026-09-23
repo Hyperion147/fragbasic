@@ -24,8 +24,7 @@ const principles = [
 
 export function WhySection() {
   return (
-    <section className="landing-noise relative isolate overflow-hidden border-y border-white/8 bg-[#0a0a0e]">
-      <div className="landing-hero-lines absolute inset-0 -z-10 opacity-15" />
+    <section className="relative isolate overflow-hidden border-y border-white/8 bg-[#0a0a0e]">
 
       <div className="grid grid-cols-2 sm:hidden">
         <article className="flex min-h-40 flex-col border-b border-r border-white/8 bg-brand/[.06] p-4">

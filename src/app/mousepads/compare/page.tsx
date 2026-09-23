@@ -16,11 +16,13 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
     title: "Mousepad Comparisons and Side-by-Side Matchups",
     description:
-        "Read published mousepad comparisons and compare FPS pads side by side across speed, control, stopping power, glide feel, and game fit.",
+        "Compare Artisan Zero Soft vs LGG Saturn Pro Soft, ATK Crimson vs Wallhack SP-005 and more FPS pad matchups side by side across speed, control, stopping power, and game fit. Or build a custom 2-3 pad comparison.",
     path: "/mousepads/compare",
     keywords: [
         "mousepad comparison",
         "artisan zero vs lgg saturn pro",
+        "artisan zero soft vs lgg saturn pro soft",
+        "atk crimson vs wallhack sp-005",
         "mousepad compare tool",
         "fps pad comparison",
         "mousepad vs mousepad",

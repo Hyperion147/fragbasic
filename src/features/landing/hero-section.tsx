@@ -20,7 +20,7 @@ export function HeroSection({}: Props) {
     const reduceMotion = useReducedMotion();
 
     return (
-        <section className="landing-noise relative isolate overflow-hidden border-b border-white/8 bg-[#09090c] lg:min-h-[calc(100svh-4rem)]">
+        <section className="relative isolate overflow-hidden border-b border-white/8 bg-[#09090c] lg:min-h-[calc(100svh-4rem)]">
             <motion.div
                 initial={reduceMotion ? false : { opacity: 0, scale: 1.025 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -35,7 +35,6 @@ export function HeroSection({}: Props) {
                     sizes="100vw"
                     className="object-cover object-[90%_center]"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,11,.98)_0%,rgba(8,8,11,.2)_28%,rgba(8,8,11,.16)_51%,rgba(8,8,11,.08)_78%,rgba(8,8,11,.2)_100%),linear-gradient(0deg,rgba(8,8,11,.72)_0%,transparent_38%,rgba(8,8,11,.12)_100%)]" />
             </motion.div>
             <motion.div
                 aria-hidden="true"
@@ -51,7 +50,6 @@ export function HeroSection({}: Props) {
                 }}
                 className="absolute -right-24 top-[8%] -z-20 hidden size-[48rem] rounded-full bg-brand/18 blur-[150px] lg:block"
             />
-            <div className="landing-hero-lines absolute inset-0 -z-10 opacity-40" />
 
             <div className="relative z-10 mx-auto flex flex-col px-5 sm:px-8 lg:min-h-[calc(100svh-4rem)] lg:px-12 xl:px-16">
                 <div className="grid flex-1 items-center gap-0 pb-0 pt-6 sm:gap-4 sm:pb-8 sm:pt-10 lg:grid-cols-[.9fr_1.1fr] lg:gap-8 lg:pb-4 lg:pt-8 xl:grid-cols-[.82fr_1.18fr]">

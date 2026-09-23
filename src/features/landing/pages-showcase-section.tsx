@@ -71,8 +71,7 @@ export function PagesShowcaseSection({
   const values = [mousepadCount, glasspadCount, iemCount, bestPageCount];
 
   return (
-    <section className="landing-noise relative isolate overflow-hidden border-y border-white/8 bg-[#0b0b0f]">
-      <div className="landing-hero-lines absolute inset-0 -z-10 opacity-20" />
+    <section className="relative isolate overflow-hidden border-y border-white/8 bg-[#0b0b0f]">
 
       <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-4">
         {destinations.map((item, index) => {
