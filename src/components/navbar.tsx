@@ -4,10 +4,13 @@ import { usePathname } from "next/navigation";
 import {
     ArrowRight,
     ChevronRight,
+    Crosshair,
     Gauge,
     Grid2x2,
     Menu,
+    Shield,
     Sparkles,
+    Target,
     Trophy,
     Zap,
 } from "lucide-react";
@@ -56,25 +59,25 @@ const bestMenuLinks: Array<{
         title: "Best Control Mousepads",
         body: "Steadier stopping power and calmer corrections",
         href: "/best/control-mousepads",
-        icon: Trophy,
+        icon: Shield,
     },
     {
         title: "Best Speed Mousepads",
         body: "Lower friction for tracking and target switches",
         href: "/best/speed-mousepads",
-        icon: Trophy,
+        icon: Zap,
     },
     {
         title: "Best VALORANT Mousepads",
         body: "Angle holding and micro-corrections for tac FPS",
         href: "/best/valorant-mousepads",
-        icon: Trophy,
+        icon: Crosshair,
     },
     {
         title: "Best CS2 Mousepads",
         body: "Counter-strafe stability and spray control",
         href: "/best/cs2-mousepads",
-        icon: Trophy,
+        icon: Target,
     },
 ] as const;
 const accessoryMenuLinks: Array<{
@@ -139,8 +142,8 @@ export function SiteNavbar() {
                     <UniversalSearch />
                     <div className="hidden items-center gap-4 md:flex">
                         {pathname === "/" ? (
-                            <Button size="sm" variant="outline" asChild>
-                                <Link href="https://forms.gle/5b1QejGptx63eQHw9">
+                            <Button size="sm" variant="secondary" asChild>
+                                <Link href="https://forms.gle/5b1QejGptx63eQHw9" target="_blank">
                                     <Sparkles className="size-4" />
                                     Submit a Review
                                 </Link>

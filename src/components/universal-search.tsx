@@ -169,11 +169,11 @@ export function UniversalSearch() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Search FragBasic"
-        className="hidden h-9 items-center gap-2 rounded-full border border-transparent bg-background/60 px-3 text-sm text-muted-foreground shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_8%,transparent)] transition-colors hover:text-foreground md:flex lg:w-56"
+        className="hidden h-9 items-center gap-2 rounded-md border border-transparent bg-background/60 px-3 text-sm text-muted-foreground shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_8%,transparent)] transition-colors hover:text-foreground md:flex lg:w-56"
       >
         <Search className="size-4 shrink-0" />
         <span className="flex-1 truncate text-left">Search FragBasic</span>
-        <kbd className="hidden shrink-0 rounded border border-white/10 bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground lg:inline-block">
+        <kbd className="hidden shrink-0 rounded border border-white/10 bg-white/4 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground lg:inline-block">
           ⌘K
         </kbd>
       </button>

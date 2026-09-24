@@ -7,8 +7,8 @@ import {
     Gauge,
     Shield,
     Sparkles,
+    Target,
     ThermometerSun,
-    Trophy,
     Zap,
 } from "lucide-react";
 
@@ -41,7 +41,7 @@ const pageIcons = {
     "control-mousepads": Shield,
     "speed-mousepads": Zap,
     "valorant-mousepads": Crosshair,
-    "cs2-mousepads": Trophy,
+    "cs2-mousepads": Target,
     glasspads: Sparkles,
     "humidity-resistant-mousepads": ThermometerSun,
 } as const;
