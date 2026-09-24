@@ -40,7 +40,6 @@ import {
   buildFaqJsonLd,
   buildProductJsonLd,
   buildMetadata,
-  getSiteUrl,
 } from "@/lib/seo";
 
 type PageProps = {
@@ -105,7 +104,6 @@ export default async function MousepadPage({ params }: PageProps) {
             name: `${pad.brand} ${pad.name} review`,
             body: productDescription,
             author: "FragBasic Review Team",
-            authorUrl: `${getSiteUrl()}/about`,
             positiveNotes: pad.communityConsensus.strengths,
             negativeNotes: pad.communityConsensus.weaknesses,
           },
