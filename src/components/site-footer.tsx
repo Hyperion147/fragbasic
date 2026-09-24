@@ -67,7 +67,7 @@ export function SiteFooter() {
             </div>
 
             <div className="flex flex-col gap-4 px-5 py-6 text-xs text-white/32 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12 xl:px-16">
-                <p>© 2026 FragBasic. Independent FPS gear research.</p>
+                <p>© 2026 FragBasic. FPS gear research.</p>
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
                     <span>No sponsored rankings</span>
                     <span>Built in India</span>

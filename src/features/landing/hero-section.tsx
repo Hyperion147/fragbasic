@@ -7,16 +7,9 @@ import { motion, useReducedMotion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
 
-type Props = {
-    mousepadCount: number;
-    glasspadCount: number;
-    iemCount: number;
-    bestPageCount: number;
-};
-
 const ease = [0.22, 1, 0.36, 1] as const;
 
-export function HeroSection({}: Props) {
+export function HeroSection() {
     const reduceMotion = useReducedMotion();
 
     return (
@@ -63,7 +56,7 @@ export function HeroSection({}: Props) {
                             className="inline-flex items-center gap-2 rounded-full border border-brand-hover/30 bg-brand/10 px-3 py-1.5 text-[10px] font-semibold uppercase text-brand-hover backdrop-blur-sm sm:text-[11px]"
                         >
                             <span className="size-1.5 rounded-full bg-brand-hover shadow-[0_0_12px_var(--brand-glow)]" />
-                            Independent FPS gear intelligence
+                            FPS gear research
                         </motion.div>
 
                         <motion.h1
@@ -72,11 +65,24 @@ export function HeroSection({}: Props) {
                             }
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.82, delay: 0.06, ease }}
-                            className="mt-6 max-w-[10ch] text-[clamp(3.15rem,15vw,5rem)] font-semibold leading-[.9] tracking-[-.065em] text-white sm:mt-7 lg:text-[clamp(3.75rem,7vw,7.8rem)]"
+                            className="mt-5 max-w-[12ch] text-balance text-[clamp(2.75rem,10vw,4rem)] font-semibold leading-[1.02] text-white sm:mt-6 lg:text-[clamp(3.25rem,4.8vw,5.25rem)]"
                         >
-                            Gear that feels made for{" "}
-                            <span className="text-brand-hover">you.</span>
+                            Research gear without the{" "}
+                            <span className="text-brand-hover">rabbit hole.</span>
                         </motion.h1>
+
+                        <motion.p
+                            initial={
+                                reduceMotion ? false : { opacity: 0, y: 18 }
+                            }
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.72, delay: 0.14, ease }}
+                            className="mt-4 max-w-[44ch] text-pretty text-[15px] font-normal leading-[1.65] text-white/60 sm:mt-5 sm:text-lg sm:leading-[1.7] lg:text-[1.25rem] lg:leading-[1.7]"
+                        >
+                            Compare how mousepads, glasspads, IEMs and skates
+                            actually differ by feel, use case, price and
+                            availability in India.
+                        </motion.p>
 
                         <motion.div
                             initial={
@@ -84,7 +90,7 @@ export function HeroSection({}: Props) {
                             }
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.72, delay: 0.21, ease }}
-                            className="mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row"
+                            className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row"
                         >
                             <Button
                                 size="lg"
@@ -113,7 +119,7 @@ export function HeroSection({}: Props) {
                             initial={reduceMotion ? false : { opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.7, delay: 0.3 }}
-                            className="mt-7 flex flex-col items-start gap-3 text-xs text-white/46 sm:mt-9 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:text-sm"
+                            className="mt-6 flex flex-col items-start gap-3 text-xs text-white/46 sm:mt-7 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:text-sm"
                         >
                             <Proof label="No sponsored rankings" />
                             <Proof label="Community + hands-on data" />

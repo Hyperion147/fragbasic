@@ -33,6 +33,7 @@ export default function HomePage() {
   const glasspadCount = mousepads.filter(
     (mousepad) => mousepad.category === "glass",
   ).length;
+  const mousepadCount = mousepads.length - glasspadCount;
   const bestPageCount = getAllBestPages().length;
   const publishedComparisons = getPublishedComparisons();
   const comparisons = publishedComparisons
@@ -65,11 +66,11 @@ export default function HomePage() {
           description:
             "A searchable FPS gear database for mousepads, glasspads, IEMs, mouse skates, best lists, and side-by-side comparisons.",
           path: "/",
-          itemCount: mousepads.length + iems.length,
+          itemCount: mousepadCount + glasspadCount + iems.length,
         })}
       />
       <HomeExperience
-        mousepadCount={mousepads.length}
+        mousepadCount={mousepadCount}
         glasspadCount={glasspadCount}
         bestPageCount={bestPageCount}
         iemCount={iems.length}

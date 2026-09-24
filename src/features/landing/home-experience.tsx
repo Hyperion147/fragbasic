@@ -22,12 +22,7 @@ export function HomeExperience({
     return (
         <main className="min-h-screen overflow-hidden bg-background text-foreground">
             <RevealSection hero>
-                <HeroSection
-                    mousepadCount={mousepadCount}
-                    glasspadCount={glasspadCount}
-                    iemCount={iemCount}
-                    bestPageCount={bestPageCount}
-                />
+                <HeroSection />
             </RevealSection>
 
             <div className="w-full space-y-10 px-4 py-10 sm:space-y-20 sm:px-5 sm:py-16 md:space-y-28 md:px-6 md:py-24 lg:px-8">

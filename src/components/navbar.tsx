@@ -8,6 +8,7 @@ import {
     Grid2x2,
     Menu,
     Sparkles,
+    Trophy,
     Zap,
 } from "lucide-react";
 
@@ -29,31 +30,51 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { UniversalSearch } from "@/components/universal-search";
 import Image from "next/image";
 
 const directNavItems = [
+    { label: "Mousepads", href: "/mousepads" },
     { label: "GlassPads", href: "/mousepads/glasspads" },
     { label: "IEMs", href: "/iems" },
 ];
 
-const mousepadMenuLinks: Array<{
+const bestMenuLinks: Array<{
     title: string;
     body: string;
     href: string;
-    icon: typeof Grid2x2;
+    icon: typeof Trophy;
     badge?: string;
 }> = [
     {
-        title: "All Mousepads",
-        body: "Browse the full database by feel, surface & availability",
-        href: "/mousepads",
-        icon: Grid2x2,
+        title: "All Best Guides",
+        body: "Every best-pick guide in one place",
+        href: "/best",
+        icon: Trophy,
     },
     {
-        title: "Universal Compare",
-        body: "Build your own 2-3 pad matchup",
-        href: "/mousepads/compare/universal",
-        icon: Gauge,
+        title: "Best Control Mousepads",
+        body: "Steadier stopping power and calmer corrections",
+        href: "/best/control-mousepads",
+        icon: Trophy,
+    },
+    {
+        title: "Best Speed Mousepads",
+        body: "Lower friction for tracking and target switches",
+        href: "/best/speed-mousepads",
+        icon: Trophy,
+    },
+    {
+        title: "Best VALORANT Mousepads",
+        body: "Angle holding and micro-corrections for tac FPS",
+        href: "/best/valorant-mousepads",
+        icon: Trophy,
+    },
+    {
+        title: "Best CS2 Mousepads",
+        body: "Counter-strafe stability and spray control",
+        href: "/best/cs2-mousepads",
+        icon: Trophy,
     },
 ] as const;
 const accessoryMenuLinks: Array<{
@@ -81,46 +102,6 @@ const accessoryMenuLinks: Array<{
         body: "Pick 2-3 skates for a skate-specific matchup",
         href: "/accessories/mouse-skates/compare",
         icon: Gauge,
-    },
-] as const;
-const comparisonLinks = [
-    {
-        title: "Artisan Zero vs LGG Saturn Pro",
-        href: "/mousepads/compare/artisan-zero-soft-vs-lgg-saturn-pro-soft",
-    },
-    {
-        title: "LGG Saturn Pro vs Artisan Type-99",
-        href: "/mousepads/compare/lgg-saturn-pro-soft-vs-artisan-type-99-soft",
-    },
-    {
-        title: "Artisan Zero vs Pulsar Hyperion",
-        href: "/mousepads/compare/artisan-zero-soft-vs-pulsar-lgg-hyperion-soft",
-    },
-    {
-        title: "Zowie G-SR III vs LGG Saturn Pro",
-        href: "/mousepads/compare/zowie-g-sr-iii-vs-lgg-saturn-pro-soft",
-    },
-] as const;
-const bestGuideLinks = [
-    {
-        title: "Best mousepads home",
-        href: "/best",
-    },
-    {
-        title: "Best control mousepads",
-        href: "/best/control-mousepads",
-    },
-    {
-        title: "Best speed mousepads",
-        href: "/best/speed-mousepads",
-    },
-    {
-        title: "Best VALORANT mousepads",
-        href: "/best/valorant-mousepads",
-    },
-    {
-        title: "Best CS2 mousepads",
-        href: "/best/cs2-mousepads",
     },
 ] as const;
 
@@ -154,24 +135,27 @@ export function SiteNavbar() {
 
                 <DesktopNavigation pathname={pathname} />
 
-                <div className="hidden items-center gap-4 md:flex">
-                    {pathname === "/" ? (
-                        <Button size="sm" variant="outline" asChild>
-                            <Link href="https://forms.gle/5b1QejGptx63eQHw9">
-                                <Sparkles className="size-4" />
-                                Submit a Review
+                <div className="flex items-center gap-2 md:gap-4">
+                    <UniversalSearch />
+                    <div className="hidden items-center gap-4 md:flex">
+                        {pathname === "/" ? (
+                            <Button size="sm" variant="outline" asChild>
+                                <Link href="https://forms.gle/5b1QejGptx63eQHw9">
+                                    <Sparkles className="size-4" />
+                                    Submit a Review
+                                </Link>
+                            </Button>
+                        ) : null}
+                        <Button size="sm" asChild>
+                            <Link href={compareHref}>
+                                <Gauge className="size-4" />
+                                {compareLabel}
                             </Link>
                         </Button>
-                    ) : null}
-                    <Button size="sm" asChild>
-                        <Link href={compareHref}>
-                            <Gauge className="size-4" />
-                            {compareLabel}
-                        </Link>
-                    </Button>
-                </div>
+                    </div>
 
-                <MobileNavigation />
+                    <MobileNavigation />
+                </div>
             </div>
         </header>
     );
@@ -181,126 +165,6 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
     return (
         <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
-                <NavigationMenuItem>
-                    <NavigationMenuTrigger
-                        data-active={pathname.startsWith("/mousepads") || pathname.startsWith("/best")}
-                        className="px-3 py-1.5"
-                    >
-                        Mousepads
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <div className="w-[min(880px,calc(100vw-4rem))] overflow-hidden rounded-lg bg-card/72 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)]">
-                            <div className="grid grid-cols-[1.12fr_1.38fr_1.05fr]">
-                                <div className="p-5 shadow-[inset_-1px_0_0_color-mix(in_srgb,var(--foreground)_5%,transparent)]">
-                                    <MousepadsMenuHeading title="Mousepads" />
-                                    <div className="mt-4 space-y-2.5">
-                                        {mousepadMenuLinks.map((item) => (
-                                            <MousepadsMenuFeatureLink
-                                                key={item.title}
-                                                href={item.href}
-                                                title={item.title}
-                                                body={item.body}
-                                                icon={item.icon}
-                                                badge={item.badge}
-                                            />
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="p-5 shadow-[inset_-1px_0_0_color-mix(in_srgb,var(--foreground)_5%,transparent)]">
-                                    <MousepadsMenuHeading title="Popular comparisons" />
-                                    <div className="mt-4 space-y-1.5">
-                                        {comparisonLinks.map((item) => (
-                                            <NavigationMenuLink
-                                                key={item.title}
-                                                asChild
-                                            >
-                                                <Link
-                                                    href={item.href}
-                                                    className="flex justify-between rounded-md px-2 py-2 text-sm leading-5 text-foreground/76 hover:bg-[color-mix(in_srgb,var(--brand)_8%,transparent)] hover:text-foreground focus:bg-[color-mix(in_srgb,var(--brand)_8%,transparent)]"
-                                                >
-                                                    <span>{item.title}</span>
-                                                    <ChevronRight className="size-4 text-muted-foreground" />
-                                                </Link>
-                                            </NavigationMenuLink>
-                                        ))}
-                                    </div>
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        asChild
-                                        className="mt-4 w-full"
-                                    >
-                                        <Link href="/mousepads/compare/universal">
-                                            Open Universal Compare
-                                            <ArrowRight className="size-4" />
-                                        </Link>
-                                    </Button>
-                                </div>
-
-                                <div className="p-5">
-                                    <MousepadsMenuHeading title="Best pages" />
-                                    <div className="mt-4 space-y-4">
-                                        <div className="space-y-1.5">
-                                            {bestGuideLinks.map((item) => (
-                                                <NavigationMenuLink
-                                                    key={item.href}
-                                                    asChild
-                                                >
-                                                    <Link
-                                                        href={item.href}
-                                                        className="flex items-center justify-between rounded-md px-2 py-2 text-sm leading-5 text-foreground/78 hover:bg-[color-mix(in_srgb,var(--brand)_8%,transparent)] hover:text-foreground focus:bg-[color-mix(in_srgb,var(--brand)_8%,transparent)]"
-                                                    >
-                                                        <span>{item.title}</span>
-                                                        <ChevronRight className="size-4 text-muted-foreground" />
-                                                    </Link>
-                                                </NavigationMenuLink>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        asChild
-                                        className="mt-4 w-full align-bottom"
-                                    >
-                                        <Link href="/best">
-                                            Open best pages
-                                            <ArrowRight className="size-4" />
-                                        </Link>
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
-                    </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                    <NavigationMenuTrigger
-                        data-active={pathname.startsWith("/accessories")}
-                        className="px-3 py-1.5"
-                    >
-                        Accessories
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <div className="w-[420px] overflow-hidden rounded-lg bg-card/72 p-5 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)]">
-                            <MousepadsMenuHeading title="Accessories" />
-                            <div className="mt-4 space-y-2.5">
-                                {accessoryMenuLinks.map((item) => (
-                                    <MousepadsMenuFeatureLink
-                                        key={item.title}
-                                        href={item.href}
-                                        title={item.title}
-                                        body={item.body}
-                                        icon={item.icon}
-                                        badge={item.badge}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                    </NavigationMenuContent>
-                </NavigationMenuItem>
-
                 {directNavItems.map((item) => (
                     <NavigationMenuItem key={item.href}>
                         <NavigationMenuLink
@@ -328,6 +192,58 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
                         </NavigationMenuLink>
                     </NavigationMenuItem>
                 ))}
+
+                <NavigationMenuItem>
+                    <NavigationMenuTrigger
+                        data-active={pathname.startsWith("/accessories")}
+                        className="px-3 py-1.5"
+                    >
+                        Accessories
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                        <div className="w-[420px] overflow-hidden rounded-lg bg-card/72 p-5 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)]">
+                            <MousepadsMenuHeading title="Accessories" />
+                            <div className="mt-4 space-y-2.5">
+                                {accessoryMenuLinks.map((item) => (
+                                    <MousepadsMenuFeatureLink
+                                        key={item.title}
+                                        href={item.href}
+                                        title={item.title}
+                                        body={item.body}
+                                        icon={item.icon}
+                                        badge={item.badge}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                    <NavigationMenuTrigger
+                        data-active={pathname.startsWith("/best")}
+                        className="px-3 py-1.5"
+                    >
+                        Best Reviews
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                        <div className="w-[420px] overflow-hidden rounded-lg bg-card/72 p-5 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)]">
+                            <MousepadsMenuHeading title="Best Reviews" />
+                            <div className="mt-4 space-y-2.5">
+                                {bestMenuLinks.map((item) => (
+                                    <MousepadsMenuFeatureLink
+                                        key={item.title}
+                                        href={item.href}
+                                        title={item.title}
+                                        body={item.body}
+                                        icon={item.icon}
+                                        badge={item.badge}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </NavigationMenuContent>
+                </NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu>
     );
@@ -344,6 +260,14 @@ function MousepadsMenuHeading({ title }: { title: string }) {
 function isActivePath(pathname: string, href: string) {
     if (href === "/") {
         return pathname === "/";
+    }
+
+    if (href === "/mousepads") {
+        return (
+            pathname === "/mousepads" ||
+            (pathname.startsWith("/mousepads/") &&
+                !pathname.startsWith("/mousepads/glasspads"))
+        );
     }
 
     if (href === "/iems" && pathname.startsWith("/iems/compare")) {
@@ -409,13 +333,6 @@ function MobileNavigation() {
                 { label: "All Mousepads", href: "/mousepads" },
                 { label: "GlassPads", href: "/mousepads/glasspads" },
                 { label: "Universal Compare", href: "/mousepads/compare/universal" },
-                { label: "Best mousepads home", href: "/best" },
-                ...bestGuideLinks
-                    .filter((item) => item.href !== "/best")
-                    .map((item) => ({
-                        label: item.title,
-                        href: item.href,
-                    })),
             ],
         },
         {
@@ -434,6 +351,14 @@ function MobileNavigation() {
                 { label: "Browse Skates", href: "/accessories/mouse-skates/browse" },
                 { label: "Compare Skates", href: "/accessories/mouse-skates/compare" },
             ],
+        },
+        {
+            title: "Best Reviews",
+            icon: Trophy,
+            items: bestMenuLinks.map((item) => ({
+                label: item.title,
+                href: item.href,
+            })),
         },
     ] as const;
 
