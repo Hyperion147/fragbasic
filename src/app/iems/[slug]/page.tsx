@@ -41,7 +41,7 @@ import {
     getIemFullName,
     getIemScoreTone,
 } from "@/lib/iems";
-import { buildFaqJsonLd, buildMetadata, buildProductJsonLd, getSiteUrl } from "@/lib/seo";
+import { buildFaqJsonLd, buildMetadata, buildProductJsonLd } from "@/lib/seo";
 import type { Iem, IemFrequencyPoint } from "@/types/iem";
 
 type Props = {
@@ -122,7 +122,6 @@ export default async function IemPage({ params }: Props) {
                         name: `${fullName} review`,
                         body: iem.officialReview.verdict,
                         author: "FragBasic Review Team",
-                        authorUrl: `${getSiteUrl()}/about`,
                         datePublished: iem.updatedAt,
                         rating: iem.ratings.fragbasic,
                         bestRating: 10,

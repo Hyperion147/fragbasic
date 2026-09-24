@@ -270,7 +270,6 @@ export function buildProductJsonLd({
       author: {
         "@type": "Person",
         name: review.author,
-        url: review.authorUrl ?? getAbsoluteUrl("/about"),
       },
       publisher: {
         "@type": "Organization",

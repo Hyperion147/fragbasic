@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { getAllComparisons } from "@/lib/comparisons";
+import { getPublishedComparisons } from "@/lib/comparisons";
 import { getAllIems } from "@/lib/iems";
 import { getAllMousepads } from "@/lib/mousepads";
 import { getSiteUrl } from "@/lib/seo";
@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/mousepads",
     "/mousepads/glasspads",
+    "/mousepads/guides",
     "/mousepads/compare",
     "/mousepads/compare/universal",
     "/iems",
@@ -46,7 +47,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     images: [`${siteUrl}${iem.images.main}`],
   }));
 
-  const comparisonRoutes = getAllComparisons().map((comparison) => ({
+  // NOTE: published only — drafts render publicly today, but must not be
+  // handed to crawlers until reviewed.
+  const comparisonRoutes = getPublishedComparisons().map((comparison) => ({
     url: `${siteUrl}/mousepads/compare/${comparison.slug}`,
     changeFrequency: "weekly" as const,
     priority: 0.8,
