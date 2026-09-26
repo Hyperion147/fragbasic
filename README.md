@@ -85,6 +85,10 @@ npm run dev
 
 Open `http://localhost:3000`.
 
+## Contributing and License
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, contribution guidelines, and validation commands. FragBasic is licensed under the [MIT License](LICENSE). Third-party assets and trademarks may have separate terms.
+
 ## Quality Checks
 
 ```bash
