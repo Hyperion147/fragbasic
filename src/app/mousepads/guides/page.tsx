@@ -1,8 +1,23 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+    title: "FPS Mousepad Guides",
+    description:
+        "Learn how control, speed, stopping power, texture, and humidity affect mousepad feel, and compare surfaces before choosing your next FPS pad.",
+    path: "/mousepads/guides",
+    keywords: [
+        "mousepad guide",
+        "control vs speed mousepad",
+        "how to choose a mousepad",
+        "mousepad humidity guide",
+    ],
+});
 
 const guidePreviews = [
     {
