@@ -90,7 +90,7 @@ export function PagesShowcaseSection({
                 <span className="flex size-9 items-center justify-center rounded-full border border-white/10 bg-white/[.025] text-white/55 transition-all duration-500 group-hover:border-brand-hover/30 group-hover:bg-brand/12 group-hover:text-brand-hover sm:size-12">
                   <Icon className="size-4 sm:size-5" />
                 </span>
-                <span className="font-mono text-[10px] text-white/24 sm:text-xs">
+                <span className="font-mono text-[10px] text-white/70 sm:text-xs">
                   0{index + 1} / 04
                 </span>
               </div>
@@ -102,7 +102,7 @@ export function PagesShowcaseSection({
                 <h3 className="text-lg font-semibold tracking-[-.04em] text-white sm:mt-3 sm:text-4xl">
                   {item.title}
                 </h3>
-                <p className="mt-4 hidden max-w-sm text-sm leading-6 text-white/45 sm:block sm:text-base sm:leading-7">
+                <p className="mt-4 hidden max-w-sm text-sm leading-6 text-white/70 sm:block sm:text-base sm:leading-7">
                   {item.description}
                 </p>
               </div>
@@ -112,7 +112,7 @@ export function PagesShowcaseSection({
                   <p className="text-2xl font-semibold leading-none tracking-[-.055em] text-white sm:text-5xl">
                     {values[index]}
                   </p>
-                  <p className="mt-2 hidden text-[10px] font-medium uppercase text-white/32 sm:block sm:text-xs">
+                  <p className="mt-2 hidden text-[10px] font-medium uppercase text-white/70 sm:block sm:text-xs">
                     {item.statLabel}
                   </p>
                 </div>

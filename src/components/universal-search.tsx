@@ -168,7 +168,6 @@ export function UniversalSearch() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Search FragBasic"
         className="hidden h-9 items-center gap-2 rounded-md border border-transparent bg-background/60 px-3 text-sm text-muted-foreground shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_8%,transparent)] transition-colors hover:text-foreground md:flex lg:w-56"
       >
         <Search className="size-4 shrink-0" />

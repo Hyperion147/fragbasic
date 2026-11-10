@@ -41,7 +41,7 @@ export function WhySection() {
               className={`flex min-h-40 flex-col border-white/8 p-4 ${index === 0 ? "border-b" : ""} ${index === 1 ? "border-r" : ""}`}
             >
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[9px] text-white/25">{principle.number}</span>
+                <span className="font-mono text-[9px] text-white/70">{principle.number}</span>
                 <Icon className="size-4 text-brand-hover" />
               </div>
               <h3 className="mt-auto text-sm font-semibold leading-tight text-white">{principle.title}</h3>
@@ -65,11 +65,11 @@ export function WhySection() {
               <p className="text-[10px] font-semibold uppercase text-brand-hover sm:text-xs">
                 The desk behind the database
               </p>
-              <p className="mt-2 max-w-sm text-sm leading-6 text-white/58">
+              <p className="mt-2 max-w-sm text-sm leading-6 text-white/70">
                 Built by a player who would rather understand the difference than buy the hype.
               </p>
             </div>
-            <span className="hidden font-mono text-[10px] text-white/25 sm:block">
+            <span className="hidden font-mono text-[10px] text-white/70 sm:block">
               FRAGBASIC / 2026
             </span>
           </div>
@@ -88,7 +88,7 @@ export function WhySection() {
             </h2>
 
             <div className="grid gap-6 xl:grid-cols-[1fr_.65fr] mt-8">
-              <p className="max-w-2xl text-base leading-7 text-white/55 sm:text-lg sm:leading-8">
+              <p className="max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">
                 I spent years testing gear, reading forums, and learning which
                 differences actually show up in game. FragBasic turns that work
                 into clear profiles and comparisons you can use.
@@ -109,7 +109,7 @@ export function WhySection() {
                   className="group border-b border-white/8 p-5 transition-colors hover:bg-brand/[.055] last:border-b-0 sm:border-b-0 sm:border-r sm:p-6 sm:last:border-r-0"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] text-white/24">
+                    <span className="font-mono text-[10px] text-white/70">
                       {principle.number}
                     </span>
                     <Icon className="size-4 text-white/32 transition-colors group-hover:text-brand-hover" />

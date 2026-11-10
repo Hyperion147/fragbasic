@@ -41,7 +41,7 @@ export function MethodologySection() {
                 className="group flex min-h-40 flex-col border-b border-white/7 p-4 odd:border-r"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] text-white/30">{step.number}</span>
+                  <span className="font-mono text-[10px] text-white/70">{step.number}</span>
                   <Icon className="size-4 text-white/45" />
                 </div>
                 <h3 className="mt-auto max-w-[10ch] text-base font-semibold leading-tight tracking-[-.025em]">
@@ -69,7 +69,7 @@ export function MethodologySection() {
           </h2>
         </div>
         <div className="flex items-end border-t border-white/7 p-6 sm:p-8 lg:border-l lg:border-t-0 lg:p-12">
-          <p className="max-w-2xl text-base leading-7 text-white/52 sm:text-lg sm:leading-8">
+          <p className="max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">
             Specs tell only half the story. We translate technical details and player experience into a repeatable research flow that makes every trade-off visible.
           </p>
         </div>
@@ -84,13 +84,13 @@ export function MethodologySection() {
               className="group relative min-h-72 border-b border-white/7 p-6 transition-colors hover:bg-white/[.025] sm:p-8 lg:border-b-0 lg:p-10 [&:not(:last-child)]:lg:border-r"
             >
               <div className="flex items-center justify-between">
-                <span className="font-mono text-xs text-white/30">{step.number} / 03</span>
+                <span className="font-mono text-xs text-white/70">{step.number} / 03</span>
                 <span className="flex size-10 items-center justify-center rounded-full border border-white/8 bg-white/[.025] text-white/55 transition-all duration-300 group-hover:border-brand-hover/30 group-hover:text-brand-hover">
                   <Icon className="size-4" />
                 </span>
               </div>
               <h3 className="mt-16 text-2xl font-semibold tracking-[-.025em]">{step.title}</h3>
-              <p className="mt-3 max-w-sm text-sm leading-6 text-white/45 sm:text-base sm:leading-7">{step.body}</p>
+              <p className="mt-3 max-w-sm text-sm leading-6 text-white/70 sm:text-base sm:leading-7">{step.body}</p>
               <span className="absolute bottom-0 left-0 h-px w-0 bg-brand-hover transition-all duration-500 group-hover:w-full" />
             </article>
           );

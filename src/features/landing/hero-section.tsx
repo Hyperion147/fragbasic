@@ -64,7 +64,7 @@ export function HeroSection() {
                             </Button>
                         </div>
 
-                        <div className="mt-6 flex flex-col items-start gap-3 text-xs text-white/46 sm:mt-7 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:text-sm">
+                        <div className="mt-6 flex flex-col items-start gap-3 text-xs text-white/70 sm:mt-7 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:text-sm">
                             <Proof label="No sponsored rankings" />
                             <Proof label="Community + hands-on data" />
                         </div>
@@ -79,7 +79,7 @@ export function HeroSection() {
                                 <span className="block font-semibold text-white">
                                     Built to compare
                                 </span>
-                                <span className="mt-0.5 block text-white/42">
+                                <span className="mt-0.5 block text-white/70">
                                     Feel, surface, fit, value
                                 </span>
                             </span>
