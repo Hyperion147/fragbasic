@@ -36,11 +36,10 @@ import {
     formatIemPrice,
     formatIemRating,
     formatIemSoundSignature,
-    getAllIems,
-    getIemBySlug,
     getIemFullName,
     getIemScoreTone,
 } from "@/lib/iems";
+import { getPublicIemBySlug, getPublicIemSlugs } from "@/server/catalog/iems";
 import { buildFaqJsonLd, buildMetadata, buildProductJsonLd } from "@/lib/seo";
 import type { Iem, IemFrequencyPoint } from "@/types/iem";
 
@@ -48,15 +47,17 @@ type Props = {
     params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-    return getAllIems().map((iem) => ({
-        slug: iem.slug,
+export const revalidate = 300;
+
+export async function generateStaticParams() {
+    return (await getPublicIemSlugs()).map((slug) => ({
+        slug,
     }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params;
-    const iem = getIemBySlug(slug);
+    const iem = await getPublicIemBySlug(slug);
 
     if (!iem) {
         return {};
@@ -79,7 +80,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function IemPage({ params }: Props) {
     const { slug } = await params;
-    const iem = getIemBySlug(slug);
+    const iem = await getPublicIemBySlug(slug);
 
     if (!iem) {
         notFound();

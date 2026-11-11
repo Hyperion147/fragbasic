@@ -21,8 +21,6 @@ import { getRelatedComparisons } from "@/lib/comparisons"
 import {
   formatEnvironmentLabel,
   formatFeelLabel,
-  getAllMousepads,
-  getMousepadBySlug,
 } from "@/lib/mousepads"
 import { formatPrice, formatValue } from "@/lib/utils/format"
 import { Card } from "@/components/ui/card"
@@ -41,6 +39,14 @@ import {
   buildProductJsonLd,
   buildMetadata,
 } from "@/lib/seo";
+import { getPublicComparisons } from "@/server/catalog/comparisons";
+import {
+  getPublicPadBySlug,
+  getPublicPadSlugs,
+  getPublicPads,
+} from "@/server/catalog/pads";
+
+export const revalidate = 300;
 
 type PageProps = {
   params: Promise<{
@@ -48,15 +54,15 @@ type PageProps = {
   }>
 }
 
-export function generateStaticParams() {
-  return getAllMousepads().map((pad) => ({
-    slug: pad.slug,
+export async function generateStaticParams() {
+  return (await getPublicPadSlugs()).map((slug) => ({
+    slug,
   }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const pad = getMousepadBySlug(slug)
+  const pad = await getPublicPadBySlug(slug)
 
   if (!pad) {
     notFound()
@@ -77,15 +83,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function MousepadPage({ params }: PageProps) {
   const { slug } = await params
-  const pad = getMousepadBySlug(slug)
+  const [allMousepads, comparisons] = await Promise.all([
+    getPublicPads(),
+    getPublicComparisons(),
+  ])
+  const pad = allMousepads.find((mousepad) => mousepad.slug === slug)
 
   if (!pad) notFound()
 
-  const relatedComparisons = getRelatedComparisons(pad.slug)
-  const relatedAlternativeGroups = getRelatedAlternativeGroups(pad)
-  const publishedComparison = relatedComparisons.find(
-    (comparison) => comparison.status === "published"
+  const relatedComparisons = getRelatedComparisons(pad.slug, comparisons)
+  const relatedAlternativeGroups = getRelatedAlternativeGroups(
+    pad,
+    allMousepads
   )
+  const publishedComparison = relatedComparisons[0]
   const productDescription = getHeroSummary(pad)
 
   return (
@@ -818,7 +829,8 @@ function getHeroSummary(pad: Mousepad) {
 }
 
 function getRelatedAlternativeGroups(
-  pad: Mousepad
+  pad: Mousepad,
+  allMousepads: Mousepad[]
 ): RelatedAlternativeGroup[] {
   const related = pad.relatedAlternatives
 
@@ -830,24 +842,36 @@ function getRelatedAlternativeGroups(
     {
       label: "Similar feeling",
       description: "Closest in overall glide, control, and use case.",
-      mousepads: resolveRelatedMousepads(pad, related.similarFeeling),
+      mousepads: resolveRelatedMousepads(
+        pad,
+        related.similarFeeling,
+        allMousepads
+      ),
     },
     {
       label: "More control",
       description: "Slower or more planted options with extra stopping power.",
-      mousepads: resolveRelatedMousepads(pad, related.moreControl),
+      mousepads: resolveRelatedMousepads(
+        pad,
+        related.moreControl,
+        allMousepads
+      ),
     },
     {
       label: "More speed",
       description: "Faster options when you want less friction and easier glide.",
-      mousepads: resolveRelatedMousepads(pad, related.moreSpeed),
+      mousepads: resolveRelatedMousepads(pad, related.moreSpeed, allMousepads),
     },
   ]
 }
 
-function resolveRelatedMousepads(source: Mousepad, slugs: string[]) {
+function resolveRelatedMousepads(
+  source: Mousepad,
+  slugs: string[],
+  allMousepads: Mousepad[]
+) {
   return slugs
     .filter((slug) => slug !== source.slug)
-    .map((slug) => getMousepadBySlug(slug))
+    .map((slug) => allMousepads.find((mousepad) => mousepad.slug === slug))
     .filter((mousepad): mousepad is Mousepad => Boolean(mousepad))
 }

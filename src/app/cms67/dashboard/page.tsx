@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { CatalogHealthPanel } from "@/features/admin/catalog-health-panel";
 
 export default function CmsDashboardPage() {
   const router = useRouter();
@@ -137,6 +138,48 @@ export default function CmsDashboardPage() {
 
         <Card className="border border-border/80 bg-card/80">
           <CardHeader>
+            <CardTitle>Comparisons</CardTitle>
+            <CardDescription>
+              Edit head-to-head pad comparisons and their references.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/cms67/comparisons">Open comparisons</Link>
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card className="border border-border/80 bg-card/80">
+          <CardHeader>
+            <CardTitle>Best pages</CardTitle>
+            <CardDescription>
+              Edit buying guides and the catalog pads they recommend.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/cms67/best-pages">Open best pages</Link>
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card className="border border-border/80 bg-card/80">
+          <CardHeader>
+            <CardTitle>Guides</CardTitle>
+            <CardDescription>
+              Write long-form guides and link them to catalog pads.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/cms67/guides">Open guides</Link>
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card className="border border-border/80 bg-card/80">
+          <CardHeader>
             <CardTitle>Public site</CardTitle>
             <CardDescription>
               Preview how visitors see FragBasic.
@@ -148,6 +191,16 @@ export default function CmsDashboardPage() {
             </Button>
           </CardContent>
         </Card>
+      </div>
+
+      <div className="space-y-3">
+        <div>
+          <h3 className="text-lg font-semibold tracking-tight">Catalog health</h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Schema, image, reference, and source-flag checks.
+          </p>
+        </div>
+        <CatalogHealthPanel compact />
       </div>
     </div>
   );

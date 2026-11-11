@@ -4,10 +4,10 @@ import { Suspense } from "react";
 import { MouseSkateCompare } from "@/components/accessories/mouse-skates/mouse-skate-compare";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
-import { getAllMouseSkates } from "@/data/accessories/mouse-skates";
 import { buildMetadata } from "@/lib/seo";
+import { getPublicMouseSkates } from "@/server/catalog/accessories";
 
-const skates = getAllMouseSkates();
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
   title: "Mouse Skate Compare",
@@ -32,6 +32,7 @@ type CompareMouseSkatesPageProps = {
 export default async function CompareMouseSkatesPage({
   searchParams,
 }: CompareMouseSkatesPageProps) {
+  const skates = await getPublicMouseSkates();
   const params = searchParams ? await searchParams : undefined;
 
   return (

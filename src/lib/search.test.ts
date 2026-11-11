@@ -1,27 +1,60 @@
 import { describe, expect, it } from "vitest";
 
+import { getAllBestPages } from "@/data/best-pages";
+import { getAllMouseSkates } from "@/data/accessories/mouse-skates";
+import { getAllGuides } from "@/data/guides";
+import { getPublishedComparisons } from "@/lib/comparisons";
+import { getAllIems } from "@/lib/iems";
+import { getAllMousepads } from "@/lib/mousepads";
 import {
-  buildSearchIndex,
+  articleSearchItems,
+  bestPageSearchItems,
+  comparisonSearchItems,
   groupSearchResults,
+  iemSearchItems,
   normalizeSearchText,
+  padSearchItems,
+  prepareSearchIndex,
   searchAndGroup,
   searchItems,
+  skateSearchItems,
   SEARCH_GROUP_ORDER,
+  type SearchItem,
 } from "./search";
 
-describe("buildSearchIndex", () => {
+/** Fixture index built from the seed catalog, mirroring the API payload. */
+function buildFixtureIndex(): SearchItem[] {
+  return [
+    ...padSearchItems(getAllMousepads()),
+    ...iemSearchItems(getAllIems()),
+    ...skateSearchItems(getAllMouseSkates()),
+    ...bestPageSearchItems(getAllBestPages()),
+    ...articleSearchItems(getAllGuides()),
+    ...comparisonSearchItems(getPublishedComparisons()),
+  ];
+}
+
+describe("search index fixture", () => {
   it("covers every database domain", () => {
-    const index = buildSearchIndex();
+    const index = buildFixtureIndex();
     const kinds = new Set(index.map((item) => item.kind));
 
     expect(kinds).toEqual(
-      new Set(["mousepad", "glasspad", "iem", "skate", "guide", "comparison"]),
+      new Set([
+        "mousepad",
+        "glasspad",
+        "iem",
+        "skate",
+        "guide",
+        "article",
+        "comparison",
+      ]),
     );
     expect(index.length).toBeGreaterThan(60);
   });
 
   it("routes glasspads to mousepad detail pages and skates to the browser", () => {
-    const index = buildSearchIndex();
+    const index = buildFixtureIndex();
     const glass = index.filter((item) => item.kind === "glasspad");
     const cloth = index.filter((item) => item.kind === "mousepad");
     const skates = index.filter((item) => item.kind === "skate");
@@ -43,23 +76,23 @@ describe("normalizeSearchText", () => {
 
 describe("searchItems", () => {
   it("returns nothing for an empty query", () => {
-    expect(searchItems(buildSearchIndex(), "   ")).toEqual([]);
+    expect(searchItems(buildFixtureIndex(), "   ")).toEqual([]);
   });
 
   it("finds cloth pads by brand", () => {
-    const results = searchItems(buildSearchIndex(), "artisan");
+    const results = searchItems(buildFixtureIndex(), "artisan");
     expect(results.length).toBeGreaterThan(0);
     expect(results.some((item) => item.kind === "mousepad")).toBe(true);
   });
 
   it("keeps glasspads in their own kind", () => {
-    const results = searchItems(buildSearchIndex(), "wallhack");
+    const results = searchItems(buildFixtureIndex(), "wallhack");
     expect(results.length).toBeGreaterThan(0);
     expect(results[0].kind).toBe("glasspad");
   });
 
   it("matches every token for multi-word queries", () => {
-    const results = searchItems(buildSearchIndex(), "artisan zero");
+    const results = searchItems(buildFixtureIndex(), "artisan zero");
     expect(results.length).toBeGreaterThan(0);
     expect(
       results.every((item) =>
@@ -69,13 +102,16 @@ describe("searchItems", () => {
   });
 
   it("finds IEMs, skates, guides, and comparisons", () => {
-    const index = buildSearchIndex();
+    const index = buildFixtureIndex();
     expect(searchItems(index, "dunu")[0]?.kind).toBe("iem");
     expect(searchItems(index, "jade").some((item) => item.kind === "skate")).toBe(
       true,
     );
     expect(
       searchItems(index, "control mousepads").some((item) => item.kind === "guide"),
+    ).toBe(true);
+    expect(
+      searchItems(index, "humid climate").some((item) => item.kind === "article"),
     ).toBe(true);
     expect(
       searchItems(index, "crimson wallhack").some(
@@ -85,13 +121,22 @@ describe("searchItems", () => {
   });
 
   it("returns nothing for gibberish", () => {
-    expect(searchItems(buildSearchIndex(), "zzzqqqxk")).toEqual([]);
+    expect(searchItems(buildFixtureIndex(), "zzzqqqxk")).toEqual([]);
+  });
+
+  it("returns the same results from a prepared index", () => {
+    const index = buildFixtureIndex();
+    const prepared = prepareSearchIndex(index);
+
+    expect(searchItems(prepared, "artisan zero").map((item) => item.id)).toEqual(
+      searchItems(index, "artisan zero").map((item) => item.id),
+    );
   });
 });
 
 describe("searchAndGroup", () => {
   it("orders groups pads-first and caps each group", () => {
-    const groups = searchAndGroup(buildSearchIndex(), "a");
+    const groups = searchAndGroup(buildFixtureIndex(), "a");
     const labels = groups.map((group) => group.kind);
     const order = SEARCH_GROUP_ORDER.filter((kind) => labels.includes(kind));
 
@@ -100,7 +145,7 @@ describe("searchAndGroup", () => {
   });
 
   it("groupSearchResults drops empty kinds", () => {
-    const index = buildSearchIndex();
+    const index = buildFixtureIndex();
     const groups = groupSearchResults(
       index.filter((item) => item.kind === "iem"),
     );

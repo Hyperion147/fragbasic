@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { UniversalCompare } from "@/components/compare/universal/universal-compare";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
-import { getAllMousepads } from "@/lib/mousepads";
 import { buildMetadata } from "@/lib/seo";
+import { getPublicPads } from "@/server/catalog/pads";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
   title: "Universal Mousepad Compare",
@@ -18,8 +20,8 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function UniversalComparePage() {
-  const allMousepads = getAllMousepads();
+export default async function UniversalComparePage() {
+  const allMousepads = await getPublicPads();
 
   return (
     <main className="min-h-screen bg-background text-foreground">

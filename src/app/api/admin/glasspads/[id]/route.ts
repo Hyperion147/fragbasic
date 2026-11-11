@@ -2,6 +2,7 @@ import { mousepadWriteSchema } from "@/schemas/mousepad";
 import { jsonError, jsonOk, zodError } from "@/server/api";
 import { requireAdmin } from "@/server/auth";
 import * as repo from "@/server/glasspads/repo";
+import { revalidateCatalog } from "@/server/catalog/revalidate";
 
 type Ctx = { params: Promise<{ id: string }> };
 
@@ -22,12 +23,16 @@ export async function PATCH(request: Request, context: Ctx) {
   if (data.id !== id) return jsonError("Body data.id must match URL id", 400);
   if (data.category !== "glass" || data.surface !== "glass") return jsonError("Glasspad data must use glass category and surface", 400);
   if (data.slug !== existing.slug && await repo.getGlasspadBySlug(data.slug)) return jsonError("Slug already exists", 409);
-  return jsonOk({ glasspad: await repo.updateGlasspad(id, { slug: data.slug, brand: data.brand, name: data.name, status, data }) });
+  const row = await repo.updateGlasspad(id, { slug: data.slug, brand: data.brand, name: data.name, status, data });
+  revalidateCatalog("glasspads");
+  return jsonOk({ glasspad: row });
 }
 
 export async function DELETE(_request: Request, context: Ctx) {
   if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
   const id = (await context.params).id;
   const row = await repo.deleteGlasspad(id);
-  return row ? jsonOk({ ok: true, id }) : jsonError("Not found", 404);
+  if (!row) return jsonError("Not found", 404);
+  revalidateCatalog("glasspads");
+  return jsonOk({ ok: true, id });
 }

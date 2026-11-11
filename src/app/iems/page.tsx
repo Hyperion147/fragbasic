@@ -6,8 +6,11 @@ import { IemBrowser } from "@/components/iems/iem-browser";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { SiteSection } from "@/components/SiteSection";
 import { Badge } from "@/components/ui/badge";
-import { getAllIems } from "@/lib/iems";
+import { getPublicIems } from "@/server/catalog/iems";
+import { getPublicLatestAdded } from "@/server/catalog/latest-added";
 import { buildCollectionJsonLd, buildMetadata } from "@/lib/seo";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
   title: "IEM Database for FPS Games",
@@ -24,8 +27,11 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function IemsPage() {
-  const iems = getAllIems();
+export default async function IemsPage() {
+  const [iems, latestAdded] = await Promise.all([
+    getPublicIems(),
+    getPublicLatestAdded(),
+  ]);
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -64,7 +70,7 @@ export default function IemsPage() {
       <section id="iems" className="page-section">
         <SiteSection>
           <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading IEM filters...</div>}>
-            <IemBrowser iems={iems} />
+            <IemBrowser iems={iems} latestAddedSlugs={latestAdded.iems} />
           </Suspense>
         </SiteSection>
       </section>

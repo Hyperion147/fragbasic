@@ -1,10 +1,18 @@
 "use client";
 
-import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   ArrowUpRight,
+  BookOpen,
   Boxes,
   CornerDownLeft,
   Headphones,
@@ -17,13 +25,43 @@ import {
 
 import { cn } from "@/lib/utils";
 import {
-  buildSearchIndex,
   normalizeSearchText,
+  prepareSearchIndex,
   searchAndGroup,
+  type PreparedSearchItem,
   type SearchGroup,
   type SearchItem,
   type SearchKind,
 } from "@/lib/search";
+
+const SEARCH_INDEX_URL = "/api/search-index";
+
+/**
+ * One shared request per browser session. The promise is reset on failure so
+ * the next open can retry instead of caching an empty result forever.
+ */
+let searchIndexPromise: Promise<SearchItem[] | null> | null = null;
+
+function loadSearchIndex(): Promise<SearchItem[] | null> {
+  if (searchIndexPromise) return searchIndexPromise;
+
+  searchIndexPromise = fetch(SEARCH_INDEX_URL, {
+    headers: { accept: "application/json" },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Search index request failed: ${response.status}`);
+      }
+      return response.json() as Promise<{ items?: SearchItem[] }>;
+    })
+    .then((body) => (Array.isArray(body.items) ? body.items : []))
+    .catch(() => {
+      searchIndexPromise = null;
+      return null;
+    });
+
+  return searchIndexPromise;
+}
 
 const KIND_ICONS: Record<SearchKind, typeof Boxes> = {
   mousepad: Boxes,
@@ -31,6 +69,7 @@ const KIND_ICONS: Record<SearchKind, typeof Boxes> = {
   iem: Headphones,
   skate: Sparkles,
   guide: Trophy,
+  article: BookOpen,
   comparison: CornerDownLeft,
 };
 
@@ -84,8 +123,54 @@ export function UniversalSearch() {
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
-  const index = useMemo(() => buildSearchIndex(), []);
+  const [index, setIndex] = useState<PreparedSearchItem[]>([]);
+  const [indexStatus, setIndexStatus] = useState<"idle" | "ready" | "error">(
+    "idle",
+  );
+  const loadedRef = useRef(false);
+  const loadingRef = useRef(false);
   const deferredQuery = useDeferredValue(query);
+
+  const hydrateIndex = useCallback(async () => {
+    if (loadedRef.current || loadingRef.current) return;
+
+    loadingRef.current = true;
+    const items = await loadSearchIndex();
+    loadingRef.current = false;
+
+    if (items === null) {
+      setIndexStatus("error");
+      return;
+    }
+
+    loadedRef.current = true;
+    setIndex(prepareSearchIndex(items));
+    setIndexStatus("ready");
+  }, []);
+
+  // Warm the index while the browser is idle so the first open is instant,
+  // without adding catalog data to the initial JS bundle.
+  useEffect(() => {
+    let cancelled = false;
+    const preload = () => {
+      if (!cancelled) void hydrateIndex();
+    };
+
+    if (typeof window.requestIdleCallback === "function") {
+      const handle = window.requestIdleCallback(preload, { timeout: 1500 });
+      return () => {
+        cancelled = true;
+        window.cancelIdleCallback(handle);
+      };
+    }
+
+    const handle = window.setTimeout(preload, 600);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(handle);
+    };
+  }, [hydrateIndex]);
+
   const groups: SearchGroup[] = useMemo(
     () => searchAndGroup(index, deferredQuery),
     [index, deferredQuery],
@@ -96,30 +181,47 @@ export function UniversalSearch() {
   );
   const hasQuery = deferredQuery.trim().length > 0;
 
+  const openSearch = useCallback(() => {
+    setQuery("");
+    setActiveIndex(0);
+    setOpen(true);
+    void hydrateIndex();
+  }, [hydrateIndex]);
+
+  const retryIndex = useCallback(() => {
+    setIndexStatus("idle");
+    void hydrateIndex();
+  }, [hydrateIndex]);
+
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
-        setOpen((previous) => !previous);
+        if (open) {
+          setOpen(false);
+        } else {
+          openSearch();
+        }
       }
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
+  }, [open, openSearch]);
 
   useEffect(() => {
-    if (open) {
-      setQuery("");
-      setActiveIndex(0);
-      document.body.style.overflow = "hidden";
-      requestAnimationFrame(() => inputRef.current?.focus());
-    } else {
+    if (!open) {
       document.body.style.overflow = "";
+      return;
     }
+
+    document.body.style.overflow = "hidden";
+    const frame = requestAnimationFrame(() => inputRef.current?.focus());
+
     return () => {
+      cancelAnimationFrame(frame);
       document.body.style.overflow = "";
     };
-  }, [open ]);
+  }, [open]);
 
   useEffect(() => {
     listRef.current
@@ -167,7 +269,9 @@ export function UniversalSearch() {
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={openSearch}
+        onPointerEnter={() => void hydrateIndex()}
+        onFocus={() => void hydrateIndex()}
         className="hidden h-9 items-center gap-2 rounded-md border border-transparent bg-background/60 px-3 text-sm text-muted-foreground shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_8%,transparent)] transition-colors hover:text-foreground md:flex lg:w-56"
       >
         <Search className="size-4 shrink-0" />
@@ -179,7 +283,9 @@ export function UniversalSearch() {
 
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={openSearch}
+        onPointerEnter={() => void hydrateIndex()}
+        onFocus={() => void hydrateIndex()}
         aria-label="Search FragBasic"
         className="flex size-9 items-center justify-center rounded-md border border-transparent bg-background/60 text-muted-foreground shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_8%,transparent)] transition-colors hover:text-foreground md:hidden"
       >
@@ -297,6 +403,31 @@ export function UniversalSearch() {
                     })}
                   </div>
                 ))
+              ) : hasQuery && indexStatus === "idle" ? (
+                <div className="px-4 py-10 text-center" aria-live="polite">
+                  <p className="text-sm font-medium text-foreground">
+                    Loading catalog…
+                  </p>
+                  <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                    Searching pads, IEMs, skates, and guides.
+                  </p>
+                </div>
+              ) : hasQuery && indexStatus === "error" ? (
+                <div className="px-4 py-10 text-center">
+                  <p className="text-sm font-medium text-foreground">
+                    Search is unavailable right now.
+                  </p>
+                  <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                    Check your connection and try again.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={retryIndex}
+                    className="mt-4 rounded-md border border-white/12 px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-white/8"
+                  >
+                    Retry
+                  </button>
+                </div>
               ) : hasQuery ? (
                 <div className="px-4 py-10 text-center">
                   <p className="text-sm font-medium text-foreground">

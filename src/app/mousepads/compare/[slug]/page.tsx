@@ -11,10 +11,14 @@ import { SpeedControlPosition } from "@/components/compare/speed-control-positio
 import { SpecRows } from "@/components/compare/spec-rows";
 import { VerdictPanel } from "@/components/compare/verdict-panel";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
-import { getAllComparisons } from "@/lib/comparisons";
-import { getComparisonPageData } from "@/lib/compare";
 import { getMousepadFullName } from "@/lib/mousepads";
 import { buildMetadata } from "@/lib/seo";
+import {
+  getPublicComparisonPageData,
+  getPublicComparisonSlugs,
+} from "@/server/catalog/comparisons";
+
+export const revalidate = 300;
 
 type PageProps = {
   params: Promise<{
@@ -22,15 +26,15 @@ type PageProps = {
   }>;
 };
 
-export function generateStaticParams() {
-  return getAllComparisons().map((comparison) => ({
-    slug: comparison.slug,
+export async function generateStaticParams() {
+  return (await getPublicComparisonSlugs()).map((slug) => ({
+    slug,
   }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const comparisonData = getComparisonPageData(slug);
+  const comparisonData = await getPublicComparisonPageData(slug);
 
   if (!comparisonData) {
     notFound();
@@ -56,7 +60,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ComparePage({ params }: PageProps) {
   const { slug } = await params;
-  const comparisonData = getComparisonPageData(slug);
+  const comparisonData = await getPublicComparisonPageData(slug);
 
   if (!comparisonData) {
     notFound();

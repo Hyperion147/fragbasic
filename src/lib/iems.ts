@@ -1,7 +1,11 @@
-import { getAllIems, getIemBySlug, getIemFullName, getIemsByFragbasicScore } from "@/data/iems/iems";
-import type { Iem, IemAvailability, IemDriverType, IemGame, IemSoundSignature } from "@/types/iem";
+import { getAllIems, getIemBySlug, getIemsByFragbasicScore } from "@/data/iems/iems";
+import type { Iem, IemAvailability, IemDriverType, IemGame } from "@/types/iem";
 
-export { getAllIems, getIemBySlug, getIemFullName, getIemsByFragbasicScore };
+export {
+  formatIemSoundSignature,
+  getIemFullName,
+} from "@/lib/iems/format";
+export { getAllIems, getIemBySlug, getIemsByFragbasicScore };
 
 export function formatIemRating(value: number) {
   return value.toFixed(1);
@@ -30,19 +34,6 @@ export function formatIemDriverType(type: IemDriverType) {
   };
 
   return labels[type];
-}
-
-export function formatIemSoundSignature(signature: IemSoundSignature) {
-  const labels: Record<IemSoundSignature, string> = {
-    "neutral-bright": "Neutral Bright",
-    neutral: "Neutral",
-    "warm-neutral": "Warm Neutral",
-    "v-shape": "V-Shape",
-    "mild-v": "Mild V",
-    "bass-boosted": "Bass Boosted",
-  };
-
-  return labels[signature];
 }
 
 export function formatIemGame(game: IemGame) {

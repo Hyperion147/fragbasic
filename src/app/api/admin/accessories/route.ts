@@ -2,6 +2,7 @@ import { mouseSkateWriteSchema } from "@/schemas/accessory";
 import { jsonError, jsonOk, zodError } from "@/server/api";
 import { requireAdmin } from "@/server/auth";
 import * as repo from "@/server/accessories/repo";
+import { revalidateCatalog } from "@/server/catalog/revalidate";
 
 export async function GET() {
   if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
@@ -15,5 +16,7 @@ export async function POST(request: Request) {
   const { status, data } = parsed.data;
   if (await repo.getMouseSkateBySlug(data.slug)) return jsonError("Slug already exists", 409);
   if (await repo.getMouseSkateById(data.id)) return jsonError("Id already exists", 409);
-  return jsonOk({ accessory: await repo.insertMouseSkate({ id: data.id, slug: data.slug, brand: data.brand, name: data.name, status, data }) }, 201);
+  const accessory = await repo.insertMouseSkate({ id: data.id, slug: data.slug, brand: data.brand, name: data.name, status, data });
+  revalidateCatalog("accessories");
+  return jsonOk({ accessory }, 201);
 }

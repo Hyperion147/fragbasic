@@ -29,7 +29,6 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-import { latestAddedIemSlugs } from "@/data/latest-added";
 import {
   Sheet,
   SheetContent,
@@ -61,7 +60,13 @@ const priceTierOrder: Record<Iem["priceTier"], number> = {
   premium: 4,
 };
 
-export function IemBrowser({ iems }: { iems: Iem[] }) {
+export function IemBrowser({
+  iems,
+  latestAddedSlugs = [],
+}: {
+  iems: Iem[];
+  latestAddedSlugs?: readonly string[];
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -89,8 +94,8 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
     [iems],
   );
   const latestAddedSlugSet = useMemo(
-    () => new Set<string>(latestAddedIemSlugs),
-    [],
+    () => new Set<string>(latestAddedSlugs),
+    [latestAddedSlugs],
   );
 
   const filteredIems = useMemo(() => {
@@ -151,10 +156,10 @@ export function IemBrowser({ iems }: { iems: Iem[] }) {
     sort === "score";
   const latestIems = useMemo(
     () =>
-      latestAddedIemSlugs
+      latestAddedSlugs
         .map((slug) => iems.find((iem) => iem.slug === slug))
         .filter((iem): iem is Iem => Boolean(iem)),
-    [iems],
+    [iems, latestAddedSlugs],
   );
   const tableIems = isDefaultBrowse
     ? filteredIems.filter((iem) => !latestAddedSlugSet.has(iem.slug))

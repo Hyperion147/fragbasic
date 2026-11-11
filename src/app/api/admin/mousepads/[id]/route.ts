@@ -2,6 +2,7 @@ import { requireAdmin } from "@/server/auth";
 import { jsonError, jsonOk, zodError } from "@/server/api";
 import { mousepadWriteSchema } from "@/schemas/mousepad";
 import * as repo from "@/server/mousepads/repo";
+import { revalidateCatalog } from "@/server/catalog/revalidate";
 
 type Ctx = { params: Promise<{ id: string }> };
 
@@ -46,6 +47,7 @@ export async function PATCH(req: Request, ctx: Ctx) {
     data,
   });
 
+  revalidateCatalog("mousepads");
   return jsonOk({ mousepad: row });
 }
 
@@ -56,5 +58,6 @@ export async function DELETE(_req: Request, ctx: Ctx) {
   const { id } = await ctx.params;
   const row = await repo.deleteMousepad(id);
   if (!row) return jsonError("Not found", 404);
+  revalidateCatalog("mousepads");
   return jsonOk({ ok: true, id });
 }

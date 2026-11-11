@@ -1,9 +1,4 @@
-import { getComparisonBySlug } from "@/lib/comparisons";
-import {
-  formatMousepadValue,
-  getMousepadBySlug,
-  getMousepadFullName,
-} from "@/lib/mousepads";
+import { formatMousepadValue, getMousepadFullName } from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
 
 type NumericFeelKey =
@@ -13,27 +8,6 @@ type NumericFeelKey =
   | "staticFriction"
   | "dynamicFriction"
   | "microAdjustments";
-
-export function getComparisonPageData(slug: string) {
-  const comparison = getComparisonBySlug(slug);
-
-  if (!comparison) {
-    return null;
-  }
-
-  const left = getMousepadBySlug(comparison.leftSlug);
-  const right = getMousepadBySlug(comparison.rightSlug);
-
-  if (!left || !right) {
-    return null;
-  }
-
-  return {
-    comparison,
-    left,
-    right,
-  };
-}
 
 export function getComparisonWinner(
   left: Mousepad,

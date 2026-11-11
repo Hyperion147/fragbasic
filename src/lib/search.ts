@@ -1,15 +1,11 @@
-import { getAllBestPages } from "@/data/best-pages";
-import { getAllMouseSkates } from "@/data/accessories/mouse-skates";
-import { getAllMousepads, getMousepadFullName } from "@/lib/mousepads";
 import { formatMouseSkateMaterial } from "@/lib/accessories/mouse-skates";
-import { getPublishedComparisons } from "@/lib/comparisons";
-import {
-  formatIemSoundSignature,
-  getAllIems,
-  getIemFullName,
-} from "@/lib/iems";
+import { formatIemSoundSignature, getIemFullName } from "@/lib/iems/format";
 import { formatMousepadValue } from "@/lib/utils/format";
+import type { MousepadComparison } from "@/data/comparisons";
+import type { GuideDataInput } from "@/schemas/guide";
+import type { MouseSkate } from "@/types/accessory";
 import type { Iem } from "@/types/iem";
+import type { Mousepad } from "@/types/mousepad";
 
 export type SearchKind =
   | "mousepad"
@@ -17,6 +13,7 @@ export type SearchKind =
   | "iem"
   | "skate"
   | "guide"
+  | "article"
   | "comparison";
 
 export interface SearchItem {
@@ -40,6 +37,7 @@ export const SEARCH_GROUP_ORDER: SearchKind[] = [
   "iem",
   "skate",
   "guide",
+  "article",
   "comparison",
 ];
 
@@ -48,7 +46,8 @@ export const SEARCH_GROUP_LABELS: Record<SearchKind, string> = {
   glasspad: "Glasspads",
   iem: "IEMs",
   skate: "Skates",
-  guide: "Best guides",
+  guide: "Best pages",
+  article: "Guides",
   comparison: "Comparisons",
 };
 
@@ -64,66 +63,82 @@ function formatIemPriceTierLabel(tier: Iem["priceTier"]): string {
   return labels[tier];
 }
 
-export function buildSearchIndex(): SearchItem[] {
-  const items: SearchItem[] = [];
+export function iemSearchItems(iems: readonly Iem[]): SearchItem[] {
+  return iems.map((iem) => ({
+    id: `iem-${iem.slug}`,
+    kind: "iem" as const,
+    title: getIemFullName(iem),
+    subtitle: `${formatIemSoundSignature(iem.soundSignature)} · ${formatIemPriceTierLabel(iem.priceTier)}`,
+    href: `/iems/${iem.slug}`,
+    keywords: [iem.brand, iem.name, iem.shortName, iem.slug, iem.driverType, iem.soundSignature],
+  }));
+}
 
-  for (const pad of getAllMousepads()) {
-    const isGlass = pad.category === "glass";
-    items.push({
-      id: `pad-${pad.slug}`,
-      kind: isGlass ? "glasspad" : "mousepad",
-      title: getMousepadFullName(pad),
-      subtitle: `${formatMousepadValue(pad.category)} · ${formatMousepadValue(pad.surface)}`,
-      href: `/mousepads/${pad.slug}`,
-      keywords: [pad.brand, pad.name, pad.series ?? "", pad.slug, pad.category, pad.surface],
-    });
-  }
+export function padSearchItems(pads: readonly Mousepad[]): SearchItem[] {
+  return pads.map((pad) => ({
+    id: `pad-${pad.slug}`,
+    kind: pad.category === "glass" ? "glasspad" : "mousepad",
+    title: `${pad.brand} ${pad.name}`,
+    subtitle: `${formatMousepadValue(pad.category)} · ${formatMousepadValue(pad.surface)}`,
+    href: `/mousepads/${pad.slug}`,
+    keywords: [pad.brand, pad.name, pad.series ?? "", pad.slug, pad.category, pad.surface],
+  }));
+}
 
-  for (const iem of getAllIems()) {
-    items.push({
-      id: `iem-${iem.slug}`,
-      kind: "iem",
-      title: getIemFullName(iem),
-      subtitle: `${formatIemSoundSignature(iem.soundSignature)} · ${formatIemPriceTierLabel(iem.priceTier)}`,
-      href: `/iems/${iem.slug}`,
-      keywords: [iem.brand, iem.name, iem.shortName, iem.slug, iem.driverType, iem.soundSignature],
-    });
-  }
+export function skateSearchItems(skates: readonly MouseSkate[]): SearchItem[] {
+  return skates.map((skate) => ({
+    id: `skate-${skate.slug}`,
+    kind: "skate" as const,
+    title: `${skate.brand} ${skate.name}`,
+    subtitle: `${formatMouseSkateMaterial(skate.material)} · ${skate.shape}`,
+    href: "/accessories/mouse-skates/browse",
+    keywords: [skate.brand, skate.name, skate.series, skate.slug, skate.material, skate.shape],
+  }));
+}
 
-  for (const skate of getAllMouseSkates()) {
-    items.push({
-      id: `skate-${skate.slug}`,
-      kind: "skate",
-      title: `${skate.brand} ${skate.name}`,
-      subtitle: `${formatMouseSkateMaterial(skate.material)} · ${skate.shape}`,
-      href: "/accessories/mouse-skates/browse",
-      keywords: [skate.brand, skate.name, skate.series, skate.slug, skate.material, skate.shape],
-    });
-  }
+export function bestPageSearchItems(
+  pages: readonly {
+    slug: string;
+    title: string;
+    eyebrow: string;
+    badge: string;
+    keywords: string[];
+  }[],
+): SearchItem[] {
+  return pages.map((page) => ({
+    id: `guide-${page.slug}`,
+    kind: "guide" as const,
+    title: page.title,
+    subtitle: page.eyebrow,
+    href: `/best/${page.slug}`,
+    keywords: [page.slug, page.badge, ...page.keywords],
+  }));
+}
 
-  for (const page of getAllBestPages()) {
-    items.push({
-      id: `guide-${page.slug}`,
-      kind: "guide",
-      title: page.title,
-      subtitle: page.eyebrow,
-      href: `/best/${page.slug}`,
-      keywords: [page.slug, page.badge, ...page.keywords],
-    });
-  }
+export function articleSearchItems(
+  guides: readonly GuideDataInput[],
+): SearchItem[] {
+  return guides.map((guide) => ({
+    id: `article-${guide.slug}`,
+    kind: "article" as const,
+    title: guide.title,
+    subtitle: `${guide.category} · ${guide.readingTime} min read`,
+    href: `/mousepads/guides/${guide.slug}`,
+    keywords: [guide.slug, guide.category, ...guide.keywords],
+  }));
+}
 
-  for (const comparison of getPublishedComparisons()) {
-    items.push({
-      id: `comparison-${comparison.slug}`,
-      kind: "comparison",
-      title: comparison.title,
-      subtitle: comparison.excerpt,
-      href: `/mousepads/compare/${comparison.slug}`,
-      keywords: [comparison.slug, ...comparison.tags],
-    });
-  }
-
-  return items;
+export function comparisonSearchItems(
+  comparisons: readonly MousepadComparison[],
+): SearchItem[] {
+  return comparisons.map((comparison) => ({
+    id: `comparison-${comparison.slug}`,
+    kind: "comparison" as const,
+    title: comparison.title,
+    subtitle: comparison.excerpt,
+    href: `/mousepads/compare/${comparison.slug}`,
+    keywords: [comparison.slug, ...comparison.tags],
+  }));
 }
 
 export function normalizeSearchText(value: string): string {
@@ -136,6 +151,35 @@ export function normalizeSearchText(value: string): string {
     .trim();
 }
 
+export interface PreparedSearchItem extends SearchItem {
+  normalizedTitle: string;
+  normalizedHaystack: string;
+}
+
+export type SearchableIndexItem = SearchItem | PreparedSearchItem;
+
+/**
+ * Normalizes each item once so repeated keystrokes only scan precomputed text.
+ * Call this when the index arrives from the API, not on every search.
+ */
+export function prepareSearchIndex(
+  items: readonly SearchItem[],
+): PreparedSearchItem[] {
+  return items.map((item) => ({
+    ...item,
+    normalizedTitle: normalizeSearchText(item.title),
+    normalizedHaystack: normalizeSearchText(
+      [item.title, item.subtitle, ...item.keywords].join(" "),
+    ),
+  }));
+}
+
+function isPreparedSearchItem(
+  item: SearchableIndexItem,
+): item is PreparedSearchItem {
+  return "normalizedHaystack" in item;
+}
+
 function scoreToken(title: string, haystack: string, token: string): number {
   if (title.startsWith(token)) return 3;
   if (title.includes(` ${token}`)) return 2;
@@ -144,11 +188,15 @@ function scoreToken(title: string, haystack: string, token: string): number {
   return 0;
 }
 
-function scoreItem(item: SearchItem, tokens: string[]): number {
-  const title = normalizeSearchText(item.title);
-  const haystack = normalizeSearchText(
-    [item.title, item.subtitle, ...item.keywords].join(" "),
-  );
+function scoreItem(item: SearchableIndexItem, tokens: string[]): number {
+  const title = isPreparedSearchItem(item)
+    ? item.normalizedTitle
+    : normalizeSearchText(item.title);
+  const haystack = isPreparedSearchItem(item)
+    ? item.normalizedHaystack
+    : normalizeSearchText(
+        [item.title, item.subtitle, ...item.keywords].join(" "),
+      );
   let score = 0;
   for (const token of tokens) {
     const tokenScore = scoreToken(title, haystack, token);
@@ -158,7 +206,10 @@ function scoreItem(item: SearchItem, tokens: string[]): number {
   return score;
 }
 
-export function searchItems(index: SearchItem[], query: string): SearchItem[] {
+export function searchItems(
+  index: readonly SearchableIndexItem[],
+  query: string,
+): SearchItem[] {
   const tokens = normalizeSearchText(query).split(" ").filter(Boolean);
   if (tokens.length === 0) return [];
 
@@ -185,6 +236,9 @@ export function groupSearchResults(items: SearchItem[]): SearchGroup[] {
   return groups;
 }
 
-export function searchAndGroup(index: SearchItem[], query: string): SearchGroup[] {
+export function searchAndGroup(
+  index: readonly SearchableIndexItem[],
+  query: string,
+): SearchGroup[] {
   return groupSearchResults(searchItems(index, query));
 }

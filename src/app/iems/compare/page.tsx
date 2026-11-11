@@ -5,8 +5,10 @@ import { IemCompare } from "@/components/iems/iem-compare";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { SiteSection } from "@/components/SiteSection";
 import { Badge } from "@/components/ui/badge";
-import { getAllIems } from "@/lib/iems";
+import { getPublicIems } from "@/server/catalog/iems";
 import { buildMetadata } from "@/lib/seo";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
   title: "Compare IEMs",
@@ -21,8 +23,8 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function IemComparePage() {
-  const iems = getAllIems();
+export default async function IemComparePage() {
+  const iems = await getPublicIems();
 
   return (
     <main className="min-h-screen bg-background text-foreground">

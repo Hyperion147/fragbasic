@@ -1,9 +1,19 @@
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { glasspads, type NewGlasspadRow } from "@/db/schema";
 
 export async function listGlasspads() {
   return db.select().from(glasspads).orderBy(glasspads.brand);
+}
+
+export async function listLatestGlasspadSlugs(limit = 3) {
+  const rows = await db
+    .select({ slug: glasspads.slug })
+    .from(glasspads)
+    .where(eq(glasspads.status, "published"))
+    .orderBy(desc(glasspads.createdAt), desc(glasspads.updatedAt), glasspads.slug)
+    .limit(limit);
+  return rows.map((row) => row.slug);
 }
 
 export async function getGlasspadById(id: string) {

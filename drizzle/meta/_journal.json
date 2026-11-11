@@ -8,6 +8,34 @@
       "when": 1789305529528,
       "tag": "0000_clammy_network",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794396690437,
+      "tag": "0001_living_shaman",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794399251012,
+      "tag": "0002_mixed_rictor",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794406093898,
+      "tag": "0003_typical_pixie",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794408291736,
+      "tag": "0004_worried_rictor",
+      "breakpoints": true
     }
   ]
 }

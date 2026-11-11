@@ -38,4 +38,7 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# generated catalog snapshot (npm run db:snapshot)
+/output/static-catalog-snapshot.json
 next-env.d.ts

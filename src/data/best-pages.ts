@@ -423,7 +423,7 @@ export function getBestPageSlugs() {
 }
 
 export function getBestPagePicks(
-  page: BestPageConfig,
+  page: Pick<BestPageConfig, "pickSlugs">,
   mousepads: Mousepad[],
 ) {
   return page.pickSlugs
