@@ -10,6 +10,7 @@ import {
 } from "@/lib/iems";
 import { formatMousepadValue } from "@/lib/utils/format";
 import type { Iem } from "@/types/iem";
+import type { Mousepad } from "@/types/mousepad";
 
 export type SearchKind =
   | "mousepad"
@@ -75,21 +76,21 @@ export function iemSearchItems(iems: readonly Iem[]): SearchItem[] {
   }));
 }
 
+export function padSearchItems(pads: readonly Mousepad[]): SearchItem[] {
+  return pads.map((pad) => ({
+    id: `pad-${pad.slug}`,
+    kind: pad.category === "glass" ? "glasspad" : "mousepad",
+    title: getMousepadFullName(pad),
+    subtitle: `${formatMousepadValue(pad.category)} · ${formatMousepadValue(pad.surface)}`,
+    href: `/mousepads/${pad.slug}`,
+    keywords: [pad.brand, pad.name, pad.series ?? "", pad.slug, pad.category, pad.surface],
+  }));
+}
+
 export function buildSearchIndex(): SearchItem[] {
   const items: SearchItem[] = [];
 
-  for (const pad of getAllMousepads()) {
-    const isGlass = pad.category === "glass";
-    items.push({
-      id: `pad-${pad.slug}`,
-      kind: isGlass ? "glasspad" : "mousepad",
-      title: getMousepadFullName(pad),
-      subtitle: `${formatMousepadValue(pad.category)} · ${formatMousepadValue(pad.surface)}`,
-      href: `/mousepads/${pad.slug}`,
-      keywords: [pad.brand, pad.name, pad.series ?? "", pad.slug, pad.category, pad.surface],
-    });
-  }
-
+  items.push(...padSearchItems(getAllMousepads()));
   items.push(...iemSearchItems(getAllIems()));
 
   for (const skate of getAllMouseSkates()) {

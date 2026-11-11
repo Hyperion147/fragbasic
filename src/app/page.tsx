@@ -3,10 +3,11 @@ import { JsonLd } from "@/components/json-ld";
 import { HomeExperience } from "@/features/landing/home-experience";
 import { getAllBestPages } from "@/data/best-pages";
 import { getPublishedComparisons } from "@/lib/comparisons";
-import { getAllMousepads, getDefaultColorway, getMousepadFullName, getMousepadBySlug } from "@/lib/mousepads";
+import { getDefaultColorway, getMousepadFullName } from "@/lib/mousepads";
 import { buildCollectionJsonLd, buildMetadata } from "@/lib/seo";
 import { getPublicIems } from "@/server/catalog/iems";
 import { getPublicLatestAdded } from "@/server/catalog/latest-added";
+import { getPublicPads } from "@/server/catalog/pads";
 
 export const revalidate = 300;
 
@@ -24,13 +25,16 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function HomePage() {
-  const mousepads = getAllMousepads();
-  const [iems, latestAddedSlugs] = await Promise.all([
+  const [mousepads, iems, latestAddedSlugs] = await Promise.all([
+    getPublicPads(),
     getPublicIems(),
     getPublicLatestAdded(),
   ]);
+  const mousepadsBySlug = new Map(
+    mousepads.map((mousepad) => [mousepad.slug, mousepad]),
+  );
   const latestAdded = latestAddedSlugs.mousepads
-    .map((slug) => getMousepadBySlug(slug))
+    .map((slug) => mousepadsBySlug.get(slug))
     .filter((mousepad) => mousepad !== undefined);
   const latestAddedIems = latestAddedSlugs.iems
     .map((slug) => iems.find((iem) => iem.slug === slug))
@@ -43,8 +47,8 @@ export default async function HomePage() {
   const publishedComparisons = getPublishedComparisons();
   const comparisons = publishedComparisons
     .map((comparison) => {
-      const left = getMousepadBySlug(comparison.leftSlug);
-      const right = getMousepadBySlug(comparison.rightSlug);
+      const left = mousepadsBySlug.get(comparison.leftSlug);
+      const right = mousepadsBySlug.get(comparison.rightSlug);
 
       if (!left || !right) {
         return null;

@@ -1,16 +1,23 @@
 import type { MetadataRoute } from "next";
 
 import { getPublishedComparisons } from "@/lib/comparisons";
-import { getAllMousepads } from "@/lib/mousepads";
 import { getSiteUrl } from "@/lib/seo";
 import { getBestPageSlugs } from "@/data/best-pages";
 import { getPublicIems } from "@/server/catalog/iems";
+import { getPublicPads } from "@/server/catalog/pads";
 
 export const revalidate = 300;
 
+function toAbsoluteUrl(siteUrl: string, value: string) {
+  return /^https?:\/\//i.test(value) ? value : `${siteUrl}${value}`;
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl();
-  const iems = await getPublicIems();
+  const [iems, mousepads] = await Promise.all([
+    getPublicIems(),
+    getPublicPads(),
+  ]);
 
   // NOTE: only emit lastModified where we have a real source date (IEMs).
   // Emitting `new Date()` for every URL fakes freshness and hurts AI/trust
@@ -35,11 +42,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: path === "" ? 1 : 0.8,
   }));
 
-  const mousepadRoutes = getAllMousepads().map((mousepad) => ({
+  const mousepadRoutes = mousepads.map((mousepad) => ({
     url: `${siteUrl}/mousepads/${mousepad.slug}`,
     changeFrequency: "weekly" as const,
     priority: 0.9,
-    images: [`${siteUrl}${mousepad.images.main}`],
+    images: [toAbsoluteUrl(siteUrl, mousepad.images.main)],
   }));
 
   const iemRoutes = iems.map((iem) => ({
@@ -47,7 +54,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: iem.updatedAt,
     changeFrequency: "weekly" as const,
     priority: 0.86,
-    images: [`${siteUrl}${iem.images.main}`],
+    images: [toAbsoluteUrl(siteUrl, iem.images.main)],
   }));
 
   // NOTE: published only — drafts render publicly today, but must not be

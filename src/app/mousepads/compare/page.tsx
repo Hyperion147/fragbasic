@@ -8,10 +8,12 @@ import {
     getComparisonTagOptions,
     getPublishedComparisons,
 } from "@/lib/comparisons";
-import { getMousepadBySlug } from "@/lib/mousepads";
 import Link from "next/link";
 import { ClientShareButton } from "@/components/ClientShareButton";
 import { buildMetadata } from "@/lib/seo";
+import { getPublicPads } from "@/server/catalog/pads";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
     title: "Mousepad Comparisons and Side-by-Side Matchups",
@@ -30,11 +32,14 @@ export const metadata: Metadata = buildMetadata({
     ],
 });
 
-export default function CompareIndexPage() {
+export default async function CompareIndexPage() {
+    const padsBySlug = new Map(
+        (await getPublicPads()).map((pad) => [pad.slug, pad]),
+    );
     const comparisons = getPublishedComparisons()
         .map((comparison) => {
-            const left = getMousepadBySlug(comparison.leftSlug);
-            const right = getMousepadBySlug(comparison.rightSlug);
+            const left = padsBySlug.get(comparison.leftSlug);
+            const right = padsBySlug.get(comparison.rightSlug);
 
             if (!left || !right) {
                 return null;

@@ -16,8 +16,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { getAllBestPages, getBestPagePicks } from "@/data/best-pages";
-import { getAllMousepads, getMousepadFullName } from "@/lib/mousepads";
+import { getMousepadFullName } from "@/lib/mousepads";
 import { buildMetadata } from "@/lib/seo";
+import { getPublicPads } from "@/server/catalog/pads";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
     title: "Best Mousepads for FPS Games",
@@ -55,9 +58,9 @@ const pageTone = {
     "humidity-resistant-mousepads": "Climate stable",
 } as const;
 
-export default function BestPage() {
+export default async function BestPage() {
     const pages = getAllBestPages();
-    const mousepads = getAllMousepads();
+    const mousepads = await getPublicPads();
     const featured = pages.slice(0, 3).map((page) => ({
         page,
         pick: getBestPagePicks(page, mousepads)[0],

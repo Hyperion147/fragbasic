@@ -1,16 +1,40 @@
-import { buildSearchIndex, iemSearchItems, type SearchItem } from "@/lib/search";
+import { buildSearchIndex, iemSearchItems, padSearchItems, type SearchItem } from "@/lib/search";
 import { getPublicIems } from "./iems";
+import { getPublicPads } from "./pads";
 import { isDbCatalogSource } from "./source";
 
 /**
- * Full public search index. When the IEM module points at the database, its
- * static items are replaced with the live published rows.
+ * Full public search index. Each cut-over module replaces its bundled static
+ * items with the live published rows.
  */
 export async function buildPublicSearchIndex(): Promise<SearchItem[]> {
-  if (!isDbCatalogSource("iems")) {
+  const padsFromDb =
+    isDbCatalogSource("mousepads") || isDbCatalogSource("glasspads");
+  const iemsFromDb = isDbCatalogSource("iems");
+
+  if (!padsFromDb && !iemsFromDb) {
     return buildSearchIndex();
   }
 
-  const baseItems = buildSearchIndex().filter((item) => item.kind !== "iem");
-  return [...baseItems, ...iemSearchItems(await getPublicIems())];
+  const items = buildSearchIndex().filter((item) => {
+    if (
+      padsFromDb &&
+      (item.kind === "mousepad" || item.kind === "glasspad")
+    ) {
+      return false;
+    }
+    if (iemsFromDb && item.kind === "iem") {
+      return false;
+    }
+    return true;
+  });
+
+  if (padsFromDb) {
+    items.push(...padSearchItems(await getPublicPads()));
+  }
+  if (iemsFromDb) {
+    items.push(...iemSearchItems(await getPublicIems()));
+  }
+
+  return items;
 }

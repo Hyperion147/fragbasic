@@ -5,18 +5,16 @@ import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { MousepadBrowser } from "@/components/mousepads/mousepad-browser";
 import { SiteSection } from "@/components/SiteSection";
-import { latestAddedMousepadSlugs } from "@/data/latest-added";
 import {
-  getAllMousepads,
   getMousepadBrandOptions,
   getMousepadCategoryOptions,
 } from "@/lib/mousepads";
 import { buildCollectionJsonLd, buildMetadata } from "@/lib/seo";
+import { getPublicLatestAdded } from "@/server/catalog/latest-added";
+import { getPublicMousepads } from "@/server/catalog/pads";
 import type { MousepadCategory } from "@/types/mousepad";
 
-const browseMousepads = getAllMousepads().filter(
-    (mousepad) => mousepad.category !== "glass",
-);
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
     title: "Mousepad Database for FPS Games",
@@ -42,7 +40,10 @@ type MousepadsPageProps = {
 };
 
 export default async function MousepadsPage({ searchParams }: MousepadsPageProps) {
-    const mousepads = browseMousepads;
+    const [mousepads, latestAdded] = await Promise.all([
+        getPublicMousepads(),
+        getPublicLatestAdded(),
+    ]);
     const params = searchParams ? await searchParams : undefined;
     const brands = getMousepadBrandOptions(mousepads);
     const categories = getMousepadCategoryOptions(mousepads);
@@ -97,7 +98,7 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
                             brands={brands}
                             categories={categories}
                             initialCategory={initialCategory}
-                            latestAddedSlugs={latestAddedMousepadSlugs}
+                            latestAddedSlugs={latestAdded.mousepads}
                         />
                     </Suspense>
                 </SiteSection>

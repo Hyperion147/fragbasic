@@ -5,13 +5,11 @@ import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { MousepadBrowser } from "@/components/mousepads/mousepad-browser";
 import { SiteSection } from "@/components/SiteSection";
-import { latestAddedGlasspadSlugs } from "@/data/latest-added";
-import { getAllMousepads } from "@/lib/mousepads";
 import { buildCollectionJsonLd, buildMetadata } from "@/lib/seo";
+import { getPublicLatestAdded } from "@/server/catalog/latest-added";
+import { getPublicGlasspads } from "@/server/catalog/pads";
 
-const glasspads = getAllMousepads().filter(
-  (mousepad) => mousepad.category === "glass",
-);
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
   title: "Glass Mousepad Database",
@@ -29,7 +27,12 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function GlasspadsPage() {
+export default async function GlasspadsPage() {
+  const [glasspads, latestAdded] = await Promise.all([
+    getPublicGlasspads(),
+    getPublicLatestAdded(),
+  ]);
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       <JsonLd
@@ -72,7 +75,7 @@ export default function GlasspadsPage() {
               mousepads={glasspads}
               categories={[]}
               searchOnly
-              latestAddedSlugs={latestAddedGlasspadSlugs}
+              latestAddedSlugs={latestAdded.glasspads}
             />
           </Suspense>
         </SiteSection>

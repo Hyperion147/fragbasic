@@ -21,7 +21,6 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { IconTooltip } from "@/components/ui/tooltip";
-import { getMousepadBySlug } from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
 
 type Props = {
@@ -44,6 +43,11 @@ export function UniversalCompare({ allMousepads }: Props) {
     const hasPadsParam = searchParams.has("pads");
     const didCheckStoredSelection = useRef(false);
 
+    const availableSlugs = useMemo(
+        () => new Set(allMousepads.map((mousepad) => mousepad.slug)),
+        [allMousepads],
+    );
+
     const urlSelectedSlugs = useMemo(() => {
         if (padsParam === null) {
             return [];
@@ -54,8 +58,8 @@ export function UniversalCompare({ allMousepads }: Props) {
             .map((slug) => slug.trim())
             .filter(Boolean)
             .slice(0, MAX_SELECTED)
-            .filter((slug) => getMousepadBySlug(slug));
-    }, [padsParam]);
+            .filter((slug) => availableSlugs.has(slug));
+    }, [availableSlugs, padsParam]);
 
     const [query, setQuery] = useState("");
     const selectedSlugs = useMemo(
@@ -106,7 +110,7 @@ export function UniversalCompare({ allMousepads }: Props) {
             const storedSlugs = Array.isArray(parsed)
                 ? parsed
                       .filter((slug): slug is string => typeof slug === "string")
-                      .filter((slug) => getMousepadBySlug(slug))
+                      .filter((slug) => availableSlugs.has(slug))
                       .slice(0, MAX_SELECTED)
                 : [];
 
@@ -118,8 +122,10 @@ export function UniversalCompare({ allMousepads }: Props) {
             // Ignore malformed localStorage and fall back to starter pads.
         }
 
-        replaceUrl(DEFAULT_SELECTED_SLUGS.filter((slug) => getMousepadBySlug(slug)));
-    }, [hasPadsParam, replaceUrl]);
+        replaceUrl(
+            DEFAULT_SELECTED_SLUGS.filter((slug) => availableSlugs.has(slug)),
+        );
+    }, [availableSlugs, hasPadsParam, replaceUrl]);
 
     useEffect(() => {
         if (!hasPadsParam) {
@@ -309,7 +315,7 @@ export function UniversalCompare({ allMousepads }: Props) {
                                         variant="outline"
                                         onClick={() => {
                                             const valid = preset.slugs.filter(
-                                                (s) => getMousepadBySlug(s),
+                                                (s) => availableSlugs.has(s),
                                             );
                                             replaceUrl(valid);
                                         }}

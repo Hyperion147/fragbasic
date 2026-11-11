@@ -12,9 +12,11 @@ import { SpecRows } from "@/components/compare/spec-rows";
 import { VerdictPanel } from "@/components/compare/verdict-panel";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { getAllComparisons } from "@/lib/comparisons";
-import { getComparisonPageData } from "@/lib/compare";
 import { getMousepadFullName } from "@/lib/mousepads";
 import { buildMetadata } from "@/lib/seo";
+import { getPublicComparisonPageData } from "@/server/catalog/comparisons";
+
+export const revalidate = 300;
 
 type PageProps = {
   params: Promise<{
@@ -30,7 +32,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const comparisonData = getComparisonPageData(slug);
+  const comparisonData = await getPublicComparisonPageData(slug);
 
   if (!comparisonData) {
     notFound();
@@ -56,7 +58,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ComparePage({ params }: PageProps) {
   const { slug } = await params;
-  const comparisonData = getComparisonPageData(slug);
+  const comparisonData = await getPublicComparisonPageData(slug);
 
   if (!comparisonData) {
     notFound();

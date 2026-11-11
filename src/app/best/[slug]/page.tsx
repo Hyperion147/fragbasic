@@ -19,13 +19,15 @@ import {
     formatEnvironmentLabel,
     formatFeelLabel,
     formatMousepadValue,
-    getAllMousepads,
     getMousepadFullName,
 } from "@/lib/mousepads";
 import {
     buildFaqJsonLd,
     buildMetadata,
 } from "@/lib/seo";
+import { getPublicPads } from "@/server/catalog/pads";
+
+export const revalidate = 300;
 
 type Props = {
     params: Promise<{ slug: string }>;
@@ -45,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         return {};
     }
 
-    const picks = getBestPagePicks(page, getAllMousepads());
+    const picks = getBestPagePicks(page, await getPublicPads());
     const pickNames = picks
         .slice(0, 3)
         .map((p) => getMousepadFullName(p.mousepad))
@@ -73,7 +75,7 @@ export default async function BestMousepadsPage({ params }: Props) {
         notFound();
     }
 
-    const picks = getBestPagePicks(page, getAllMousepads());
+    const picks = getBestPagePicks(page, await getPublicPads());
     const topPick = picks[0]?.mousepad;
     const bestFaqs = getBestFaqs(page.title, page.badge, page.thesis);
 
