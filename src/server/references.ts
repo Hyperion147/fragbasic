@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { glasspads, mousepads } from "@/db/schema";
+import { glasspads, iems, mousepads } from "@/db/schema";
 
 /**
  * Slugs from both table-backed pad collections. The public catalog treats
@@ -21,4 +21,24 @@ export async function getPadSlugs(): Promise<Set<string>> {
 export async function findMissingPadSlugs(slugs: readonly string[]) {
   const available = await getPadSlugs();
   return [...new Set(slugs)].filter((slug) => !available.has(slug));
+}
+
+export async function findMissingMousepadSlugs(slugs: readonly string[]) {
+  const rows = await db.select({ slug: mousepads.slug }).from(mousepads);
+  return findMissing(slugs, rows.map((row) => row.slug));
+}
+
+export async function findMissingGlasspadSlugs(slugs: readonly string[]) {
+  const rows = await db.select({ slug: glasspads.slug }).from(glasspads);
+  return findMissing(slugs, rows.map((row) => row.slug));
+}
+
+export async function findMissingIemSlugs(slugs: readonly string[]) {
+  const rows = await db.select({ slug: iems.slug }).from(iems);
+  return findMissing(slugs, rows.map((row) => row.slug));
+}
+
+function findMissing(slugs: readonly string[], available: readonly string[]) {
+  const known = new Set(available);
+  return [...new Set(slugs)].filter((slug) => !known.has(slug));
 }

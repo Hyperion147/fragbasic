@@ -84,8 +84,28 @@ export function UniversalSearch() {
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
-  const index = useMemo(() => buildSearchIndex(), []);
+  const [index, setIndex] = useState<SearchItem[]>(() => buildSearchIndex());
   const deferredQuery = useDeferredValue(query);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch("/api/search-index")
+      .then((response) => (response.ok ? response.json() : null))
+      .then((body: { items?: SearchItem[] } | null) => {
+        if (!cancelled && Array.isArray(body?.items)) {
+          setIndex(body.items);
+        }
+      })
+      .catch(() => {
+        // Keep the bundled index if the live one cannot be loaded.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const groups: SearchGroup[] = useMemo(
     () => searchAndGroup(index, deferredQuery),
     [index, deferredQuery],

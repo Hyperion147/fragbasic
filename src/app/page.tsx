@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { HomeExperience } from "@/features/landing/home-experience";
 import { getAllBestPages } from "@/data/best-pages";
-import { latestAddedIemSlugs, latestAddedMousepadSlugs } from "@/data/latest-added";
 import { getPublishedComparisons } from "@/lib/comparisons";
-import { getAllIems, getIemBySlug } from "@/lib/iems";
 import { getAllMousepads, getDefaultColorway, getMousepadFullName, getMousepadBySlug } from "@/lib/mousepads";
 import { buildCollectionJsonLd, buildMetadata } from "@/lib/seo";
+import { getPublicIems } from "@/server/catalog/iems";
+import { getPublicLatestAdded } from "@/server/catalog/latest-added";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
   title: "Mousepad Database, Glasspads, IEMs & Comparisons",
@@ -21,14 +23,17 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function HomePage() {
+export default async function HomePage() {
   const mousepads = getAllMousepads();
-  const iems = getAllIems();
-  const latestAdded = latestAddedMousepadSlugs
+  const [iems, latestAddedSlugs] = await Promise.all([
+    getPublicIems(),
+    getPublicLatestAdded(),
+  ]);
+  const latestAdded = latestAddedSlugs.mousepads
     .map((slug) => getMousepadBySlug(slug))
     .filter((mousepad) => mousepad !== undefined);
-  const latestAddedIems = latestAddedIemSlugs
-    .map((slug) => getIemBySlug(slug))
+  const latestAddedIems = latestAddedSlugs.iems
+    .map((slug) => iems.find((iem) => iem.slug === slug))
     .filter((iem) => iem !== undefined);
   const glasspadCount = mousepads.filter(
     (mousepad) => mousepad.category === "glass",

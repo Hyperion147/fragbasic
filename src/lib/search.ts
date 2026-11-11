@@ -64,6 +64,17 @@ function formatIemPriceTierLabel(tier: Iem["priceTier"]): string {
   return labels[tier];
 }
 
+export function iemSearchItems(iems: readonly Iem[]): SearchItem[] {
+  return iems.map((iem) => ({
+    id: `iem-${iem.slug}`,
+    kind: "iem" as const,
+    title: getIemFullName(iem),
+    subtitle: `${formatIemSoundSignature(iem.soundSignature)} · ${formatIemPriceTierLabel(iem.priceTier)}`,
+    href: `/iems/${iem.slug}`,
+    keywords: [iem.brand, iem.name, iem.shortName, iem.slug, iem.driverType, iem.soundSignature],
+  }));
+}
+
 export function buildSearchIndex(): SearchItem[] {
   const items: SearchItem[] = [];
 
@@ -79,16 +90,7 @@ export function buildSearchIndex(): SearchItem[] {
     });
   }
 
-  for (const iem of getAllIems()) {
-    items.push({
-      id: `iem-${iem.slug}`,
-      kind: "iem",
-      title: getIemFullName(iem),
-      subtitle: `${formatIemSoundSignature(iem.soundSignature)} · ${formatIemPriceTierLabel(iem.priceTier)}`,
-      href: `/iems/${iem.slug}`,
-      keywords: [iem.brand, iem.name, iem.shortName, iem.slug, iem.driverType, iem.soundSignature],
-    });
-  }
+  items.push(...iemSearchItems(getAllIems()));
 
   for (const skate of getAllMouseSkates()) {
     items.push({

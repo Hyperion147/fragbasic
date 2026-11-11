@@ -15,6 +15,13 @@
       "when": 1794396690437,
       "tag": "0001_living_shaman",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794399251012,
+      "tag": "0002_mixed_rictor",
+      "breakpoints": true
     }
   ]
 }

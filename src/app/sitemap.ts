@@ -1,13 +1,14 @@
 import type { MetadataRoute } from "next";
 
 import { getPublishedComparisons } from "@/lib/comparisons";
-import { getAllIems } from "@/lib/iems";
 import { getAllMousepads } from "@/lib/mousepads";
 import { getSiteUrl } from "@/lib/seo";
 import { getBestPageSlugs } from "@/data/best-pages";
+import { getPublicIems } from "@/server/catalog/iems";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl();
+  const iems = await getPublicIems();
 
   // NOTE: only emit lastModified where we have a real source date (IEMs).
   // Emitting `new Date()` for every URL fakes freshness and hurts AI/trust
@@ -39,7 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     images: [`${siteUrl}${mousepad.images.main}`],
   }));
 
-  const iemRoutes = getAllIems().map((iem) => ({
+  const iemRoutes = iems.map((iem) => ({
     url: `${siteUrl}/iems/${iem.slug}`,
     lastModified: iem.updatedAt,
     changeFrequency: "weekly" as const,

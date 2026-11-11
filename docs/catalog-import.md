@@ -37,6 +37,7 @@ bucket → Settings) or via the Storage API `PUT /storage/v1/bucket/:id` with
 | `npm run db:seed:accessories` | Mouse skates |
 | `npm run db:seed:comparisons` | Head-to-head comparisons |
 | `npm run db:seed:best-pages` | Buying-guide best pages |
+| `npm run db:seed:latest-added` | Curated home-page "latest added" slug lists |
 | `npm run db:seed:all` | All of the above, sequentially |
 | `npm run db:snapshot` | Writes `output/static-catalog-snapshot.json` |
 
@@ -52,6 +53,7 @@ npm run db:seed:iems -- --dry-run
 npm run db:seed:accessories -- --dry-run
 npm run db:seed:comparisons -- --dry-run
 npm run db:seed:best-pages -- --dry-run
+npm run db:seed:latest-added -- --dry-run
 ```
 
 Expected output for an in-sync database:
@@ -63,6 +65,7 @@ Expected output for an in-sync database:
 [dry-run] Mouse skate import (upsert): create=0 update=0 unchanged=12 skip=0 conflict=0 total=12
 [dry-run] Comparison import (upsert): create=0 update=0 unchanged=8 skip=0 conflict=0 total=8
 [dry-run] Best page import (upsert): create=0 update=0 unchanged=6 skip=0 conflict=0 total=6
+[dry-run] Latest added import (upsert): create=0 update=0 unchanged=1 skip=0 conflict=0 total=1
 ```
 
 Then apply:
@@ -138,6 +141,42 @@ writing:
 public catalog resolves pads. Deleting or renaming a referenced pad does not
 cascade; fix the editorial record and the CMS will reject unknown slugs on the
 next save.
+
+Latest-added is a single `site_settings` row with key `latest-added` and three
+slug lists: soft mousepads, glasspads, and IEMs. Edit it at
+`/cms67/latest-added`; the API rejects slugs that are not in the matching table.
+
+## Public reads and module cutover
+
+Public pages default to the static TypeScript catalog. Each module can be moved
+to the database independently by setting its flag in `.env`:
+
+| Flag | Module |
+| --- | --- |
+| `CATALOG_SOURCE_MOUSEPADS` | Soft mousepads |
+| `CATALOG_SOURCE_GLASSPADS` | Glasspads |
+| `CATALOG_SOURCE_IEMS` | IEMs |
+| `CATALOG_SOURCE_ACCESSORIES` | Mouse skates |
+| `CATALOG_SOURCE_COMPARISONS` | Comparisons |
+| `CATALOG_SOURCE_BEST_PAGES` | Best pages |
+| `CATALOG_SOURCE_LATEST_ADDED` | Home-page latest-added lists |
+
+`static` is the default; any value other than `db` keeps the static source.
+When a module is on `db`, public readers only return rows with status
+`published`, so drafts stay hidden in the CMS.
+
+The IEM module was the first cutover. It covers `/iems`, `/iems/[slug]`,
+`/iems/compare`, the home page, the sitemap, and the live search index. IEM
+pages revalidate every five minutes.
+
+Before flipping a flag, run its import dry-run and confirm `update=0 conflict=0`:
+
+```bash
+npm run db:seed:iems -- --dry-run
+```
+
+Then set `CATALOG_SOURCE_IEMS=db`, restart/redeploy, and spot-check list, detail,
+compare, search, and sitemap output.
 
 ## Rollback
 
