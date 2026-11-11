@@ -99,9 +99,18 @@ export default function CmsBestPagesPage() {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="sm" asChild>
-                      <Link href={`/cms67/best-pages/${row.id}`}>Edit</Link>
-                    </Button>
+                    <div className="flex justify-end gap-1">
+                      {row.status === "published" ? (
+                        <Button variant="ghost" size="sm" asChild>
+                          <Link href={`/best/${row.slug}`} target="_blank">
+                            View
+                          </Link>
+                        </Button>
+                      ) : null}
+                      <Button variant="ghost" size="sm" asChild>
+                        <Link href={`/cms67/best-pages/${row.id}`}>Edit</Link>
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))

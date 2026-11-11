@@ -21,8 +21,9 @@
     "db:seed:accessories": "tsx --env-file=.env src/db/seed-accessories.ts",
     "db:seed:comparisons": "tsx --env-file=.env src/db/seed-comparisons.ts",
     "db:seed:best-pages": "tsx --env-file=.env src/db/seed-best-pages.ts",
+    "db:seed:guides": "tsx --env-file=.env src/db/seed-guides.ts",
     "db:seed:latest-added": "tsx --env-file=.env src/db/seed-latest-added.ts",
-    "db:seed:all": "npm run db:seed && npm run db:seed:glasspads && npm run db:seed:iems && npm run db:seed:accessories && npm run db:seed:comparisons && npm run db:seed:best-pages && npm run db:seed:latest-added"
+    "db:seed:all": "npm run db:seed && npm run db:seed:glasspads && npm run db:seed:iems && npm run db:seed:accessories && npm run db:seed:comparisons && npm run db:seed:best-pages && npm run db:seed:guides && npm run db:seed:latest-added"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.101.4",

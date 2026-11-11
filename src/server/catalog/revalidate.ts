@@ -17,11 +17,13 @@ const MODULE_ROUTES: Record<CatalogSourceModule, RouteConfig> = {
       "/mousepads/glasspads",
       "/mousepads/compare",
       "/mousepads/compare/universal",
+      "/mousepads/guides",
       "/best",
     ],
     dynamic: [
       { path: "/mousepads/[slug]", type: "page" },
       { path: "/mousepads/compare/[slug]", type: "page" },
+      { path: "/mousepads/guides/[slug]", type: "page" },
       { path: "/best/[slug]", type: "page" },
     ],
   },
@@ -32,11 +34,13 @@ const MODULE_ROUTES: Record<CatalogSourceModule, RouteConfig> = {
       "/mousepads/glasspads",
       "/mousepads/compare",
       "/mousepads/compare/universal",
+      "/mousepads/guides",
       "/best",
     ],
     dynamic: [
       { path: "/mousepads/[slug]", type: "page" },
       { path: "/mousepads/compare/[slug]", type: "page" },
+      { path: "/mousepads/guides/[slug]", type: "page" },
       { path: "/best/[slug]", type: "page" },
     ],
   },
@@ -67,6 +71,10 @@ const MODULE_ROUTES: Record<CatalogSourceModule, RouteConfig> = {
   "best-pages": {
     literals: [...SHARED_PATHS, "/best"],
     dynamic: [{ path: "/best/[slug]", type: "page" }],
+  },
+  guides: {
+    literals: [...SHARED_PATHS, "/mousepads/guides"],
+    dynamic: [{ path: "/mousepads/guides/[slug]", type: "page" }],
   },
   "latest-added": {
     literals: [

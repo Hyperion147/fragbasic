@@ -7,6 +7,7 @@ export type CatalogSourceModule =
   | "accessories"
   | "comparisons"
   | "best-pages"
+  | "guides"
   | "latest-added";
 
 const ENV_KEYS: Record<CatalogSourceModule, string> = {
@@ -16,6 +17,7 @@ const ENV_KEYS: Record<CatalogSourceModule, string> = {
   accessories: "CATALOG_SOURCE_ACCESSORIES",
   comparisons: "CATALOG_SOURCE_COMPARISONS",
   "best-pages": "CATALOG_SOURCE_BEST_PAGES",
+  guides: "CATALOG_SOURCE_GUIDES",
   "latest-added": "CATALOG_SOURCE_LATEST_ADDED",
 };
 

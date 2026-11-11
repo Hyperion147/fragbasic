@@ -8,6 +8,7 @@ import { iems } from "@/data/iems/iems";
 import { mouseSkates } from "@/data/accessories/mouse-skates";
 import { comparisons } from "@/data/comparisons";
 import { bestPages } from "@/data/best-pages";
+import { guides } from "@/data/guides";
 import {
   latestAddedGlasspadSlugs,
   latestAddedIemSlugs,
@@ -18,6 +19,7 @@ import { iemSchema } from "@/schemas/iem";
 import { mouseSkateSchema } from "@/schemas/accessory";
 import { comparisonDataSchema } from "@/schemas/comparison";
 import { bestPageDataSchema } from "@/schemas/best-page";
+import { guideDataSchema } from "@/schemas/guide";
 
 const DEFAULT_OUTPUT = "output/static-catalog-snapshot.json";
 
@@ -39,6 +41,7 @@ Default: ${DEFAULT_OUTPUT}`);
     mouseSkates,
     comparisons,
     bestPages,
+    guides,
     latestAdded: {
       mousepads: latestAddedMousepadSlugs,
       glasspads: latestAddedGlasspadSlugs,
@@ -52,6 +55,7 @@ Default: ${DEFAULT_OUTPUT}`);
     mouseSkates: countInvalid(mouseSkates, mouseSkateSchema),
     comparisons: countInvalid(comparisons, comparisonDataSchema),
     bestPages: countInvalid(bestPages, bestPageDataSchema),
+    guides: countInvalid(guides, guideDataSchema),
   };
 
   const checksum = createHash("sha256")
@@ -69,6 +73,7 @@ Default: ${DEFAULT_OUTPUT}`);
       mouseSkates: mouseSkates.length,
       comparisons: comparisons.length,
       bestPages: bestPages.length,
+      guides: guides.length,
     },
     validation,
     data,
@@ -81,7 +86,7 @@ Default: ${DEFAULT_OUTPUT}`);
   console.log(`Snapshot written: ${outputPath}`);
   console.log(`Checksum: ${checksum}`);
   console.log(
-    `Counts: mousepads=${snapshot.counts.mousepads} (soft=${snapshot.counts.softMousepads}, glass=${snapshot.counts.glasspads}) iems=${snapshot.counts.iems} skates=${snapshot.counts.mouseSkates} comparisons=${snapshot.counts.comparisons} bestPages=${snapshot.counts.bestPages}`,
+    `Counts: mousepads=${snapshot.counts.mousepads} (soft=${snapshot.counts.softMousepads}, glass=${snapshot.counts.glasspads}) iems=${snapshot.counts.iems} skates=${snapshot.counts.mouseSkates} comparisons=${snapshot.counts.comparisons} bestPages=${snapshot.counts.bestPages} guides=${snapshot.counts.guides}`,
   );
 
   for (const [name, invalid] of Object.entries(validation)) {

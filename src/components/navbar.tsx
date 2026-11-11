@@ -39,6 +39,7 @@ import Image from "next/image";
 const directNavItems = [
     { label: "Mousepads", href: "/mousepads" },
     { label: "GlassPads", href: "/mousepads/glasspads" },
+    { label: "Guides", href: "/mousepads/guides" },
     { label: "IEMs", href: "/iems" },
 ];
 
@@ -269,7 +270,8 @@ function isActivePath(pathname: string, href: string) {
         return (
             pathname === "/mousepads" ||
             (pathname.startsWith("/mousepads/") &&
-                !pathname.startsWith("/mousepads/glasspads"))
+                !pathname.startsWith("/mousepads/glasspads") &&
+                !pathname.startsWith("/mousepads/guides"))
         );
     }
 
@@ -335,6 +337,7 @@ function MobileNavigation() {
             items: [
                 { label: "All Mousepads", href: "/mousepads" },
                 { label: "GlassPads", href: "/mousepads/glasspads" },
+                { label: "Guides", href: "/mousepads/guides" },
                 { label: "Universal Compare", href: "/mousepads/compare/universal" },
             ],
         },

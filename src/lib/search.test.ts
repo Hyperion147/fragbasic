@@ -2,10 +2,12 @@ import { describe, expect, it } from "vitest";
 
 import { getAllBestPages } from "@/data/best-pages";
 import { getAllMouseSkates } from "@/data/accessories/mouse-skates";
+import { getAllGuides } from "@/data/guides";
 import { getPublishedComparisons } from "@/lib/comparisons";
 import { getAllIems } from "@/lib/iems";
 import { getAllMousepads } from "@/lib/mousepads";
 import {
+  articleSearchItems,
   bestPageSearchItems,
   comparisonSearchItems,
   groupSearchResults,
@@ -27,6 +29,7 @@ function buildFixtureIndex(): SearchItem[] {
     ...iemSearchItems(getAllIems()),
     ...skateSearchItems(getAllMouseSkates()),
     ...bestPageSearchItems(getAllBestPages()),
+    ...articleSearchItems(getAllGuides()),
     ...comparisonSearchItems(getPublishedComparisons()),
   ];
 }
@@ -37,7 +40,15 @@ describe("search index fixture", () => {
     const kinds = new Set(index.map((item) => item.kind));
 
     expect(kinds).toEqual(
-      new Set(["mousepad", "glasspad", "iem", "skate", "guide", "comparison"]),
+      new Set([
+        "mousepad",
+        "glasspad",
+        "iem",
+        "skate",
+        "guide",
+        "article",
+        "comparison",
+      ]),
     );
     expect(index.length).toBeGreaterThan(60);
   });
@@ -98,6 +109,9 @@ describe("searchItems", () => {
     );
     expect(
       searchItems(index, "control mousepads").some((item) => item.kind === "guide"),
+    ).toBe(true);
+    expect(
+      searchItems(index, "humid climate").some((item) => item.kind === "article"),
     ).toBe(true);
     expect(
       searchItems(index, "crimson wallhack").some(

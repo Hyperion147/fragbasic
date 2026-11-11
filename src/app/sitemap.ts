@@ -3,6 +3,7 @@ import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/seo";
 import { getPublicBestPageSlugs } from "@/server/catalog/best-pages";
 import { getPublicComparisons } from "@/server/catalog/comparisons";
+import { getPublicGuides } from "@/server/catalog/guides";
 import { getPublicIems } from "@/server/catalog/iems";
 import { getPublicPads } from "@/server/catalog/pads";
 
@@ -14,12 +15,14 @@ function toAbsoluteUrl(siteUrl: string, value: string) {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl();
-  const [iems, mousepads, comparisons, bestPageSlugs] = await Promise.all([
-    getPublicIems(),
-    getPublicPads(),
-    getPublicComparisons(),
-    getPublicBestPageSlugs(),
-  ]);
+  const [iems, mousepads, comparisons, bestPageSlugs, guides] =
+    await Promise.all([
+      getPublicIems(),
+      getPublicPads(),
+      getPublicComparisons(),
+      getPublicBestPageSlugs(),
+      getPublicGuides(),
+    ]);
 
   // NOTE: only emit lastModified where we have a real source date (IEMs).
   // Emitting `new Date()` for every URL fakes freshness and hurts AI/trust
@@ -73,11 +76,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.85,
   }));
 
+  const guideRoutes = guides.map((guide) => ({
+    url: `${siteUrl}/mousepads/guides/${guide.slug}`,
+    lastModified: guide.publishedAt,
+    changeFrequency: "monthly" as const,
+    priority: 0.78,
+  }));
+
   return [
     ...staticRoutes,
     ...mousepadRoutes,
     ...iemRoutes,
     ...comparisonRoutes,
     ...bestRoutes,
+    ...guideRoutes,
   ];
 }

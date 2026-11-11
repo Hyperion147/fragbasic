@@ -22,6 +22,13 @@
       "when": 1794399251012,
       "tag": "0002_mixed_rictor",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794406093898,
+      "tag": "0003_typical_pixie",
+      "breakpoints": true
     }
   ]
 }

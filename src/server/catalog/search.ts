@@ -1,9 +1,11 @@
 import { getAllBestPages } from "@/data/best-pages";
 import { getAllMouseSkates } from "@/data/accessories/mouse-skates";
+import { getAllGuides } from "@/data/guides";
 import { getPublishedComparisons } from "@/lib/comparisons";
 import { getAllIems } from "@/lib/iems";
 import { getAllMousepads } from "@/lib/mousepads";
 import {
+  articleSearchItems,
   bestPageSearchItems,
   comparisonSearchItems,
   iemSearchItems,
@@ -14,6 +16,7 @@ import {
 import { getPublicMouseSkates } from "./accessories";
 import { getPublicBestPages } from "./best-pages";
 import { getPublicComparisons } from "./comparisons";
+import { getPublicGuides } from "./guides";
 import { getPublicIems } from "./iems";
 import { getPublicPads } from "./pads";
 import { isDbCatalogSource } from "./source";
@@ -28,6 +31,7 @@ function buildStaticSearchIndex(): SearchItem[] {
     ...iemSearchItems(getAllIems()),
     ...skateSearchItems(getAllMouseSkates()),
     ...bestPageSearchItems(getAllBestPages()),
+    ...articleSearchItems(getAllGuides()),
     ...comparisonSearchItems(getPublishedComparisons()),
   ];
 }
@@ -43,13 +47,15 @@ export async function buildPublicSearchIndex(): Promise<SearchItem[]> {
   const skatesFromDb = isDbCatalogSource("accessories");
   const comparisonsFromDb = isDbCatalogSource("comparisons");
   const bestPagesFromDb = isDbCatalogSource("best-pages");
+  const guidesFromDb = isDbCatalogSource("guides");
 
   if (
     !padsFromDb &&
     !iemsFromDb &&
     !skatesFromDb &&
     !comparisonsFromDb &&
-    !bestPagesFromDb
+    !bestPagesFromDb &&
+    !guidesFromDb
   ) {
     return buildStaticSearchIndex();
   }
@@ -73,6 +79,9 @@ export async function buildPublicSearchIndex(): Promise<SearchItem[]> {
     if (bestPagesFromDb && item.kind === "guide") {
       return false;
     }
+    if (guidesFromDb && item.kind === "article") {
+      return false;
+    }
     return true;
   });
 
@@ -90,6 +99,9 @@ export async function buildPublicSearchIndex(): Promise<SearchItem[]> {
   }
   if (bestPagesFromDb) {
     items.push(...bestPageSearchItems(await getPublicBestPages()));
+  }
+  if (guidesFromDb) {
+    items.push(...articleSearchItems(await getPublicGuides()));
   }
 
   return items;

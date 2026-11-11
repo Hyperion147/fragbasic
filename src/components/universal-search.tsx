@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   ArrowUpRight,
+  BookOpen,
   Boxes,
   CornerDownLeft,
   Headphones,
@@ -68,6 +69,7 @@ const KIND_ICONS: Record<SearchKind, typeof Boxes> = {
   iem: Headphones,
   skate: Sparkles,
   guide: Trophy,
+  article: BookOpen,
   comparison: CornerDownLeft,
 };
 

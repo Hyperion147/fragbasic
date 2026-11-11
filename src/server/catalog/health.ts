@@ -5,6 +5,7 @@ import {
   bestPages,
   comparisons,
   glasspads,
+  guides,
   iems,
   mousepads,
   mouseSkates,
@@ -16,6 +17,7 @@ import {
 } from "@/schemas/latest-added";
 import { bestPageDataSchema } from "@/schemas/best-page";
 import { comparisonDataSchema } from "@/schemas/comparison";
+import { guideDataSchema } from "@/schemas/guide";
 import { iemSchema } from "@/schemas/iem";
 import { mousepadSchema } from "@/schemas/mousepad";
 import { mouseSkateSchema } from "@/schemas/accessory";
@@ -61,6 +63,7 @@ const MODULE_LABELS: Record<CatalogSourceModule, string> = {
   accessories: "Mouse skates",
   comparisons: "Comparisons",
   "best-pages": "Best pages",
+  guides: "Guides",
   "latest-added": "Latest added",
 };
 
@@ -158,6 +161,7 @@ export async function getCatalogHealth(): Promise<CatalogHealthReport> {
     skateRows,
     comparisonRows,
     bestPageRows,
+    guideRows,
     latestAddedSetting,
   ] = await Promise.all([
     db.select().from(mousepads),
@@ -166,6 +170,7 @@ export async function getCatalogHealth(): Promise<CatalogHealthReport> {
     db.select().from(mouseSkates),
     db.select().from(comparisons),
     db.select().from(bestPages),
+    db.select().from(guides),
     latestAddedRepo.getSiteSetting(LATEST_ADDED_KEY),
   ]);
 
@@ -255,6 +260,24 @@ export async function getCatalogHealth(): Promise<CatalogHealthReport> {
               module: "best-pages",
               slug: row.slug,
               message: `Missing pad reference: ${pick.slug}`,
+            });
+          }
+        }
+      },
+    }),
+  );
+
+  modules.push(
+    inspectRows("guides", guideRows, guideDataSchema, issues, {
+      validate: (row, data) => {
+        const guide = data as { relatedPadSlugs: string[] };
+        for (const slug of guide.relatedPadSlugs) {
+          if (!padSlugs.has(slug)) {
+            issues.push({
+              level: "error",
+              module: "guides",
+              slug: row.slug,
+              message: `Missing pad reference: ${slug}`,
             });
           }
         }

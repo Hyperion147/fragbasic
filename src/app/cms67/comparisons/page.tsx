@@ -103,9 +103,21 @@ export default function CmsComparisonsPage() {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="sm" asChild>
-                      <Link href={`/cms67/comparisons/${row.id}`}>Edit</Link>
-                    </Button>
+                    <div className="flex justify-end gap-1">
+                      {row.status === "published" ? (
+                        <Button variant="ghost" size="sm" asChild>
+                          <Link
+                            href={`/mousepads/compare/${row.slug}`}
+                            target="_blank"
+                          >
+                            View
+                          </Link>
+                        </Button>
+                      ) : null}
+                      <Button variant="ghost" size="sm" asChild>
+                        <Link href={`/cms67/comparisons/${row.id}`}>Edit</Link>
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))

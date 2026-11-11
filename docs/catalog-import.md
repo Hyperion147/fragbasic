@@ -37,6 +37,7 @@ bucket → Settings) or via the Storage API `PUT /storage/v1/bucket/:id` with
 | `npm run db:seed:accessories` | Mouse skates |
 | `npm run db:seed:comparisons` | Head-to-head comparisons |
 | `npm run db:seed:best-pages` | Buying-guide best pages |
+| `npm run db:seed:guides` | Long-form mousepad guides |
 | `npm run db:seed:latest-added` | Curated home-page "latest added" slug lists |
 | `npm run db:seed:all` | All of the above, sequentially |
 | `npm run db:check` | Validate schemas, images, references, and source flags |
@@ -54,6 +55,7 @@ npm run db:seed:iems -- --dry-run
 npm run db:seed:accessories -- --dry-run
 npm run db:seed:comparisons -- --dry-run
 npm run db:seed:best-pages -- --dry-run
+npm run db:seed:guides -- --dry-run
 npm run db:seed:latest-added -- --dry-run
 ```
 
@@ -66,6 +68,7 @@ Expected output for an in-sync database:
 [dry-run] Mouse skate import (upsert): create=0 update=0 unchanged=12 skip=0 conflict=0 total=12
 [dry-run] Comparison import (upsert): create=0 update=0 unchanged=8 skip=0 conflict=0 total=8
 [dry-run] Best page import (upsert): create=0 update=0 unchanged=6 skip=0 conflict=0 total=6
+[dry-run] Guide import (upsert): create=0 update=0 unchanged=3 skip=0 conflict=0 total=3
 [dry-run] Latest added import (upsert): create=0 update=0 unchanged=1 skip=0 conflict=0 total=1
 ```
 
@@ -143,15 +146,17 @@ and the `glasspads/<id>/` folder, while mousepads use `mousepadId` and
 
 ## Editorial content
 
-Comparisons and best pages live in the `comparisons` and `best_pages` tables.
-They are imported by `db:seed:comparisons` and `db:seed:best-pages`, and edited
-under `/cms67/comparisons` and `/cms67/best-pages`.
+Comparisons, best pages, and guides live in the `comparisons`, `best_pages`, and
+`guides` tables. They are imported by `db:seed:comparisons`,
+`db:seed:best-pages`, and `db:seed:guides`, and edited under
+`/cms67/comparisons`, `/cms67/best-pages`, and `/cms67/guides`.
 
-Both use structured forms rather than raw JSON. References are validated before
-writing:
+All three use structured forms rather than raw JSON. References are validated
+before writing:
 
 - A comparison must point at two different pad slugs.
 - Every best-page pick must point at a pad slug.
+- Every guide `relatedPadSlugs` entry must point at a pad slug.
 
 "Pad slug" means the union of `mousepads` and `glasspads`, matching how the
 public catalog resolves pads. Deleting or renaming a referenced pad does not
@@ -175,6 +180,7 @@ to the database independently by setting its flag in `.env`:
 | `CATALOG_SOURCE_ACCESSORIES` | Mouse skates |
 | `CATALOG_SOURCE_COMPARISONS` | Comparisons |
 | `CATALOG_SOURCE_BEST_PAGES` | Best pages |
+| `CATALOG_SOURCE_GUIDES` | Long-form guides |
 | `CATALOG_SOURCE_LATEST_ADDED` | Home-page latest-added lists |
 
 `static` is the default; any value other than `db` keeps the static source.
@@ -196,6 +202,7 @@ Every table-backed module now supports database reads:
 - Comparisons: `/mousepads/compare`, `/mousepads/compare/[slug]`, related
   comparison links on pad detail pages
 - Best pages: `/best`, `/best/[slug]`
+- Guides: `/mousepads/guides`, `/mousepads/guides/[slug]`
 
 The home page, sitemap, and live search index use the same public readers.
 Cut-over pages revalidate every five minutes.
@@ -214,6 +221,7 @@ npm run db:seed:iems -- --dry-run
 npm run db:seed:accessories -- --dry-run
 npm run db:seed:comparisons -- --dry-run
 npm run db:seed:best-pages -- --dry-run
+npm run db:seed:guides -- --dry-run
 npm run db:seed:latest-added -- --dry-run
 ```
 

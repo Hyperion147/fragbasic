@@ -166,6 +166,20 @@ export default function CmsDashboardPage() {
 
         <Card className="border border-border/80 bg-card/80">
           <CardHeader>
+            <CardTitle>Guides</CardTitle>
+            <CardDescription>
+              Write long-form guides and link them to catalog pads.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/cms67/guides">Open guides</Link>
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card className="border border-border/80 bg-card/80">
+          <CardHeader>
             <CardTitle>Latest added</CardTitle>
             <CardDescription>
               Curate the new-product list shown on the home page.

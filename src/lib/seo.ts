@@ -319,6 +319,44 @@ function buildReviewNotes(notes?: string[]) {
   };
 }
 
+export function buildArticleJsonLd({
+  title,
+  description,
+  path,
+  datePublished,
+  dateModified,
+  keywords = [],
+}: {
+  title: string;
+  description: string;
+  path: string;
+  datePublished?: string;
+  dateModified?: string;
+  keywords?: string[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    description,
+    url: getAbsoluteUrl(path),
+    mainEntityOfPage: getAbsoluteUrl(path),
+    datePublished,
+    dateModified: dateModified ?? datePublished,
+    keywords: keywords.length > 0 ? keywords.join(", ") : undefined,
+    author: {
+      "@type": "Organization",
+      name: siteName,
+      url: siteUrl,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteName,
+      url: siteUrl,
+    },
+  };
+}
+
 export function buildFaqJsonLd(items: Array<{ q: string; a: string }>) {
   return {
     "@context": "https://schema.org",

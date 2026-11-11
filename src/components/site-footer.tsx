@@ -9,6 +9,7 @@ const footerGroups = [
         links: [
             { label: "All mousepads", href: "/mousepads" },
             { label: "Glasspads", href: "/mousepads/glasspads" },
+            { label: "Guides", href: "/mousepads/guides" },
             { label: "IEMs", href: "/iems" },
             { label: "Mouse skates", href: "/accessories/mouse-skates" },
         ],

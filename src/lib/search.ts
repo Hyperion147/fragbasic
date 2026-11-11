@@ -2,6 +2,7 @@ import { formatMouseSkateMaterial } from "@/lib/accessories/mouse-skates";
 import { formatIemSoundSignature, getIemFullName } from "@/lib/iems/format";
 import { formatMousepadValue } from "@/lib/utils/format";
 import type { MousepadComparison } from "@/data/comparisons";
+import type { GuideDataInput } from "@/schemas/guide";
 import type { MouseSkate } from "@/types/accessory";
 import type { Iem } from "@/types/iem";
 import type { Mousepad } from "@/types/mousepad";
@@ -12,6 +13,7 @@ export type SearchKind =
   | "iem"
   | "skate"
   | "guide"
+  | "article"
   | "comparison";
 
 export interface SearchItem {
@@ -35,6 +37,7 @@ export const SEARCH_GROUP_ORDER: SearchKind[] = [
   "iem",
   "skate",
   "guide",
+  "article",
   "comparison",
 ];
 
@@ -43,7 +46,8 @@ export const SEARCH_GROUP_LABELS: Record<SearchKind, string> = {
   glasspad: "Glasspads",
   iem: "IEMs",
   skate: "Skates",
-  guide: "Best guides",
+  guide: "Best pages",
+  article: "Guides",
   comparison: "Comparisons",
 };
 
@@ -108,6 +112,19 @@ export function bestPageSearchItems(
     subtitle: page.eyebrow,
     href: `/best/${page.slug}`,
     keywords: [page.slug, page.badge, ...page.keywords],
+  }));
+}
+
+export function articleSearchItems(
+  guides: readonly GuideDataInput[],
+): SearchItem[] {
+  return guides.map((guide) => ({
+    id: `article-${guide.slug}`,
+    kind: "article" as const,
+    title: guide.title,
+    subtitle: `${guide.category} · ${guide.readingTime} min read`,
+    href: `/mousepads/guides/${guide.slug}`,
+    keywords: [guide.slug, guide.category, ...guide.keywords],
   }));
 }
 

@@ -3,6 +3,7 @@ import type { MouseSkateInput } from "@/schemas/accessory";
 import type { IemInput } from "@/schemas/iem";
 import type { ComparisonDataInput } from "@/schemas/comparison";
 import type { BestPageDataInput } from "@/schemas/best-page";
+import type { GuideDataInput } from "@/schemas/guide";
 import { jsonb, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const mousepadStatusEnum = pgEnum("mousepad_status", [
@@ -102,10 +103,24 @@ export const bestPages = pgTable("best_pages", {
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+export const guideStatusEnum = pgEnum("guide_status", ["draft", "published"]);
+
+export const guides = pgTable("guides", {
+    id: text("id").primaryKey(),
+    slug: text("slug").notNull().unique(),
+    title: text("title").notNull(),
+    status: guideStatusEnum("status").notNull().default("published"),
+    data: jsonb("data").$type<GuideDataInput>().notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 export type ComparisonRow = typeof comparisons.$inferSelect;
 export type NewComparisonRow = typeof comparisons.$inferInsert;
 export type BestPageRow = typeof bestPages.$inferSelect;
 export type NewBestPageRow = typeof bestPages.$inferInsert;
+export type GuideRow = typeof guides.$inferSelect;
+export type NewGuideRow = typeof guides.$inferInsert;
 
 /**
  * Small site-wide documents that do not fit the catalog tables.
