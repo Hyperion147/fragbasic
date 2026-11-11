@@ -107,6 +107,21 @@ the public URL. Uploads use `x-upsert: true`, so re-runs are idempotent.
 Use `--skip-images` when storage is unavailable or when you only want to update
 text fields.
 
+## CMS editors
+
+Catalog rows are edited at `/cms67/mousepads`, `/cms67/glasspads`, `/cms67/iems`,
+and `/cms67/mouse-skates`. The forms are generated from the same Zod schemas used
+by the APIs, so fields, enum options, required markers, and numeric limits stay
+in sync with validation.
+
+Each editor also has an **Advanced JSON** panel for the complete record. Changes
+made there are only applied after pressing **Apply JSON**; otherwise saving is
+blocked to avoid losing unapplied edits.
+
+Image uploads go to Supabase Storage. Glasspads use the `glasspadId` form field
+and the `glasspads/<id>/` folder, while mousepads use `mousepadId` and
+`mousepads/<id>/`.
+
 ## Editorial content
 
 Comparisons and best pages live in the `comparisons` and `best_pages` tables.
