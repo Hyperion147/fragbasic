@@ -1,6 +1,10 @@
+import { getAllBestPages } from "@/data/best-pages";
+import { getAllMouseSkates } from "@/data/accessories/mouse-skates";
+import { getPublishedComparisons } from "@/lib/comparisons";
+import { getAllIems } from "@/lib/iems";
+import { getAllMousepads } from "@/lib/mousepads";
 import {
   bestPageSearchItems,
-  buildSearchIndex,
   comparisonSearchItems,
   iemSearchItems,
   padSearchItems,
@@ -13,6 +17,20 @@ import { getPublicComparisons } from "./comparisons";
 import { getPublicIems } from "./iems";
 import { getPublicPads } from "./pads";
 import { isDbCatalogSource } from "./source";
+
+/**
+ * Static index used as the mixed-source fallback. Lives on the server so the
+ * client bundle never imports the catalog data files.
+ */
+function buildStaticSearchIndex(): SearchItem[] {
+  return [
+    ...padSearchItems(getAllMousepads()),
+    ...iemSearchItems(getAllIems()),
+    ...skateSearchItems(getAllMouseSkates()),
+    ...bestPageSearchItems(getAllBestPages()),
+    ...comparisonSearchItems(getPublishedComparisons()),
+  ];
+}
 
 /**
  * Full public search index. Each cut-over module replaces its bundled static
@@ -33,10 +51,10 @@ export async function buildPublicSearchIndex(): Promise<SearchItem[]> {
     !comparisonsFromDb &&
     !bestPagesFromDb
   ) {
-    return buildSearchIndex();
+    return buildStaticSearchIndex();
   }
 
-  const items = buildSearchIndex().filter((item) => {
+  const items = buildStaticSearchIndex().filter((item) => {
     if (
       padsFromDb &&
       (item.kind === "mousepad" || item.kind === "glasspad")

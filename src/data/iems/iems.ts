@@ -1245,9 +1245,7 @@ export function getIemBySlug(slug: string) {
   return iems.find((iem) => iem.slug === slug);
 }
 
-export function getIemFullName(iem: Iem) {
-  return `${iem.brand} ${iem.name}`;
-}
+export { getIemFullName } from "@/lib/iems/format";
 
 export function getIemsByFragbasicScore() {
   return [...iems].sort((left, right) => right.ratings.fragbasic - left.ratings.fragbasic);

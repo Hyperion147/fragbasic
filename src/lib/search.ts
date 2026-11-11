@@ -1,13 +1,5 @@
-import { getAllBestPages } from "@/data/best-pages";
-import { getAllMouseSkates } from "@/data/accessories/mouse-skates";
-import { getAllMousepads, getMousepadFullName } from "@/lib/mousepads";
 import { formatMouseSkateMaterial } from "@/lib/accessories/mouse-skates";
-import { getPublishedComparisons } from "@/lib/comparisons";
-import {
-  formatIemSoundSignature,
-  getAllIems,
-  getIemFullName,
-} from "@/lib/iems";
+import { formatIemSoundSignature, getIemFullName } from "@/lib/iems/format";
 import { formatMousepadValue } from "@/lib/utils/format";
 import type { MousepadComparison } from "@/data/comparisons";
 import type { MouseSkate } from "@/types/accessory";
@@ -82,7 +74,7 @@ export function padSearchItems(pads: readonly Mousepad[]): SearchItem[] {
   return pads.map((pad) => ({
     id: `pad-${pad.slug}`,
     kind: pad.category === "glass" ? "glasspad" : "mousepad",
-    title: getMousepadFullName(pad),
+    title: `${pad.brand} ${pad.name}`,
     subtitle: `${formatMousepadValue(pad.category)} · ${formatMousepadValue(pad.surface)}`,
     href: `/mousepads/${pad.slug}`,
     keywords: [pad.brand, pad.name, pad.series ?? "", pad.slug, pad.category, pad.surface],
@@ -132,16 +124,6 @@ export function comparisonSearchItems(
   }));
 }
 
-export function buildSearchIndex(): SearchItem[] {
-  return [
-    ...padSearchItems(getAllMousepads()),
-    ...iemSearchItems(getAllIems()),
-    ...skateSearchItems(getAllMouseSkates()),
-    ...bestPageSearchItems(getAllBestPages()),
-    ...comparisonSearchItems(getPublishedComparisons()),
-  ];
-}
-
 export function normalizeSearchText(value: string): string {
   return value
     .normalize("NFD")
@@ -152,6 +134,35 @@ export function normalizeSearchText(value: string): string {
     .trim();
 }
 
+export interface PreparedSearchItem extends SearchItem {
+  normalizedTitle: string;
+  normalizedHaystack: string;
+}
+
+export type SearchableIndexItem = SearchItem | PreparedSearchItem;
+
+/**
+ * Normalizes each item once so repeated keystrokes only scan precomputed text.
+ * Call this when the index arrives from the API, not on every search.
+ */
+export function prepareSearchIndex(
+  items: readonly SearchItem[],
+): PreparedSearchItem[] {
+  return items.map((item) => ({
+    ...item,
+    normalizedTitle: normalizeSearchText(item.title),
+    normalizedHaystack: normalizeSearchText(
+      [item.title, item.subtitle, ...item.keywords].join(" "),
+    ),
+  }));
+}
+
+function isPreparedSearchItem(
+  item: SearchableIndexItem,
+): item is PreparedSearchItem {
+  return "normalizedHaystack" in item;
+}
+
 function scoreToken(title: string, haystack: string, token: string): number {
   if (title.startsWith(token)) return 3;
   if (title.includes(` ${token}`)) return 2;
@@ -160,11 +171,15 @@ function scoreToken(title: string, haystack: string, token: string): number {
   return 0;
 }
 
-function scoreItem(item: SearchItem, tokens: string[]): number {
-  const title = normalizeSearchText(item.title);
-  const haystack = normalizeSearchText(
-    [item.title, item.subtitle, ...item.keywords].join(" "),
-  );
+function scoreItem(item: SearchableIndexItem, tokens: string[]): number {
+  const title = isPreparedSearchItem(item)
+    ? item.normalizedTitle
+    : normalizeSearchText(item.title);
+  const haystack = isPreparedSearchItem(item)
+    ? item.normalizedHaystack
+    : normalizeSearchText(
+        [item.title, item.subtitle, ...item.keywords].join(" "),
+      );
   let score = 0;
   for (const token of tokens) {
     const tokenScore = scoreToken(title, haystack, token);
@@ -174,7 +189,10 @@ function scoreItem(item: SearchItem, tokens: string[]): number {
   return score;
 }
 
-export function searchItems(index: SearchItem[], query: string): SearchItem[] {
+export function searchItems(
+  index: readonly SearchableIndexItem[],
+  query: string,
+): SearchItem[] {
   const tokens = normalizeSearchText(query).split(" ").filter(Boolean);
   if (tokens.length === 0) return [];
 
@@ -201,6 +219,9 @@ export function groupSearchResults(items: SearchItem[]): SearchGroup[] {
   return groups;
 }
 
-export function searchAndGroup(index: SearchItem[], query: string): SearchGroup[] {
+export function searchAndGroup(
+  index: readonly SearchableIndexItem[],
+  query: string,
+): SearchGroup[] {
   return groupSearchResults(searchItems(index, query));
 }
