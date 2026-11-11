@@ -1,127 +1,128 @@
 import { config } from "dotenv";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
+import { eq } from "drizzle-orm";
+
 import { mousepads as catalog } from "@/data/mousepads/mousepads";
-import { db } from "./index";
-import { mousepads } from "./schema";
 import { mousepadSchema, type MousepadInput } from "@/schemas/mousepad";
+import { db } from "@/db";
+import {
+  assertSafeOptions,
+  executeImports,
+  parseImportOptions,
+  planImports,
+  printImportHelp,
+  printImportSummary,
+} from "@/db/import-utils";
+import { createImageUploader } from "@/db/import/images";
+import { mousepads, type NewMousepadRow } from "@/db/schema";
 
 config({ path: ".env" });
 
-const supabaseUrl = process.env.SUPABASE_URL?.replace(/\/$/, "");
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const storageBucket = process.env.SUPABASE_STORAGE_BUCKET ?? "mousepads";
-const uploadedAssets = new Map<string, string>();
+async function main() {
+  const options = parseImportOptions();
 
-function contentTypeFor(filePath: string) {
-    const extension = path.extname(filePath).toLowerCase();
-    return (
-        {
-            ".avif": "image/avif",
-            ".gif": "image/gif",
-            ".jpeg": "image/jpeg",
-            ".jpg": "image/jpeg",
-            ".png": "image/png",
-            ".webp": "image/webp",
-        } as Record<string, string>
-    )[extension] ?? "application/octet-stream";
-}
+  if (options.help) {
+    printImportHelp("npm run db:seed --");
+    return;
+  }
 
-function storagePathFor(id: string, source: string) {
-    const sourcePath = new URL(source, "http://seed.local").pathname;
-    const fileName = path.basename(sourcePath).replace(/[^a-zA-Z0-9._-]/g, "-");
-    return `mousepads/${id}/${fileName}`;
-}
+  assertSafeOptions(options);
 
-async function uploadAsset(id: string, source: string) {
-    if (!source.startsWith("/")) return source;
+  const uploader = createImageUploader("mousepads", {
+    skip: options.skipImages,
+  });
+  const upload = options.dryRun
+    ? async (id: string, source: string) => uploader.resolve(id, source)
+    : uploader.upload;
 
-    const cached = uploadedAssets.get(source);
-    if (cached) return cached;
+  const valid: MousepadInput[] = [];
+  let invalid = 0;
 
-    if (!supabaseUrl || !serviceRoleKey) {
-        throw new Error("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required to seed images");
+  for (const pad of catalog.filter((item) => item.category !== "glass")) {
+    const parsed = mousepadSchema.safeParse(pad);
+    if (!parsed.success) {
+      invalid += 1;
+      console.error(
+        `Invalid mousepad ${pad.slug}:`,
+        parsed.error.issues[0]?.message ?? parsed.error.message,
+      );
+      continue;
     }
 
-    const localPath = path.join(process.cwd(), "public", source.slice(1));
-    const file = await readFile(localPath);
-    const objectPath = storagePathFor(id, source);
-    const uploadUrl = `${supabaseUrl}/storage/v1/object/${encodeURIComponent(storageBucket)}/${objectPath}`;
-    const response = await fetch(uploadUrl, {
-        method: "POST",
-        headers: {
-            Authorization: `Bearer ${serviceRoleKey}`,
-            apikey: serviceRoleKey,
-            "Content-Type": contentTypeFor(localPath),
-            "x-upsert": "true",
-        },
-        body: file,
-    });
+    valid.push(parsed.data);
+  }
 
-    if (!response.ok) {
-        const detail = await response.text().catch(() => "");
-        throw new Error(`Image upload failed for ${source}: ${response.status} ${detail}`);
-    }
+  const rows: NewMousepadRow[] = [];
 
-    const publicUrl = `${supabaseUrl}/storage/v1/object/public/${encodeURIComponent(storageBucket)}/${objectPath}`;
-    uploadedAssets.set(source, publicUrl);
-    return publicUrl;
-}
-
-async function uploadMousepadImages(data: MousepadInput) {
+  for (const data of valid) {
     const images = {
-        ...data.images,
-        main: await uploadAsset(data.id, data.images.main),
+      ...data.images,
+      main: await upload(data.id, data.images.main),
     };
     const colorways = await Promise.all(
-        data.visuals.colorways.map(async (colorway) => ({
-            ...colorway,
-            ...(colorway.image
-                ? { image: await uploadAsset(data.id, colorway.image) }
-                : {}),
-        })),
+      data.visuals.colorways.map(async (colorway) => ({
+        ...colorway,
+        ...(colorway.image
+          ? { image: await upload(data.id, colorway.image) }
+          : {}),
+      })),
     );
 
-    return {
+    rows.push({
+      id: data.id,
+      slug: data.slug,
+      brand: data.brand,
+      name: data.name,
+      status: options.status,
+      data: {
         ...data,
         images,
         visuals: { ...data.visuals, colorways },
-    };
-}
+      },
+    });
+  }
 
-async function main() {
-    let inserted = 0;
-    let skipped = 0;
-
+  if (options.mode === "replace" && !options.dryRun) {
     await db.delete(mousepads);
+  }
 
-    for (const pad of catalog.filter((item) => item.category !== "glass")) {
-        const parsed = mousepadSchema.safeParse(pad);
-        if (!parsed.success) {
-            console.error("Skip invalid: ", pad.slug, parsed.error);
-            skipped += 1;
-            continue;
-        }
+  const existing =
+    options.mode === "replace" ? [] : await db.select().from(mousepads);
 
-        const data = await uploadMousepadImages(parsed.data);
+  const plans = planImports(rows, existing, options);
 
-        await db.insert(mousepads).values({
-            id: data.id,
-            slug: data.slug,
-            brand: data.brand,
-            name: data.name,
-            status: "published",
-            data,
-        });
+  const summary = await executeImports(
+    plans,
+    {
+      insert: async (row) => {
+        await db.insert(mousepads).values(row);
+      },
+      update: async (id, row) => {
+        await db
+          .update(mousepads)
+          .set({
+            slug: row.slug,
+            brand: row.brand,
+            name: row.name,
+            status: row.status,
+            data: row.data,
+            updatedAt: new Date(),
+          })
+          .where(eq(mousepads.id, id));
+      },
+    },
+    options,
+  );
 
-        inserted += 1;
-    }
+  printImportSummary("Mousepad import", summary, plans, options);
 
-    console.log(`Seed Complete inserted=${inserted} skipped=${skipped}`);
-    process.exit(skipped > 0 ? 1 : 0);
+  if (invalid > 0) {
+    console.error(`Skipped ${invalid} invalid mousepad record(s).`);
+  }
+
+  process.exit(invalid > 0 || summary.conflict > 0 ? 1 : 0);
 }
 
-main().catch((err) => {
-    console.error(err);
-    process.exit(1);
+main().catch((error) => {
+  console.error(error instanceof Error ? error.message : error);
+  process.exit(1);
 });

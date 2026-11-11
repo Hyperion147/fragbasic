@@ -1,68 +1,135 @@
 import { config } from "dotenv";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
+import { eq } from "drizzle-orm";
+
 import { glassMousepads as catalog } from "@/data/mousepads/glasspads";
 import { mousepadSchema, type MousepadInput } from "@/schemas/mousepad";
-import { db } from "./index";
-import { glasspads } from "./schema";
+import { db } from "@/db";
+import {
+  assertSafeOptions,
+  executeImports,
+  parseImportOptions,
+  planImports,
+  printImportHelp,
+  printImportSummary,
+} from "@/db/import-utils";
+import { createImageUploader } from "@/db/import/images";
+import { glasspads, type NewGlasspadRow } from "@/db/schema";
 
 config({ path: ".env" });
 
-const supabaseUrl = process.env.SUPABASE_URL?.replace(/\/$/, "");
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const bucket = process.env.SUPABASE_STORAGE_BUCKET ?? "mousepads";
-
-function contentType(filePath: string) {
-  const extension = path.extname(filePath).toLowerCase();
-  return ({ ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp", ".avif": "image/avif" } as Record<string, string>)[extension] ?? "application/octet-stream";
-}
-
-async function uploadAsset(id: string, source: string) {
-  if (!source.startsWith("/")) return source;
-  if (!supabaseUrl || !serviceRoleKey) throw new Error("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required");
-  const localPath = path.join(process.cwd(), "public", source.slice(1));
-  const fileName = path.basename(localPath).replace(/[^a-zA-Z0-9._-]/g, "-");
-  const objectPath = `glasspads/${id}/${fileName}`;
-  const response = await fetch(`${supabaseUrl}/storage/v1/object/${encodeURIComponent(bucket)}/${objectPath}`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${serviceRoleKey}`, apikey: serviceRoleKey, "Content-Type": contentType(localPath), "x-upsert": "true" },
-    body: await readFile(localPath),
-  });
-  if (!response.ok) throw new Error(`Glasspad image upload failed for ${source}: ${response.status}`);
-  return `${supabaseUrl}/storage/v1/object/public/${encodeURIComponent(bucket)}/${objectPath}`;
-}
-
-async function uploadImages(data: MousepadInput) {
-  return {
-    ...data,
-    images: { ...data.images, main: await uploadAsset(data.id, data.images.main) },
-    visuals: {
-      ...data.visuals,
-      colorways: await Promise.all(data.visuals.colorways.map(async (colorway) => ({
-        ...colorway,
-        ...(colorway.image ? { image: await uploadAsset(data.id, colorway.image) } : {}),
-      }))),
-    },
-  };
-}
-
 async function main() {
-  let inserted = 0;
-  let skipped = 0;
-  await db.delete(glasspads);
+  const options = parseImportOptions();
+
+  if (options.help) {
+    printImportHelp("npm run db:seed:glasspads --");
+    return;
+  }
+
+  assertSafeOptions(options);
+
+  const uploader = createImageUploader("glasspads", {
+    skip: options.skipImages,
+  });
+  const upload = options.dryRun
+    ? async (id: string, source: string) => uploader.resolve(id, source)
+    : uploader.upload;
+
+  const valid: MousepadInput[] = [];
+  let invalid = 0;
+
   for (const item of catalog) {
     const parsed = mousepadSchema.safeParse(item);
-    if (!parsed.success || parsed.data.category !== "glass" || parsed.data.surface !== "glass") {
-      console.error("Skip invalid glasspad:", item.slug, parsed.success ? "not glass" : parsed.error);
-      skipped += 1;
+
+    if (
+      !parsed.success ||
+      parsed.data.category !== "glass" ||
+      parsed.data.surface !== "glass"
+    ) {
+      invalid += 1;
+      console.error(
+        `Invalid glasspad ${item.slug}:`,
+        parsed.success
+          ? "record is not a glasspad"
+          : (parsed.error.issues[0]?.message ?? parsed.error.message),
+      );
       continue;
     }
-    const data = await uploadImages(parsed.data);
-    await db.insert(glasspads).values({ id: data.id, slug: data.slug, brand: data.brand, name: data.name, status: "published", data });
-    inserted += 1;
+
+    valid.push(parsed.data);
   }
-  console.log(`Glasspad seed complete inserted=${inserted} skipped=${skipped}`);
-  process.exit(skipped > 0 ? 1 : 0);
+
+  const rows: NewGlasspadRow[] = [];
+
+  for (const data of valid) {
+    const images = {
+      ...data.images,
+      main: await upload(data.id, data.images.main),
+    };
+    const colorways = await Promise.all(
+      data.visuals.colorways.map(async (colorway) => ({
+        ...colorway,
+        ...(colorway.image
+          ? { image: await upload(data.id, colorway.image) }
+          : {}),
+      })),
+    );
+
+    rows.push({
+      id: data.id,
+      slug: data.slug,
+      brand: data.brand,
+      name: data.name,
+      status: options.status,
+      data: {
+        ...data,
+        images,
+        visuals: { ...data.visuals, colorways },
+      },
+    });
+  }
+
+  if (options.mode === "replace" && !options.dryRun) {
+    await db.delete(glasspads);
+  }
+
+  const existing =
+    options.mode === "replace" ? [] : await db.select().from(glasspads);
+
+  const plans = planImports(rows, existing, options);
+
+  const summary = await executeImports(
+    plans,
+    {
+      insert: async (row) => {
+        await db.insert(glasspads).values(row);
+      },
+      update: async (id, row) => {
+        await db
+          .update(glasspads)
+          .set({
+            slug: row.slug,
+            brand: row.brand,
+            name: row.name,
+            status: row.status,
+            data: row.data,
+            updatedAt: new Date(),
+          })
+          .where(eq(glasspads.id, id));
+      },
+    },
+    options,
+  );
+
+  printImportSummary("Glasspad import", summary, plans, options);
+
+  if (invalid > 0) {
+    console.error(`Skipped ${invalid} invalid glasspad record(s).`);
+  }
+
+  process.exit(invalid > 0 || summary.conflict > 0 ? 1 : 0);
 }
 
-main().catch((error) => { console.error(error); process.exit(1); });
+main().catch((error) => {
+  console.error(error instanceof Error ? error.message : error);
+  process.exit(1);
+});

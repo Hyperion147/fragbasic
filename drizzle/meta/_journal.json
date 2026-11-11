@@ -8,6 +8,13 @@
       "when": 1789305529528,
       "tag": "0000_clammy_network",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794396690437,
+      "tag": "0001_living_shaman",
+      "breakpoints": true
     }
   ]
 }

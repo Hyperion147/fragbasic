@@ -1,6 +1,8 @@
 import type { MousepadInput } from "@/schemas/mousepad";
 import type { MouseSkateInput } from "@/schemas/accessory";
 import type { IemInput } from "@/schemas/iem";
+import type { ComparisonDataInput } from "@/schemas/comparison";
+import type { BestPageDataInput } from "@/schemas/best-page";
 import { jsonb, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const mousepadStatusEnum = pgEnum("mousepad_status", [
@@ -67,3 +69,40 @@ export type IemRow = typeof iems.$inferSelect;
 export type NewIemRow = typeof iems.$inferInsert;
 export type MouseSkateRow = typeof mouseSkates.$inferSelect;
 export type NewMouseSkateRow = typeof mouseSkates.$inferInsert;
+
+export const comparisonStatusEnum = pgEnum("comparison_status", [
+    "draft",
+    "published",
+]);
+
+export const comparisons = pgTable("comparisons", {
+    id: text("id").primaryKey(),
+    slug: text("slug").notNull().unique(),
+    title: text("title").notNull(),
+    leftSlug: text("left_slug").notNull(),
+    rightSlug: text("right_slug").notNull(),
+    status: comparisonStatusEnum("status").notNull().default("published"),
+    data: jsonb("data").$type<ComparisonDataInput>().notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const bestPageStatusEnum = pgEnum("best_page_status", [
+    "draft",
+    "published",
+]);
+
+export const bestPages = pgTable("best_pages", {
+    id: text("id").primaryKey(),
+    slug: text("slug").notNull().unique(),
+    title: text("title").notNull(),
+    status: bestPageStatusEnum("status").notNull().default("published"),
+    data: jsonb("data").$type<BestPageDataInput>().notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export type ComparisonRow = typeof comparisons.$inferSelect;
+export type NewComparisonRow = typeof comparisons.$inferInsert;
+export type BestPageRow = typeof bestPages.$inferSelect;
+export type NewBestPageRow = typeof bestPages.$inferInsert;

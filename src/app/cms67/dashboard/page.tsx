@@ -137,6 +137,34 @@ export default function CmsDashboardPage() {
 
         <Card className="border border-border/80 bg-card/80">
           <CardHeader>
+            <CardTitle>Comparisons</CardTitle>
+            <CardDescription>
+              Edit head-to-head pad comparisons and their references.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/cms67/comparisons">Open comparisons</Link>
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card className="border border-border/80 bg-card/80">
+          <CardHeader>
+            <CardTitle>Best pages</CardTitle>
+            <CardDescription>
+              Edit buying guides and the catalog pads they recommend.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/cms67/best-pages">Open best pages</Link>
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card className="border border-border/80 bg-card/80">
+          <CardHeader>
             <CardTitle>Public site</CardTitle>
             <CardDescription>
               Preview how visitors see FragBasic.
