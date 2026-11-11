@@ -2,6 +2,7 @@ import { mouseSkateWriteSchema } from "@/schemas/accessory";
 import { jsonError, jsonOk, zodError } from "@/server/api";
 import { requireAdmin } from "@/server/auth";
 import * as repo from "@/server/accessories/repo";
+import { revalidateCatalog } from "@/server/catalog/revalidate";
 
 type Ctx = { params: Promise<{ id: string }> };
 
@@ -21,12 +22,16 @@ export async function PATCH(request: Request, context: Ctx) {
   const { status, data } = parsed.data;
   if (data.id !== id) return jsonError("Body data.id must match URL id", 400);
   if (data.slug !== existing.slug && await repo.getMouseSkateBySlug(data.slug)) return jsonError("Slug already exists", 409);
-  return jsonOk({ accessory: await repo.updateMouseSkate(id, { slug: data.slug, brand: data.brand, name: data.name, status, data }) });
+  const row = await repo.updateMouseSkate(id, { slug: data.slug, brand: data.brand, name: data.name, status, data });
+  revalidateCatalog("accessories");
+  return jsonOk({ accessory: row });
 }
 
 export async function DELETE(_request: Request, context: Ctx) {
   if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
   const id = (await context.params).id;
   const row = await repo.deleteMouseSkate(id);
-  return row ? jsonOk({ ok: true, id }) : jsonError("Not found", 404);
+  if (!row) return jsonError("Not found", 404);
+  revalidateCatalog("accessories");
+  return jsonOk({ ok: true, id });
 }

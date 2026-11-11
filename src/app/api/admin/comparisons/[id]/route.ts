@@ -3,6 +3,7 @@ import { jsonError, jsonOk, zodError } from "@/server/api";
 import { requireAdmin } from "@/server/auth";
 import * as repo from "@/server/comparisons/repo";
 import { findMissingPadSlugs } from "@/server/references";
+import { revalidateCatalog } from "@/server/catalog/revalidate";
 
 type Ctx = { params: Promise<{ id: string }> };
 
@@ -38,22 +39,25 @@ export async function PATCH(request: Request, context: Ctx) {
     return jsonError(`Unknown pad slug(s): ${missing.join(", ")}`, 400);
   }
 
-  return jsonOk({
-    comparison: await repo.updateComparison(id, {
-      id: data.slug,
-      slug: data.slug,
-      title: data.title,
-      leftSlug: data.leftSlug,
-      rightSlug: data.rightSlug,
-      status,
-      data,
-    }),
+  const comparison = await repo.updateComparison(id, {
+    id: data.slug,
+    slug: data.slug,
+    title: data.title,
+    leftSlug: data.leftSlug,
+    rightSlug: data.rightSlug,
+    status,
+    data,
   });
+
+  revalidateCatalog("comparisons");
+  return jsonOk({ comparison });
 }
 
 export async function DELETE(_request: Request, context: Ctx) {
   if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
   const id = (await context.params).id;
   const row = await repo.deleteComparison(id);
-  return row ? jsonOk({ ok: true, id }) : jsonError("Not found", 404);
+  if (!row) return jsonError("Not found", 404);
+  revalidateCatalog("comparisons");
+  return jsonOk({ ok: true, id });
 }

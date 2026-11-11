@@ -2,6 +2,7 @@ import { requireAdmin } from "@/server/auth";
 import { jsonError, jsonOk, zodError } from "@/server/api";
 import { mousepadWriteSchema } from "@/schemas/mousepad";
 import * as repo from "@/server/mousepads/repo";
+import { revalidateCatalog } from "@/server/catalog/revalidate";
 
 export async function GET() {
   const session = await requireAdmin();
@@ -36,5 +37,6 @@ export async function POST(req: Request) {
     data,
   });
 
+  revalidateCatalog("mousepads");
   return jsonOk({ mousepad: row }, 201);
 }

@@ -3,6 +3,7 @@ import { jsonError, jsonOk, zodError } from "@/server/api";
 import { requireAdmin } from "@/server/auth";
 import * as repo from "@/server/best-pages/repo";
 import { findMissingPadSlugs } from "@/server/references";
+import { revalidateCatalog } from "@/server/catalog/revalidate";
 
 export async function GET() {
   if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
@@ -31,16 +32,14 @@ export async function POST(request: Request) {
     return jsonError("Id already exists", 409);
   }
 
-  return jsonOk(
-    {
-      bestPage: await repo.insertBestPage({
-        id: data.slug,
-        slug: data.slug,
-        title: data.title,
-        status,
-        data,
-      }),
-    },
-    201,
-  );
+  const bestPage = await repo.insertBestPage({
+    id: data.slug,
+    slug: data.slug,
+    title: data.title,
+    status,
+    data,
+  });
+
+  revalidateCatalog("best-pages");
+  return jsonOk({ bestPage }, 201);
 }

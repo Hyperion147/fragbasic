@@ -2,6 +2,7 @@ import { LATEST_ADDED_KEY, latestAddedWriteSchema } from "@/schemas/latest-added
 import { jsonError, jsonOk, zodError } from "@/server/api";
 import { requireAdmin } from "@/server/auth";
 import * as repo from "@/server/latest-added/repo";
+import { revalidateCatalog } from "@/server/catalog/revalidate";
 import {
   findMissingGlasspadSlugs,
   findMissingIemSlugs,
@@ -45,5 +46,7 @@ export async function PUT(request: Request) {
     return jsonError(`Unknown IEM slug(s): ${missingIems.join(", ")}`, 400);
   }
 
-  return jsonOk({ latestAdded: await repo.saveLatestAdded(data) });
+  const latestAdded = await repo.saveLatestAdded(data);
+  revalidateCatalog("latest-added");
+  return jsonOk({ latestAdded });
 }

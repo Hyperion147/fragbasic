@@ -14,6 +14,7 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:snapshot": "tsx src/db/snapshot.ts",
+    "db:check": "tsx --env-file=.env src/db/check.ts",
     "db:seed": "tsx --env-file=.env src/db/seed.ts",
     "db:seed:glasspads": "tsx --env-file=.env src/db/seed-glasspads.ts",
     "db:seed:iems": "tsx --env-file=.env src/db/seed-iems.ts",

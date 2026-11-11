@@ -6,6 +6,8 @@ import { getSiteUrl } from "@/lib/seo";
 import { getBestPageSlugs } from "@/data/best-pages";
 import { getPublicIems } from "@/server/catalog/iems";
 
+export const revalidate = 300;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl();
   const iems = await getPublicIems();

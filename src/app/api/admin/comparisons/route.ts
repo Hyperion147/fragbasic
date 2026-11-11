@@ -3,6 +3,7 @@ import { jsonError, jsonOk, zodError } from "@/server/api";
 import { requireAdmin } from "@/server/auth";
 import * as repo from "@/server/comparisons/repo";
 import { findMissingPadSlugs } from "@/server/references";
+import { revalidateCatalog } from "@/server/catalog/revalidate";
 
 export async function GET() {
   if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
@@ -33,18 +34,16 @@ export async function POST(request: Request) {
     return jsonError("Id already exists", 409);
   }
 
-  return jsonOk(
-    {
-      comparison: await repo.insertComparison({
-        id: data.slug,
-        slug: data.slug,
-        title: data.title,
-        leftSlug: data.leftSlug,
-        rightSlug: data.rightSlug,
-        status,
-        data,
-      }),
-    },
-    201,
-  );
+  const comparison = await repo.insertComparison({
+    id: data.slug,
+    slug: data.slug,
+    title: data.title,
+    leftSlug: data.leftSlug,
+    rightSlug: data.rightSlug,
+    status,
+    data,
+  });
+
+  revalidateCatalog("comparisons");
+  return jsonOk({ comparison }, 201);
 }

@@ -39,6 +39,7 @@ bucket → Settings) or via the Storage API `PUT /storage/v1/bucket/:id` with
 | `npm run db:seed:best-pages` | Buying-guide best pages |
 | `npm run db:seed:latest-added` | Curated home-page "latest added" slug lists |
 | `npm run db:seed:all` | All of the above, sequentially |
+| `npm run db:check` | Validate schemas, images, references, and source flags |
 | `npm run db:snapshot` | Writes `output/static-catalog-snapshot.json` |
 
 ## Safe workflow
@@ -100,6 +101,21 @@ re-imports from unpublishing a record that an editor demoted to `draft`. Use
 If an incoming slug already belongs to a different row `id`, the plan reports a
 `conflict` and skips that record instead of overwriting it. Resolve the slug
 collision in the source data or the database, then re-run.
+
+## Catalog health
+
+Run the read-only integrity check before and after every import or flag change:
+
+```bash
+npm run db:check
+npm run db:check -- --json
+```
+
+It validates every table-backed row against its Zod schema, requires absolute
+public `images.main` URLs, resolves comparison/best-page/latest-added
+references, and reports the public source flag for each module. It exits
+non-zero when errors are found. The same report is available in the CMS at
+`/cms67/health` and as a compact card on the dashboard.
 
 ## Images
 
@@ -168,6 +184,11 @@ When a module is on `db`, public readers only return rows with status
 The IEM module was the first cutover. It covers `/iems`, `/iems/[slug]`,
 `/iems/compare`, the home page, the sitemap, and the live search index. IEM
 pages revalidate every five minutes.
+
+CMS writes also trigger on-demand revalidation for the affected module. This
+covers list/detail/compare pages, the home page, the sitemap, the search index,
+and editorial pages that reference the changed rows. The five-minute interval
+remains a fallback for direct database changes made outside the CMS.
 
 Before flipping a flag, run its import dry-run and confirm `update=0 conflict=0`:
 
