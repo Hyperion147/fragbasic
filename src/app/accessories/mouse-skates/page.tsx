@@ -5,13 +5,12 @@ import { ArrowRight } from "lucide-react";
 import { SkateSpectrum } from "@/components/accessories/mouse-skates/skate-spectrum";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
-import {
-    getAllMouseSkates,
-    getMouseSkatesBySpeed,
-} from "@/data/accessories/mouse-skates";
 import { formatMouseSkateMaterial } from "@/lib/accessories/mouse-skates";
 import { buildMetadata } from "@/lib/seo";
+import { getPublicMouseSkates } from "@/server/catalog/accessories";
 import type { MouseSkateMaterial } from "@/types/accessory";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
     title: "Mouse Skate Database",
@@ -30,9 +29,6 @@ export const metadata: Metadata = buildMetadata({
         "glasspad mouse skates",
     ],
 });
-
-const skates = getAllMouseSkates();
-const fastSlowSkates = getMouseSkatesBySpeed();
 
 const materialNotes: Array<{
     material: MouseSkateMaterial;
@@ -66,7 +62,12 @@ const materialNotes: Array<{
     },
 ];
 
-export default function MouseSkatesPage() {
+export default async function MouseSkatesPage() {
+    const skates = await getPublicMouseSkates();
+    const fastSlowSkates = [...skates].sort(
+        (left, right) => right.ratings.speed - left.ratings.speed,
+    );
+
     return (
         <main className="min-h-screen bg-background text-foreground">
             <section className="border-b border-border bg-background">

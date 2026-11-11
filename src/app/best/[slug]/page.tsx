@@ -10,11 +10,7 @@ import { MetricCell } from "@/components/data-display";
 import { JsonLd } from "@/components/json-ld";
 import { AiDefinition, AiFaq, AiSpecTable } from "@/components/seo/ai-blocks";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
-import {
-    getAllBestPages,
-    getBestPageBySlug,
-    getBestPagePicks,
-} from "@/data/best-pages";
+import { getBestPagePicks } from "@/data/best-pages";
 import {
     formatEnvironmentLabel,
     formatFeelLabel,
@@ -25,6 +21,10 @@ import {
     buildFaqJsonLd,
     buildMetadata,
 } from "@/lib/seo";
+import {
+    getPublicBestPageBySlug,
+    getPublicBestPageSlugs,
+} from "@/server/catalog/best-pages";
 import { getPublicPads } from "@/server/catalog/pads";
 
 export const revalidate = 300;
@@ -33,15 +33,15 @@ type Props = {
     params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-    return getAllBestPages().map((page) => ({
-        slug: page.slug,
+export async function generateStaticParams() {
+    return (await getPublicBestPageSlugs()).map((slug) => ({
+        slug,
     }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params;
-    const page = getBestPageBySlug(slug);
+    const page = await getPublicBestPageBySlug(slug);
 
     if (!page) {
         return {};
@@ -69,7 +69,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BestMousepadsPage({ params }: Props) {
     const { slug } = await params;
-    const page = getBestPageBySlug(slug);
+    const page = await getPublicBestPageBySlug(slug);
 
     if (!page) {
         notFound();

@@ -1,4 +1,15 @@
-import { buildSearchIndex, iemSearchItems, padSearchItems, type SearchItem } from "@/lib/search";
+import {
+  bestPageSearchItems,
+  buildSearchIndex,
+  comparisonSearchItems,
+  iemSearchItems,
+  padSearchItems,
+  skateSearchItems,
+  type SearchItem,
+} from "@/lib/search";
+import { getPublicMouseSkates } from "./accessories";
+import { getPublicBestPages } from "./best-pages";
+import { getPublicComparisons } from "./comparisons";
 import { getPublicIems } from "./iems";
 import { getPublicPads } from "./pads";
 import { isDbCatalogSource } from "./source";
@@ -11,8 +22,17 @@ export async function buildPublicSearchIndex(): Promise<SearchItem[]> {
   const padsFromDb =
     isDbCatalogSource("mousepads") || isDbCatalogSource("glasspads");
   const iemsFromDb = isDbCatalogSource("iems");
+  const skatesFromDb = isDbCatalogSource("accessories");
+  const comparisonsFromDb = isDbCatalogSource("comparisons");
+  const bestPagesFromDb = isDbCatalogSource("best-pages");
 
-  if (!padsFromDb && !iemsFromDb) {
+  if (
+    !padsFromDb &&
+    !iemsFromDb &&
+    !skatesFromDb &&
+    !comparisonsFromDb &&
+    !bestPagesFromDb
+  ) {
     return buildSearchIndex();
   }
 
@@ -26,6 +46,15 @@ export async function buildPublicSearchIndex(): Promise<SearchItem[]> {
     if (iemsFromDb && item.kind === "iem") {
       return false;
     }
+    if (skatesFromDb && item.kind === "skate") {
+      return false;
+    }
+    if (comparisonsFromDb && item.kind === "comparison") {
+      return false;
+    }
+    if (bestPagesFromDb && item.kind === "guide") {
+      return false;
+    }
     return true;
   });
 
@@ -34,6 +63,15 @@ export async function buildPublicSearchIndex(): Promise<SearchItem[]> {
   }
   if (iemsFromDb) {
     items.push(...iemSearchItems(await getPublicIems()));
+  }
+  if (skatesFromDb) {
+    items.push(...skateSearchItems(await getPublicMouseSkates()));
+  }
+  if (comparisonsFromDb) {
+    items.push(...comparisonSearchItems(await getPublicComparisons()));
+  }
+  if (bestPagesFromDb) {
+    items.push(...bestPageSearchItems(await getPublicBestPages()));
   }
 
   return items;

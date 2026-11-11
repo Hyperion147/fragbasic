@@ -187,12 +187,18 @@ the database without affecting the other. Public "all pads" reads, pad detail
 pages, comparisons, best guides, the home page, the sitemap, and the search
 index all use that union.
 
-The IEM module was the first cutover. It covers `/iems`, `/iems/[slug]`,
-`/iems/compare`, the home page, the sitemap, and the live search index. The pad
-modules followed across `/mousepads`, `/mousepads/glasspads`,
-`/mousepads/[slug]`, the compare hub, universal compare, the home page, best
-guides, the sitemap, and the search index. Cut-over pages revalidate every five
-minutes.
+Every table-backed module now supports database reads:
+
+- IEMs: `/iems`, `/iems/[slug]`, `/iems/compare`
+- Mousepads and glasspads: `/mousepads`, `/mousepads/glasspads`,
+  `/mousepads/[slug]`, the compare hub, universal compare
+- Mouse skates: `/accessories/mouse-skates`, `/browse`, `/compare`
+- Comparisons: `/mousepads/compare`, `/mousepads/compare/[slug]`, related
+  comparison links on pad detail pages
+- Best pages: `/best`, `/best/[slug]`
+
+The home page, sitemap, and live search index use the same public readers.
+Cut-over pages revalidate every five minutes.
 
 CMS writes also trigger on-demand revalidation for the affected module. This
 covers list/detail/compare pages, the home page, the sitemap, the search index,
@@ -202,9 +208,13 @@ remains a fallback for direct database changes made outside the CMS.
 Before flipping a flag, run its import dry-run and confirm `update=0 conflict=0`:
 
 ```bash
-npm run db:seed:iems -- --dry-run
 npm run db:seed -- --dry-run
 npm run db:seed:glasspads -- --dry-run
+npm run db:seed:iems -- --dry-run
+npm run db:seed:accessories -- --dry-run
+npm run db:seed:comparisons -- --dry-run
+npm run db:seed:best-pages -- --dry-run
+npm run db:seed:latest-added -- --dry-run
 ```
 
 Then set the matching `CATALOG_SOURCE_*=db`, restart/redeploy, and spot-check

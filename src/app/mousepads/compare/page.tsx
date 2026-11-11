@@ -4,13 +4,11 @@ import { ComparisonBrowser } from "@/components/compare/comparison-browser";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-    getComparisonTagOptions,
-    getPublishedComparisons,
-} from "@/lib/comparisons";
+import { getComparisonTagOptions } from "@/lib/comparisons";
 import Link from "next/link";
 import { ClientShareButton } from "@/components/ClientShareButton";
 import { buildMetadata } from "@/lib/seo";
+import { getPublicComparisons } from "@/server/catalog/comparisons";
 import { getPublicPads } from "@/server/catalog/pads";
 
 export const revalidate = 300;
@@ -33,10 +31,12 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function CompareIndexPage() {
-    const padsBySlug = new Map(
-        (await getPublicPads()).map((pad) => [pad.slug, pad]),
-    );
-    const comparisons = getPublishedComparisons()
+    const [pads, publishedComparisons] = await Promise.all([
+        getPublicPads(),
+        getPublicComparisons(),
+    ]);
+    const padsBySlug = new Map(pads.map((pad) => [pad.slug, pad]));
+    const comparisons = publishedComparisons
         .map((comparison) => {
             const left = padsBySlug.get(comparison.leftSlug);
             const right = padsBySlug.get(comparison.rightSlug);

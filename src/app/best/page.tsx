@@ -15,9 +15,10 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
-import { getAllBestPages, getBestPagePicks } from "@/data/best-pages";
+import { getBestPagePicks } from "@/data/best-pages";
 import { getMousepadFullName } from "@/lib/mousepads";
 import { buildMetadata } from "@/lib/seo";
+import { getPublicBestPages } from "@/server/catalog/best-pages";
 import { getPublicPads } from "@/server/catalog/pads";
 
 export const revalidate = 300;
@@ -40,27 +41,29 @@ export const metadata: Metadata = buildMetadata({
     ],
 });
 
-const pageIcons = {
+const pageIcons: Record<string, typeof Sparkles> = {
     "control-mousepads": Shield,
     "speed-mousepads": Zap,
     "valorant-mousepads": Crosshair,
     "cs2-mousepads": Target,
     glasspads: Sparkles,
     "humidity-resistant-mousepads": ThermometerSun,
-} as const;
+};
 
-const pageTone = {
+const pageTone: Record<string, string> = {
     "control-mousepads": "Brake feel",
     "speed-mousepads": "Fast glide",
     "valorant-mousepads": "Tac precision",
     "cs2-mousepads": "Rifle control",
     glasspads: "Hard surface",
     "humidity-resistant-mousepads": "Climate stable",
-} as const;
+};
 
 export default async function BestPage() {
-    const pages = getAllBestPages();
-    const mousepads = await getPublicPads();
+    const [pages, mousepads] = await Promise.all([
+        getPublicBestPages(),
+        getPublicPads(),
+    ]);
     const featured = pages.slice(0, 3).map((page) => ({
         page,
         pick: getBestPagePicks(page, mousepads)[0],
@@ -170,7 +173,7 @@ export default async function BestPage() {
 
                 <div className="mt-10 soft-panel">
                     {pages.map((page, index) => {
-                        const Icon = pageIcons[page.slug];
+                        const Icon = pageIcons[page.slug] ?? Sparkles;
                         const firstPick = getBestPagePicks(page, mousepads)[0];
 
                         return (
@@ -198,7 +201,7 @@ export default async function BestPage() {
                                 </div>
 
                                 <Badge variant="outline" className="w-fit">
-                                    {pageTone[page.slug]}
+                                    {pageTone[page.slug] ?? page.badge}
                                 </Badge>
 
                                 <div className="min-w-0">

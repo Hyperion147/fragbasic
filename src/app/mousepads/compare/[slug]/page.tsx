@@ -11,10 +11,12 @@ import { SpeedControlPosition } from "@/components/compare/speed-control-positio
 import { SpecRows } from "@/components/compare/spec-rows";
 import { VerdictPanel } from "@/components/compare/verdict-panel";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
-import { getAllComparisons } from "@/lib/comparisons";
 import { getMousepadFullName } from "@/lib/mousepads";
 import { buildMetadata } from "@/lib/seo";
-import { getPublicComparisonPageData } from "@/server/catalog/comparisons";
+import {
+  getPublicComparisonPageData,
+  getPublicComparisonSlugs,
+} from "@/server/catalog/comparisons";
 
 export const revalidate = 300;
 
@@ -24,9 +26,9 @@ type PageProps = {
   }>;
 };
 
-export function generateStaticParams() {
-  return getAllComparisons().map((comparison) => ({
-    slug: comparison.slug,
+export async function generateStaticParams() {
+  return (await getPublicComparisonSlugs()).map((slug) => ({
+    slug,
   }));
 }
 

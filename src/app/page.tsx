@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { HomeExperience } from "@/features/landing/home-experience";
-import { getAllBestPages } from "@/data/best-pages";
-import { getPublishedComparisons } from "@/lib/comparisons";
 import { getDefaultColorway, getMousepadFullName } from "@/lib/mousepads";
 import { buildCollectionJsonLd, buildMetadata } from "@/lib/seo";
+import { getPublicBestPages } from "@/server/catalog/best-pages";
+import { getPublicComparisons } from "@/server/catalog/comparisons";
 import { getPublicIems } from "@/server/catalog/iems";
 import { getPublicLatestAdded } from "@/server/catalog/latest-added";
 import { getPublicPads } from "@/server/catalog/pads";
@@ -25,10 +25,18 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function HomePage() {
-  const [mousepads, iems, latestAddedSlugs] = await Promise.all([
+  const [
+    mousepads,
+    iems,
+    latestAddedSlugs,
+    publishedComparisons,
+    bestPages,
+  ] = await Promise.all([
     getPublicPads(),
     getPublicIems(),
     getPublicLatestAdded(),
+    getPublicComparisons(),
+    getPublicBestPages(),
   ]);
   const mousepadsBySlug = new Map(
     mousepads.map((mousepad) => [mousepad.slug, mousepad]),
@@ -43,8 +51,7 @@ export default async function HomePage() {
     (mousepad) => mousepad.category === "glass",
   ).length;
   const mousepadCount = mousepads.length - glasspadCount;
-  const bestPageCount = getAllBestPages().length;
-  const publishedComparisons = getPublishedComparisons();
+  const bestPageCount = bestPages.length;
   const comparisons = publishedComparisons
     .map((comparison) => {
       const left = mousepadsBySlug.get(comparison.leftSlug);

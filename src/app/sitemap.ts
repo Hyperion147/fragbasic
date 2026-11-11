@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
 
-import { getPublishedComparisons } from "@/lib/comparisons";
 import { getSiteUrl } from "@/lib/seo";
-import { getBestPageSlugs } from "@/data/best-pages";
+import { getPublicBestPageSlugs } from "@/server/catalog/best-pages";
+import { getPublicComparisons } from "@/server/catalog/comparisons";
 import { getPublicIems } from "@/server/catalog/iems";
 import { getPublicPads } from "@/server/catalog/pads";
 
@@ -14,9 +14,11 @@ function toAbsoluteUrl(siteUrl: string, value: string) {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl();
-  const [iems, mousepads] = await Promise.all([
+  const [iems, mousepads, comparisons, bestPageSlugs] = await Promise.all([
     getPublicIems(),
     getPublicPads(),
+    getPublicComparisons(),
+    getPublicBestPageSlugs(),
   ]);
 
   // NOTE: only emit lastModified where we have a real source date (IEMs).
@@ -59,13 +61,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // NOTE: published only — drafts render publicly today, but must not be
   // handed to crawlers until reviewed.
-  const comparisonRoutes = getPublishedComparisons().map((comparison) => ({
+  const comparisonRoutes = comparisons.map((comparison) => ({
     url: `${siteUrl}/mousepads/compare/${comparison.slug}`,
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
 
-  const bestRoutes = getBestPageSlugs().map((slug) => ({
+  const bestRoutes = bestPageSlugs.map((slug) => ({
     url: `${siteUrl}/best/${slug}`,
     changeFrequency: "weekly" as const,
     priority: 0.85,

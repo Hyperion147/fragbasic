@@ -59,7 +59,10 @@ const MODULE_ROUTES: Record<CatalogSourceModule, RouteConfig> = {
       "/mousepads/compare",
       "/mousepads/compare/universal",
     ],
-    dynamic: [{ path: "/mousepads/compare/[slug]", type: "page" }],
+    dynamic: [
+      { path: "/mousepads/compare/[slug]", type: "page" },
+      { path: "/mousepads/[slug]", type: "page" },
+    ],
   },
   "best-pages": {
     literals: [...SHARED_PATHS, "/best"],

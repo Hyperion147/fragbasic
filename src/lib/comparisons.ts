@@ -21,8 +21,11 @@ export function getDraftComparisons() {
   return comparisons.filter((comparison) => comparison.status === "draft");
 }
 
-export function getRelatedComparisons(mousepadSlug: string) {
-  return comparisons.filter(
+export function getRelatedComparisons(
+  mousepadSlug: string,
+  entries: readonly MousepadComparison[] = comparisons
+) {
+  return entries.filter(
     (comparison) =>
       comparison.leftSlug === mousepadSlug ||
       comparison.rightSlug === mousepadSlug

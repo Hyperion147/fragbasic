@@ -9,6 +9,8 @@ import {
   getIemFullName,
 } from "@/lib/iems";
 import { formatMousepadValue } from "@/lib/utils/format";
+import type { MousepadComparison } from "@/data/comparisons";
+import type { MouseSkate } from "@/types/accessory";
 import type { Iem } from "@/types/iem";
 import type { Mousepad } from "@/types/mousepad";
 
@@ -87,46 +89,57 @@ export function padSearchItems(pads: readonly Mousepad[]): SearchItem[] {
   }));
 }
 
+export function skateSearchItems(skates: readonly MouseSkate[]): SearchItem[] {
+  return skates.map((skate) => ({
+    id: `skate-${skate.slug}`,
+    kind: "skate" as const,
+    title: `${skate.brand} ${skate.name}`,
+    subtitle: `${formatMouseSkateMaterial(skate.material)} · ${skate.shape}`,
+    href: "/accessories/mouse-skates/browse",
+    keywords: [skate.brand, skate.name, skate.series, skate.slug, skate.material, skate.shape],
+  }));
+}
+
+export function bestPageSearchItems(
+  pages: readonly {
+    slug: string;
+    title: string;
+    eyebrow: string;
+    badge: string;
+    keywords: string[];
+  }[],
+): SearchItem[] {
+  return pages.map((page) => ({
+    id: `guide-${page.slug}`,
+    kind: "guide" as const,
+    title: page.title,
+    subtitle: page.eyebrow,
+    href: `/best/${page.slug}`,
+    keywords: [page.slug, page.badge, ...page.keywords],
+  }));
+}
+
+export function comparisonSearchItems(
+  comparisons: readonly MousepadComparison[],
+): SearchItem[] {
+  return comparisons.map((comparison) => ({
+    id: `comparison-${comparison.slug}`,
+    kind: "comparison" as const,
+    title: comparison.title,
+    subtitle: comparison.excerpt,
+    href: `/mousepads/compare/${comparison.slug}`,
+    keywords: [comparison.slug, ...comparison.tags],
+  }));
+}
+
 export function buildSearchIndex(): SearchItem[] {
-  const items: SearchItem[] = [];
-
-  items.push(...padSearchItems(getAllMousepads()));
-  items.push(...iemSearchItems(getAllIems()));
-
-  for (const skate of getAllMouseSkates()) {
-    items.push({
-      id: `skate-${skate.slug}`,
-      kind: "skate",
-      title: `${skate.brand} ${skate.name}`,
-      subtitle: `${formatMouseSkateMaterial(skate.material)} · ${skate.shape}`,
-      href: "/accessories/mouse-skates/browse",
-      keywords: [skate.brand, skate.name, skate.series, skate.slug, skate.material, skate.shape],
-    });
-  }
-
-  for (const page of getAllBestPages()) {
-    items.push({
-      id: `guide-${page.slug}`,
-      kind: "guide",
-      title: page.title,
-      subtitle: page.eyebrow,
-      href: `/best/${page.slug}`,
-      keywords: [page.slug, page.badge, ...page.keywords],
-    });
-  }
-
-  for (const comparison of getPublishedComparisons()) {
-    items.push({
-      id: `comparison-${comparison.slug}`,
-      kind: "comparison",
-      title: comparison.title,
-      subtitle: comparison.excerpt,
-      href: `/mousepads/compare/${comparison.slug}`,
-      keywords: [comparison.slug, ...comparison.tags],
-    });
-  }
-
-  return items;
+  return [
+    ...padSearchItems(getAllMousepads()),
+    ...iemSearchItems(getAllIems()),
+    ...skateSearchItems(getAllMouseSkates()),
+    ...bestPageSearchItems(getAllBestPages()),
+    ...comparisonSearchItems(getPublishedComparisons()),
+  ];
 }
 
 export function normalizeSearchText(value: string): string {

@@ -4,12 +4,12 @@ import { Suspense } from "react";
 import { MouseSkateBrowser } from "@/components/accessories/mouse-skates/mouse-skate-browser";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
-import { getAllMouseSkates } from "@/data/accessories/mouse-skates";
 import { buildMetadata } from "@/lib/seo";
+import { getPublicMouseSkates } from "@/server/catalog/accessories";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-const skates = getAllMouseSkates();
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
     title: "Browse Mouse Skates",
@@ -26,7 +26,9 @@ export const metadata: Metadata = buildMetadata({
     ],
 });
 
-export default function BrowseMouseSkatesPage() {
+export default async function BrowseMouseSkatesPage() {
+    const skates = await getPublicMouseSkates();
+
     return (
         <main className="min-h-screen bg-background text-foreground">
             <section className="border-b border-border bg-background">

@@ -39,6 +39,7 @@ import {
   buildProductJsonLd,
   buildMetadata,
 } from "@/lib/seo";
+import { getPublicComparisons } from "@/server/catalog/comparisons";
 import {
   getPublicPadBySlug,
   getPublicPadSlugs,
@@ -82,19 +83,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function MousepadPage({ params }: PageProps) {
   const { slug } = await params
-  const allMousepads = await getPublicPads()
+  const [allMousepads, comparisons] = await Promise.all([
+    getPublicPads(),
+    getPublicComparisons(),
+  ])
   const pad = allMousepads.find((mousepad) => mousepad.slug === slug)
 
   if (!pad) notFound()
 
-  const relatedComparisons = getRelatedComparisons(pad.slug)
+  const relatedComparisons = getRelatedComparisons(pad.slug, comparisons)
   const relatedAlternativeGroups = getRelatedAlternativeGroups(
     pad,
     allMousepads
   )
-  const publishedComparison = relatedComparisons.find(
-    (comparison) => comparison.status === "published"
-  )
+  const publishedComparison = relatedComparisons[0]
   const productDescription = getHeroSummary(pad)
 
   return (
