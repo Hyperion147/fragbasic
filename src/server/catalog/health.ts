@@ -16,19 +16,18 @@ import { guideDataSchema } from "@/schemas/guide";
 import { iemSchema } from "@/schemas/iem";
 import { mousepadSchema } from "@/schemas/mousepad";
 import { mouseSkateSchema } from "@/schemas/accessory";
-import { getCatalogSource, type CatalogSourceModule } from "./source";
+import { CATALOG_MODULE_LABELS, type CatalogModule } from "./modules";
 
 export type CatalogHealthIssue = {
   level: "error" | "warning";
-  module: CatalogSourceModule;
+  module: CatalogModule;
   message: string;
   slug?: string;
 };
 
 export type CatalogHealthModuleReport = {
-  module: CatalogSourceModule;
+  module: CatalogModule;
   label: string;
-  source: ReturnType<typeof getCatalogSource>;
   total: number;
   published: number;
   draft: number;
@@ -48,16 +47,6 @@ export type CatalogHealthReport = {
     errors: number;
     warnings: number;
   };
-};
-
-const MODULE_LABELS: Record<CatalogSourceModule, string> = {
-  mousepads: "Mousepads",
-  glasspads: "Glasspads",
-  iems: "IEMs",
-  accessories: "Mouse skates",
-  comparisons: "Comparisons",
-  "best-pages": "Best pages",
-  guides: "Guides",
 };
 
 type HealthRow = {
@@ -81,7 +70,7 @@ function imageUrl(data: unknown) {
 }
 
 function inspectRows(
-  module: CatalogSourceModule,
+  module: CatalogModule,
   rows: readonly HealthRow[],
   schema: ZodType,
   issues: CatalogHealthIssue[],
@@ -123,8 +112,7 @@ function inspectRows(
 
   return {
     module,
-    label: MODULE_LABELS[module],
-    source: getCatalogSource(module),
+    label: CATALOG_MODULE_LABELS[module],
     total: rows.length,
     published,
     draft,
@@ -135,7 +123,7 @@ function inspectRows(
 
 function issueCount(
   issues: readonly CatalogHealthIssue[],
-  module: CatalogSourceModule,
+  module: CatalogModule,
   level: CatalogHealthIssue["level"],
 ) {
   return issues.filter((issue) => issue.module === module && issue.level === level)

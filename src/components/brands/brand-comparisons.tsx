@@ -1,6 +1,6 @@
 import { ComparisonCard } from "@/components/compare/comparison-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { MousepadComparison } from "@/data/comparisons";
+import type { MousepadComparison } from "@/types/comparison";
 import type { Mousepad } from "@/types/mousepad";
 
 type Entry = {

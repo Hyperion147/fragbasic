@@ -2,21 +2,24 @@ import { createHash } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { mousepads } from "@/data/mousepads/mousepads";
-import { relatedAlternativesBySlug } from "@/data/mousepads/related-alternatives";
-import { iems } from "@/data/iems/iems";
-import { mouseSkates } from "@/data/accessories/mouse-skates";
-import { comparisons } from "@/data/comparisons";
-import { bestPages } from "@/data/best-pages";
-import { guides } from "@/data/guides";
-import { mousepadSchema } from "@/schemas/mousepad";
-import { iemSchema } from "@/schemas/iem";
+import { db } from "@/db";
+import {
+  bestPages,
+  comparisons,
+  glasspads,
+  guides,
+  iems,
+  mousepads,
+  mouseSkates,
+} from "@/db/schema";
 import { mouseSkateSchema } from "@/schemas/accessory";
-import { comparisonDataSchema } from "@/schemas/comparison";
 import { bestPageDataSchema } from "@/schemas/best-page";
+import { comparisonDataSchema } from "@/schemas/comparison";
 import { guideDataSchema } from "@/schemas/guide";
+import { iemSchema } from "@/schemas/iem";
+import { mousepadSchema } from "@/schemas/mousepad";
 
-const DEFAULT_OUTPUT = "output/static-catalog-snapshot.json";
+const DEFAULT_OUTPUT = "output/catalog-snapshot.json";
 
 async function main() {
   const options = parseArgs(process.argv.slice(2));
@@ -24,28 +27,47 @@ async function main() {
   if (options.help) {
     console.log(`Usage: npm run db:snapshot -- [--out=path]
 
-Writes the current static catalog to JSON for rollback and verification.
+Writes the current database catalog to JSON for backup and verification.
 Default: ${DEFAULT_OUTPUT}`);
     return;
   }
 
+  const [
+    mousepadRows,
+    glasspadRows,
+    iemRows,
+    skateRows,
+    comparisonRows,
+    bestPageRows,
+    guideRows,
+  ] = await Promise.all([
+    db.select().from(mousepads),
+    db.select().from(glasspads),
+    db.select().from(iems),
+    db.select().from(mouseSkates),
+    db.select().from(comparisons),
+    db.select().from(bestPages),
+    db.select().from(guides),
+  ]);
+
   const data = {
-    mousepads,
-    relatedAlternativesBySlug,
-    iems,
-    mouseSkates,
-    comparisons,
-    bestPages,
-    guides,
+    mousepads: mousepadRows,
+    glasspads: glasspadRows,
+    iems: iemRows,
+    mouseSkates: skateRows,
+    comparisons: comparisonRows,
+    bestPages: bestPageRows,
+    guides: guideRows,
   };
 
   const validation = {
-    mousepads: countInvalid(mousepads, mousepadSchema),
-    iems: countInvalid(iems, iemSchema),
-    mouseSkates: countInvalid(mouseSkates, mouseSkateSchema),
-    comparisons: countInvalid(comparisons, comparisonDataSchema),
-    bestPages: countInvalid(bestPages, bestPageDataSchema),
-    guides: countInvalid(guides, guideDataSchema),
+    mousepads: countInvalid(mousepadRows, mousepadSchema),
+    glasspads: countInvalid(glasspadRows, mousepadSchema),
+    iems: countInvalid(iemRows, iemSchema),
+    mouseSkates: countInvalid(skateRows, mouseSkateSchema),
+    comparisons: countInvalid(comparisonRows, comparisonDataSchema),
+    bestPages: countInvalid(bestPageRows, bestPageDataSchema),
+    guides: countInvalid(guideRows, guideDataSchema),
   };
 
   const checksum = createHash("sha256")
@@ -56,14 +78,13 @@ Default: ${DEFAULT_OUTPUT}`);
     generatedAt: new Date().toISOString(),
     checksum,
     counts: {
-      mousepads: mousepads.length,
-      glasspads: mousepads.filter((pad) => pad.category === "glass").length,
-      softMousepads: mousepads.filter((pad) => pad.category !== "glass").length,
-      iems: iems.length,
-      mouseSkates: mouseSkates.length,
-      comparisons: comparisons.length,
-      bestPages: bestPages.length,
-      guides: guides.length,
+      mousepads: mousepadRows.length,
+      glasspads: glasspadRows.length,
+      iems: iemRows.length,
+      mouseSkates: skateRows.length,
+      comparisons: comparisonRows.length,
+      bestPages: bestPageRows.length,
+      guides: guideRows.length,
     },
     validation,
     data,
@@ -76,7 +97,7 @@ Default: ${DEFAULT_OUTPUT}`);
   console.log(`Snapshot written: ${outputPath}`);
   console.log(`Checksum: ${checksum}`);
   console.log(
-    `Counts: mousepads=${snapshot.counts.mousepads} (soft=${snapshot.counts.softMousepads}, glass=${snapshot.counts.glasspads}) iems=${snapshot.counts.iems} skates=${snapshot.counts.mouseSkates} comparisons=${snapshot.counts.comparisons} bestPages=${snapshot.counts.bestPages} guides=${snapshot.counts.guides}`,
+    `Counts: mousepads=${snapshot.counts.mousepads} glasspads=${snapshot.counts.glasspads} iems=${snapshot.counts.iems} skates=${snapshot.counts.mouseSkates} comparisons=${snapshot.counts.comparisons} bestPages=${snapshot.counts.bestPages} guides=${snapshot.counts.guides}`,
   );
 
   for (const [name, invalid] of Object.entries(validation)) {
@@ -85,6 +106,8 @@ Default: ${DEFAULT_OUTPUT}`);
       process.exitCode = 1;
     }
   }
+
+  process.exit(process.exitCode ?? 0);
 }
 
 function parseArgs(argv: readonly string[]) {
@@ -113,10 +136,10 @@ function parseArgs(argv: readonly string[]) {
 }
 
 function countInvalid(
-  records: readonly unknown[],
+  rows: readonly { data: unknown }[],
   schema: { safeParse: (value: unknown) => { success: boolean } },
 ) {
-  return records.filter((record) => !schema.safeParse(record).success).length;
+  return rows.filter((row) => !schema.safeParse(row.data).success).length;
 }
 
 main().catch((error) => {

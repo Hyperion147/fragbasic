@@ -1,11 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { getAllBestPages } from "@/data/best-pages";
-import { getAllMouseSkates } from "@/data/accessories/mouse-skates";
-import { getAllGuides } from "@/data/guides";
-import { getPublishedComparisons } from "@/lib/comparisons";
-import { getAllIems } from "@/lib/iems";
-import { getAllMousepads } from "@/lib/mousepads";
+import type { GuideDataInput } from "@/schemas/guide";
+import type { MouseSkate } from "@/types/accessory";
+import type { MousepadComparison } from "@/types/comparison";
+import type { Iem } from "@/types/iem";
+import type { Mousepad } from "@/types/mousepad";
 import {
   articleSearchItems,
   bestPageSearchItems,
@@ -22,15 +21,86 @@ import {
   type SearchItem,
 } from "./search";
 
-/** Fixture index built from the seed catalog, mirroring the API payload. */
+const fixturePads = [
+  {
+    slug: "artisan-zero-soft",
+    brand: "Artisan",
+    name: "Zero",
+    series: "Zero",
+    category: "balanced-control",
+    surface: "cloth",
+  },
+  {
+    slug: "wallhack-sp-005",
+    brand: "Wallhack",
+    name: "SP-005",
+    series: "SP",
+    category: "glass",
+    surface: "glass",
+  },
+] as unknown as Mousepad[];
+
+const fixtureIems = [
+  {
+    slug: "dunu-titan-x",
+    brand: "DUNU",
+    name: "Titan X",
+    shortName: "Titan X",
+    driverType: "single-dd",
+    soundSignature: "v-shape",
+    priceTier: "under-5000",
+  },
+] as unknown as Iem[];
+
+const fixtureSkates = [
+  {
+    slug: "xraypad-jade",
+    brand: "Xraypad",
+    name: "Jade",
+    series: "Jade",
+    material: "ptfe",
+    shape: "dots",
+  },
+] as unknown as MouseSkate[];
+
+const fixtureBestPages = [
+  {
+    slug: "control-mousepads",
+    title: "Best Control Mousepads",
+    eyebrow: "Slow down the last inch",
+    badge: "Control",
+    keywords: ["control", "mousepads"],
+  },
+];
+
+const fixtureGuides = [
+  {
+    slug: "humid-climate-mousepads",
+    title: "Humid climate mousepads",
+    category: "Environment",
+    readingTime: 6,
+    keywords: ["humid", "climate"],
+  },
+] as unknown as GuideDataInput[];
+
+const fixtureComparisons = [
+  {
+    slug: "atk-crimson-vs-wallhack-sp-005",
+    title: "ATK Crimson vs Wallhack SP-005",
+    excerpt: "A control-leaning glasspad compared with a speed-first benchmark.",
+    tags: ["Glass", "Control"],
+  },
+] as unknown as MousepadComparison[];
+
+/** Fixture index mirroring the API payload without importing seed data. */
 function buildFixtureIndex(): SearchItem[] {
   return [
-    ...padSearchItems(getAllMousepads()),
-    ...iemSearchItems(getAllIems()),
-    ...skateSearchItems(getAllMouseSkates()),
-    ...bestPageSearchItems(getAllBestPages()),
-    ...articleSearchItems(getAllGuides()),
-    ...comparisonSearchItems(getPublishedComparisons()),
+    ...padSearchItems(fixturePads),
+    ...iemSearchItems(fixtureIems),
+    ...skateSearchItems(fixtureSkates),
+    ...bestPageSearchItems(fixtureBestPages),
+    ...articleSearchItems(fixtureGuides),
+    ...comparisonSearchItems(fixtureComparisons),
   ];
 }
 
@@ -50,7 +120,7 @@ describe("search index fixture", () => {
         "comparison",
       ]),
     );
-    expect(index.length).toBeGreaterThan(60);
+    expect(index.length).toBe(7);
   });
 
   it("routes glasspads to mousepad detail pages and skates to the browser", () => {
@@ -95,9 +165,7 @@ describe("searchItems", () => {
     const results = searchItems(buildFixtureIndex(), "artisan zero");
     expect(results.length).toBeGreaterThan(0);
     expect(
-      results.every((item) =>
-        item.title.toLowerCase().includes("artisan"),
-      ),
+      results.every((item) => item.title.toLowerCase().includes("artisan")),
     ).toBe(true);
   });
 

@@ -10,7 +10,7 @@ import { MetricCell } from "@/components/data-display";
 import { JsonLd } from "@/components/json-ld";
 import { AiDefinition, AiFaq, AiSpecTable } from "@/components/seo/ai-blocks";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
-import { getBestPagePicks } from "@/data/best-pages";
+import { getBestPagePicks } from "@/lib/best-pages";
 import {
     formatEnvironmentLabel,
     formatFeelLabel,

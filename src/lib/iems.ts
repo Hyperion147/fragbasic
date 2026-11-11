@@ -1,11 +1,9 @@
-import { getAllIems, getIemBySlug, getIemsByFragbasicScore } from "@/data/iems/iems";
 import type { Iem, IemAvailability, IemDriverType, IemGame } from "@/types/iem";
 
 export {
   formatIemSoundSignature,
   getIemFullName,
 } from "@/lib/iems/format";
-export { getAllIems, getIemBySlug, getIemsByFragbasicScore };
 
 export function formatIemRating(value: number) {
   return value.toFixed(1);

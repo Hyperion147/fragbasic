@@ -13,16 +13,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "db:snapshot": "tsx src/db/snapshot.ts",
-    "db:check": "tsx --env-file=.env src/db/check.ts",
-    "db:seed": "tsx --env-file=.env src/db/seed.ts",
-    "db:seed:glasspads": "tsx --env-file=.env src/db/seed-glasspads.ts",
-    "db:seed:iems": "tsx --env-file=.env src/db/seed-iems.ts",
-    "db:seed:accessories": "tsx --env-file=.env src/db/seed-accessories.ts",
-    "db:seed:comparisons": "tsx --env-file=.env src/db/seed-comparisons.ts",
-    "db:seed:best-pages": "tsx --env-file=.env src/db/seed-best-pages.ts",
-    "db:seed:guides": "tsx --env-file=.env src/db/seed-guides.ts",
-    "db:seed:all": "npm run db:seed && npm run db:seed:glasspads && npm run db:seed:iems && npm run db:seed:accessories && npm run db:seed:comparisons && npm run db:seed:best-pages && npm run db:seed:guides"
+    "db:snapshot": "tsx --env-file=.env src/db/snapshot.ts",
+    "db:check": "tsx --env-file=.env src/db/check.ts"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.101.4",

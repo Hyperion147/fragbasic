@@ -1,7 +1,7 @@
 import { formatMouseSkateMaterial } from "@/lib/accessories/mouse-skates";
 import { formatIemSoundSignature, getIemFullName } from "@/lib/iems/format";
 import { formatMousepadValue } from "@/lib/utils/format";
-import type { MousepadComparison } from "@/data/comparisons";
+import type { MousepadComparison } from "@/types/comparison";
 import type { GuideDataInput } from "@/schemas/guide";
 import type { MouseSkate } from "@/types/accessory";
 import type { Iem } from "@/types/iem";

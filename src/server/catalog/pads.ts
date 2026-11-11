@@ -1,21 +1,8 @@
-import type { Mousepad } from "@/types/mousepad";
-import {
-  getAllMousepads as getStaticPads,
-  getMousepadBySlug as getStaticPadBySlug,
-} from "@/lib/mousepads";
 import * as glasspadRepo from "@/server/glasspads/repo";
 import * as mousepadRepo from "@/server/mousepads/repo";
-import { isDbCatalogSource } from "./source";
-
-function isGlassPad(pad: Mousepad) {
-  return pad.category === "glass";
-}
+import type { Mousepad } from "@/types/mousepad";
 
 async function loadMousepads(): Promise<Mousepad[]> {
-  if (!isDbCatalogSource("mousepads")) {
-    return getStaticPads().filter((pad) => !isGlassPad(pad));
-  }
-
   const rows = await mousepadRepo.listMousepads();
   return rows
     .filter((row) => row.status === "published")
@@ -23,10 +10,6 @@ async function loadMousepads(): Promise<Mousepad[]> {
 }
 
 async function loadGlasspads(): Promise<Mousepad[]> {
-  if (!isDbCatalogSource("glasspads")) {
-    return getStaticPads().filter(isGlassPad);
-  }
-
   const rows = await glasspadRepo.listGlasspads();
   return rows
     .filter((row) => row.status === "published")
@@ -34,22 +17,12 @@ async function loadGlasspads(): Promise<Mousepad[]> {
 }
 
 async function loadMousepadBySlug(slug: string): Promise<Mousepad | null> {
-  if (!isDbCatalogSource("mousepads")) {
-    const pad = getStaticPadBySlug(slug);
-    return pad && !isGlassPad(pad) ? pad : null;
-  }
-
   const row = await mousepadRepo.getMousepadBySlug(slug);
   if (!row || row.status !== "published") return null;
   return row.data as Mousepad;
 }
 
 async function loadGlasspadBySlug(slug: string): Promise<Mousepad | null> {
-  if (!isDbCatalogSource("glasspads")) {
-    const pad = getStaticPadBySlug(slug);
-    return pad && isGlassPad(pad) ? pad : null;
-  }
-
   const row = await glasspadRepo.getGlasspadBySlug(slug);
   if (!row || row.status !== "published") return null;
   return row.data as Mousepad;
@@ -70,9 +43,8 @@ export async function getPublicGlasspads(): Promise<Mousepad[]> {
 }
 
 /**
- * The public "all pads" union. Soft pads and glasspads use independent source
- * flags, so one module can move to the database without pulling the other
- * along. Duplicate slugs are collapsed defensively.
+ * The public "all pads" union of soft pads and glasspads. Duplicate slugs are
+ * collapsed defensively.
  */
 export async function getPublicPads(): Promise<Mousepad[]> {
   const [mousepads, glasspads] = await Promise.all([

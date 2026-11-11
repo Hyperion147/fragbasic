@@ -1,45 +1,24 @@
-import {
-  comparisons,
-  type MousepadComparison,
-} from "@/data/comparisons";
+import type { MousepadComparison } from "@/types/comparison";
 
 const comparisonCompanyTags = new Set(["Artisan", "LGG", "Pulsar"]);
 
-export function getAllComparisons() {
-  return comparisons;
-}
-
-export function getComparisonBySlug(slug: string) {
-  return comparisons.find((comparison) => comparison.slug === slug);
-}
-
-export function getPublishedComparisons() {
-  return comparisons.filter((comparison) => comparison.status === "published");
-}
-
-export function getDraftComparisons() {
-  return comparisons.filter((comparison) => comparison.status === "draft");
-}
-
 export function getRelatedComparisons(
   mousepadSlug: string,
-  entries: readonly MousepadComparison[] = comparisons
+  entries: readonly MousepadComparison[],
 ) {
   return entries.filter(
     (comparison) =>
       comparison.leftSlug === mousepadSlug ||
-      comparison.rightSlug === mousepadSlug
+      comparison.rightSlug === mousepadSlug,
   );
 }
 
-export function getComparisonTagOptions(
-  entries: MousepadComparison[] = comparisons
-) {
+export function getComparisonTagOptions(entries: readonly MousepadComparison[]) {
   return Array.from(
     new Set(
       entries
         .flatMap((comparison) => comparison.tags)
-        .filter((tag) => !comparisonCompanyTags.has(tag))
-    )
+        .filter((tag) => !comparisonCompanyTags.has(tag)),
+    ),
   ).sort((left, right) => left.localeCompare(right));
 }

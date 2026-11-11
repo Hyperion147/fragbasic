@@ -1,6 +1,6 @@
 import { revalidatePath } from "next/cache";
 
-import type { CatalogSourceModule } from "./source";
+import type { CatalogModule } from "./modules";
 
 type RouteConfig = {
   literals: string[];
@@ -9,7 +9,7 @@ type RouteConfig = {
 
 const SHARED_PATHS = ["/", "/sitemap.xml", "/api/search-index"];
 
-const MODULE_ROUTES: Record<CatalogSourceModule, RouteConfig> = {
+const MODULE_ROUTES: Record<CatalogModule, RouteConfig> = {
   mousepads: {
     literals: [
       ...SHARED_PATHS,
@@ -82,7 +82,7 @@ const MODULE_ROUTES: Record<CatalogSourceModule, RouteConfig> = {
  * Revalidate every public page and generated artifact that can depend on a
  * catalog module. Called from admin route handlers after successful writes.
  */
-export function revalidateCatalog(...modules: CatalogSourceModule[]) {
+export function revalidateCatalog(...modules: CatalogModule[]) {
   const literals = new Set<string>();
   const dynamic = new Map<string, "page" | "layout">();
 
