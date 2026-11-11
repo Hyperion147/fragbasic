@@ -9,11 +9,6 @@ import { mouseSkates } from "@/data/accessories/mouse-skates";
 import { comparisons } from "@/data/comparisons";
 import { bestPages } from "@/data/best-pages";
 import { guides } from "@/data/guides";
-import {
-  latestAddedGlasspadSlugs,
-  latestAddedIemSlugs,
-  latestAddedMousepadSlugs,
-} from "@/data/latest-added";
 import { mousepadSchema } from "@/schemas/mousepad";
 import { iemSchema } from "@/schemas/iem";
 import { mouseSkateSchema } from "@/schemas/accessory";
@@ -42,11 +37,6 @@ Default: ${DEFAULT_OUTPUT}`);
     comparisons,
     bestPages,
     guides,
-    latestAdded: {
-      mousepads: latestAddedMousepadSlugs,
-      glasspads: latestAddedGlasspadSlugs,
-      iems: latestAddedIemSlugs,
-    },
   };
 
   const validation = {

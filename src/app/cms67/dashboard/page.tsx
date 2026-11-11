@@ -180,20 +180,6 @@ export default function CmsDashboardPage() {
 
         <Card className="border border-border/80 bg-card/80">
           <CardHeader>
-            <CardTitle>Latest added</CardTitle>
-            <CardDescription>
-              Curate the new-product list shown on the home page.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button asChild>
-              <Link href="/cms67/latest-added">Open latest added</Link>
-            </Button>
-          </CardContent>
-        </Card>
-
-        <Card className="border border-border/80 bg-card/80">
-          <CardHeader>
             <CardTitle>Public site</CardTitle>
             <CardDescription>
               Preview how visitors see FragBasic.

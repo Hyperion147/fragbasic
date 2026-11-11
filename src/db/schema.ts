@@ -121,22 +121,3 @@ export type BestPageRow = typeof bestPages.$inferSelect;
 export type NewBestPageRow = typeof bestPages.$inferInsert;
 export type GuideRow = typeof guides.$inferSelect;
 export type NewGuideRow = typeof guides.$inferInsert;
-
-/**
- * Small site-wide documents that do not fit the catalog tables.
- * The first key is `latest-added`, which stores the curated "new to the
- * database" slug lists shown on the home page.
- */
-export const siteSettings = pgTable("site_settings", {
-    key: text("key").primaryKey(),
-    data: jsonb("data").$type<Record<string, unknown>>().notNull(),
-    createdAt: timestamp("created_at", { withTimezone: true })
-        .notNull()
-        .defaultNow(),
-    updatedAt: timestamp("updated_at", { withTimezone: true })
-        .notNull()
-        .defaultNow(),
-});
-
-export type SiteSettingRow = typeof siteSettings.$inferSelect;
-export type NewSiteSettingRow = typeof siteSettings.$inferInsert;

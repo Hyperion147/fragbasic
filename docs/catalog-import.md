@@ -38,7 +38,6 @@ bucket → Settings) or via the Storage API `PUT /storage/v1/bucket/:id` with
 | `npm run db:seed:comparisons` | Head-to-head comparisons |
 | `npm run db:seed:best-pages` | Buying-guide best pages |
 | `npm run db:seed:guides` | Long-form mousepad guides |
-| `npm run db:seed:latest-added` | Curated home-page "latest added" slug lists |
 | `npm run db:seed:all` | All of the above, sequentially |
 | `npm run db:check` | Validate schemas, images, references, and source flags |
 | `npm run db:snapshot` | Writes `output/static-catalog-snapshot.json` |
@@ -56,7 +55,6 @@ npm run db:seed:accessories -- --dry-run
 npm run db:seed:comparisons -- --dry-run
 npm run db:seed:best-pages -- --dry-run
 npm run db:seed:guides -- --dry-run
-npm run db:seed:latest-added -- --dry-run
 ```
 
 Expected output for an in-sync database:
@@ -69,7 +67,6 @@ Expected output for an in-sync database:
 [dry-run] Comparison import (upsert): create=0 update=0 unchanged=8 skip=0 conflict=0 total=8
 [dry-run] Best page import (upsert): create=0 update=0 unchanged=6 skip=0 conflict=0 total=6
 [dry-run] Guide import (upsert): create=0 update=0 unchanged=3 skip=0 conflict=0 total=3
-[dry-run] Latest added import (upsert): create=0 update=0 unchanged=1 skip=0 conflict=0 total=1
 ```
 
 Then apply:
@@ -115,8 +112,8 @@ npm run db:check -- --json
 ```
 
 It validates every table-backed row against its Zod schema, requires absolute
-public `images.main` URLs, resolves comparison/best-page/latest-added
-references, and reports the public source flag for each module. It exits
+public `images.main` URLs, resolves comparison/best-page/guide references,
+and reports the public source flag for each module. It exits
 non-zero when errors are found. The same report is available in the CMS at
 `/cms67/health` and as a compact card on the dashboard.
 
@@ -163,9 +160,10 @@ public catalog resolves pads. Deleting or renaming a referenced pad does not
 cascade; fix the editorial record and the CMS will reject unknown slugs on the
 next save.
 
-Latest-added is a single `site_settings` row with key `latest-added` and three
-slug lists: soft mousepads, glasspads, and IEMs. Edit it at
-`/cms67/latest-added`; the API rejects slugs that are not in the matching table.
+Latest-added is derived automatically. Each catalog module exposes its three
+newest published rows by `created_at` (with `updated_at` as a tiebreaker). Adding
+a row makes it eligible immediately; there is no curated list to maintain and no
+CMS editor or `site_settings` document.
 
 ## Public reads and module cutover
 
@@ -181,7 +179,6 @@ to the database independently by setting its flag in `.env`:
 | `CATALOG_SOURCE_COMPARISONS` | Comparisons |
 | `CATALOG_SOURCE_BEST_PAGES` | Best pages |
 | `CATALOG_SOURCE_GUIDES` | Long-form guides |
-| `CATALOG_SOURCE_LATEST_ADDED` | Home-page latest-added lists |
 
 `static` is the default; any value other than `db` keeps the static source.
 When a module is on `db`, public readers only return rows with status
@@ -222,7 +219,6 @@ npm run db:seed:accessories -- --dry-run
 npm run db:seed:comparisons -- --dry-run
 npm run db:seed:best-pages -- --dry-run
 npm run db:seed:guides -- --dry-run
-npm run db:seed:latest-added -- --dry-run
 ```
 
 Then set the matching `CATALOG_SOURCE_*=db`, restart/redeploy, and spot-check

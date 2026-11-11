@@ -89,7 +89,7 @@ src/data/iems/
 src/data/accessories/
 src/data/comparisons.ts
 src/data/best-pages.ts
-src/data/latest-added.ts
+src/data/guides.ts
 ```
 
 ### Types

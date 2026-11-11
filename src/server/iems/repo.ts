@@ -1,8 +1,18 @@
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { iems, type NewIemRow } from "@/db/schema";
 
 export async function listIems() { return db.select().from(iems).orderBy(iems.brand); }
+
+export async function listLatestIemSlugs(limit = 3) {
+  const rows = await db
+    .select({ slug: iems.slug })
+    .from(iems)
+    .where(eq(iems.status, "published"))
+    .orderBy(desc(iems.createdAt), desc(iems.updatedAt), iems.slug)
+    .limit(limit);
+  return rows.map((row) => row.slug);
+}
 export async function getIemById(id: string) {
   const rows = await db.select().from(iems).where(eq(iems.id, id)).limit(1);
   return rows[0] ?? null;

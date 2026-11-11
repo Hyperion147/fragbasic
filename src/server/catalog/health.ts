@@ -10,18 +10,12 @@ import {
   mousepads,
   mouseSkates,
 } from "@/db/schema";
-import {
-  LATEST_ADDED_KEY,
-  latestAddedDataSchema,
-  type LatestAddedDataInput,
-} from "@/schemas/latest-added";
 import { bestPageDataSchema } from "@/schemas/best-page";
 import { comparisonDataSchema } from "@/schemas/comparison";
 import { guideDataSchema } from "@/schemas/guide";
 import { iemSchema } from "@/schemas/iem";
 import { mousepadSchema } from "@/schemas/mousepad";
 import { mouseSkateSchema } from "@/schemas/accessory";
-import * as latestAddedRepo from "@/server/latest-added/repo";
 import { getCatalogSource, type CatalogSourceModule } from "./source";
 
 export type CatalogHealthIssue = {
@@ -64,7 +58,6 @@ const MODULE_LABELS: Record<CatalogSourceModule, string> = {
   comparisons: "Comparisons",
   "best-pages": "Best pages",
   guides: "Guides",
-  "latest-added": "Latest added",
 };
 
 type HealthRow = {
@@ -162,7 +155,6 @@ export async function getCatalogHealth(): Promise<CatalogHealthReport> {
     comparisonRows,
     bestPageRows,
     guideRows,
-    latestAddedSetting,
   ] = await Promise.all([
     db.select().from(mousepads),
     db.select().from(glasspads),
@@ -171,7 +163,6 @@ export async function getCatalogHealth(): Promise<CatalogHealthReport> {
     db.select().from(comparisons),
     db.select().from(bestPages),
     db.select().from(guides),
-    latestAddedRepo.getSiteSetting(LATEST_ADDED_KEY),
   ]);
 
   const issues: CatalogHealthIssue[] = [];
@@ -285,14 +276,6 @@ export async function getCatalogHealth(): Promise<CatalogHealthReport> {
     }),
   );
 
-  modules.push(
-    inspectLatestAdded(latestAddedSetting?.data ?? null, issues, {
-      mousepads: new Set(mousepadRows.map((row) => row.slug)),
-      glasspads: new Set(glasspadRows.map((row) => row.slug)),
-      iems: new Set(iemRows.map((row) => row.slug)),
-    }),
-  );
-
   // Row-level validators append issues after the initial count is computed.
   for (const entry of modules) {
     entry.errorCount = issueCount(issues, entry.module, "error");
@@ -316,94 +299,5 @@ export async function getCatalogHealth(): Promise<CatalogHealthReport> {
     modules,
     issues,
     totals,
-  };
-}
-
-function inspectLatestAdded(
-  raw: unknown,
-  issues: CatalogHealthIssue[],
-  available: {
-    mousepads: Set<string>;
-    glasspads: Set<string>;
-    iems: Set<string>;
-  },
-): CatalogHealthModuleReport {
-  const source = getCatalogSource("latest-added");
-
-  if (raw === null) {
-    issues.push({
-      level: source === "db" ? "error" : "warning",
-      module: "latest-added",
-      message:
-        source === "db"
-          ? "Database source is enabled but no latest-added document exists"
-          : "No latest-added document imported yet",
-    });
-    return {
-      module: "latest-added",
-      label: MODULE_LABELS["latest-added"],
-      source,
-      total: 0,
-      published: 0,
-      draft: 0,
-      errorCount: issueCount(issues, "latest-added", "error"),
-      warningCount: issueCount(issues, "latest-added", "warning"),
-    };
-  }
-
-  const parsed = latestAddedDataSchema.safeParse(raw);
-  if (!parsed.success) {
-    issues.push({
-      level: "error",
-      module: "latest-added",
-      message:
-        parsed.error.issues[0]?.message ?? "Invalid latest-added document",
-    });
-    return {
-      module: "latest-added",
-      label: MODULE_LABELS["latest-added"],
-      source,
-      total: 0,
-      published: 0,
-      draft: 0,
-      errorCount: issueCount(issues, "latest-added", "error"),
-      warningCount: issueCount(issues, "latest-added", "warning"),
-    };
-  }
-
-  const data: LatestAddedDataInput = parsed.data;
-  const references: Array<{
-    list: keyof LatestAddedDataInput;
-    available: Set<string>;
-  }> = [
-    { list: "mousepads", available: available.mousepads },
-    { list: "glasspads", available: available.glasspads },
-    { list: "iems", available: available.iems },
-  ];
-
-  for (const reference of references) {
-    for (const slug of data[reference.list]) {
-      if (!reference.available.has(slug)) {
-        issues.push({
-          level: "error",
-          module: "latest-added",
-          slug,
-          message: `Missing ${reference.list} reference`,
-        });
-      }
-    }
-  }
-
-  const total = data.mousepads.length + data.glasspads.length + data.iems.length;
-
-  return {
-    module: "latest-added",
-    label: MODULE_LABELS["latest-added"],
-    source,
-    total,
-    published: total,
-    draft: 0,
-    errorCount: issueCount(issues, "latest-added", "error"),
-    warningCount: issueCount(issues, "latest-added", "warning"),
   };
 }

@@ -76,15 +76,6 @@ const MODULE_ROUTES: Record<CatalogSourceModule, RouteConfig> = {
     literals: [...SHARED_PATHS, "/mousepads/guides"],
     dynamic: [{ path: "/mousepads/guides/[slug]", type: "page" }],
   },
-  "latest-added": {
-    literals: [
-      ...SHARED_PATHS,
-      "/iems",
-      "/mousepads",
-      "/mousepads/glasspads",
-    ],
-    dynamic: [],
-  },
 };
 
 /**

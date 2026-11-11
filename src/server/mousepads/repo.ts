@@ -1,9 +1,19 @@
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { mousepads, type NewMousepadRow } from "@/db/schema";
 
 export async function listMousepads() {
   return db.select().from(mousepads).orderBy(mousepads.brand);
+}
+
+export async function listLatestMousepadSlugs(limit = 3) {
+  const rows = await db
+    .select({ slug: mousepads.slug })
+    .from(mousepads)
+    .where(eq(mousepads.status, "published"))
+    .orderBy(desc(mousepads.createdAt), desc(mousepads.updatedAt), mousepads.slug)
+    .limit(limit);
+  return rows.map((row) => row.slug);
 }
 
 export async function getMousepadById(id: string) {
