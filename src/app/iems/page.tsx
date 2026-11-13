@@ -6,24 +6,29 @@ import { IemBrowser } from "@/components/iems/iem-browser";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { SiteSection } from "@/components/SiteSection";
 import { Badge } from "@/components/ui/badge";
+import { AiFaq } from "@/components/seo/ai-blocks";
+import { PopularSearches } from "@/components/seo/related-links";
 import { getPublicIems } from "@/server/catalog/iems";
 import { getPublicLatestAdded } from "@/server/catalog/latest-added";
-import { buildCollectionJsonLd, buildMetadata } from "@/lib/seo";
+import { iemFaqs, iemLinkGroups } from "@/lib/seo-content";
+import {
+  buildCollectionJsonLd,
+  buildFaqJsonLd,
+  buildMetadata,
+  seoKeywords,
+} from "@/lib/seo";
 
 export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-  title: "IEM Database for FPS Games",
+  title: "Gaming IEM Database for FPS",
   description:
-    "Browse FragBasic's IEM database for FPS games, with imaging, clarity, soundstage, comfort, tuning, value, and India buying notes.",
+    "Browse gaming IEMs ranked by imaging, clarity, soundstage, comfort, tuning, and value. Find the best IEMs for VALORANT, CS2, and footsteps.",
   path: "/iems",
   keywords: [
-    "gaming IEMs",
-    "best IEMs for valorant",
-    "best IEMs for CS2",
-    "IEM database",
-    "budget IEMs India",
-    "FPS earphones",
+    ...seoKeywords.iems,
+    ...seoKeywords.games,
+    ...seoKeywords.questions,
   ],
 });
 
@@ -44,6 +49,7 @@ export default async function IemsPage() {
           itemCount: iems.length,
         })}
       />
+      <JsonLd data={buildFaqJsonLd(iemFaqs)} />
       <section className="relative overflow-hidden border-b border-border bg-background">
 
         <div className="page-hero relative">
@@ -72,6 +78,19 @@ export default async function IemsPage() {
           <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading IEM filters...</div>}>
             <IemBrowser iems={iems} latestAddedSlugs={latestAdded.iems} />
           </Suspense>
+        </SiteSection>
+      </section>
+
+      <section className="page-section border-t border-border">
+        <SiteSection>
+          <div className="space-y-6">
+            <AiFaq items={iemFaqs} />
+            <PopularSearches
+              title="Popular IEM searches"
+              description="Find an IEM by game, budget, sound signature, or comparison."
+              groups={iemLinkGroups}
+            />
+          </div>
         </SiteSection>
       </section>
     </main>

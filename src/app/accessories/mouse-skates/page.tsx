@@ -3,30 +3,28 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { SkateSpectrum } from "@/components/accessories/mouse-skates/skate-spectrum";
+import { JsonLd } from "@/components/json-ld";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
+import { AiFaq } from "@/components/seo/ai-blocks";
+import { PopularSearches } from "@/components/seo/related-links";
 import { formatMouseSkateMaterial } from "@/lib/accessories/mouse-skates";
-import { buildMetadata } from "@/lib/seo";
+import { mouseSkateFaqs, mouseSkateLinkGroups } from "@/lib/seo-content";
+import { buildFaqJsonLd, buildMetadata, seoKeywords } from "@/lib/seo";
 import { getPublicMouseSkates } from "@/server/catalog/accessories";
 import type { MouseSkateMaterial } from "@/types/accessory";
 
 export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-    title: "Mouse Skate Database",
+    title: "Mouse Skates Database & Buying Guide",
     description:
-        "Browse FragBasic's mouse skate database with popular skate speed, control, material, glasspad fit, and surface compatibility notes.",
+        "Compare mouse skates by material, speed, control, stopping power, durability, and glasspad fit. Find the best PTFE and UHMWPE skates.",
     path: "/accessories/mouse-skates",
     keywords: [
-        "mouse skates",
-        "Xraypad skates",
-        "Corepad skates",
-        "Tiger ICE skates",
-        "Pulsar Superglide skates",
-        "Jade skates",
-        "Obsidian skates",
-        "best mouse skates",
-        "glasspad mouse skates",
+        ...seoKeywords.skates,
+        ...seoKeywords.questions,
+        ...seoKeywords.comparisons,
     ],
 });
 
@@ -70,6 +68,7 @@ export default async function MouseSkatesPage() {
 
     return (
         <main className="min-h-screen bg-background text-foreground">
+            <JsonLd data={buildFaqJsonLd(mouseSkateFaqs)} />
             <section className="border-b border-border bg-background">
                 <div className="page-hero flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                     <div className="max-w-5xl">
@@ -139,6 +138,17 @@ export default async function MouseSkatesPage() {
                             </p>
                         </div>
                     ))}
+                </div>
+            </section>
+
+            <section className="page-section border-t border-border">
+                <div className="space-y-6">
+                    <AiFaq items={mouseSkateFaqs} />
+                    <PopularSearches
+                        title="Popular mouse skate searches"
+                        description="Find skates by surface, material, speed, or a specific review and comparison."
+                        groups={mouseSkateLinkGroups}
+                    />
                 </div>
             </section>
         </main>

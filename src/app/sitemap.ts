@@ -1,11 +1,13 @@
 import type { MetadataRoute } from "next";
 
+import { getBrandSlugs } from "@/lib/brands";
 import { getSiteUrl } from "@/lib/seo";
 import { getPublicBestPageSlugs } from "@/server/catalog/best-pages";
 import { getPublicComparisons } from "@/server/catalog/comparisons";
 import { getPublicGuides } from "@/server/catalog/guides";
 import { getPublicIems } from "@/server/catalog/iems";
 import { getPublicPads } from "@/server/catalog/pads";
+import { getPublicMouseSkates } from "@/server/catalog/accessories";
 
 export const revalidate = 300;
 
@@ -15,13 +17,14 @@ function toAbsoluteUrl(siteUrl: string, value: string) {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl();
-  const [iems, mousepads, comparisons, bestPageSlugs, guides] =
+  const [iems, mousepads, comparisons, bestPageSlugs, guides, mouseSkates] =
     await Promise.all([
       getPublicIems(),
       getPublicPads(),
       getPublicComparisons(),
       getPublicBestPageSlugs(),
       getPublicGuides(),
+      getPublicMouseSkates(),
     ]);
 
   // NOTE: only emit lastModified where we have a real source date (IEMs).
@@ -31,6 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
     "",
     "/mousepads",
+    "/mousepads/brand",
     "/mousepads/glasspads",
     "/mousepads/guides",
     "/mousepads/compare",
@@ -53,6 +57,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
     images: [toAbsoluteUrl(siteUrl, mousepad.images.main)],
   }));
+
+  const brandRoutes = getBrandSlugs(mousepads.map((pad) => pad.brand)).map(
+    (slug) => ({
+      url: `${siteUrl}/mousepads/brand/${slug}`,
+      changeFrequency: "weekly" as const,
+      priority: 0.82,
+    }),
+  );
 
   const iemRoutes = iems.map((iem) => ({
     url: `${siteUrl}/iems/${iem.slug}`,
@@ -83,12 +95,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.78,
   }));
 
+  const mouseSkateRoutes = mouseSkates.map((skate) => ({
+    url: `${siteUrl}/accessories/mouse-skates/${skate.slug}`,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
   return [
     ...staticRoutes,
     ...mousepadRoutes,
+    ...brandRoutes,
     ...iemRoutes,
     ...comparisonRoutes,
     ...bestRoutes,
     ...guideRoutes,
+    ...mouseSkateRoutes,
   ];
 }

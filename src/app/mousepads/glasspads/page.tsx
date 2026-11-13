@@ -5,27 +5,34 @@ import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { MousepadBrowser } from "@/components/mousepads/mousepad-browser";
 import { SiteSection } from "@/components/SiteSection";
-import { buildCollectionJsonLd, buildMetadata } from "@/lib/seo";
+import { AiFaq } from "@/components/seo/ai-blocks";
+import { PopularSearches } from "@/components/seo/related-links";
+import { glasspadFaqs, glasspadLinkGroups } from "@/lib/seo-content";
+import {
+  buildCollectionJsonLd,
+  buildFaqJsonLd,
+  buildMetadata,
+  seoKeywords,
+} from "@/lib/seo";
 import { getPublicLatestAdded } from "@/server/catalog/latest-added";
 import { getPublicGlasspads } from "@/server/catalog/pads";
 
 export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-  title: "Glass Mousepad Database",
+  title: "Glass Mousepad Database & Reviews",
   description:
-    "Browse FragBasic's glass mousepad database with fast surfaces, glass-specific tradeoffs, and tracked models for competitive FPS players who want speed and consistency.",
+    "Compare glass mousepads by speed, control, surface finish, skate compatibility, and humidity resistance for VALORANT, CS2, and tracking FPS.",
   path: "/mousepads/glasspads",
   keywords: [
-    "glasspads",
-    "glass mousepads",
-    "glass mousepad database",
-    "wallhack sp-005 review",
-    "tekkusai phantom",
-    "best glasspads for fps",
-    "best glass mousepads",
+    ...seoKeywords.glasspads,
+    ...seoKeywords.bestLists,
+    ...seoKeywords.comparisons,
+    ...seoKeywords.questions,
   ],
 });
+
+const glasspadExtraFaqs = glasspadFaqs.slice(3);
 
 export default async function GlasspadsPage() {
   const [glasspads, latestAdded] = await Promise.all([
@@ -44,6 +51,7 @@ export default async function GlasspadsPage() {
           itemCount: glasspads.length,
         })}
       />
+      <JsonLd data={buildFaqJsonLd(glasspadFaqs)} />
       <section className="border-b border-border bg-background">
         <div className="page-hero">
           <div className="max-w-5xl">
@@ -124,6 +132,19 @@ export default async function GlasspadsPage() {
             </p>
           </article>
         </div>
+      </section>
+
+      <section className="page-section border-t border-border">
+        <SiteSection>
+          <div className="space-y-6">
+            <AiFaq items={glasspadExtraFaqs} />
+            <PopularSearches
+              title="Popular glasspad searches"
+              description="Go from the glass-vs-cloth question to a specific review, matchup, or skate recommendation."
+              groups={glasspadLinkGroups}
+            />
+          </div>
+        </SiteSection>
       </section>
     </main>
   );

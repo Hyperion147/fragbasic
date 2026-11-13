@@ -40,7 +40,12 @@ import {
     getIemScoreTone,
 } from "@/lib/iems";
 import { getPublicIemBySlug, getPublicIemSlugs } from "@/server/catalog/iems";
-import { buildFaqJsonLd, buildMetadata, buildProductJsonLd } from "@/lib/seo";
+import {
+    buildFaqJsonLd,
+    buildMetadata,
+    buildProductJsonLd,
+    seoKeywords,
+} from "@/lib/seo";
 import type { Iem, IemFrequencyPoint } from "@/types/iem";
 
 type Props = {
@@ -65,15 +70,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     return buildMetadata({
         title: `${getIemFullName(iem)} Review & FPS Scores`,
-        description: `${getIemFullName(iem)} IEM review with imaging, clarity, soundstage, comfort, sound signature, specs, and India buying notes on FragBasic.`,
+        description: `${getIemFullName(iem)} review: imaging, clarity, soundstage, comfort, tuning, specs, and price in India. Is it good for VALORANT, CS2, or music?`,
         path: `/iems/${iem.slug}`,
         keywords: [
+            ...seoKeywords.iems,
             getIemFullName(iem),
             `${getIemFullName(iem)} review`,
             `${getIemFullName(iem)} gaming`,
             `${getIemFullName(iem)} valorant`,
+            `${getIemFullName(iem)} cs2`,
+            `${getIemFullName(iem)} price in india`,
+            `is ${getIemFullName(iem)} good for gaming`,
+            `is ${getIemFullName(iem)} good for valorant`,
+            `${iem.name} review`,
+            `${iem.name} iem`,
+            `${iem.brand} iem`,
+            `${iem.brand} iem review`,
+            `${iem.name} vs`,
             "IEM review",
             "gaming IEM",
+            "best IEM for FPS",
         ],
     });
 }

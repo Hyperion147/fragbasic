@@ -12,7 +12,7 @@ import {
     formatMousepadValue,
     getMousepadFullName,
 } from "@/lib/mousepads";
-import { buildArticleJsonLd, buildMetadata } from "@/lib/seo";
+import { buildArticleJsonLd, buildMetadata, seoKeywords } from "@/lib/seo";
 import {
     getPublicGuideBySlug,
     getPublicGuides,
@@ -44,7 +44,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title: guide.title,
         description: guide.description,
         path: `/mousepads/guides/${guide.slug}`,
-        keywords: [...guide.keywords, guide.category, "mousepad guide"],
+        keywords: [
+            ...guide.keywords,
+            ...seoKeywords.guides,
+            ...seoKeywords.questions,
+            guide.category,
+            "mousepad guide",
+        ],
     });
 }
 

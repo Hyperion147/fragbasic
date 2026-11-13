@@ -335,7 +335,12 @@ function MouseSkateTableRow({ skate }: { skate: MouseSkate }) {
               <Badge variant="outline">{skate.shape}</Badge>
             </div>
             <p className="mt-2.5 truncate text-lg font-semibold leading-6 text-foreground">
-              {getMouseSkateFullName(skate)}
+              <Link
+                href={`/accessories/mouse-skates/${skate.slug}`}
+                className="hover:text-primary"
+              >
+                {getMouseSkateFullName(skate)}
+              </Link>
             </p>
             <p className="mt-1 truncate text-sm leading-5 text-muted-foreground">{skate.series}</p>
           </div>

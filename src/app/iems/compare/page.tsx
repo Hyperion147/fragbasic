@@ -2,24 +2,30 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import { IemCompare } from "@/components/iems/iem-compare";
+import { JsonLd } from "@/components/json-ld";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { SiteSection } from "@/components/SiteSection";
 import { Badge } from "@/components/ui/badge";
+import { AiFaq } from "@/components/seo/ai-blocks";
 import { getPublicIems } from "@/server/catalog/iems";
-import { buildMetadata } from "@/lib/seo";
+import { iemCompareFaqs } from "@/lib/seo-content";
+import {
+  buildFaqJsonLd,
+  buildMetadata,
+  seoKeywords,
+} from "@/lib/seo";
 
 export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-  title: "Compare IEMs",
+  title: "Compare Gaming IEMs Side by Side",
   description:
-    "Compare two IEMs side by side for FPS gaming, music, tuning, imaging, comfort, value, and specs on FragBasic.",
+    "Compare two gaming IEMs side by side for FPS imaging, clarity, soundstage, comfort, tuning, and value. Find the better IEM for VALORANT and CS2.",
   path: "/iems/compare",
   keywords: [
-    "compare IEMs",
-    "gaming IEM comparison",
-    "best IEM for FPS comparison",
-    "IEM side by side",
+    ...seoKeywords.iems,
+    ...seoKeywords.comparisons,
+    ...seoKeywords.questions,
   ],
 });
 
@@ -28,6 +34,7 @@ export default async function IemComparePage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <JsonLd data={buildFaqJsonLd(iemCompareFaqs)} />
       <section className="border-b border-border bg-background">
         <div className="page-hero">
           <div className="max-w-5xl">
@@ -54,6 +61,12 @@ export default async function IemComparePage() {
           <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading IEM comparison...</div>}>
             <IemCompare iems={iems} />
           </Suspense>
+        </SiteSection>
+      </section>
+
+      <section className="page-section border-t border-border">
+        <SiteSection>
+          <AiFaq items={iemCompareFaqs} />
         </SiteSection>
       </section>
     </main>

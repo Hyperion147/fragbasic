@@ -38,6 +38,7 @@ import {
   buildFaqJsonLd,
   buildProductJsonLd,
   buildMetadata,
+  seoKeywords,
 } from "@/lib/seo";
 import { getPublicComparisons } from "@/server/catalog/comparisons";
 import {
@@ -70,13 +71,30 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return buildMetadata({
     title: `${pad.brand} ${pad.name} Review & Specs`,
-    description: `${pad.brand} ${pad.name} review with feel profile, specs, humidity resistance, control, speed, and FPS recommendations on FragBasic.`,
+    description: `Review of ${pad.brand} ${pad.name}: feel ratings, specs, humidity resistance, price in India, and whether it suits VALORANT, CS2, or tracking FPS.`,
     path: `/mousepads/${pad.slug}`,
     keywords: [
+      ...seoKeywords.mousepads,
+      ...(pad.category === "glass" ? seoKeywords.glasspads : []),
       `${pad.brand} ${pad.name}`,
       `${pad.brand} ${pad.name} review`,
       `${pad.brand} ${pad.name} specs`,
       `${pad.brand} ${pad.name} mousepad`,
+      `${pad.name} mousepad`,
+      `${pad.name} review`,
+      `${pad.name} specs`,
+      `${pad.name} price in india`,
+      `${pad.name} vs`,
+      `${pad.name} vs artisan zero`,
+      `is ${pad.name} good for valorant`,
+      `is ${pad.name} good for cs2`,
+      `is ${pad.name} good for fps`,
+      `${pad.brand} mousepad`,
+      `${pad.brand} mousepad india`,
+      `${pad.brand} ${pad.name} review reddit`,
+      `${pad.name} speed`,
+      `${pad.name} control`,
+      `${pad.name} humidity`,
     ],
   })
 }
@@ -153,7 +171,7 @@ export default async function MousepadPage({ params }: PageProps) {
                 </p>
 
                 <h1 className="page-title mt-3 max-w-4xl">
-                  {pad.name}
+                  {pad.brand} {pad.name}
                 </h1>
 
                 <p className="body-copy mt-4 max-w-2xl">

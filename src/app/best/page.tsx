@@ -17,27 +17,22 @@ import { Button } from "@/components/ui/button";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { getBestPagePicks } from "@/lib/best-pages";
 import { getMousepadFullName } from "@/lib/mousepads";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, getCurrentYear, seoKeywords } from "@/lib/seo";
 import { getPublicBestPages } from "@/server/catalog/best-pages";
 import { getPublicPads } from "@/server/catalog/pads";
 
 export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-    title: "Best Mousepads for FPS Games",
+    title: `Best FPS Mousepads & Buying Guides (${getCurrentYear()})`,
     description:
-        "Browse FragBasic's best mousepad guides for FPS games, including control, speed, VALORANT, CS2, glasspads, and humidity-resistant picks.",
+        "The best FPS mousepads for VALORANT, CS2, control, speed, glass, and humid rooms, ranked from the FragBasic database with feel data.",
     path: "/best",
     keywords: [
-        "best mousepads",
-        "best fps mousepads",
-        "best mousepads for fps",
-        "best gaming mousepads",
-        "best valorant mousepads",
-        "best cs2 mousepads",
-        "best glasspads",
-        "best control mousepads",
-        "best speed mousepads",
+        ...seoKeywords.bestLists,
+        ...seoKeywords.mousepads,
+        ...seoKeywords.games,
+        ...seoKeywords.questions,
     ],
 });
 

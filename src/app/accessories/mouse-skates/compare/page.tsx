@@ -2,24 +2,31 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import { MouseSkateCompare } from "@/components/accessories/mouse-skates/mouse-skate-compare";
+import { JsonLd } from "@/components/json-ld";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
-import { buildMetadata } from "@/lib/seo";
+import { AiFaq } from "@/components/seo/ai-blocks";
+import {
+  mouseSkateCompareFaqs,
+} from "@/lib/seo-content";
+import {
+  buildFaqJsonLd,
+  buildMetadata,
+  seoKeywords,
+} from "@/lib/seo";
 import { getPublicMouseSkates } from "@/server/catalog/accessories";
 
 export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-  title: "Mouse Skate Compare",
+  title: "Compare Mouse Skates Side by Side",
   description:
-    "Compare mouse skates side by side using skate-specific speed, control, stopping, durability, smoothness, noise, and surface compatibility ratings.",
+    "Compare mouse skates side by side on speed, control, stopping power, durability, noise, and surface fit for cloth and glass pads.",
   path: "/accessories/mouse-skates/compare",
   keywords: [
-    "mouse skate compare",
-    "compare mouse skates",
-    "Tiger ICE vs Corepad",
-    "Xraypad Jade vs Obsidian",
-    "glasspad skate comparison",
+    ...seoKeywords.skates,
+    ...seoKeywords.comparisons,
+    ...seoKeywords.questions,
   ],
 });
 
@@ -37,6 +44,7 @@ export default async function CompareMouseSkatesPage({
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <JsonLd data={buildFaqJsonLd(mouseSkateCompareFaqs)} />
       <section className="border-b border-border bg-background">
         <div className="page-hero">
           <div className="max-w-5xl">
@@ -65,6 +73,10 @@ export default async function CompareMouseSkatesPage({
         <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading skate comparison...</div>}>
           <MouseSkateCompare skates={skates} initialLeftSlug={params?.left} />
         </Suspense>
+      </section>
+
+      <section className="page-section border-t border-border">
+        <AiFaq items={mouseSkateCompareFaqs} />
       </section>
     </main>
   );

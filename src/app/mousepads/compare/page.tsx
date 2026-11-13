@@ -1,32 +1,35 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ComparisonBrowser } from "@/components/compare/comparison-browser";
+import { JsonLd } from "@/components/json-ld";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getComparisonTagOptions } from "@/lib/comparisons";
 import Link from "next/link";
 import { ClientShareButton } from "@/components/ClientShareButton";
-import { buildMetadata } from "@/lib/seo";
+import { AiFaq } from "@/components/seo/ai-blocks";
+import { mousepadCompareFaqs } from "@/lib/seo-content";
+import {
+    buildFaqJsonLd,
+    buildMetadata,
+    seoKeywords,
+} from "@/lib/seo";
 import { getPublicComparisons } from "@/server/catalog/comparisons";
 import { getPublicPads } from "@/server/catalog/pads";
 
 export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-    title: "Mousepad Comparisons and Side-by-Side Matchups",
+    title: "Mousepad Comparisons: X vs Y Matchups",
     description:
-        "Compare Artisan Zero Soft vs LGG Saturn Pro Soft, ATK Crimson vs Wallhack SP-005 and more FPS pad matchups side by side across speed, control, stopping power, and game fit. Or build a custom 2-3 pad comparison.",
+        "Compare Artisan Zero vs LGG Saturn Pro, ATK Crimson vs Wallhack SP-005, and more FPS mousepad matchups across speed, control, and feel.",
     path: "/mousepads/compare",
     keywords: [
-        "mousepad comparison",
-        "artisan zero vs lgg saturn pro",
-        "artisan zero soft vs lgg saturn pro soft",
-        "atk crimson vs wallhack sp-005",
-        "mousepad compare tool",
-        "fps pad comparison",
-        "mousepad vs mousepad",
-        "compare mousepads side by side",
+        ...seoKeywords.comparisons,
+        ...seoKeywords.mousepads,
+        ...seoKeywords.glasspads,
+        ...seoKeywords.questions,
     ],
 });
 
@@ -55,6 +58,7 @@ export default async function CompareIndexPage() {
 
     return (
         <main className="min-h-screen bg-background text-foreground">
+            <JsonLd data={buildFaqJsonLd(mousepadCompareFaqs)} />
             <section className="border-b border-border bg-background">
                 <div className="page-hero flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                     <div className="max-w-3xl">
@@ -112,6 +116,10 @@ export default async function CompareIndexPage() {
                         )}
                     />
                 </Suspense>
+            </section>
+
+            <section className="page-section border-t border-border">
+                <AiFaq items={mousepadCompareFaqs} />
             </section>
         </main>
     );

@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { HomeExperience } from "@/features/landing/home-experience";
+import { homeFaqs } from "@/features/landing/seo-section";
 import { getDefaultColorway, getMousepadFullName } from "@/lib/mousepads";
-import { buildCollectionJsonLd, buildMetadata } from "@/lib/seo";
+import {
+  buildCollectionJsonLd,
+  buildFaqJsonLd,
+  buildMetadata,
+  seoKeywords,
+} from "@/lib/seo";
 import { getPublicBestPages } from "@/server/catalog/best-pages";
 import { getPublicComparisons } from "@/server/catalog/comparisons";
 import { getPublicIems } from "@/server/catalog/iems";
@@ -12,15 +18,19 @@ import { getPublicPads } from "@/server/catalog/pads";
 export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-  title: "Mousepad Database, Glasspads, IEMs & Comparisons",
+  title: "FPS Mousepad Database & Gear Comparisons",
   description:
-    "Browse FPS mousepads, glasspads, and IEMs, then compare gear side by side for VALORANT, CS2, Apex, and more.",
+    "Compare FPS mousepads, glasspads, gaming IEMs, and mouse skates by speed, control, stopping power, comfort, price, and India availability.",
   path: "/",
   keywords: [
-    "mousepad database india",
-    "best mousepads for valorant",
-    "best glasspads",
-    "mousepad compare",
+    ...seoKeywords.mousepads,
+    ...seoKeywords.glasspads,
+    ...seoKeywords.iems,
+    ...seoKeywords.skates,
+    ...seoKeywords.bestLists,
+    ...seoKeywords.comparisons,
+    ...seoKeywords.games,
+    ...seoKeywords.questions,
   ],
 });
 
@@ -85,6 +95,7 @@ export default async function HomePage() {
           itemCount: mousepadCount + glasspadCount + iems.length,
         })}
       />
+      <JsonLd data={buildFaqJsonLd(homeFaqs)} />
       <HomeExperience
         mousepadCount={mousepadCount}
         glasspadCount={glasspadCount}

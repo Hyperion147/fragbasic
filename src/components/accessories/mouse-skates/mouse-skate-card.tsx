@@ -60,14 +60,21 @@ export function MouseSkateCard({ skate }: { skate: MouseSkate }) {
         </div>
       </div>
 
-      <div className="mt-auto pt-5">
+      <div className="mt-auto flex flex-wrap items-center gap-4 pt-5">
+        <Link
+          href={`/accessories/mouse-skates/${skate.slug}`}
+          className="inline-flex items-center gap-2 text-sm font-semibold text-brand-hover transition-colors hover:text-foreground"
+          aria-label={`View ${getMouseSkateFullName(skate)} details`}
+        >
+          View details
+          <ArrowRight className="size-4" />
+        </Link>
         <Link
           href={`/accessories/mouse-skates/compare?left=${skate.slug}`}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-brand-hover transition-colors hover:text-foreground"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
           aria-label={`Compare ${getMouseSkateFullName(skate)}`}
         >
-          Compare skate
-          <ArrowRight className="size-4" />
+          Compare
         </Link>
       </div>
     </article>

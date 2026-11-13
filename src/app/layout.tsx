@@ -6,7 +6,11 @@ import { Analytics } from "@vercel/analytics/next";
 import { JsonLd } from "@/components/json-ld";
 import { PublicChrome } from "@/components/public-chrome";
 import { QueryProvider } from "@/components/providers/query-provider";
-import { buildWebsiteJsonLd, getRootMetadata } from "@/lib/seo";
+import {
+    buildOrganizationJsonLd,
+    buildWebsiteJsonLd,
+    getRootMetadata,
+} from "@/lib/seo";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = getRootMetadata();
@@ -58,6 +62,7 @@ export default function RootLayout({
         >
             <body className="min-h-full flex flex-col" suppressHydrationWarning>
                 <JsonLd data={buildWebsiteJsonLd()} />
+                <JsonLd data={buildOrganizationJsonLd()} />
                 <Analytics />
                 <QueryProvider>
                     <TooltipProvider>

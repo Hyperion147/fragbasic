@@ -15,6 +15,16 @@ const footerGroups = [
         ],
     },
     {
+        title: "Brands",
+        links: [
+            { label: "All mousepad brands", href: "/mousepads/brand" },
+            { label: "Artisan mousepads", href: "/mousepads/brand/artisan" },
+            { label: "Xraypad mousepads", href: "/mousepads/brand/xraypad" },
+            { label: "Zowie mousepads", href: "/mousepads/brand/zowie" },
+            { label: "LGG mousepads", href: "/mousepads/brand/lgg" },
+        ],
+    },
+    {
         title: "Research",
         links: [
             {
@@ -42,7 +52,7 @@ export function SiteFooter() {
 
     return (
         <footer className="relative isolate overflow-hidden border-y border-white/8 bg-[#08080b] text-white">
-            <div className="grid border-y border-white/8 sm:grid-cols-3 lg:border-l lg:border-t-0 px-6">
+            <div className="grid border-y border-white/8 sm:grid-cols-2 lg:grid-cols-4 lg:border-l lg:border-t-0 px-6">
                 {footerGroups.map((group) => (
                     <section
                         key={group.title}

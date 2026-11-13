@@ -30,14 +30,14 @@ export function HeroSection() {
                         </div>
 
                         <h1 className="mt-5 max-w-[12ch] text-balance text-[clamp(2.75rem,10vw,4rem)] font-semibold leading-[1.02] text-white sm:mt-6 lg:text-[clamp(3.25rem,4.8vw,5.25rem)]">
-                            Research gear without the{" "}
+                            FPS gear research without the{" "}
                             <span className="text-brand-hover">rabbit hole.</span>
                         </h1>
 
                         <p className="mt-4 max-w-[44ch] text-pretty text-[15px] font-normal leading-[1.65] text-white/60 sm:mt-5 sm:text-lg sm:leading-[1.7] lg:text-[1.25rem] lg:leading-[1.7]">
-                            Compare how mousepads, glasspads, IEMs and skates
-                            actually differ by feel, use case, price and
-                            availability in India.
+                            Compare how mousepads, glasspads, gaming IEMs and
+                            mouse skates actually differ by feel, use case, price
+                            and availability in India.
                         </p>
 
                         <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row">

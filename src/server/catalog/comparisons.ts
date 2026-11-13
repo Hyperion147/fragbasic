@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import * as repo from "@/server/comparisons/repo";
 import type { Mousepad } from "@/types/mousepad";
 import type { MousepadComparison } from "@/types/comparison";
@@ -21,10 +23,14 @@ function toPublicComparison(
 /**
  * Public comparison reads. Draft rows stay in the CMS and are never exposed.
  */
-export async function getPublicComparisons(): Promise<MousepadComparison[]> {
-  const rows = await repo.listComparisons();
-  return rows.filter((row) => row.status === "published").map(toPublicComparison);
-}
+export const getPublicComparisons = cache(
+  async (): Promise<MousepadComparison[]> => {
+    const rows = await repo.listComparisons();
+    return rows
+      .filter((row) => row.status === "published")
+      .map(toPublicComparison);
+  },
+);
 
 export async function getPublicComparisonBySlug(
   slug: string,

@@ -19,7 +19,10 @@ import {
 } from "@/lib/mousepads";
 import {
     buildFaqJsonLd,
+    buildItemListJsonLd,
     buildMetadata,
+    getCurrentYear,
+    seoKeywords,
 } from "@/lib/seo";
 import {
     getPublicBestPageBySlug,
@@ -54,15 +57,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         .join(", ");
 
     return buildMetadata({
-        title: page.title,
-        description: `${page.description} ${picks.length} tested picks including ${pickNames}. Best-use cases and FPS reasoning for each.`,
+        title: `${page.title} (${getCurrentYear()})`,
+        description: `${page.description} ${picks.length} picks including ${pickNames}, ranked by feel and FPS use case.`,
         path: `/best/${page.slug}`,
         keywords: [
             ...page.keywords,
+            ...seoKeywords.bestLists,
+            ...seoKeywords.questions,
             "best gaming mousepads",
             "fps mousepad guide",
             `best ${page.badge.toLowerCase()} mousepads`,
             `best ${page.badge.toLowerCase()} mousepad`,
+            `best ${page.badge.toLowerCase()} mousepads ${getCurrentYear()}`,
+            `best mousepads for ${page.badge.toLowerCase()}`,
+            `${page.badge.toLowerCase()} mousepad india`,
         ],
     });
 }
@@ -82,6 +90,17 @@ export default async function BestMousepadsPage({ params }: Props) {
     return (
         <main className="min-h-screen bg-background text-foreground">
             <JsonLd data={buildFaqJsonLd(bestFaqs)} />
+            <JsonLd
+                data={buildItemListJsonLd({
+                    name: page.title,
+                    description: page.description,
+                    path: `/best/${page.slug}`,
+                    items: picks.map((pick) => ({
+                        name: getMousepadFullName(pick.mousepad),
+                        url: `/mousepads/${pick.mousepad.slug}`,
+                    })),
+                })}
+            />
             <section className="border-b border-border bg-background">
                 <div className="page-hero">
                     <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.55fr)] lg:items-end">
@@ -108,7 +127,7 @@ export default async function BestMousepadsPage({ params }: Props) {
                             </p>
 
                             <h1 className="page-title mt-4">
-                                {page.title}
+                                {page.title} ({getCurrentYear()})
                             </h1>
 
                             <div className="mt-6 flex flex-wrap gap-3">
