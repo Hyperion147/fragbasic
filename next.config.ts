@@ -28,6 +28,12 @@ const nextConfig: NextConfig = {
   },
   images: {
     qualities: [35, 75],
+    // Remote catalog images come from Supabase Storage, which answers with
+    // `Cache-Control: private, no-cache`. Without a long Next-side TTL, every
+    // browser revalidation triggers a fresh download plus sharp re-encode.
+    // 31 days keeps optimized variants hot; bump the image URL (filename or
+    // ?v=) when replacing a file at the same path.
+    minimumCacheTTL: 2678400,
     remotePatterns: supabaseImageHostname
       ? [
           {

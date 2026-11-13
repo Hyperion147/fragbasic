@@ -1,25 +1,5 @@
 import { cn } from "@/lib/utils";
 
-export function DataSection({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return <section className={cn("data-shell", className)}>{children}</section>;
-}
-
-export function DataPanel({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return <div className={cn("data-panel", className)}>{children}</div>;
-}
-
 export function MetricBar({
   value,
   max = 10,

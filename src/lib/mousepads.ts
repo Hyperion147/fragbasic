@@ -1,6 +1,7 @@
 import type { Mousepad } from "@/types/mousepad";
 
-// Re-export centralized format helpers (and the legacy name)
+// Re-export centralized format helpers so catalog components can import them
+// from one place alongside the mousepad helpers.
 export {
   formatMousepadValue,
   formatValue,
