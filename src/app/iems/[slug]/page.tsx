@@ -91,6 +91,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             "gaming IEM",
             "best IEM for FPS",
         ],
+        image: iem.images.main,
     });
 }
 

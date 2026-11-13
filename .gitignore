@@ -39,6 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 
-# generated catalog snapshot (npm run db:snapshot)
+# generated catalog snapshots (npm run db:snapshot)
 /output/static-catalog-snapshot.json
+/output/catalog-snapshot-*.json
+# image migration report (npm run images:migrate -- --apply)
+/output/cloudinary-migration*.json
 next-env.d.ts

@@ -96,6 +96,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `${pad.name} control`,
       `${pad.name} humidity`,
     ],
+    image: pad.images.main,
   })
 }
 

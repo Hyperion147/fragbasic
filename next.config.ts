@@ -1,8 +1,15 @@
 import type { NextConfig } from "next";
 
 /**
- * Uploaded catalog images live in Supabase Storage. Derive the hostname from
- * the project URL so staging and production projects work without hardcoding.
+ * Cloudinary delivery only needs the cloud name. Until it is configured (and
+ * the catalog has been migrated), keep Next's built-in optimizer so Supabase
+ * images are still resized and cached instead of being served at full size.
+ */
+const cloudinaryEnabled = Boolean(process.env.CLOUDINARY_CLOUD_NAME);
+
+/**
+ * Supabase Storage host derived from the project URL, so staging and
+ * production projects work without hardcoding.
  */
 function getSupabaseImageHostname(): string | null {
   const rawUrl =
@@ -27,23 +34,37 @@ const nextConfig: NextConfig = {
     staticGenerationMaxConcurrency: 4,
   },
   images: {
+    // Once CLOUDINARY_CLOUD_NAME is present at build time, Cloudinary becomes
+    // the image CDN and its loader applies f_auto/w_<width> per request.
+    // Before that, the default optimizer keeps working for Supabase.
+    loader: cloudinaryEnabled ? "custom" : undefined,
+    loaderFile: cloudinaryEnabled
+      ? "./src/lib/cloudinary-loader.ts"
+      : undefined,
     qualities: [35, 75],
-    // Remote catalog images come from Supabase Storage, which answers with
-    // `Cache-Control: private, no-cache`. Without a long Next-side TTL, every
-    // browser revalidation triggers a fresh download plus sharp re-encode.
-    // 31 days keeps optimized variants hot; bump the image URL (filename or
-    // ?v=) when replacing a file at the same path.
+    // Supabase answers with `Cache-Control: private, no-cache`, so without a
+    // long Next-side TTL every revalidation downloads and re-encodes again.
+    // Cloudinary URLs are listed too, in case the custom loader is not active
+    // in some environment, so they are still accepted by the optimizer.
     minimumCacheTTL: 2678400,
-    remotePatterns: supabaseImageHostname
-      ? [
-          {
-            protocol: "https",
-            hostname: supabaseImageHostname,
-            port: "",
-            pathname: "/storage/v1/object/public/**",
-          },
-        ]
-      : [],
+    remotePatterns: [
+      ...(supabaseImageHostname
+        ? [
+            {
+              protocol: "https" as const,
+              hostname: supabaseImageHostname,
+              port: "",
+              pathname: "/storage/v1/object/public/**",
+            },
+          ]
+        : []),
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
   },
   async redirects() {
     return [

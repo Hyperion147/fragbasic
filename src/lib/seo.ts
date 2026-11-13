@@ -11,6 +11,23 @@ type MetadataOptions = {
 const siteName = "FragBasic";
 const siteUrl = "https://fragbasic.fun";
 const ogImageUrl = new URL("/og-image.png", siteUrl).toString();
+const cloudinaryPrefix = "https://res.cloudinary.com/";
+
+/**
+ * Product images are stored as WebP masters. Some social crawlers still reject
+ * WebP for `og:image`, so Cloudinary product images are rendered as JPG at the
+ * 1200x630 card size. Everything else is returned unchanged.
+ */
+function getSocialImage(image: string) {
+  if (!image.startsWith(cloudinaryPrefix) || !image.includes("/image/upload/")) {
+    return image;
+  }
+
+  return image.replace(
+    "/image/upload/",
+    "/image/upload/f_jpg,q_auto,c_pad,w_1200,h_630,b_auto/",
+  );
+}
 const defaultDescription =
   "FragBasic is an FPS gear database for gaming mousepads, glasspads, gaming IEMs, and mouse skates. Compare speed, control, stopping power, humidity resistance, imaging, comfort, price, and India availability with best-pick guides and side-by-side matchups for VALORANT, CS2, Apex, and more.";
 
@@ -394,7 +411,8 @@ export function buildMetadata({
   // suffix is appended. Drop the suffix for those pages so the product name
   // stays intact.
   const documentTitle = socialTitle.length > 62 ? { absolute: title } : title;
-  const socialImage = image.startsWith("http") ? image : getAbsoluteUrl(image);
+  const absoluteImage = image.startsWith("http") ? image : getAbsoluteUrl(image);
+  const socialImage = getSocialImage(absoluteImage);
   const mergedKeywords = Array.from(
     new Set([...seoKeywords.core, ...keywords]),
   );

@@ -140,6 +140,7 @@ function FeaturedIemCard({ iem }: { iem: Iem }) {
                             src={iem.images.main}
                             alt={getIemFullName(iem)}
                             fill
+                            priority
                             sizes="(min-width: 768px) 32vw, 100vw"
                             className="object-cover object-right transition-transform duration-300 group-hover:scale-[1.03]"
                         />

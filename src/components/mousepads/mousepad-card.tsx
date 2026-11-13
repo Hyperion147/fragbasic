@@ -197,6 +197,7 @@ function FeaturedMousepadCard({ pad }: { pad: Mousepad }) {
                             src={pad.images.main}
                             alt={getMousepadFullName(pad)}
                             fill
+                            priority
                             sizes="(min-width: 768px) 32vw, 100vw"
                             className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.03]"
                         />
