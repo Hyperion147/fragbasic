@@ -1,3 +1,4 @@
+import { withCatalogWrite } from "@/server/catalog/write";
 import { iemWriteSchema } from "@/schemas/iem";
 import { jsonError, jsonOk, zodError } from "@/server/api";
 import { requireAdmin } from "@/server/auth";
@@ -12,8 +13,7 @@ export async function GET(_request: Request, context: Ctx) {
   return row ? jsonOk({ iem: row }) : jsonError("Not found", 404);
 }
 
-export async function PATCH(request: Request, context: Ctx) {
-  if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
+export const PATCH = withCatalogWrite(async (request: Request, context: Ctx) => {
   const id = (await context.params).id;
   const existing = await repo.getIemById(id);
   if (!existing) return jsonError("Not found", 404);
@@ -25,13 +25,12 @@ export async function PATCH(request: Request, context: Ctx) {
   const row = await repo.updateIem(id, { slug: data.slug, brand: data.brand, name: data.name, status, data });
   revalidateCatalog("iems");
   return jsonOk({ iem: row });
-}
+});
 
-export async function DELETE(_request: Request, context: Ctx) {
-  if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
+export const DELETE = withCatalogWrite(async (_request: Request, context: Ctx) => {
   const id = (await context.params).id;
   const row = await repo.deleteIem(id);
   if (!row) return jsonError("Not found", 404);
   revalidateCatalog("iems");
   return jsonOk({ ok: true, id });
-}
+});

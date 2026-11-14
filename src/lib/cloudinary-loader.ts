@@ -13,9 +13,8 @@ const CLOUDINARY_PREFIX = "https://res.cloudinary.com/";
  * width) applied in the URL, so Cloudinary's CDN does the resizing and caches
  * the result.
  *
- * When `images.loader` is `"custom"`, Next.js does not serve `/_next/image`
- * at all, so anything that is not on Cloudinary (local assets, or Supabase
- * images that have not been migrated yet) must be returned unchanged.
+ * OptimizedImage selects this loader only for Cloudinary upload URLs.
+ * Other sources use Next's default optimizer; the fallback below is defensive.
  */
 export default function cloudinaryLoader({ src, width, quality }: LoaderArgs): string {
   if (!src.startsWith(CLOUDINARY_PREFIX)) {

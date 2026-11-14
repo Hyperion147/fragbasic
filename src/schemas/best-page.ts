@@ -1,16 +1,17 @@
 import { z } from "zod";
+import { slugSchema, padSlugSchema } from "@/lib/validation/catalog";
 
 export const bestPageStatusSchema = z.enum(["draft", "published"]);
 
 export const bestPagePickSchema = z.object({
-  slug: z.string().min(1),
+  slug: padSlugSchema,
   label: z.string().min(1),
   reason: z.string().min(1),
   bestFor: z.string().min(1),
 });
 
 export const bestPageDataSchema = z.object({
-  slug: z.string().min(1),
+  slug: slugSchema,
   title: z.string().min(1),
   eyebrow: z.string().min(1),
   description: z.string().min(1),

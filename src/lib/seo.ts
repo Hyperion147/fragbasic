@@ -6,6 +6,8 @@ type MetadataOptions = {
   path: string;
   keywords?: string[];
   image?: string;
+  publishedTime?: string;
+  modifiedTime?: string;
 };
 
 const siteName = "FragBasic";
@@ -371,10 +373,6 @@ export function getSiteName() {
   return siteName;
 }
 
-export function getCurrentYear() {
-  return new Date().getFullYear();
-}
-
 export function getDefaultDescription() {
   return defaultDescription;
 }
@@ -402,8 +400,9 @@ export function buildMetadata({
   title,
   description,
   path,
-  keywords = [],
   image = ogImageUrl,
+  publishedTime,
+  modifiedTime,
 }: MetadataOptions): Metadata {
   const url = getAbsoluteUrl(path);
   const socialTitle = `${title} | ${siteName}`;
@@ -413,24 +412,17 @@ export function buildMetadata({
   const documentTitle = socialTitle.length > 62 ? { absolute: title } : title;
   const absoluteImage = image.startsWith("http") ? image : getAbsoluteUrl(image);
   const socialImage = getSocialImage(absoluteImage);
-  const mergedKeywords = Array.from(
-    new Set([...seoKeywords.core, ...keywords]),
-  );
 
   return {
     metadataBase: new URL(siteUrl),
     title: documentTitle,
     description: clampDescription(description),
-    keywords: mergedKeywords,
     authors: [{ name: siteName, url: siteUrl }],
     creator: siteName,
     publisher: siteName,
     category: "technology",
     alternates: {
       canonical: url,
-      types: {
-        "text/plain": "/llms.txt",
-      },
     },
     robots: {
       index: true,
@@ -444,7 +436,8 @@ export function buildMetadata({
       },
     },
     openGraph: {
-      type: "website",
+      type: publishedTime ? "article" : "website",
+      ...(publishedTime ? { publishedTime, modifiedTime: modifiedTime ?? publishedTime, authors: [getAbsoluteUrl("/editorial-policy#who")] } : {}),
       url,
       siteName,
       title: socialTitle,
@@ -481,15 +474,6 @@ export function getRootMetadata(): Metadata {
       template: `%s | ${siteName}`,
     },
     description: clampDescription(defaultDescription),
-    keywords: Array.from(
-      new Set([
-        ...seoKeywords.core,
-        ...seoKeywords.mousepads.slice(0, 30),
-        ...seoKeywords.glasspads.slice(0, 12),
-        ...seoKeywords.iems.slice(0, 16),
-        ...seoKeywords.skates.slice(0, 12),
-      ]),
-    ),
     formatDetection: {
       email: false,
       address: false,
@@ -497,9 +481,6 @@ export function getRootMetadata(): Metadata {
     },
     alternates: {
       canonical: siteUrl,
-      types: {
-        "text/plain": "/llms.txt",
-      },
     },
     robots: {
       index: true,
@@ -652,7 +633,10 @@ export function buildCollectionJsonLd({
       name: siteName,
       url: siteUrl,
     },
-    numberOfItems: itemCount,
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: itemCount,
+    },
   };
 }
 
@@ -691,6 +675,10 @@ export function buildProductJsonLd({
 }) {
   const hasValidPrice =
     typeof price === "number" && Number.isFinite(price) && price > 0;
+  const bestRating = review.bestRating ?? 10;
+  const hasValidRating =
+    typeof review.rating === "number" && Number.isFinite(review.rating) &&
+    review.rating >= 0 && review.rating <= bestRating;
 
   return {
     "@context": "https://schema.org",
@@ -704,12 +692,12 @@ export function buildProductJsonLd({
       "@type": "Brand",
       name: brand,
     },
-    review: {
+    review: hasValidRating ? {
       "@type": "Review",
       name: review.name,
       reviewBody: review.body,
       author: {
-        "@type": "Person",
+        "@type": "Organization",
         name: review.author,
         url: review.authorUrl,
       },
@@ -720,17 +708,17 @@ export function buildProductJsonLd({
       },
       datePublished: review.datePublished,
       reviewRating:
-        typeof review.rating === "number"
+        hasValidRating
           ? {
               "@type": "Rating",
               ratingValue: review.rating,
-              bestRating: review.bestRating ?? 10,
-              worstRating: 1,
+              bestRating,
+              worstRating: 0,
             }
           : undefined,
       positiveNotes: buildReviewNotes(review.positiveNotes),
       negativeNotes: buildReviewNotes(review.negativeNotes),
-    },
+    } : undefined,
     offers: hasValidPrice
       ? {
           "@type": "Offer",
@@ -785,7 +773,7 @@ export function buildArticleJsonLd({
     description,
     url: getAbsoluteUrl(path),
     mainEntityOfPage: getAbsoluteUrl(path),
-    image: image ? getAbsoluteUrl(image) : undefined,
+    image: getAbsoluteUrl(image ?? "/og-image.png"),
     datePublished,
     dateModified: dateModified ?? datePublished,
     keywords: keywords.length > 0 ? keywords.join(", ") : undefined,

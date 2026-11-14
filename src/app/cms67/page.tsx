@@ -10,7 +10,6 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
@@ -86,9 +85,9 @@ export default function CmsLoginPage() {
   return (
     <Card className="w-full max-w-md border border-border/80 bg-card/80">
       <CardHeader className="border-b border-border/60">
-        <CardTitle className="text-xl font-semibold tracking-tight">
+        <h1 className="text-xl font-semibold tracking-tight">
           Sign in
-        </CardTitle>
+        </h1>
         <CardDescription>
           Admin access for FragBasic catalog content. Session is cookie-based.
         </CardDescription>

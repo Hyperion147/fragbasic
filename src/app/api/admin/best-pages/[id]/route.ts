@@ -1,3 +1,4 @@
+import { withCatalogWrite } from "@/server/catalog/write";
 import { bestPageWriteSchema } from "@/schemas/best-page";
 import { jsonError, jsonOk, zodError } from "@/server/api";
 import { requireAdmin } from "@/server/auth";
@@ -13,8 +14,7 @@ export async function GET(_request: Request, context: Ctx) {
   return row ? jsonOk({ bestPage: row }) : jsonError("Not found", 404);
 }
 
-export async function PATCH(request: Request, context: Ctx) {
-  if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
+export const PATCH = withCatalogWrite(async (request: Request, context: Ctx) => {
   const id = (await context.params).id;
   const existing = await repo.getBestPageById(id);
   if (!existing) return jsonError("Not found", 404);
@@ -31,10 +31,10 @@ export async function PATCH(request: Request, context: Ctx) {
   }
 
   const missing = await findMissingPadSlugs(
-    data.pickSlugs.map((pick) => pick.slug),
+    data.pickSlugs.map((pick) => pick.slug), status === "published",
   );
   if (missing.length > 0) {
-    return jsonError(`Unknown pad slug(s): ${missing.join(", ")}`, 400);
+    return jsonError(`Missing or unpublished pad slug(s): ${missing.join(", ")}`, 400);
   }
 
   const bestPage = await repo.updateBestPage(id, {
@@ -47,13 +47,12 @@ export async function PATCH(request: Request, context: Ctx) {
 
   revalidateCatalog("best-pages");
   return jsonOk({ bestPage });
-}
+});
 
-export async function DELETE(_request: Request, context: Ctx) {
-  if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
+export const DELETE = withCatalogWrite(async (_request: Request, context: Ctx) => {
   const id = (await context.params).id;
   const row = await repo.deleteBestPage(id);
   if (!row) return jsonError("Not found", 404);
   revalidateCatalog("best-pages");
   return jsonOk({ ok: true, id });
-}
+});

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { slugSchema, padSlugSchema } from "@/lib/validation/catalog";
 
 export const guideStatusSchema = z.enum(["draft", "published"]);
 
@@ -9,11 +10,7 @@ export const guideSectionSchema = z.object({
 });
 
 export const guideDataSchema = z.object({
-  slug: z
-    .string()
-    .trim()
-    .min(1)
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use a lowercase kebab-case slug."),
+  slug: slugSchema,
   title: z.string().trim().min(1),
   eyebrow: z.string().trim().min(1),
   description: z.string().trim().min(1),
@@ -25,7 +22,7 @@ export const guideDataSchema = z.object({
   intro: z.string().trim().min(1),
   sections: z.array(guideSectionSchema).min(1),
   takeaways: z.array(z.string().trim().min(1)).min(1),
-  relatedPadSlugs: z.array(z.string().trim().min(1)).default([]),
+  relatedPadSlugs: z.array(padSlugSchema).default([]),
   keywords: z.array(z.string().trim().min(1)).default([]),
 });
 

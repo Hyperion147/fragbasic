@@ -149,6 +149,8 @@ export interface MousepadRelatedAlternatives {
 }
 
 export interface Mousepad {
+  createdAt?: string;
+    updatedAt?: string;
     id: string;
     slug: string;
 

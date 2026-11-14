@@ -23,7 +23,7 @@ Live site: [https://fragbasic.fun](https://fragbasic.fun)
 - App Router project on Next.js 16 with typed metadata routes.
 - Central SEO helper for canonical URLs, Open Graph, Twitter cards, robots directives, and structured data.
 - Generated `sitemap.xml`, `robots.txt`, and `manifest.webmanifest`.
-- Static product data organized by domain under `src/data`.
+- Published catalog records stored in PostgreSQL with Drizzle, validated with Zod and served through domain catalog readers.
 - Reusable feature components for browsers, cards, comparison charts, radar charts, selectors, and landing sections.
 - Vercel Analytics integration.
 
@@ -44,7 +44,9 @@ Live site: [https://fragbasic.fun](https://fragbasic.fun)
 src/app                 App Router pages, layouts, sitemap, robots, manifest
 src/components          Shared UI, product cards, browsers, charts, compare tools
 src/features/landing    Home page sections and landing experience
-src/data                Mousepad, IEM, comparison, best-page, and accessory data
+src/server              Catalog repositories, public readers, integrity guards
+src/db                  PostgreSQL connection and Drizzle schema
+src/schemas             Catalog input validation
 src/lib                 Data access helpers, formatting, comparison logic, SEO helpers
 src/types               Domain types for mousepads, IEMs, and accessories
 public                  Product images, brand assets, OG image, icons
@@ -122,3 +124,15 @@ Submit this sitemap in Google Search Console:
 ```txt
 https://fragbasic.fun/sitemap.xml
 ```
+
+## Audit, accessibility and release checks
+
+See [the audit/remediation report](docs/project-audit.md) and [Vercel/Search Console deployment steps](docs/deployment.md).
+
+- `npm run release:check` runs lint, TypeScript, unit tests and the production build.
+- `npm run env:check` checks database, authentication and upload configuration without printing credentials.
+- `npm run test:e2e` checks desktop/mobile accessibility, keyboard navigation, SEO behavior and protected API access using a production build.
+- `npm run audit:performance` writes reproducible mobile Lighthouse reports while the production server runs on port 3100.
+- `npm run db:check` performs a read-only catalog integrity check.
+
+CI uses a disposable PostgreSQL service for authenticated mutation tests. Never set `E2E_DATABASE=1` for the real catalog; the test seed refuses remote databases.

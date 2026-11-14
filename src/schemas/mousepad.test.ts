@@ -174,7 +174,8 @@ describe("mousepadFeelRatingSchema", () => {
     });
 
     it("rejects missing control", () => {
-        const { control: _removed, ...rest } = valid;
+        const rest: Partial<typeof valid> = { ...valid };
+        delete rest.control;
         const result = mousepadFeelRatingSchema.safeParse(rest);
         expect(result.success).toBe(false);
     });

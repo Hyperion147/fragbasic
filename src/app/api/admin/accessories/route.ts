@@ -1,3 +1,4 @@
+import { withCatalogWrite } from "@/server/catalog/write";
 import { mouseSkateWriteSchema } from "@/schemas/accessory";
 import { jsonError, jsonOk, zodError } from "@/server/api";
 import { requireAdmin } from "@/server/auth";
@@ -9,8 +10,7 @@ export async function GET() {
   return jsonOk({ accessories: await repo.listMouseSkates() });
 }
 
-export async function POST(request: Request) {
-  if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
+export const POST = withCatalogWrite(async (request: Request) => {
   const parsed = mouseSkateWriteSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return zodError(parsed.error);
   const { status, data } = parsed.data;
@@ -19,4 +19,4 @@ export async function POST(request: Request) {
   const accessory = await repo.insertMouseSkate({ id: data.id, slug: data.slug, brand: data.brand, name: data.name, status, data });
   revalidateCatalog("accessories");
   return jsonOk({ accessory }, 201);
-}
+});

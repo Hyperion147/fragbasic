@@ -1,3 +1,5 @@
+import { getAlternativeSlugs } from "./reference-checks";
+import { imagePathSchema } from "@/lib/validation/catalog";
 import type { ZodType } from "zod";
 
 import { db } from "@/db";
@@ -59,7 +61,7 @@ type HealthRow = {
 type RowValidator = (row: HealthRow, data: unknown) => void;
 
 function isPublicUrl(value: unknown) {
-  return typeof value === "string" && /^https?:\/\/\S+$/i.test(value);
+  return imagePathSchema.safeParse(value).success;
 }
 
 function imageUrl(data: unknown) {
@@ -103,10 +105,13 @@ function inspectRows(
         level: "error",
         module,
         slug: row.slug,
-        message: "images.main must be an absolute http(s) URL",
+        message: "images.main must be a safe local path or HTTP/HTTPS URL",
       });
     }
 
+    if ((parsed.data as { slug?: string }).slug !== row.slug) {
+      issues.push({ level: "error", module, slug: row.slug, message: "Column slug and data.slug do not match" });
+    }
     options.validate?.(row, parsed.data);
   }
 
@@ -159,6 +164,19 @@ export async function getCatalogHealth(): Promise<CatalogHealthReport> {
     ...glasspadRows.map((row) => row.slug),
   ]);
 
+  const publishedPadSlugs = new Set([...mousepadRows, ...glasspadRows].filter((row) => row.status === "published").map((row) => row.slug));
+  const seenPadSlugs = new Set<string>();
+  for (const row of [...mousepadRows, ...glasspadRows]) {
+    if (seenPadSlugs.has(row.slug)) issues.push({ level: "error", module: "mousepads", slug: row.slug, message: "Duplicate slug across the pad catalogs" });
+    seenPadSlugs.add(row.slug);
+  }
+  for (const row of [...mousepadRows, ...glasspadRows]) {
+    for (const target of getAlternativeSlugs(row.data)) {
+      if (!padSlugs.has(target) || (row.status === "published" && !publishedPadSlugs.has(target))) {
+        issues.push({ level: "error", module: row.data.category === "glass" ? "glasspads" : "mousepads", slug: row.slug, message: `Missing or unpublished alternative: ${target}` });
+      }
+    }
+  }
   const modules: CatalogHealthModuleReport[] = [];
 
   modules.push(
@@ -207,12 +225,12 @@ export async function getCatalogHealth(): Promise<CatalogHealthReport> {
       validate: (row, data) => {
         const comparison = data as { leftSlug: string; rightSlug: string };
         for (const slug of [comparison.leftSlug, comparison.rightSlug]) {
-          if (!padSlugs.has(slug)) {
+          if (!padSlugs.has(slug) || (row.status === "published" && !publishedPadSlugs.has(slug))) {
             issues.push({
               level: "error",
               module: "comparisons",
               slug: row.slug,
-              message: `Missing pad reference: ${slug}`,
+              message: `Missing or unpublished pad reference: ${slug}`,
             });
           }
         }
@@ -233,12 +251,12 @@ export async function getCatalogHealth(): Promise<CatalogHealthReport> {
       validate: (row, data) => {
         const page = data as { pickSlugs: Array<{ slug: string }> };
         for (const pick of page.pickSlugs) {
-          if (!padSlugs.has(pick.slug)) {
+          if (!padSlugs.has(pick.slug) || (row.status === "published" && !publishedPadSlugs.has(pick.slug))) {
             issues.push({
               level: "error",
               module: "best-pages",
               slug: row.slug,
-              message: `Missing pad reference: ${pick.slug}`,
+              message: `Missing or unpublished pad reference: ${pick.slug}`,
             });
           }
         }
@@ -251,12 +269,12 @@ export async function getCatalogHealth(): Promise<CatalogHealthReport> {
       validate: (row, data) => {
         const guide = data as { relatedPadSlugs: string[] };
         for (const slug of guide.relatedPadSlugs) {
-          if (!padSlugs.has(slug)) {
+          if (!padSlugs.has(slug) || (row.status === "published" && !publishedPadSlugs.has(slug))) {
             issues.push({
               level: "error",
               module: "guides",
               slug: row.slug,
-              message: `Missing pad reference: ${slug}`,
+              message: `Missing or unpublished pad reference: ${slug}`,
             });
           }
         }

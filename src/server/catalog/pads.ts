@@ -11,26 +11,26 @@ const loadMousepads = cache(async (): Promise<Mousepad[]> => {
   const rows = await mousepadRepo.listMousepads();
   return rows
     .filter((row) => row.status === "published")
-    .map((row) => row.data as Mousepad);
+    .map((row) => ({ ...row.data, updatedAt: row.updatedAt.toISOString(), createdAt: row.createdAt.toISOString() }) as Mousepad);
 });
 
 const loadGlasspads = cache(async (): Promise<Mousepad[]> => {
   const rows = await glasspadRepo.listGlasspads();
   return rows
     .filter((row) => row.status === "published")
-    .map((row) => row.data as Mousepad);
+    .map((row) => ({ ...row.data, updatedAt: row.updatedAt.toISOString(), createdAt: row.createdAt.toISOString() }) as Mousepad);
 });
 
 const loadMousepadBySlug = cache(async (slug: string): Promise<Mousepad | null> => {
   const row = await mousepadRepo.getMousepadBySlug(slug);
   if (!row || row.status !== "published") return null;
-  return row.data as Mousepad;
+  return ({ ...row.data, updatedAt: row.updatedAt.toISOString(), createdAt: row.createdAt.toISOString() }) as Mousepad;
 });
 
 const loadGlasspadBySlug = cache(async (slug: string): Promise<Mousepad | null> => {
   const row = await glasspadRepo.getGlasspadBySlug(slug);
   if (!row || row.status !== "published") return null;
-  return row.data as Mousepad;
+  return ({ ...row.data, updatedAt: row.updatedAt.toISOString(), createdAt: row.createdAt.toISOString() }) as Mousepad;
 });
 
 /**

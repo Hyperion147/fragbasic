@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import { storageIdSchema } from "@/lib/validation/catalog";
 
 import sharp from "sharp";
 
@@ -6,7 +7,8 @@ import { isCloudinaryConfigured, uploadImageToCloudinary } from "@/lib/cloudinar
 import { jsonError, jsonOk } from "@/server/api";
 import { requireAdmin } from "@/server/auth";
 
-const maxFileSize = 10 * 1024 * 1024;
+const maxFileSize = 4 * 1024 * 1024;
+const maxMultipartSize = maxFileSize + 64 * 1024;
 const allowedTypes = new Set([
   "image/jpeg",
   "image/png",
@@ -21,29 +23,43 @@ type CatalogFolder = "mousepads" | "glasspads" | "iems";
  * at 2000px, and convert to WebP. This keeps Cloudinary masters small while
  * still leaving room for retina delivery.
  */
-async function optimizeImage(file: File) {
+export async function optimizeImage(file: File) {
   const input = Buffer.from(await file.arrayBuffer());
-
-  try {
-    const buffer = await sharp(input)
-      .rotate()
-      .resize({
-        width: 2000,
-        height: 2000,
-        fit: "inside",
-        withoutEnlargement: true,
-      })
-      .webp({ quality: 84 })
-      .toBuffer();
-
-    return { buffer, mimeType: "image/webp", extension: "webp" };
-  } catch {
-    const extension =
-      file.name.split(".").pop()?.toLowerCase().replace(/[^a-z0-9]/g, "") ||
-      "bin";
-
-    return { buffer: input, mimeType: file.type, extension };
+  const image = sharp(input, { limitInputPixels: 40_000_000, failOn: "error" });
+  const metadata = await image.metadata();
+  if (!metadata.format || !["jpeg", "png", "webp", "heif"].includes(metadata.format)) {
+    throw new Error("Unsupported image contents");
   }
+  const buffer = await image.rotate()
+    .resize({ width: 2000, height: 2000, fit: "inside", withoutEnlargement: true })
+    .webp({ quality: 84 }).toBuffer();
+  return { buffer, mimeType: "image/webp", extension: "webp" };
+}
+
+/** Bound the body while streaming, before formData allocates/parses it. */
+export async function readUploadForm(request: Request) {
+  const length = Number(request.headers.get("content-length"));
+  if (length > maxMultipartSize) throw new RangeError("Upload too large");
+  const reader = request.body?.getReader();
+  if (!reader) throw new Error("Missing upload body");
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > maxMultipartSize) {
+        await reader.cancel();
+        throw new RangeError("Upload too large");
+      }
+      chunks.push(value);
+    }
+  } finally { reader.releaseLock(); }
+  const body = new Uint8Array(size);
+  let offset = 0;
+  for (const chunk of chunks) { body.set(chunk, offset); offset += chunk.byteLength; }
+  return new Request(request.url, { method: "POST", headers: request.headers, body: body.buffer }).formData();
 }
 
 async function uploadToSupabase({
@@ -111,7 +127,9 @@ export function createCatalogImageUploadHandler({
       return jsonError("Unauthorized", 401);
     }
 
-    const formData = await request.formData().catch(() => null);
+    let formData: FormData;
+    try { formData = await readUploadForm(request); }
+    catch (error) { return jsonError(error instanceof RangeError ? "Image must be 4 MB or smaller" : "Invalid multipart upload", error instanceof RangeError ? 413 : 400); }
     const file = formData?.get("file");
     const catalogId = formData?.get(idField);
 
@@ -119,8 +137,8 @@ export function createCatalogImageUploadHandler({
       return jsonError("An image file is required", 400);
     }
 
-    if (typeof catalogId !== "string" || !catalogId.trim()) {
-      return jsonError(`${idField} and an image file are required`, 400);
+    if (!storageIdSchema.safeParse(catalogId).success) {
+      return jsonError(`${idField} must contain only letters, numbers, hyphens or underscores`, 400);
     }
 
     if (!allowedTypes.has(file.type)) {
@@ -128,17 +146,20 @@ export function createCatalogImageUploadHandler({
     }
 
     if (file.size > maxFileSize) {
-      return jsonError("Image must be 10 MB or smaller", 413);
+      return jsonError("Image must be 4 MB or smaller", 413);
     }
 
-    const optimized = await optimizeImage(file);
+    let optimized: Awaited<ReturnType<typeof optimizeImage>>;
+    try { optimized = await optimizeImage(file); }
+    catch { return jsonError("File contents must be a valid JPEG, PNG, WebP or AVIF image", 415); }
+    const safeId = storageIdSchema.parse(catalogId);
 
     if (isCloudinaryConfigured()) {
       try {
         const uploaded = await uploadImageToCloudinary({
           buffer: optimized.buffer,
           mimeType: optimized.mimeType,
-          folder: `fragbasic/${folder}/${catalogId.trim()}`,
+          folder: `fragbasic/${folder}/${safeId}`,
           publicId: crypto.randomUUID(),
         });
 
@@ -154,7 +175,7 @@ export function createCatalogImageUploadHandler({
       mimeType: optimized.mimeType,
       extension: optimized.extension,
       folder,
-      catalogId: catalogId.trim(),
+      catalogId: safeId,
     });
   };
 }

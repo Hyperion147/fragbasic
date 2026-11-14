@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const brand = brandPads[0] ? getBrandName(brandPads[0].brand) : undefined;
 
   if (!brand || brandPads.length === 0) {
-    return {};
+    notFound();
   }
 
   const baseDescription = `Every ${brand} mousepad we track: speed, control, stopping power, specs, price, and India availability for VALORANT, CS2, and tracking FPS.`;

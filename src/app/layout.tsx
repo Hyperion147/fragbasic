@@ -3,6 +3,7 @@ import "./globals.css";
 import { Inter, Roboto_Mono, Sora } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { JsonLd } from "@/components/json-ld";
 import { PublicChrome } from "@/components/public-chrome";
 import { QueryProvider } from "@/components/providers/query-provider";
@@ -16,30 +17,15 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 export const metadata: Metadata = getRootMetadata();
 
 const inter = Inter({
-    subsets: [
-        "latin",
-        "latin-ext",
-        "cyrillic",
-        "cyrillic-ext",
-        "greek",
-        "greek-ext",
-        "vietnamese",
-    ],
+    subsets: ["latin"],
     weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
     variable: "--font-inter",
 });
 
-const sora = Sora({ subsets: ["latin", "latin-ext"], variable: "--font-sora" });
+const sora = Sora({ subsets: ["latin"], variable: "--font-sora" });
 
 const robotoMono = Roboto_Mono({
-    subsets: [
-        "latin",
-        "latin-ext",
-        "cyrillic",
-        "cyrillic-ext",
-        "greek",
-        "vietnamese",
-    ],
+    subsets: ["latin"],
     weight: ["100", "200", "300", "400", "500", "600", "700"],
     variable: "--font-roboto-mono",
 });
@@ -63,7 +49,10 @@ export default function RootLayout({
             <body className="min-h-full flex flex-col" suppressHydrationWarning>
                 <JsonLd data={buildWebsiteJsonLd()} />
                 <JsonLd data={buildOrganizationJsonLd()} />
-                <Analytics />
+                {process.env.VERCEL === "1" && <>
+                    <Analytics />
+                    <SpeedInsights />
+                </>}
                 <QueryProvider>
                     <TooltipProvider>
                         <PublicChrome>{children}</PublicChrome>

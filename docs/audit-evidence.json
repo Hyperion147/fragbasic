@@ -1,0 +1,191 @@
+{
+  "date": "2026-11-14",
+  "deployment": {
+    "deployed": false,
+    "hosting": "Existing Vercel project serving fragbasic.fun and www.fragbasic.fun",
+    "pending": [
+      "Authenticated Vercel access and deployment",
+      "Search Console sitemap submission, inspection and recrawl requests",
+      "Enable Speed Insights dashboard and collect actual visitor field metrics"
+    ]
+  },
+  "dependencies": {
+    "next": "16.4.6",
+    "zod": "4.6.7",
+    "audit_all": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "clean_npm_ci": "passed",
+    "npm_ls_all": "passed",
+    "shadcn_cli": "4.23.0 startup passed",
+    "drizzle_migrations": "Applied successfully to fresh disposable PostgreSQL 17",
+    "baseline_production_counts": {
+      "info": 0,
+      "low": 1,
+      "moderate": 8,
+      "high": 10,
+      "critical": 2,
+      "total": 21
+    }
+  },
+  "verification": {
+    "build": "npm run build (default Turbopack): passed",
+    "unit_tests": {
+      "passed": 106,
+      "files": 11
+    },
+    "lint": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "browser_checks": {
+      "startTime": "2026-11-14T17:38:12.724Z",
+      "duration": 24755.588,
+      "expected": 29,
+      "skipped": 1,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "browser_skip_reasons": [
+      "Desktop mobile-menu scenario is inapplicable; mutating scenarios were run separately against a disposable local database."
+    ],
+    "authenticated_disposable_database_checks": {
+      "startTime": "2026-11-14T17:39:07.974Z",
+      "duration": 1532.83,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "real_catalog": {
+    "health": {
+      "total": 84,
+      "published": 84,
+      "draft": 0,
+      "errors": 0,
+      "warnings": 0
+    },
+    "before_checksum": "092ecd4385ccaa6f5836bdf034bc60aa64f8e93f209e7c482368a7c3938df8f4",
+    "after_checksum": "092ecd4385ccaa6f5836bdf034bc60aa64f8e93f209e7c482368a7c3938df8f4",
+    "unchanged": true,
+    "records": {
+      "mousepads": 33,
+      "glasspads": 12,
+      "iems": 10,
+      "mouseSkates": 12,
+      "comparisons": 8,
+      "bestPages": 6,
+      "guides": 3
+    }
+  },
+  "local_seo_crawl": {
+    "base": "http://127.0.0.1:3100",
+    "pages_checked": 117,
+    "pages_with_issues": 0,
+    "duplicates": {
+      "title": {},
+      "description": {}
+    }
+  },
+  "mobile_lighthouse": {
+    "base": "http://127.0.0.1:3100",
+    "measuredAt": "2026-11-14T17:19:57.066Z",
+    "environment": "Lighthouse simulated mobile lab run; not field Core Web Vitals",
+    "pages": [
+      {
+        "route": "/",
+        "scores": {
+          "performance": 99,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first-contentful-paint": 1067.921,
+          "largest-contentful-paint": 1067.921,
+          "cumulative-layout-shift": 0,
+          "total-blocking-time": 126,
+          "speed-index": 1067.921
+        },
+        "warnings": []
+      },
+      {
+        "route": "/mousepads",
+        "scores": {
+          "performance": 99,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first-contentful-paint": 1247.3366,
+          "largest-contentful-paint": 1247.3366,
+          "cumulative-layout-shift": 0,
+          "total-blocking-time": 122.5,
+          "speed-index": 2486.949641700411
+        },
+        "warnings": []
+      },
+      {
+        "route": "/mousepads/compare/universal",
+        "scores": {
+          "performance": 91,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first-contentful-paint": 1255.775,
+          "largest-contentful-paint": 1255.775,
+          "cumulative-layout-shift": 0,
+          "total-blocking-time": 374.6864250000003,
+          "speed-index": 2093.8866358692712
+        },
+        "warnings": []
+      }
+    ]
+  },
+  "comparison_initial_lab_finding": {
+    "performance": 71,
+    "cumulative_layout_shift": 0.3511543134872418,
+    "note": "First local measurement before server-rendered selection and deferred closed panels"
+  },
+  "landing_image": {
+    "source_bytes": 2010472,
+    "new_webp_bytes": 114666
+  },
+  "field_data": {
+    "measured": false,
+    "public_pagespeed_request_status": 429,
+    "note": "Public API quota exceeded; no Search Console field-data result was available"
+  },
+  "limits": [
+    "Local lab scores vary with machine load and do not establish production field Core Web Vitals",
+    "Automated axe and keyboard/screenshot checks do not certify full WCAG conformance",
+    "GitHub workflow is authored and its migration/seed/test steps exercised locally; no remote CI run is claimed",
+    "The separate login abuse/rate-limiting finding was not among the four requested sections"
+  ],
+  "production_cleanup": {
+    "removed_dependency": "next-cloudinary (unused; existing custom Cloudinary delivery remains)",
+    "retired_scripts": [
+      "check-next-env.mjs",
+      "scripts/diag-auth.mjs"
+    ],
+    "new_commands": [
+      "env:check",
+      "release:check"
+    ],
+    "runtime_environment": "Next loads its own environment; removed duplicate dotenv initialization and repeated auth checks inside guarded mutations",
+    "environment_template": "Correct .env comment syntax and preferred ADMIN_PASSWORD_HASH_B64 configuration",
+    "configuration_check": "passed without credential output",
+    "dependency_tree": "valid",
+    "generated_files": "Removed stale Next build cache, browser/Lighthouse reports and Python cache; retained existing catalog backups",
+    "deployed": false
+  }
+}

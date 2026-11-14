@@ -1,8 +1,4 @@
-import { config } from "dotenv";
-
 import { getCatalogHealth } from "@/server/catalog/health";
-
-config({ path: ".env", quiet: true });
 
 async function main() {
   if (process.argv.includes("--help") || process.argv.includes("-h")) {

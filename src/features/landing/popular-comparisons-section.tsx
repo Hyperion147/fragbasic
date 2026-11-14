@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/optimized-image";
 import Link from "next/link";
 import { ArrowRight, BarChart3, Flame, GitCompareArrows, Grid2X2, Star, Zap } from "lucide-react";
 
@@ -77,7 +77,7 @@ export function PopularComparisonsSection({ comparisons }: Props) {
                 ) : null}
                 <Link
                     href="/mousepads/compare"
-                    className="flex min-h-40 flex-col justify-between bg-brand p-4 text-white"
+                    className="flex min-h-40 flex-col justify-between bg-brand p-4 text-black"
                 >
                     <ArrowRight className="ml-auto size-5" />
                     <span className="max-w-[8ch] text-base font-semibold leading-tight">View all comparisons</span>

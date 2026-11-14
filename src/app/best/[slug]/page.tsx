@@ -1,5 +1,6 @@
+import { EditorialNote } from "@/components/editorial-note";
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/optimized-image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { notFound } from "next/navigation";
@@ -21,7 +22,6 @@ import {
     buildFaqJsonLd,
     buildItemListJsonLd,
     buildMetadata,
-    getCurrentYear,
     seoKeywords,
 } from "@/lib/seo";
 import {
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const page = await getPublicBestPageBySlug(slug);
 
     if (!page) {
-        return {};
+        notFound();
     }
 
     const picks = getBestPagePicks(page, await getPublicPads());
@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         .join(", ");
 
     return buildMetadata({
-        title: `${page.title} (${getCurrentYear()})`,
+        title: `${page.title}`,
         description: `${page.description} ${picks.length} picks including ${pickNames}, ranked by feel and FPS use case.`,
         path: `/best/${page.slug}`,
         keywords: [
@@ -68,7 +68,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             "fps mousepad guide",
             `best ${page.badge.toLowerCase()} mousepads`,
             `best ${page.badge.toLowerCase()} mousepad`,
-            `best ${page.badge.toLowerCase()} mousepads ${getCurrentYear()}`,
             `best mousepads for ${page.badge.toLowerCase()}`,
             `${page.badge.toLowerCase()} mousepad india`,
         ],
@@ -127,8 +126,9 @@ export default async function BestMousepadsPage({ params }: Props) {
                             </p>
 
                             <h1 className="page-title mt-4">
-                                {page.title} ({getCurrentYear()})
+                                {page.title}
                             </h1>
+<EditorialNote createdAt={page.createdAt} updatedAt={page.updatedAt} />
 
                             <div className="mt-6 flex flex-wrap gap-3">
                                 <Button asChild>

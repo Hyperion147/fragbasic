@@ -26,6 +26,8 @@ export interface MouseSkateRatings {
 }
 
 export interface MouseSkate {
+  createdAt?: string;
+  updatedAt?: string;
   id: string;
   slug: string;
   brand: string;

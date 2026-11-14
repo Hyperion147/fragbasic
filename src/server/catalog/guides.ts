@@ -1,20 +1,22 @@
+import { cache } from "react";
+
 import type { GuideDataInput } from "@/schemas/guide";
 import * as repo from "@/server/guides/repo";
 
-export type PublicGuide = GuideDataInput;
+export type PublicGuide = GuideDataInput & { updatedAt: string; createdAt: string };
 
-export async function getPublicGuides(): Promise<PublicGuide[]> {
+export const getPublicGuides = cache(async (): Promise<PublicGuide[]> => {
   const rows = await repo.listGuides();
-  return rows.filter((row) => row.status === "published").map((row) => row.data);
-}
+  return rows.filter((row) => row.status === "published").map((row) => ({ ...row.data, updatedAt: row.updatedAt.toISOString(), createdAt: row.createdAt.toISOString() }));
+});
 
-export async function getPublicGuideBySlug(
+export const getPublicGuideBySlug = cache(async (
   slug: string,
-): Promise<PublicGuide | null> {
+): Promise<PublicGuide | null> => {
   const row = await repo.getGuideBySlug(slug);
   if (!row || row.status !== "published") return null;
-  return row.data;
-}
+  return { ...row.data, updatedAt: row.updatedAt.toISOString(), createdAt: row.createdAt.toISOString() };
+});
 
 export async function getPublicGuideSlugs(): Promise<string[]> {
   return (await getPublicGuides()).map((guide) => guide.slug);

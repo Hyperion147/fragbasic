@@ -14,6 +14,7 @@ const MODULE_ROUTES: Record<CatalogModule, RouteConfig> = {
     literals: [
       ...SHARED_PATHS,
       "/mousepads",
+      "/mousepads/brand",
       "/mousepads/glasspads",
       "/mousepads/compare",
       "/mousepads/compare/universal",
@@ -22,6 +23,7 @@ const MODULE_ROUTES: Record<CatalogModule, RouteConfig> = {
     ],
     dynamic: [
       { path: "/mousepads/[slug]", type: "page" },
+      { path: "/mousepads/brand/[slug]", type: "page" },
       { path: "/mousepads/compare/[slug]", type: "page" },
       { path: "/mousepads/guides/[slug]", type: "page" },
       { path: "/best/[slug]", type: "page" },
@@ -31,6 +33,7 @@ const MODULE_ROUTES: Record<CatalogModule, RouteConfig> = {
     literals: [
       ...SHARED_PATHS,
       "/mousepads",
+      "/mousepads/brand",
       "/mousepads/glasspads",
       "/mousepads/compare",
       "/mousepads/compare/universal",
@@ -39,6 +42,7 @@ const MODULE_ROUTES: Record<CatalogModule, RouteConfig> = {
     ],
     dynamic: [
       { path: "/mousepads/[slug]", type: "page" },
+      { path: "/mousepads/brand/[slug]", type: "page" },
       { path: "/mousepads/compare/[slug]", type: "page" },
       { path: "/mousepads/guides/[slug]", type: "page" },
       { path: "/best/[slug]", type: "page" },
@@ -55,7 +59,7 @@ const MODULE_ROUTES: Record<CatalogModule, RouteConfig> = {
       "/accessories/mouse-skates/browse",
       "/accessories/mouse-skates/compare",
     ],
-    dynamic: [],
+    dynamic: [{ path: "/accessories/mouse-skates/[slug]", type: "page" }],
   },
   comparisons: {
     literals: [

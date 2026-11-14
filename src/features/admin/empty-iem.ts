@@ -15,6 +15,6 @@ export function createEmptyIem() {
         specs: { driver: "", impedance: "", sensitivity: "", frequencyResponse: "", connector: "", cableType: "", cableTermination: "", shellMaterial: "", nozzleMaterial: "", detachableCable: true, mic: false },
         buying: { availability: "unknown", stores: [] },
         officialReview: { summary: "", verdict: "", testSetup: { source: "", testedGames: [], testingDuration: "" } },
-        bestFor: [], pros: [], cons: [], avoidIf: [], tags: [], images: { main: "/iems/placeholder.png" }, sources: [], updatedAt: new Date().toISOString().slice(0, 10),
+        bestFor: [], pros: [], cons: [], avoidIf: [], tags: [], images: { main: "/product-placeholder.svg" }, sources: [], updatedAt: new Date().toISOString().slice(0, 10),
     };
 }

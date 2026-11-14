@@ -1,13 +1,6 @@
 import type { NextConfig } from "next";
 
 /**
- * Cloudinary delivery only needs the cloud name. Until it is configured (and
- * the catalog has been migrated), keep Next's built-in optimizer so Supabase
- * images are still resized and cached instead of being served at full size.
- */
-const cloudinaryEnabled = Boolean(process.env.CLOUDINARY_CLOUD_NAME);
-
-/**
  * Supabase Storage host derived from the project URL, so staging and
  * production projects work without hardcoding.
  */
@@ -34,13 +27,8 @@ const nextConfig: NextConfig = {
     staticGenerationMaxConcurrency: 4,
   },
   images: {
-    // Once CLOUDINARY_CLOUD_NAME is present at build time, Cloudinary becomes
-    // the image CDN and its loader applies f_auto/w_<width> per request.
-    // Before that, the default optimizer keeps working for Supabase.
-    loader: cloudinaryEnabled ? "custom" : undefined,
-    loaderFile: cloudinaryEnabled
-      ? "./src/lib/cloudinary-loader.ts"
-      : undefined,
+    // Cloudinary images select their CDN loader per image. Local and Supabase
+    // sources retain Next's responsive image optimization.
     qualities: [35, 75],
     // Supabase answers with `Cache-Control: private, no-cache`, so without a
     // long Next-side TTL every revalidation downloads and re-encodes again.

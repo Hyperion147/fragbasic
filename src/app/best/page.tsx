@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/optimized-image";
 import Link from "next/link";
 import {
     ArrowRight,
@@ -17,14 +17,14 @@ import { Button } from "@/components/ui/button";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { getBestPagePicks } from "@/lib/best-pages";
 import { getMousepadFullName } from "@/lib/mousepads";
-import { buildMetadata, getCurrentYear, seoKeywords } from "@/lib/seo";
+import { buildMetadata, seoKeywords } from "@/lib/seo";
 import { getPublicBestPages } from "@/server/catalog/best-pages";
 import { getPublicPads } from "@/server/catalog/pads";
 
 export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-    title: `Best FPS Mousepads & Buying Guides (${getCurrentYear()})`,
+    title: `Best FPS Mousepads & Buying Guides`,
     description:
         "The best FPS mousepads for VALORANT, CS2, control, speed, glass, and humid rooms, ranked from the FragBasic database with feel data.",
     path: "/best",

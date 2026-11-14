@@ -17,8 +17,9 @@ export function PublicChrome({ children }: { children: ReactNode }) {
 
   return (
     <>
+      <a href="#main-content" className="skip-link">Skip to content</a>
       <SiteNavbar />
-      {children}
+      <div id="main-content" tabIndex={-1}>{children}</div>
       <SiteFooter />
     </>
   );

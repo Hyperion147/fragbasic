@@ -1,3 +1,5 @@
+import { EditorialNote } from "@/components/editorial-note";
+import { safeExternalUrl } from "@/lib/validation/catalog";
 import type { Metadata } from "next";
 import Link from "next/link"
 import { notFound } from "next/navigation"
@@ -133,7 +135,8 @@ export default async function MousepadPage({ params }: PageProps) {
           review: {
             name: `${pad.brand} ${pad.name} review`,
             body: productDescription,
-            author: "FragBasic Review Team",
+            author: "FragBasic",
+            authorUrl: "https://fragbasic.fun/editorial-policy#who",
             positiveNotes: pad.communityConsensus.strengths,
             negativeNotes: pad.communityConsensus.weaknesses,
           },
@@ -174,6 +177,7 @@ export default async function MousepadPage({ params }: PageProps) {
                 <h1 className="page-title mt-3 max-w-4xl">
                   {pad.brand} {pad.name}
                 </h1>
+<EditorialNote createdAt={pad.createdAt} updatedAt={pad.updatedAt} tested={pad.personal.tested} confidence={pad.feel.ratingConfidence} />
 
                 <p className="body-copy mt-4 max-w-2xl">
                   {productDescription}
@@ -740,9 +744,9 @@ function SourcesCard({ pad }: { pad: Mousepad }) {
                 </p>
               </div>
 
-              {source.url ? (
+              {safeExternalUrl(source.url) ? (
                 <Button variant="outline" size="sm" asChild>
-                  <Link href={source.url} target="_blank" rel="noreferrer">
+                  <Link href={safeExternalUrl(source.url) ?? "#sources"} target="_blank" rel="noreferrer">
                     Open
                   </Link>
                 </Button>

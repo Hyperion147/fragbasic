@@ -1,3 +1,5 @@
+import { EditorialNote } from "@/components/editorial-note";
+import { safeExternalUrl } from "@/lib/validation/catalog";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -54,7 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const skate = await getPublicMouseSkateBySlug(slug);
 
   if (!skate) {
-    return {};
+    notFound();
   }
 
   const fullName = getMouseSkateFullName(skate);
@@ -100,12 +102,6 @@ export default async function MouseSkatePage({ params }: Props) {
   const fullName = getMouseSkateFullName(skate);
   const material = formatMouseSkateMaterial(skate.material);
   const faqs = getSkateFaqs(skate);
-  const averageRating =
-    (skate.ratings.speed +
-      skate.ratings.control +
-      skate.ratings.stoppingPower +
-      skate.ratings.durability) /
-    4;
   const relatedSkates = allSkates
     .filter((entry) => entry.slug !== skate.slug)
     .sort((left, right) => {
@@ -132,8 +128,8 @@ export default async function MouseSkatePage({ params }: Props) {
           review: {
             name: `${fullName} review`,
             body: skate.communitySummary || skate.notes,
-            author: "FragBasic Review Team",
-            rating: Number(averageRating.toFixed(1)),
+            author: "FragBasic",
+            authorUrl: "https://fragbasic.fun/editorial-policy#who",
             positiveNotes: skate.bestFor,
             negativeNotes: skate.avoidIf,
           },
@@ -169,6 +165,7 @@ export default async function MouseSkatePage({ params }: Props) {
               <div>
                 <p className="compact-label">Mouse skate review</p>
                 <h1 className="page-title mt-3 max-w-4xl">{fullName}</h1>
+<EditorialNote createdAt={skate.createdAt} updatedAt={skate.updatedAt} confidence={skate.ratings.ratingConfidence} />
                 <p className="body-copy mt-4 max-w-2xl">
                   {skate.communitySummary}
                 </p>
@@ -361,9 +358,9 @@ export default async function MouseSkatePage({ params }: Props) {
                     <Badge variant="outline" className="capitalize">
                       {source.type}
                     </Badge>
-                    {source.url ? (
+                    {safeExternalUrl(source.url) ? (
                       <a
-                        href={source.url}
+                        href={safeExternalUrl(source.url) ?? "#sources"}
                         className="underline underline-offset-4 transition-colors hover:text-foreground"
                         target="_blank"
                         rel="noreferrer"

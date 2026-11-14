@@ -1,5 +1,6 @@
+import { EditorialNote } from "@/components/editorial-note";
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/optimized-image";
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
 import { notFound } from "next/navigation";
@@ -37,13 +38,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const guide = await getPublicGuideBySlug(slug);
 
     if (!guide) {
-        return {};
+        notFound();
     }
 
     return buildMetadata({
         title: guide.title,
         description: guide.description,
         path: `/mousepads/guides/${guide.slug}`,
+        publishedTime: guide.publishedAt,
+        modifiedTime: guide.updatedAt,
         keywords: [
             ...guide.keywords,
             ...seoKeywords.guides,
@@ -89,6 +92,7 @@ export default async function GuidePage({ params }: Props) {
                     description: guide.description,
                     path: `/mousepads/guides/${guide.slug}`,
                     datePublished: guide.publishedAt,
+                    dateModified: guide.updatedAt,
                     keywords: guide.keywords,
                 })}
             />
@@ -127,6 +131,7 @@ export default async function GuidePage({ params }: Props) {
                             </p>
 
                             <h1 className="page-title mt-4">{guide.title}</h1>
+<EditorialNote createdAt={guide.createdAt} updatedAt={guide.updatedAt} />
 
                             <p className="body-copy mt-5 max-w-2xl">
                                 {guide.description}

@@ -1,3 +1,4 @@
+import { withCatalogWrite } from "@/server/catalog/write";
 import { mouseSkateWriteSchema } from "@/schemas/accessory";
 import { jsonError, jsonOk, zodError } from "@/server/api";
 import { requireAdmin } from "@/server/auth";
@@ -12,8 +13,7 @@ export async function GET(_request: Request, context: Ctx) {
   return row ? jsonOk({ accessory: row }) : jsonError("Not found", 404);
 }
 
-export async function PATCH(request: Request, context: Ctx) {
-  if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
+export const PATCH = withCatalogWrite(async (request: Request, context: Ctx) => {
   const id = (await context.params).id;
   const existing = await repo.getMouseSkateById(id);
   if (!existing) return jsonError("Not found", 404);
@@ -25,13 +25,12 @@ export async function PATCH(request: Request, context: Ctx) {
   const row = await repo.updateMouseSkate(id, { slug: data.slug, brand: data.brand, name: data.name, status, data });
   revalidateCatalog("accessories");
   return jsonOk({ accessory: row });
-}
+});
 
-export async function DELETE(_request: Request, context: Ctx) {
-  if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
+export const DELETE = withCatalogWrite(async (_request: Request, context: Ctx) => {
   const id = (await context.params).id;
   const row = await repo.deleteMouseSkate(id);
   if (!row) return jsonError("Not found", 404);
   revalidateCatalog("accessories");
   return jsonOk({ ok: true, id });
-}
+});

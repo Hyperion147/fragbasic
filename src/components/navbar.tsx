@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { UniversalSearch } from "@/components/universal-search";
-import Image from "next/image";
+import Image from "@/components/optimized-image";
 
 const directNavItems = [
     { label: "Mousepads", href: "/mousepads" },

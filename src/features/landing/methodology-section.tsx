@@ -52,7 +52,7 @@ export function MethodologySection() {
           })}
           <Link
             href="/mousepads/compare/universal"
-            className="group flex min-h-40 flex-col justify-between bg-brand p-4 text-white"
+            className="group flex min-h-40 flex-col justify-between bg-brand p-4 text-black"
           >
             <ArrowUpRight className="ml-auto size-5" />
             <span className="max-w-[9ch] text-base font-semibold leading-tight">Compare your picks</span>
@@ -99,7 +99,7 @@ export function MethodologySection() {
 
       <Link
         href="/mousepads/compare/universal"
-        className="group flex items-center justify-between gap-5 border-t border-white/7 bg-brand px-6 py-5 text-sm font-semibold text-white transition-colors hover:bg-brand-hover hover:text-black sm:px-10"
+        className="group flex items-center justify-between gap-5 border-t border-white/7 bg-brand px-6 py-5 text-sm font-semibold text-black transition-colors hover:bg-brand-hover hover:text-black sm:px-10"
       >
         Try the universal comparison tool
         <ArrowUpRight className="size-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

@@ -7,7 +7,7 @@ export async function requireAdmin() {
     return null;
   }
 
-  if (session.user.role && session.user.role !== "admin") {
+  if (session.user.role !== "admin") {
     return null;
   }
 
