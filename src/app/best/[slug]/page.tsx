@@ -1,5 +1,6 @@
+import { EditorialNote } from "@/components/editorial-note";
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/optimized-image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { notFound } from "next/navigation";
@@ -10,7 +11,7 @@ import { MetricCell } from "@/components/data-display";
 import { JsonLd } from "@/components/json-ld";
 import { AiDefinition, AiFaq, AiSpecTable } from "@/components/seo/ai-blocks";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
-import { getBestPagePicks } from "@/data/best-pages";
+import { getBestPagePicks } from "@/lib/best-pages";
 import {
     formatEnvironmentLabel,
     formatFeelLabel,
@@ -19,7 +20,9 @@ import {
 } from "@/lib/mousepads";
 import {
     buildFaqJsonLd,
+    buildItemListJsonLd,
     buildMetadata,
+    seoKeywords,
 } from "@/lib/seo";
 import {
     getPublicBestPageBySlug,
@@ -44,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const page = await getPublicBestPageBySlug(slug);
 
     if (!page) {
-        return {};
+        notFound();
     }
 
     const picks = getBestPagePicks(page, await getPublicPads());
@@ -54,15 +57,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         .join(", ");
 
     return buildMetadata({
-        title: page.title,
-        description: `${page.description} ${picks.length} tested picks including ${pickNames}. Best-use cases and FPS reasoning for each.`,
+        title: `${page.title}`,
+        description: `${page.description} ${picks.length} picks including ${pickNames}, ranked by feel and FPS use case.`,
         path: `/best/${page.slug}`,
         keywords: [
             ...page.keywords,
+            ...seoKeywords.bestLists,
+            ...seoKeywords.questions,
             "best gaming mousepads",
             "fps mousepad guide",
             `best ${page.badge.toLowerCase()} mousepads`,
             `best ${page.badge.toLowerCase()} mousepad`,
+            `best mousepads for ${page.badge.toLowerCase()}`,
+            `${page.badge.toLowerCase()} mousepad india`,
         ],
     });
 }
@@ -82,6 +89,17 @@ export default async function BestMousepadsPage({ params }: Props) {
     return (
         <main className="min-h-screen bg-background text-foreground">
             <JsonLd data={buildFaqJsonLd(bestFaqs)} />
+            <JsonLd
+                data={buildItemListJsonLd({
+                    name: page.title,
+                    description: page.description,
+                    path: `/best/${page.slug}`,
+                    items: picks.map((pick) => ({
+                        name: getMousepadFullName(pick.mousepad),
+                        url: `/mousepads/${pick.mousepad.slug}`,
+                    })),
+                })}
+            />
             <section className="border-b border-border bg-background">
                 <div className="page-hero">
                     <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.55fr)] lg:items-end">
@@ -110,6 +128,7 @@ export default async function BestMousepadsPage({ params }: Props) {
                             <h1 className="page-title mt-4">
                                 {page.title}
                             </h1>
+<EditorialNote createdAt={page.createdAt} updatedAt={page.updatedAt} />
 
                             <div className="mt-6 flex flex-wrap gap-3">
                                 <Button asChild>

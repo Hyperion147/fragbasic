@@ -1,3 +1,4 @@
+import { withCatalogWrite } from "@/server/catalog/write";
 import { bestPageWriteSchema } from "@/schemas/best-page";
 import { jsonError, jsonOk, zodError } from "@/server/api";
 import { requireAdmin } from "@/server/auth";
@@ -10,8 +11,7 @@ export async function GET() {
   return jsonOk({ bestPages: await repo.listBestPages() });
 }
 
-export async function POST(request: Request) {
-  if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
+export const POST = withCatalogWrite(async (request: Request) => {
   const parsed = bestPageWriteSchema.safeParse(
     await request.json().catch(() => null),
   );
@@ -19,10 +19,10 @@ export async function POST(request: Request) {
   const { status, data } = parsed.data;
 
   const missing = await findMissingPadSlugs(
-    data.pickSlugs.map((pick) => pick.slug),
+    data.pickSlugs.map((pick) => pick.slug), status === "published",
   );
   if (missing.length > 0) {
-    return jsonError(`Unknown pad slug(s): ${missing.join(", ")}`, 400);
+    return jsonError(`Missing or unpublished pad slug(s): ${missing.join(", ")}`, 400);
   }
 
   if (await repo.getBestPageBySlug(data.slug)) {
@@ -42,4 +42,4 @@ export async function POST(request: Request) {
 
   revalidateCatalog("best-pages");
   return jsonOk({ bestPage }, 201);
-}
+});

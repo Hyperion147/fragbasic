@@ -1,4 +1,5 @@
 "use client";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 import {
   type ChartConfig,
@@ -198,6 +199,7 @@ export function Radar({
   radarProps,
 }: RadarProps) {
   const { config, isLoading, selectedDataKey, selectDataKey } = useRadarChart();
+  const reducedMotion = useReducedMotion();
   const id = useId().replace(/:/g, ""); // unique id scopes this radar's style defs
 
   // The root renders the skeleton radar while loading, so real radars step aside
@@ -229,6 +231,7 @@ export function Radar({
           selectDataKey(selectedDataKey === dataKey ? null : dataKey);
         }}
         {...radarProps}
+        isAnimationActive={!reducedMotion && (radarProps?.isAnimationActive ?? true)}
       />
       <defs>
         <ColorGradient id={id} dataKey={dataKey} config={config} />
@@ -547,16 +550,17 @@ const generateLoadingData = (points: number) => {
  */
 export function useLoadingData(isLoading: boolean, loadingPoints: number = LOADING_POINTS) {
   const [refreshKey, setRefreshKey] = useState(0);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
-    if (!isLoading) return;
+    if (!isLoading || reducedMotion) return;
 
     const interval = setInterval(() => {
       setRefreshKey((prev) => prev + 1);
     }, LOADING_ANIMATION_DURATION);
 
     return () => clearInterval(interval);
-  }, [isLoading]);
+  }, [isLoading, reducedMotion]);
 
   const loadingData = useMemo(
     () => generateLoadingData(loadingPoints),
@@ -573,6 +577,7 @@ export function useLoadingData(isLoading: boolean, loadingPoints: number = LOADI
  * place of the real radars, it animates between randomized shapes.
  */
 const LoadingRadar = () => {
+  const reducedMotion = useReducedMotion();
   return (
     <RechartsRadar
       dataKey={LOADING_RADAR_DATA_KEY}
@@ -582,7 +587,7 @@ const LoadingRadar = () => {
       fill="currentColor"
       fillOpacity={0.1}
       dot={false}
-      isAnimationActive
+      isAnimationActive={!reducedMotion}
       animationDuration={LOADING_ANIMATION_DURATION}
       animationEasing="ease-in-out"
     />

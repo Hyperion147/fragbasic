@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { padSlugSchema, slugSchema, httpUrlSchema, imagePathSchema } from "@/lib/validation/catalog";
 
 export const mousepadCategorySchema = z.enum([
     "mud",
@@ -170,12 +171,12 @@ export const mousepadSourceTypeSchema = z.enum([
 export const mousepadSourceSchema = z.object({
     label: z.string().min(1),
     type: mousepadSourceTypeSchema,
-    url: z.string().optional(),
+    url: httpUrlSchema.optional(),
 });
 
 export const mousepadColorwaySchema = z.object({
     name: z.string().min(1),
-    slug: z.string().min(1),
+    slug: slugSchema,
     color: z.string().min(1),
     image: z.string().optional(),
     available: z.boolean(),
@@ -187,9 +188,9 @@ export const mousepadVisualsSchema = z.object({
 });
 
 export const mousepadRelatedAlternativesSchema = z.object({
-    similarFeeling: z.array(z.string().min(1)),
-    moreControl: z.array(z.string().min(1)),
-    moreSpeed: z.array(z.string().min(1)),
+    similarFeeling: z.array(padSlugSchema),
+    moreControl: z.array(padSlugSchema),
+    moreSpeed: z.array(padSlugSchema),
     notes: z.string().optional(),
 });
 
@@ -208,12 +209,12 @@ export const mousepadRecommendedForSchema = z.object({
 });
 
 export const mousepadImagesSchema = z.object({
-    main: z.string().min(1),
+    main: imagePathSchema,
 });
 
 export const mousepadSchema = z.object({
     id: z.string().min(1),
-    slug: z.string().min(1),
+    slug: padSlugSchema,
 
     brand: z.string().min(1),
     name: z.string().min(1),

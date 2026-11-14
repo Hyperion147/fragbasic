@@ -72,7 +72,7 @@ export function CompareSummaryCards({ mousepads }: Props) {
   );
 
   return (
-    <div className="data-scroll-container overflow-x-auto bg-card/35 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div tabIndex={0} role="region" aria-label="Comparison summary" className="data-scroll-container overflow-x-auto bg-card/35 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <table className="data-table min-w-[760px]">
         <thead>
           <tr>

@@ -107,6 +107,7 @@ export interface IemOfficialReview {
 }
 
 export interface Iem {
+  createdAt?: string;
   id: string;
   slug: string;
   brand: string;

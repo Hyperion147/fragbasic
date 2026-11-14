@@ -66,8 +66,8 @@ export function UniversalCompare({ allMousepads }: Props) {
         () =>
             hasPadsParam
                 ? urlSelectedSlugs
-                : [],
-        [hasPadsParam, urlSelectedSlugs],
+                : DEFAULT_SELECTED_SLUGS.filter((slug) => availableSlugs.has(slug)),
+        [availableSlugs, hasPadsParam, urlSelectedSlugs],
     );
 
     const selectedMousepads = useMemo(
@@ -381,16 +381,18 @@ function CompareDisclosure({
     children: React.ReactNode;
     defaultOpen?: boolean;
 }) {
+    const [isOpen, setIsOpen] = useState(defaultOpen);
     return (
         <details
-            open={defaultOpen}
+            open={isOpen}
+            onToggle={(event) => setIsOpen(event.currentTarget.open)}
             className="group data-panel"
         >
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-3 py-2.5 text-sm font-semibold text-foreground sm:px-5 sm:py-3">
-                {title}
+                <h2 className="inline text-sm font-semibold">{title}</h2>
                 <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
             </summary>
-            <div className="p-2 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] sm:p-4">{children}</div>
+            <div className="p-2 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] sm:p-4">{isOpen ? children : null}</div>
         </details>
     );
 }

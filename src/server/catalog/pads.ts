@@ -1,59 +1,37 @@
-import type { Mousepad } from "@/types/mousepad";
-import {
-  getAllMousepads as getStaticPads,
-  getMousepadBySlug as getStaticPadBySlug,
-} from "@/lib/mousepads";
+import { cache } from "react";
+
 import * as glasspadRepo from "@/server/glasspads/repo";
 import * as mousepadRepo from "@/server/mousepads/repo";
-import { isDbCatalogSource } from "./source";
+import type { Mousepad } from "@/types/mousepad";
 
-function isGlassPad(pad: Mousepad) {
-  return pad.category === "glass";
-}
-
-async function loadMousepads(): Promise<Mousepad[]> {
-  if (!isDbCatalogSource("mousepads")) {
-    return getStaticPads().filter((pad) => !isGlassPad(pad));
-  }
-
+// `generateMetadata` and the page body both read the catalog during the same
+// render. Caching the loaders keeps that to one query per request, which
+// matters when statically generating many pages against a pooled database.
+const loadMousepads = cache(async (): Promise<Mousepad[]> => {
   const rows = await mousepadRepo.listMousepads();
   return rows
     .filter((row) => row.status === "published")
-    .map((row) => row.data as Mousepad);
-}
+    .map((row) => ({ ...row.data, updatedAt: row.updatedAt.toISOString(), createdAt: row.createdAt.toISOString() }) as Mousepad);
+});
 
-async function loadGlasspads(): Promise<Mousepad[]> {
-  if (!isDbCatalogSource("glasspads")) {
-    return getStaticPads().filter(isGlassPad);
-  }
-
+const loadGlasspads = cache(async (): Promise<Mousepad[]> => {
   const rows = await glasspadRepo.listGlasspads();
   return rows
     .filter((row) => row.status === "published")
-    .map((row) => row.data as Mousepad);
-}
+    .map((row) => ({ ...row.data, updatedAt: row.updatedAt.toISOString(), createdAt: row.createdAt.toISOString() }) as Mousepad);
+});
 
-async function loadMousepadBySlug(slug: string): Promise<Mousepad | null> {
-  if (!isDbCatalogSource("mousepads")) {
-    const pad = getStaticPadBySlug(slug);
-    return pad && !isGlassPad(pad) ? pad : null;
-  }
-
+const loadMousepadBySlug = cache(async (slug: string): Promise<Mousepad | null> => {
   const row = await mousepadRepo.getMousepadBySlug(slug);
   if (!row || row.status !== "published") return null;
-  return row.data as Mousepad;
-}
+  return ({ ...row.data, updatedAt: row.updatedAt.toISOString(), createdAt: row.createdAt.toISOString() }) as Mousepad;
+});
 
-async function loadGlasspadBySlug(slug: string): Promise<Mousepad | null> {
-  if (!isDbCatalogSource("glasspads")) {
-    const pad = getStaticPadBySlug(slug);
-    return pad && isGlassPad(pad) ? pad : null;
-  }
-
+const loadGlasspadBySlug = cache(async (slug: string): Promise<Mousepad | null> => {
   const row = await glasspadRepo.getGlasspadBySlug(slug);
   if (!row || row.status !== "published") return null;
-  return row.data as Mousepad;
-}
+  return ({ ...row.data, updatedAt: row.updatedAt.toISOString(), createdAt: row.createdAt.toISOString() }) as Mousepad;
+});
 
 /**
  * Soft and hybrid pads only. Draft rows are never exposed publicly.
@@ -70,9 +48,8 @@ export async function getPublicGlasspads(): Promise<Mousepad[]> {
 }
 
 /**
- * The public "all pads" union. Soft pads and glasspads use independent source
- * flags, so one module can move to the database without pulling the other
- * along. Duplicate slugs are collapsed defensively.
+ * The public "all pads" union of soft pads and glasspads. Duplicate slugs are
+ * collapsed defensively.
  */
 export async function getPublicPads(): Promise<Mousepad[]> {
   const [mousepads, glasspads] = await Promise.all([
@@ -92,13 +69,13 @@ export async function getPublicPads(): Promise<Mousepad[]> {
   return pads;
 }
 
-export async function getPublicPadBySlug(
-  slug: string,
-): Promise<Mousepad | null> {
-  const mousepad = await loadMousepadBySlug(slug);
-  if (mousepad) return mousepad;
-  return loadGlasspadBySlug(slug);
-}
+export const getPublicPadBySlug = cache(
+  async (slug: string): Promise<Mousepad | null> => {
+    const mousepad = await loadMousepadBySlug(slug);
+    if (mousepad) return mousepad;
+    return loadGlasspadBySlug(slug);
+  },
+);
 
 export async function getPublicPadSlugs(): Promise<string[]> {
   return (await getPublicPads()).map((pad) => pad.slug);

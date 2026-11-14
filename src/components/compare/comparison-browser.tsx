@@ -16,7 +16,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
-import type { MousepadComparison } from "@/data/comparisons";
+import type { MousepadComparison } from "@/types/comparison";
 import type { Mousepad } from "@/types/mousepad";
 
 type ComparisonWithPads = {

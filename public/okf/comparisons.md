@@ -1,17 +1,37 @@
 ---
 type: Collection
-title: Comparisons
-description: Side-by-side mousepad matchups across speed, control, stopping power, and humidity resistance.
+title: Mousepad comparisons
+description: Side-by-side FPS mousepad and glasspad comparisons across speed, control, stopping power, texture, humidity resistance, and game fit.
 resource: https://fragbasic.fun/mousepads/compare
-tags: [comparisons, vs, mousepads]
-timestamp: 2026-09-23
+tags: [comparisons, mousepads, glasspads, versus, fps]
+timestamp: 2026-11-13
 ---
 
 # Comparisons
 
-Published matchups plus Universal Compare for custom 2-3 pad sets.
+Published X vs Y matchups plus a universal 2-3 mousepad compare tool. Each comparison covers speed, control, stopping power, micro-adjustments, humidity resistance, specs, and a buying verdict.
 
-- Hub: https://fragbasic.fun/mousepads/compare
-- Custom: https://fragbasic.fun/mousepads/compare/universal
-- Pattern: https://fragbasic.fun/mousepads/compare/[slug]
-- See also: [Mousepads](./mousepads.md), [Best guides](./best-guides.md)
+- Comparison hub: https://fragbasic.fun/mousepads/compare
+- Universal compare: https://fragbasic.fun/mousepads/compare/universal
+- Artisan Zero Soft vs LGG Saturn Pro Soft: https://fragbasic.fun/mousepads/compare/artisan-zero-soft-vs-lgg-saturn-pro-soft
+- Artisan Zero Soft vs Artisan Type-99 Soft: https://fragbasic.fun/mousepads/compare/artisan-zero-soft-vs-artisan-type-99-soft
+- Artisan Hayate Otsu Soft vs Artisan Hien Soft: https://fragbasic.fun/mousepads/compare/artisan-hayate-otsu-soft-vs-artisan-hien-soft
+- Zowie G-SR III vs LGG Saturn Pro Soft: https://fragbasic.fun/mousepads/compare/zowie-g-sr-iii-vs-lgg-saturn-pro-soft
+- ATK Crimson vs Wallhack SP-005: https://fragbasic.fun/mousepads/compare/atk-crimson-vs-wallhack-sp-005
+- Tekkusai Phantom vs Tekkusai Singularity: https://fragbasic.fun/mousepads/compare/tekkusai-phantom-vs-tekkusai-singularity
+
+## Query intents
+
+- mousepad comparison / compare mousepads side by side
+- Artisan Zero vs LGG Saturn Pro
+- Artisan Zero vs Type-99
+- Artisan Hien vs Hayate Otsu
+- Zowie G-SR III vs Artisan Zero
+- ATK Crimson vs Wallhack SP-005
+- glasspad vs cloth pad
+
+## Related
+
+- [Mousepads](./mousepads.md)
+- [Glasspads](./glasspads.md)
+- [Best guides](./best-guides.md)

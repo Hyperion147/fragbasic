@@ -1,22 +1,13 @@
-import { mousepads } from "@/data/mousepads/mousepads";
 import type { Mousepad } from "@/types/mousepad";
 
-// Re-export centralized format helpers (and the legacy name)
+// Re-export centralized format helpers so catalog components can import them
+// from one place alongside the mousepad helpers.
 export {
   formatMousepadValue,
   formatValue,
   formatPrice,
   formatSize,
 } from "./utils/format";
-
-// Core data access (keep these here as the primary public API surface)
-export function getAllMousepads() {
-  return mousepads;
-}
-
-export function getMousepadBySlug(slug: string): Mousepad | undefined {
-  return mousepads.find((pad) => pad.slug === slug);
-}
 
 export function getMousepadFullName(mousepad: Mousepad) {
   return `${mousepad.brand} ${mousepad.name}`;
@@ -39,8 +30,7 @@ export function getMousepadCompany(mousepad: Mousepad) {
 }
 
 // Re-export everything from the focused submodules for a single import path.
-// Consumers can still `import { filterMousepads, getSimilarMousepads, getDefaultColorway } from "@/lib/mousepads"`
+// Consumers can still `import { filterMousepads, getDefaultColorway } from "@/lib/mousepads"`
 export * from "./mousepads/filters";
 export * from "./mousepads/visuals";
-export * from "./mousepads/similarity";
 export * from "./mousepads/calibration";

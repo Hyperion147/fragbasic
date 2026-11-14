@@ -73,7 +73,7 @@ export function createEmptyMousepad(): MousepadInput {
             ],
         },
         images: {
-            main: "/mousepads/placeholder.png",
+            main: "/product-placeholder.svg",
         },
         personal: {
             owned: false,

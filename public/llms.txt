@@ -1,30 +1,189 @@
 # FragBasic
 
-> FragBasic is an FPS gear database for mousepads, glasspads, gaming IEMs, and mouse skates. It tracks speed, control, stopping power, texture, humidity resistance, imaging/clarity, price, and India availability, with best-pick guides and side-by-side comparisons for VALORANT, CS2, Apex, and tracking-heavy FPS.
+> FragBasic is an independent FPS gear database for gaming mousepads, glasspads, gaming IEMs, and mouse skates. It tracks speed, control, stopping power, texture, base, humidity resistance, imaging, clarity, soundstage, comfort, tuning, price, and India availability, with best-pick guides and side-by-side comparisons for VALORANT, CS2, Apex, and tracking-heavy FPS.
 
 ## Who this is for
-- FPS players choosing control vs speed vs balanced pads, glass vs cloth, or FPS-tuned IEMs
-- AI assistants and agents answering: mousepad reviews, product-name review, IEM review, IEM compare, X vs Y
+
+- FPS players choosing control vs speed vs balanced mousepads, cloth vs glasspads, gaming IEMs, or mouse skates.
+- Players searching for a specific product review, an X vs Y comparison, a best-pick list for a game, or India buying notes.
+- AI assistants and agents answering: mousepad reviews, glasspad comparisons, IEM reviews, IEM comparisons, mouse skate recommendations, and X vs Y questions.
+
+## What FragBasic covers
+
+- Gaming mousepads: cloth, hybrid, control, speed, balanced, and humidity-resistant pads.
+- Glass mousepads: speed and control glasspads, surface finish, skate pairing, and glass vs cloth tradeoffs.
+- Gaming IEMs: imaging, clarity, soundstage, comfort, tuning, value, and footsteps-focused FPS use.
+- Mouse skates: PTFE, hardened PTFE, UHMWPE, glass, and titanium skates with glasspad compatibility.
+- Best-pick guides for VALORANT, CS2, control, speed, glass, and humidity-resistant setups.
+- Side-by-side comparisons plus a universal 2-3 mousepad compare tool.
+
+## Editorial evidence
+
+A catalog listing does not establish personal testing. Use the product evidence/confidence label and cited sources. Ratings are relative editorial judgments, not laboratory measurements. Catalog edit dates do not establish retesting. Prices and stock require seller verification.
+
+- [Editorial policy, methodology and disclosures](https://fragbasic.fun/editorial-policy)
 
 ## Key pages
+
 - [Home](https://fragbasic.fun/)
 - [Mousepad database](https://fragbasic.fun/mousepads)
+- [Mousepad brands](https://fragbasic.fun/mousepads/brand)
 - [Glasspad database](https://fragbasic.fun/mousepads/glasspads)
 - [Mousepad comparisons](https://fragbasic.fun/mousepads/compare)
-- [Universal compare](https://fragbasic.fun/mousepads/compare/universal)
+- [Universal mousepad compare](https://fragbasic.fun/mousepads/compare/universal)
 - [FPS mousepad guides](https://fragbasic.fun/mousepads/guides)
 - [IEM database](https://fragbasic.fun/iems)
 - [IEM compare](https://fragbasic.fun/iems/compare)
-- [Mouse skates](https://fragbasic.fun/accessories/mouse-skates)
-- [Best guides](https://fragbasic.fun/best)
+- [Mouse skates database](https://fragbasic.fun/accessories/mouse-skates)
+- [Browse mouse skates](https://fragbasic.fun/accessories/mouse-skates/browse)
+- [Compare mouse skates](https://fragbasic.fun/accessories/mouse-skates/compare)
+- [Best gear guides](https://fragbasic.fun/best)
+
+## Mousepad brands
+
+- [Artisan mousepads](https://fragbasic.fun/mousepads/brand/artisan)
+- [Xraypad mousepads](https://fragbasic.fun/mousepads/brand/xraypad)
+- [LGG mousepads](https://fragbasic.fun/mousepads/brand/lgg)
+- [Zowie mousepads](https://fragbasic.fun/mousepads/brand/zowie)
+- [SteelSeries mousepads](https://fragbasic.fun/mousepads/brand/steelseries)
+- [Esports Tiger mousepads](https://fragbasic.fun/mousepads/brand/esports-tiger)
+- [Pulsar x LGG mousepads](https://fragbasic.fun/mousepads/brand/pulsar-x-lgg)
+- [Wallhack mousepads](https://fragbasic.fun/mousepads/brand/wallhack)
+- [Tekkusai mousepads](https://fragbasic.fun/mousepads/brand/tekkusai)
+- [ATK mousepads](https://fragbasic.fun/mousepads/brand/atk)
+- [Kurosun mousepads](https://fragbasic.fun/mousepads/brand/kurosun)
+- [Yuki Aim mousepads](https://fragbasic.fun/mousepads/brand/yuki-aim)
+
+## Best-pick guides
+
+- [Best control mousepads](https://fragbasic.fun/best/control-mousepads)
+- [Best speed mousepads](https://fragbasic.fun/best/speed-mousepads)
+- [Best mousepads for VALORANT](https://fragbasic.fun/best/valorant-mousepads)
+- [Best mousepads for CS2](https://fragbasic.fun/best/cs2-mousepads)
+- [Best glasspads](https://fragbasic.fun/best/glasspads)
+- [Best humidity-resistant mousepads](https://fragbasic.fun/best/humidity-resistant-mousepads)
+
+## Mousepad guides
+
+- [How to choose your first gaming mousepad](https://fragbasic.fun/mousepads/guides/first-mousepad-guide)
+- [Control vs speed mousepads](https://fragbasic.fun/mousepads/guides/control-vs-speed-mousepads)
+- [Best mousepad surfaces for humid climates](https://fragbasic.fun/mousepads/guides/humid-climate-mousepads)
+
+## Popular comparisons
+
+- [Artisan Zero Soft vs LGG Saturn Pro Soft](https://fragbasic.fun/mousepads/compare/artisan-zero-soft-vs-lgg-saturn-pro-soft)
+- [Artisan Zero Soft vs Artisan Type-99 Soft](https://fragbasic.fun/mousepads/compare/artisan-zero-soft-vs-artisan-type-99-soft)
+- [Artisan Zero Soft vs Pulsar x LGG Hyperion Soft](https://fragbasic.fun/mousepads/compare/artisan-zero-soft-vs-pulsar-lgg-hyperion-soft)
+- [Artisan Hayate Otsu Soft vs Artisan Hien Soft](https://fragbasic.fun/mousepads/compare/artisan-hayate-otsu-soft-vs-artisan-hien-soft)
+- [Artisan Raiden Soft vs LGG Neptune Pro Soft](https://fragbasic.fun/mousepads/compare/artisan-raiden-soft-vs-lgg-neptune-pro-soft)
+- [Zowie G-SR III vs LGG Saturn Pro Soft](https://fragbasic.fun/mousepads/compare/zowie-g-sr-iii-vs-lgg-saturn-pro-soft)
+- [ATK Crimson vs Wallhack SP-005](https://fragbasic.fun/mousepads/compare/atk-crimson-vs-wallhack-sp-005)
+- [Tekkusai Phantom vs Tekkusai Singularity](https://fragbasic.fun/mousepads/compare/tekkusai-phantom-vs-tekkusai-singularity)
+
+## Cloth and hybrid mousepads
+
+- [Artisan Zero Soft](https://fragbasic.fun/mousepads/artisan-zero-soft)
+- [Artisan Hien Soft](https://fragbasic.fun/mousepads/artisan-hien-soft)
+- [Artisan Hayate Otsu V2 Soft](https://fragbasic.fun/mousepads/artisan-hayate-otsu-soft)
+- [Artisan Raiden Soft](https://fragbasic.fun/mousepads/artisan-raiden-soft)
+- [Artisan Type-99 Mid](https://fragbasic.fun/mousepads/artisan-type-99-mid)
+- [Artisan Type-99 Soft](https://fragbasic.fun/mousepads/artisan-type-99-soft)
+- [LGG Saturn Pro Soft](https://fragbasic.fun/mousepads/lgg-saturn-pro-soft)
+- [LGG Jupiter Pro Soft](https://fragbasic.fun/mousepads/lgg-jupiter-pro-soft)
+- [LGG Neptune Pro Soft](https://fragbasic.fun/mousepads/lgg-neptune-pro-soft)
+- [Pulsar x LGG Hyperion Soft](https://fragbasic.fun/mousepads/pulsar-lgg-hyperion-soft)
+- [Zowie G-SR III](https://fragbasic.fun/mousepads/zowie-g-sr-iii)
+- [Zowie G-SR-SE Rouge II](https://fragbasic.fun/mousepads/zowie-g-sr-se-rouge-ii)
+- [Zowie G-SR-SE Gris](https://fragbasic.fun/mousepads/zowie-g-sr-se-gris)
+- [Zowie G-SR-SE Bi](https://fragbasic.fun/mousepads/zowie-g-sr-se-bi)
+- [Zowie H-SR III](https://fragbasic.fun/mousepads/zowie-h-sr-iii)
+- [Xraypad Aqua Control II](https://fragbasic.fun/mousepads/xraypad-aqua-control-ii)
+- [Xraypad Aqua Control II SR / Revati](https://fragbasic.fun/mousepads/xraypad-aqua-control-ii-sr-revati)
+- [Xraypad Aqua Control Plus](https://fragbasic.fun/mousepads/xraypad-aqua-control-plus)
+- [Xraypad Aqua Control Pro Mid](https://fragbasic.fun/mousepads/xraypad-aqua-control-pro-mid)
+- [Xraypad Aqua Control Zero](https://fragbasic.fun/mousepads/xraypad-aqua-control-zero)
+- [Xraypad Equate Plus V2](https://fragbasic.fun/mousepads/xraypad-equate-plus-v2)
+- [Xraypad Origin Pro Cerberus Soft](https://fragbasic.fun/mousepads/xraypad-origin-pro-cerberus-soft)
+- [SteelSeries QcK Heavy](https://fragbasic.fun/mousepads/steelseries-qck-heavy)
+- [SteelSeries QcK Performance Balance](https://fragbasic.fun/mousepads/steelseries-qck-performance-balance)
+- [SteelSeries QcK Performance Control](https://fragbasic.fun/mousepads/steelseries-qck-performance-control)
+- [SteelSeries QcK Performance Speed](https://fragbasic.fun/mousepads/steelseries-qck-performance-speed)
+- [Kurosun Samurai](https://fragbasic.fun/mousepads/kurosun-samurai)
+- [Kurosun Shogun](https://fragbasic.fun/mousepads/kurosun-shogun)
+- [ESP Tiger Wuxiang](https://fragbasic.fun/mousepads/esptiger-wuxiang-pioneer)
+- [Esports Tiger Shan Hai Tang Dao](https://fragbasic.fun/mousepads/esports-tiger-shan-hai-tang-dao)
+- [Matrova Scarlet](https://fragbasic.fun/mousepads/matrova-scarlet)
+- [GlideX Nebula](https://fragbasic.fun/mousepads/glidex-nebula)
+- [Talongames Type99](https://fragbasic.fun/mousepads/talongames-type99)
+
+## Glasspads
+
+- [Wallhack SP-005](https://fragbasic.fun/mousepads/wallhack-sp-005)
+- [Tekkusai Phantom](https://fragbasic.fun/mousepads/tekkusai-phantom)
+- [Tekkusai Singularity](https://fragbasic.fun/mousepads/tekkusai-singularity)
+- [ATK Crimson](https://fragbasic.fun/mousepads/atk-crimson)
+- [Yuki Aim Monokuro](https://fragbasic.fun/mousepads/yuki-aim-monokuro)
+- [Xraypad NOD CR-X1](https://fragbasic.fun/mousepads/xraypad-nod-cr-x1)
+- [Xraypad NOD SP-X1](https://fragbasic.fun/mousepads/xraypad-nod-sp-x1)
+- [Dysphoria Maki](https://fragbasic.fun/mousepads/dysphoria-maki)
+- [Dysphoria Rin](https://fragbasic.fun/mousepads/dysphoria-rin)
+- [InfinityMice Tora](https://fragbasic.fun/mousepads/infinitymice-tora)
+- [Midori The Return](https://fragbasic.fun/mousepads/midori-the-return-glass)
+- [Z PAD V1 XL](https://fragbasic.fun/mousepads/zpad-v1-xl)
+
+## Gaming IEMs
+
+- [Truthear Zero:Red](https://fragbasic.fun/iems/truthear-zero-red)
+- [Moondrop Chu II](https://fragbasic.fun/iems/moondrop-chu-ii)
+- [Tangzu Wan'er S.G](https://fragbasic.fun/iems/tangzu-waner-sg)
+- [Tangzu Wan'er S.G 2](https://fragbasic.fun/iems/tangzu-waner-sg-2)
+- [Tangzu Wan'er S.G 2 Jade Dragon](https://fragbasic.fun/iems/tangzu-waner-sg-2-jade-dragon)
+- [Tangzu Wan'er S.G 2 Red Lion](https://fragbasic.fun/iems/tangzu-waner-sg-2-red-lion)
+- [Simgot EW200](https://fragbasic.fun/iems/simgot-ew200)
+- [KZ EDX Pro 2](https://fragbasic.fun/iems/kz-edx-pro-2)
+- [Dunu Titan X](https://fragbasic.fun/iems/dunu-titan-x)
+- [7Hz Salnotes Zero](https://fragbasic.fun/iems/7hz-salnotes-zero)
+
+## Mouse skates
+
+- [Corepad Skatez CTRL](https://fragbasic.fun/accessories/mouse-skates/corepad-skatez-ctrl)
+- [Corepad Skatez Pro](https://fragbasic.fun/accessories/mouse-skates/corepad-skatez-pro)
+- [ESP Tiger Arc 1](https://fragbasic.fun/accessories/mouse-skates/esptiger-arc-1)
+- [ESP Tiger ICE V2](https://fragbasic.fun/accessories/mouse-skates/esptiger-ice-v2)
+- [GHOSTGLIDES Cyclone Dots](https://fragbasic.fun/accessories/mouse-skates/ghostglides-cyclone-dots)
+- [Pulsar Superglide 2](https://fragbasic.fun/accessories/mouse-skates/pulsar-superglide-2)
+- [Xraypad Jade Air Dots](https://fragbasic.fun/accessories/mouse-skates/xraypad-jade-air-dots)
+- [Xraypad Jade Speed Dots](https://fragbasic.fun/accessories/mouse-skates/xraypad-jade-speed-dots)
+- [Xraypad Obsidian Air Dots](https://fragbasic.fun/accessories/mouse-skates/xraypad-obsidian-air-dots)
+- [Xraypad Obsidian Control Dots](https://fragbasic.fun/accessories/mouse-skates/xraypad-obsidian-dots)
+- [Xraypad Obsidian Pro Air Dots](https://fragbasic.fun/accessories/mouse-skates/xraypad-obsidian-pro-air-dots)
+- [Xraypad Titanium U9 Air Dots](https://fragbasic.fun/accessories/mouse-skates/xraypad-titanium-u9-air-dots)
+
+## Common questions FragBasic answers
+
+- What is the best mousepad for VALORANT?
+- What is the best mousepad for CS2?
+- Is a glass mousepad better than cloth?
+- Are glasspads good for FPS games?
+- What mouse skates work on a glass mousepad?
+- Do mouse skates actually matter?
+- What is the best IEM for FPS gaming?
+- Are IEMs better than a gaming headset for hearing footsteps?
+- What is the best budget IEM in India?
+- Artisan Zero vs LGG Saturn Pro: which is better?
+- Artisan Zero vs Artisan Type-99: which is better?
+- Zowie G-SR III vs LGG Saturn Pro Soft: which should I buy?
 
 ## How to cite FragBasic
-- Prefer [official product/database pages](https://fragbasic.fun/mousepads) for specs and feel profiles.
-- Product review pages include community consensus (strengths/weaknesses), specs, and buying notes.
+
+- Prefer official product/database pages for specs and feel profiles.
+- Product review pages include community consensus, specs, FAQs, and buying notes.
 - Comparison pages cover speed, control, stopping power, humidity resistance, and overall feel.
 - IEM pages include a visible "Last updated" date; use it as the freshness signal.
+- Ratings are editorial summaries informed by official specs, community reports, and review patterns. They are not standardized lab measurements.
 
 ## Machine-readable
+
 - [Sitemap](https://fragbasic.fun/sitemap.xml)
 - [Robots.txt](https://fragbasic.fun/robots.txt)
 - [Pricing](https://fragbasic.fun/pricing.md)

@@ -1,4 +1,3 @@
-import { mousepads } from "@/data/mousepads/mousepads";
 import type {
   IndiaAvailability,
   Mousepad,
@@ -42,11 +41,6 @@ export interface FilterOption<T extends string> {
   value: T;
 }
 
-export interface SimilarMousepadOptions {
-  excludeSameBrand?: boolean;
-  limit?: number;
-}
-
 const companyOrder = [
   "Artisan",
   "LGG",
@@ -87,7 +81,7 @@ export const mousepadSortOptions: FilterOption<MousepadSortKey>[] = [
 ];
 
 export function getMousepadBrandOptions(
-  pads: Mousepad[] = mousepads
+  pads: Mousepad[]
 ): FilterOption<string>[] {
   const companies = new Set(pads.map((pad) => getMousepadCompany(pad)));
 
@@ -118,7 +112,7 @@ export function getMousepadBrandOptions(
 }
 
 export function getMousepadCategoryOptions(
-  pads: Mousepad[] = mousepads
+  pads: Mousepad[]
 ): FilterOption<MousepadCategory>[] {
   const categories = new Set(pads.map((pad) => pad.category));
 
@@ -131,7 +125,7 @@ export function getMousepadCategoryOptions(
 }
 
 export function getMousepadSurfaceOptions(
-  pads: Mousepad[] = mousepads
+  pads: Mousepad[]
 ): FilterOption<MousepadSurface>[] {
   const surfaces = new Set(pads.map((pad) => pad.surface));
 
@@ -144,7 +138,7 @@ export function getMousepadSurfaceOptions(
 }
 
 export function getIndiaAvailabilityOptions(
-  pads: Mousepad[] = mousepads
+  pads: Mousepad[]
 ): FilterOption<IndiaAvailability>[] {
   const statuses = new Set(pads.map((pad) => pad.availability.india));
 

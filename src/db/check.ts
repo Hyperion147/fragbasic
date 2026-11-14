@@ -1,16 +1,11 @@
-import { config } from "dotenv";
-
 import { getCatalogHealth } from "@/server/catalog/health";
-
-config({ path: ".env", quiet: true });
 
 async function main() {
   if (process.argv.includes("--help") || process.argv.includes("-h")) {
     console.log(`Usage: npm run db:check -- [--json]
 
-Validates every table-backed catalog row against its schema, checks public
-image URLs, resolves editorial references, and reports the public source flag
-for each module. Exits non-zero when errors are found.`);
+Validates every catalog row against its schema, checks public image URLs, and
+resolves editorial references. Exits non-zero when errors are found.`);
     return;
   }
 
@@ -25,7 +20,6 @@ for each module. Exits non-zero when errors are found.`);
   console.table(
     report.modules.map((module) => ({
       module: module.label,
-      source: module.source,
       total: module.total,
       published: module.published,
       draft: module.draft,

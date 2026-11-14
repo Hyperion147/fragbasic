@@ -1,37 +1,27 @@
-import type { BestPageConfig } from "@/data/best-pages";
-import { getAllBestPages as getStaticBestPages } from "@/data/best-pages";
-import * as repo from "@/server/best-pages/repo";
-import { isDbCatalogSource } from "./source";
+import { cache } from "react";
 
-export type PublicBestPage = Omit<BestPageConfig, "slug"> & {
-  slug: string;
-};
+import type { BestPageDataInput } from "@/schemas/best-page";
+import * as repo from "@/server/best-pages/repo";
+
+export type PublicBestPage = BestPageDataInput & { updatedAt: string; createdAt: string };
 
 /**
  * Public best-page reads. Draft rows stay in the CMS and are never exposed.
  */
-export async function getPublicBestPages(): Promise<PublicBestPage[]> {
-  if (!isDbCatalogSource("best-pages")) {
-    return getStaticBestPages().map((page) => ({ ...page }));
-  }
-
+export const getPublicBestPages = cache(async (): Promise<PublicBestPage[]> => {
   const rows = await repo.listBestPages();
   return rows
     .filter((row) => row.status === "published")
-    .map((row) => ({ ...row.data }));
-}
+    .map((row) => ({ ...row.data, updatedAt: row.updatedAt.toISOString(), createdAt: row.createdAt.toISOString() }));
+});
 
-export async function getPublicBestPageBySlug(
+export const getPublicBestPageBySlug = cache(async (
   slug: string,
-): Promise<PublicBestPage | null> {
-  if (!isDbCatalogSource("best-pages")) {
-    return getStaticBestPages().find((page) => page.slug === slug) ?? null;
-  }
-
+): Promise<PublicBestPage | null> => {
   const row = await repo.getBestPageBySlug(slug);
   if (!row || row.status !== "published") return null;
-  return { ...row.data };
-}
+  return { ...row.data, updatedAt: row.updatedAt.toISOString(), createdAt: row.createdAt.toISOString() };
+});
 
 export async function getPublicBestPageSlugs(): Promise<string[]> {
   return (await getPublicBestPages()).map((page) => page.slug);

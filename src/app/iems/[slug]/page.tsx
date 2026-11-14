@@ -1,5 +1,7 @@
+import { EditorialNote } from "@/components/editorial-note";
+import { safeExternalUrl } from "@/lib/validation/catalog";
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/optimized-image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -40,7 +42,12 @@ import {
     getIemScoreTone,
 } from "@/lib/iems";
 import { getPublicIemBySlug, getPublicIemSlugs } from "@/server/catalog/iems";
-import { buildFaqJsonLd, buildMetadata, buildProductJsonLd } from "@/lib/seo";
+import {
+    buildFaqJsonLd,
+    buildMetadata,
+    buildProductJsonLd,
+    seoKeywords,
+} from "@/lib/seo";
 import type { Iem, IemFrequencyPoint } from "@/types/iem";
 
 type Props = {
@@ -60,21 +67,33 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const iem = await getPublicIemBySlug(slug);
 
     if (!iem) {
-        return {};
+        notFound();
     }
 
     return buildMetadata({
         title: `${getIemFullName(iem)} Review & FPS Scores`,
-        description: `${getIemFullName(iem)} IEM review with imaging, clarity, soundstage, comfort, sound signature, specs, and India buying notes on FragBasic.`,
+        description: `${getIemFullName(iem)} review: imaging, clarity, soundstage, comfort, tuning, specs, and price in India. Is it good for VALORANT, CS2, or music?`,
         path: `/iems/${iem.slug}`,
         keywords: [
+            ...seoKeywords.iems,
             getIemFullName(iem),
             `${getIemFullName(iem)} review`,
             `${getIemFullName(iem)} gaming`,
             `${getIemFullName(iem)} valorant`,
+            `${getIemFullName(iem)} cs2`,
+            `${getIemFullName(iem)} price in india`,
+            `is ${getIemFullName(iem)} good for gaming`,
+            `is ${getIemFullName(iem)} good for valorant`,
+            `${iem.name} review`,
+            `${iem.name} iem`,
+            `${iem.brand} iem`,
+            `${iem.brand} iem review`,
+            `${iem.name} vs`,
             "IEM review",
             "gaming IEM",
+            "best IEM for FPS",
         ],
+        image: iem.images.main,
     });
 }
 
@@ -122,8 +141,8 @@ export default async function IemPage({ params }: Props) {
                     review: {
                         name: `${fullName} review`,
                         body: iem.officialReview.verdict,
-                        author: "FragBasic Review Team",
-                        datePublished: iem.updatedAt,
+                        author: "FragBasic",
+            authorUrl: "https://fragbasic.fun/editorial-policy#who",
                         rating: iem.ratings.fragbasic,
                         bestRating: 10,
                         positiveNotes: iem.pros,
@@ -166,6 +185,7 @@ export default async function IemPage({ params }: Props) {
                         <h1 className="page-title mt-5 max-w-4xl">
                             {getIemFullName(iem)}
                         </h1>
+<EditorialNote createdAt={iem.createdAt} updatedAt={iem.updatedAt} tested={iem.ratings.ratingConfidence === "personal-tested"} confidence={iem.ratings.ratingConfidence} />
 
                         <p className="body-copy mt-3">
                             {iem.subtitle}
@@ -193,7 +213,7 @@ export default async function IemPage({ params }: Props) {
                                 <StorePill
                                     key={store.label}
                                     label={store.label}
-                                    href={store.url}
+                                    href={safeExternalUrl(store.url) ?? "#buying"}
                                 />
                             ))}
                             <IconTooltip label="Open product image">

@@ -5,21 +5,21 @@ import { ArrowRight } from "lucide-react";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, seoKeywords } from "@/lib/seo";
 import { getPublicGuides } from "@/server/catalog/guides";
 
 export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-    title: "FPS Mousepad Guides",
+    title: "FPS Mousepad Guides & Buying Advice",
     description:
-        "Learn how control, speed, stopping power, texture, and humidity affect mousepad feel, and compare surfaces before choosing your next FPS pad.",
+        "Learn how control, speed, stopping power, texture, and humidity affect mousepad feel before choosing your next FPS mousepad.",
     path: "/mousepads/guides",
     keywords: [
-        "mousepad guide",
-        "control vs speed mousepad",
-        "how to choose a mousepad",
-        "mousepad humidity guide",
+        ...seoKeywords.guides,
+        ...seoKeywords.mousepads,
+        ...seoKeywords.games,
+        ...seoKeywords.questions,
     ],
 });
 

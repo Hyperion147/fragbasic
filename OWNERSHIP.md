@@ -83,13 +83,9 @@ Product **numbers and copy** come from community reviews, manufacturer specs, an
 ### Data
 
 ```text
-src/data/mousepads/     artisan, lgg, zowie, xraypad, steelseries, others, glasspads, related-alternatives
-src/data/mousepads/mousepads.ts   barrel aggregate of all pads
-src/data/iems/
-src/data/accessories/
-src/data/comparisons.ts
-src/data/best-pages.ts
-src/data/guides.ts
+Postgres (Drizzle schema in src/db/schema.ts)
+src/server/catalog/   public readers (published rows only)
+src/db/snapshot.ts    database catalog export
 ```
 
 ### Types
@@ -297,7 +293,7 @@ Problem: **too much font-size differentiation** without a named scale → incons
 | `src/components/mousepads/mousepad-browser.tsx` | Explore UI: filter/search and navigate to product pages (table-structured exploration) |
 | `src/app/globals.css` | Design tokens (shadcn-style + brand) for consistency |
 
-**Correction vs earlier draft:** `src/lib/mousepads.ts` is **domain API** (getAll, getBySlug, company naming), not “only shadcn.”
+**Correction vs earlier draft:** `src/lib/mousepads.ts` is **domain API** (format helpers, company naming), not “only shadcn.”
 
 ---
 

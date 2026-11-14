@@ -9,6 +9,6 @@ export function createEmptyGlasspad() {
         base: "rubber" as const,
         softness: "hard" as const,
         glassSurfaceFinish: "unknown" as const,
-        images: { main: "/mousepads/glasspads/placeholder.png" },
+        images: { main: "/product-placeholder.svg" },
     };
 }

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/optimized-image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -202,6 +202,7 @@ function LatestMousepadCard({
           src={pad.images.main}
           alt={getMousepadFullName(pad)}
           fill
+          priority={featured}
           sizes={
             featured
               ? "(min-width: 1024px) 24vw, 90vw"
@@ -349,6 +350,7 @@ function LatestIemCard({
           src={iem.images.main}
           alt={getIemFullName(iem)}
           fill
+          priority={featured}
           sizes={
             featured
               ? "(min-width: 1024px) 24vw, 90vw"

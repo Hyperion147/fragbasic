@@ -1,3 +1,4 @@
+import { withCatalogWrite } from "@/server/catalog/write";
 import { comparisonWriteSchema } from "@/schemas/comparison";
 import { jsonError, jsonOk, zodError } from "@/server/api";
 import { requireAdmin } from "@/server/auth";
@@ -13,8 +14,7 @@ export async function GET(_request: Request, context: Ctx) {
   return row ? jsonOk({ comparison: row }) : jsonError("Not found", 404);
 }
 
-export async function PATCH(request: Request, context: Ctx) {
-  if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
+export const PATCH = withCatalogWrite(async (request: Request, context: Ctx) => {
   const id = (await context.params).id;
   const existing = await repo.getComparisonById(id);
   if (!existing) return jsonError("Not found", 404);
@@ -34,9 +34,9 @@ export async function PATCH(request: Request, context: Ctx) {
     if (clash && clash.id !== id) return jsonError("Slug already exists", 409);
   }
 
-  const missing = await findMissingPadSlugs([data.leftSlug, data.rightSlug]);
+  const missing = await findMissingPadSlugs([data.leftSlug, data.rightSlug], status === "published");
   if (missing.length > 0) {
-    return jsonError(`Unknown pad slug(s): ${missing.join(", ")}`, 400);
+    return jsonError(`Missing or unpublished pad slug(s): ${missing.join(", ")}`, 400);
   }
 
   const comparison = await repo.updateComparison(id, {
@@ -51,13 +51,12 @@ export async function PATCH(request: Request, context: Ctx) {
 
   revalidateCatalog("comparisons");
   return jsonOk({ comparison });
-}
+});
 
-export async function DELETE(_request: Request, context: Ctx) {
-  if (!(await requireAdmin())) return jsonError("Unauthorized", 401);
+export const DELETE = withCatalogWrite(async (_request: Request, context: Ctx) => {
   const id = (await context.params).id;
   const row = await repo.deleteComparison(id);
   if (!row) return jsonError("Not found", 404);
   revalidateCatalog("comparisons");
   return jsonOk({ ok: true, id });
-}
+});

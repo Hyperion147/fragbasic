@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/optimized-image";
 import { Gamepad2, RefreshCw, ScanSearch } from "lucide-react";
 
 const principles = [
@@ -53,7 +53,7 @@ export function WhySection() {
       <div className="hidden sm:grid lg:grid-cols-[.9fr_1.1fr]">
         <div className="relative min-h-[28rem] overflow-hidden border-b border-white/8 sm:min-h-[36rem] lg:min-h-[48rem] lg:border-b-0 lg:border-r">
           <Image
-            src="/why-this-exist.png"
+            src="/why-this-exist.webp"
             alt="A focused desktop gaming setup used to research competitive gear"
             fill
             sizes="(max-width: 1024px) 100vw, 45vw"

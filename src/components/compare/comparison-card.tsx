@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import type { MousepadComparison } from "@/data/comparisons";
+import type { MousepadComparison } from "@/types/comparison";
 import { formatFeelLabel } from "@/lib/mousepads";
 import type { Mousepad } from "@/types/mousepad";
 

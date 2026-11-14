@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { iemSlugSchema, httpUrlSchema, imagePathSchema } from "@/lib/validation/catalog";
 
 export const iemDriverTypeSchema = z.enum([
   "single-dd",
@@ -101,7 +102,7 @@ export const iemSpecSchema = z.object({
 
 export const iemStoreSchema = z.object({
   label: nonEmpty,
-  url: z.string().url().optional(),
+  url: httpUrlSchema.optional(),
 });
 
 export const iemBuyingSchema = z.object({
@@ -119,9 +120,9 @@ export const iemFrequencyPointSchema = z.object({
 });
 
 export const iemFrequencyGraphSchema = z.object({
-  url: z.string().url(),
+  url: httpUrlSchema,
   source: nonEmpty,
-  sourceUrl: z.string().url(),
+  sourceUrl: httpUrlSchema,
   rig: nonEmpty,
   points: z.array(iemFrequencyPointSchema).min(2),
   target: z.array(iemFrequencyPointSchema).min(2),
@@ -144,16 +145,16 @@ export const iemOfficialReviewSchema = z.object({
 export const iemSourceSchema = z.object({
   label: nonEmpty,
   type: iemSourceTypeSchema,
-  url: z.string().url().optional(),
+  url: httpUrlSchema.optional(),
 });
 
 export const iemImagesSchema = z.object({
-  main: nonEmpty,
+  main: imagePathSchema,
 });
 
 export const iemSchema = z.object({
   id: nonEmpty,
-  slug: nonEmpty,
+  slug: iemSlugSchema,
   brand: nonEmpty,
   name: nonEmpty,
   shortName: nonEmpty,

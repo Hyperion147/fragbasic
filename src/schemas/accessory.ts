@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { accessorySlugSchema, httpUrlSchema } from "@/lib/validation/catalog";
 
 const mouseSkateMaterialSchema = z.enum(["ptfe", "hardened-ptfe", "uhmwpe", "glass", "titanium"]);
 const mouseSkateShapeSchema = z.enum(["dots", "donuts", "mouse-specific"]);
@@ -8,7 +9,7 @@ const mouseSkateRatingConfidenceSchema = z.enum(["official", "community", "estim
 export const mouseSkateSchema = z
   .object({
     id: z.string().min(1),
-    slug: z.string().min(1),
+    slug: accessorySlugSchema,
     brand: z.string().min(1),
     name: z.string().min(1),
     series: z.string().min(1),
@@ -47,7 +48,7 @@ export const mouseSkateSchema = z
     sources: z.array(z.object({
       label: z.string().min(1),
       type: z.enum(["official", "store", "reddit", "review"]),
-      url: z.string().url().optional(),
+      url: httpUrlSchema.optional(),
     })),
   });
 

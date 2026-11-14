@@ -34,7 +34,7 @@ export function AiSpecTable({
   return (
     <section aria-label={heading} className="soft-panel p-4 sm:p-5">
       <h2 className="section-title">{heading}</h2>
-      <div className="mt-4 overflow-x-auto">
+      <div tabIndex={0} role="region" aria-label="Product specifications" className="mt-4 overflow-x-auto">
         <table className="w-full min-w-[520px] border-collapse text-left text-sm">
           <thead>
             <tr className="text-xs uppercase tracking-wide text-muted-foreground">

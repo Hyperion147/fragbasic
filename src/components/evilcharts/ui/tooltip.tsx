@@ -1,4 +1,5 @@
-import { getPayloadConfigFromPayload, getColorsCount, useChart } from "@/components/evilcharts/ui/chart";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { getPayloadConfigFromPayload, useChart } from "@/components/evilcharts/ui/chart";
 import type { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 import * as RechartsPrimitive from "recharts";
 import { cn } from "@/lib/utils";
@@ -25,7 +26,6 @@ function ChartTooltipContent({
   className,
   indicator = "dot",
   hideLabel = false,
-  hideIndicator = false,
   label,
   labelFormatter,
   labelClassName,
@@ -106,8 +106,6 @@ function ChartTooltipContent({
             const key = `${payloadName ?? item.name ?? item.dataKey ?? "value"}`;
             const itemConfig = getPayloadConfigFromPayload(config, item, key);
 
-            // Get colors count for this item to determine gradient vs solid
-            const colorsCount = itemConfig ? getColorsCount(itemConfig) : 1;
 
             return (
               <div
@@ -152,26 +150,13 @@ function ChartTooltipContent({
   );
 }
 
-function getIndicatorColorStyle(dataKey: string, colorsCount: number): React.CSSProperties {
-  if (colorsCount <= 1) {
-    return { background: `var(--color-${dataKey}-0)` };
-  }
-
-  // Multiple colors: create linear gradient with evenly distributed stops
-  const stops = Array.from({ length: colorsCount }, (_, index) => {
-    const offset = (index / (colorsCount - 1)) * 100;
-    return `var(--color-${dataKey}-${index}) ${offset}%`;
-  }).join(", ");
-
-  return { background: `linear-gradient(to right, ${stops})` };
-}
-
 const ChartTooltip = ({
   animationDuration = 200,
   ...props
-}: React.ComponentProps<typeof RechartsPrimitive.Tooltip>) => (
-  <RechartsPrimitive.Tooltip animationDuration={animationDuration} {...props} />
-);
+}: React.ComponentProps<typeof RechartsPrimitive.Tooltip>) => {
+  const reducedMotion = useReducedMotion();
+  return <RechartsPrimitive.Tooltip {...props} animationDuration={reducedMotion ? 0 : animationDuration} />;
+};
 
 export { ChartTooltip, ChartTooltipContent };
 export type { TooltipRoundness, TooltipVariant };

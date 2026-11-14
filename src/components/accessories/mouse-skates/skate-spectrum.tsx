@@ -2,6 +2,7 @@
 
 import type { ComponentType } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import {
     ArrowLeft,
     ArrowRight,
@@ -182,16 +183,17 @@ function SpectrumSkateCard({
             </div>
 
             <IconTooltip label={skate.name}>
-                <div
-                    className="mx-auto mt-1 flex h-8 w-36 max-w-full items-center justify-center rounded-full px-3 text-center text-[11px] font-semibold text-slate-950"
+                <Link
+                    href={`/accessories/mouse-skates/${skate.slug}`}
+                    className="mx-auto mt-1 flex h-8 w-36 max-w-full items-center justify-center rounded-full px-3 text-center text-[11px] font-semibold text-slate-950 transition-opacity hover:opacity-85"
                     style={{
                         background: `linear-gradient(90deg, ${visual.secondaryHex}, ${visual.primaryHex})`,
                         color: visual.textHex,
                     }}
-                    tabIndex={0}
+                    aria-label={`View ${skate.brand} ${skate.name} details`}
                 >
                     <span className="truncate">{skate.name}</span>
-                </div>
+                </Link>
             </IconTooltip>
 
             <div className="mt-5 space-y-3">

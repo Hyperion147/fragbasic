@@ -15,6 +15,16 @@ const footerGroups = [
         ],
     },
     {
+        title: "Brands",
+        links: [
+            { label: "All mousepad brands", href: "/mousepads/brand" },
+            { label: "Artisan mousepads", href: "/mousepads/brand/artisan" },
+            { label: "Xraypad mousepads", href: "/mousepads/brand/xraypad" },
+            { label: "Zowie mousepads", href: "/mousepads/brand/zowie" },
+            { label: "LGG mousepads", href: "/mousepads/brand/lgg" },
+        ],
+    },
+    {
         title: "Research",
         links: [
             {
@@ -33,6 +43,7 @@ const footerGroups = [
                 label: "Submit a review",
                 href: "https://forms.gle/5b1QejGptx63eQHw9",
             },
+            { label: "Editorial policy & disclosures", href: "/editorial-policy" },
             { label: "Follow on X", href: "https://x.com/suryansu87" },
         ],
     },
@@ -42,16 +53,16 @@ export function SiteFooter() {
 
     return (
         <footer className="relative isolate overflow-hidden border-y border-white/8 bg-[#08080b] text-white">
-            <div className="grid border-y border-white/8 sm:grid-cols-3 lg:border-l lg:border-t-0 px-6">
+            <div className="grid border-y border-white/8 sm:grid-cols-2 lg:grid-cols-4 lg:border-l lg:border-t-0 px-6">
                 {footerGroups.map((group) => (
                     <section
                         key={group.title}
                         className="border-b border-white/8 p-5 last:border-b-0 sm:border-b-0 sm:border-r sm:p-7 sm:last:border-r-0 lg:p-9"
                     >
-                        <p className="text-[10px] font-semibold uppercase text-white/32 sm:text-xs">
+                        <p className="text-[10px] font-semibold uppercase text-white/65 sm:text-xs">
                             {group.title}
                         </p>
-                        <nav className="mt-6 space-y-4">
+                        <nav aria-label={`${group.title} links`} className="mt-6 space-y-4">
                             {group.links.map((link) => (
                                 <Link
                                     key={link.href}
@@ -67,7 +78,7 @@ export function SiteFooter() {
                 ))}
             </div>
 
-            <div className="flex flex-col gap-4 px-5 py-6 text-xs text-white/32 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12 xl:px-16">
+            <div className="flex flex-col gap-4 px-5 py-6 text-xs text-white/65 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12 xl:px-16">
                 <p>© 2026 FragBasic. FPS gear research.</p>
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
                     <span>No sponsored rankings</span>
@@ -81,12 +92,9 @@ export function SiteFooter() {
                 </div>
             </div>
 
-            <p
-                aria-hidden="true"
-                className="select-none overflow-hidden border-t border-white/8 px-3 pb-2 pt-4 text-center text-[clamp(4.5rem,14.4vw,17rem)] font-semibold leading-[.72] tracking-[-.085em] text-white/[.035]"
-            >
-                FRAGBASIC
-            </p>
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 1000 145" className="w-full select-none border-t border-white/8 px-3 pt-4">
+                <text x="500" y="126" textAnchor="middle" fill="white" opacity="0.035" fontSize="157" fontWeight="600" letterSpacing="-10">FRAGBASIC</text>
+            </svg>
         </footer>
     );
 }

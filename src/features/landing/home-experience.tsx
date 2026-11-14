@@ -4,6 +4,7 @@ import { PagesShowcaseSection } from "@/features/landing/pages-showcase-section"
 import { PopularComparisonsSection } from "@/features/landing/popular-comparisons-section";
 import { MethodologySection } from "@/features/landing/methodology-section";
 import type { LandingProps } from "@/features/landing/types";
+import { HomeSeoSection } from "@/features/landing/seo-section";
 import { WhySection } from "@/features/landing/why-section";
 
 export function HomeExperience({
@@ -36,6 +37,7 @@ export function HomeExperience({
                 <MethodologySection />
                 <PopularComparisonsSection comparisons={comparisons} />
                 <WhySection />
+                <HomeSeoSection />
             </div>
         </main>
     );

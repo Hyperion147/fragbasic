@@ -5,11 +5,19 @@ import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { MousepadBrowser } from "@/components/mousepads/mousepad-browser";
 import { SiteSection } from "@/components/SiteSection";
+import { AiFaq } from "@/components/seo/ai-blocks";
+import { PopularSearches } from "@/components/seo/related-links";
 import {
   getMousepadBrandOptions,
   getMousepadCategoryOptions,
 } from "@/lib/mousepads";
-import { buildCollectionJsonLd, buildMetadata } from "@/lib/seo";
+import { mousepadFaqs, mousepadLinkGroups } from "@/lib/seo-content";
+import {
+  buildCollectionJsonLd,
+  buildFaqJsonLd,
+  buildMetadata,
+  seoKeywords,
+} from "@/lib/seo";
 import { getPublicLatestAdded } from "@/server/catalog/latest-added";
 import { getPublicMousepads } from "@/server/catalog/pads";
 import type { MousepadCategory } from "@/types/mousepad";
@@ -17,19 +25,15 @@ import type { MousepadCategory } from "@/types/mousepad";
 export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-    title: "Mousepad Database for FPS Games",
+    title: "Gaming Mousepad Database & Reviews",
     description:
-        "Browse FragBasic's mousepad database for FPS games, with cloth and hybrid pads sorted by speed, control, stopping power, surface feel, and India availability.",
+        "Browse FPS mousepads — cloth, hybrid, control, and speed pads — by stopping power, humidity resistance, price, and India availability.",
     path: "/mousepads",
     keywords: [
-        "mousepad reviews",
-        "mousepad database",
-        "cloth mousepads",
-        "hybrid mousepads",
-        "control mousepads",
-        "speed mousepads",
-        "best fps mousepads",
-        "mousepads india",
+        ...seoKeywords.mousepads,
+        ...seoKeywords.bestLists,
+        ...seoKeywords.games,
+        ...seoKeywords.questions,
     ],
 });
 
@@ -64,6 +68,7 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
                     itemCount: mousepads.length,
                 })}
             />
+            <JsonLd data={buildFaqJsonLd(mousepadFaqs)} />
             <section className="border-b border-border bg-background">
                 <div className="page-hero">
                     <div className="max-w-5xl">
@@ -83,7 +88,7 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
                         </div>
 
                         <h1 className="page-title mt-5">
-                            Browse pads by feel, surface, and India
+                            Browse gaming mousepads by feel, surface, and India
                             availability.
                         </h1>
                     </div>
@@ -101,6 +106,19 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
                             latestAddedSlugs={latestAdded.mousepads}
                         />
                     </Suspense>
+                </SiteSection>
+            </section>
+
+            <section className="page-section border-t border-border">
+                <SiteSection>
+                    <div className="space-y-6">
+                        <AiFaq items={mousepadFaqs} />
+                        <PopularSearches
+                            title="Popular mousepad searches"
+                            description="Jump straight to the game, feel, review, or comparison you are looking for."
+                            groups={mousepadLinkGroups}
+                        />
+                    </div>
                 </SiteSection>
             </section>
         </main>

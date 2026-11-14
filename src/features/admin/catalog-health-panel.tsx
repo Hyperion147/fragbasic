@@ -94,8 +94,7 @@ export function CatalogHealthPanel({ compact = false }: Props) {
               key={module.module}
               className="rounded-full border border-border/70 px-2.5 py-1 text-xs text-muted-foreground"
             >
-              {module.label}: {module.published}/{module.total}{" "}
-              <span className="uppercase tracking-wide">{module.source}</span>
+              {module.label}: {module.published}/{module.total}
             </span>
           ))}
         </div>
@@ -105,7 +104,6 @@ export function CatalogHealthPanel({ compact = false }: Props) {
             <TableHeader>
               <TableRow>
                 <TableHead>Module</TableHead>
-                <TableHead>Source</TableHead>
                 <TableHead className="text-right">Total</TableHead>
                 <TableHead className="text-right">Published</TableHead>
                 <TableHead className="text-right">Draft</TableHead>
@@ -117,13 +115,6 @@ export function CatalogHealthPanel({ compact = false }: Props) {
               {report.modules.map((module) => (
                 <TableRow key={module.module}>
                   <TableCell className="font-medium">{module.label}</TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={module.source === "db" ? "default" : "secondary"}
-                    >
-                      {module.source}
-                    </Badge>
-                  </TableCell>
                   <TableCell className="text-right">{module.total}</TableCell>
                   <TableCell className="text-right">
                     {module.published}
