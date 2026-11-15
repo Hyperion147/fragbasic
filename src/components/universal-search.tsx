@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { Dialog } from "radix-ui";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -33,6 +34,37 @@ import {
   type SearchItem,
   type SearchKind,
 } from "@/lib/search";
+
+// Build the decorative text once; typing never runs a flame animation loop.
+const ASCII_FLAMES = Array.from({ length: 12 }, (_, row) =>
+  Array.from({ length: 180 }, (_, column) => {
+    const height = 2 + Math.round(
+      6 * ((Math.sin(column * 0.21) + 1) / 2) ** 2 +
+      3 * (Math.sin(column * 0.57) + 1) / 2,
+    );
+    const fromBottom = 11 - row;
+    if (fromBottom >= height) {
+      return fromBottom < height + 3 && (column + row * 7) % 19 === 0 ? "." : " ";
+    }
+    const density = (height - fromBottom) / height;
+    const glyphs = density < 0.2 ? ".'`:" : density < 0.5 ? ":;*+" : "+x%#@";
+    return glyphs[(column * 7 + row * 11) % glyphs.length];
+  }).join(""),
+);
+
+function SearchFlames() {
+  return (
+    <div className="search-flames" aria-hidden="true">
+      <svg className="search-flames-ascii" viewBox="0 0 1440 144" preserveAspectRatio="none">
+        {ASCII_FLAMES.map((line, row) => (
+          <text key={row} x="0" y={(row + 1) * 12} textLength="1440" lengthAdjust="spacingAndGlyphs" xmlSpace="preserve">
+            {line}
+          </text>
+        ))}
+      </svg>
+    </div>
+  );
+}
 
 const SEARCH_INDEX_URL = "/api/search-index";
 
@@ -120,6 +152,7 @@ export function UniversalSearch() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
+  const openerRef = useRef<HTMLElement | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -182,6 +215,7 @@ export function UniversalSearch() {
   const hasQuery = deferredQuery.trim().length > 0;
 
   const openSearch = useCallback(() => {
+    openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     setQuery("");
     setActiveIndex(0);
     setOpen(true);
@@ -207,21 +241,6 @@ export function UniversalSearch() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, openSearch]);
-
-  useEffect(() => {
-    if (!open) {
-      document.body.style.overflow = "";
-      return;
-    }
-
-    document.body.style.overflow = "hidden";
-    const frame = requestAnimationFrame(() => inputRef.current?.focus());
-
-    return () => {
-      cancelAnimationFrame(frame);
-      document.body.style.overflow = "";
-    };
-  }, [open]);
 
   useEffect(() => {
     listRef.current
@@ -266,12 +285,15 @@ export function UniversalSearch() {
   let runningIndex = -1;
 
   return (
-    <>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
       <button
         type="button"
         onClick={openSearch}
+        aria-haspopup="dialog"
+        aria-expanded={open}
         onPointerEnter={() => void hydrateIndex()}
         onFocus={() => void hydrateIndex()}
+        aria-label="Search FragBasic"
         className="hidden h-9 items-center gap-2 rounded-md border border-transparent bg-background/60 px-3 text-sm text-muted-foreground shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_8%,transparent)] transition-colors hover:text-foreground md:flex lg:w-56"
       >
         <Search className="size-4 shrink-0" />
@@ -284,6 +306,8 @@ export function UniversalSearch() {
       <button
         type="button"
         onClick={openSearch}
+        aria-haspopup="dialog"
+        aria-expanded={open}
         onPointerEnter={() => void hydrateIndex()}
         onFocus={() => void hydrateIndex()}
         aria-label="Search FragBasic"
@@ -292,197 +316,200 @@ export function UniversalSearch() {
         <Search className="size-4" />
       </button>
 
-      {open ? (
-        <div
-          className="fixed inset-0 z-50 flex items-start justify-center px-4 pt-[12vh]"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Search FragBasic"
+      <Dialog.Portal>
+        <Dialog.Overlay className="search-overlay">
+          <SearchFlames />
+        </Dialog.Overlay>
+        <Dialog.Content
+          className="search-panel"
+          aria-describedby={undefined}
+          onOpenAutoFocus={(event) => {
+            event.preventDefault();
+            inputRef.current?.focus();
+          }}
+          onCloseAutoFocus={(event) => {
+            event.preventDefault();
+            openerRef.current?.focus({ preventScroll: true });
+          }}
         >
-          <button
-            type="button"
-            aria-label="Close search"
-            onClick={() => setOpen(false)}
-            className="absolute inset-0 cursor-default bg-black/70 backdrop-blur-md"
-          />
+          <Dialog.Title className="sr-only">Search FragBasic</Dialog.Title>
+          <div className="flex items-center gap-3 border-b border-white/8 px-4">
+            <Search className="size-4 shrink-0 text-muted-foreground" />
+            <input
+              ref={inputRef}
+              value={query}
+              onChange={(event) => onQueryChange(event.target.value)}
+              onKeyDown={onInputKeyDown}
+              placeholder="Search pads, IEMs, skates, guides…"
+              aria-label="Search FragBasic"
+              aria-expanded="true"
+              aria-controls="fragbasic-search-results"
+              aria-activedescendant={
+                flatItems[activeIndex]
+                  ? `search-option-${flatItems[activeIndex].id}`
+                  : undefined
+              }
+              role="combobox"
+              autoComplete="off"
+              spellCheck={false}
+              className="h-13 min-w-0 flex-1 bg-transparent py-3.5 text-[15px] text-foreground outline-none focus-visible:outline-none placeholder:text-muted-foreground/70"
+            />
+            {query ? (
+              <button
+                type="button"
+                onClick={() => onQueryChange("")}
+                aria-label="Clear search"
+                className="flex size-6 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/8 hover:text-foreground"
+              >
+                <X className="size-3.5" />
+              </button>
+            ) : null}
+            <Dialog.Close asChild>
+              <button type="button" aria-label="Close search" className="flex size-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-white/8 hover:text-foreground">
+                <X className="size-4" />
+              </button>
+            </Dialog.Close>
+          </div>
 
-          <div className="relative w-full max-w-xl overflow-hidden rounded-xl border border-white/12 bg-[#101014] shadow-2xl">
-            <div className="flex items-center gap-3 border-b border-white/8 px-4">
-              <Search className="size-4 shrink-0 text-muted-foreground" />
-              <input
-                ref={inputRef}
-                value={query}
-                onChange={(event) => onQueryChange(event.target.value)}
-                onKeyDown={onInputKeyDown}
-                placeholder="Search pads, IEMs, skates, guides…"
-                aria-label="Search FragBasic"
-                aria-expanded="true"
-                aria-controls="fragbasic-search-results"
-                aria-activedescendant={
-                  flatItems[activeIndex]
-                    ? `search-option-${flatItems[activeIndex].id}`
-                    : undefined
-                }
-                role="combobox"
-                autoComplete="off"
-                spellCheck={false}
-                className="h-13 flex-1 bg-transparent py-3.5 text-[15px] text-foreground outline-none placeholder:text-muted-foreground/70"
-              />
-              {query ? (
-                <button
-                  type="button"
-                  onClick={() => onQueryChange("")}
-                  aria-label="Clear search"
-                  className="flex size-6 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/8 hover:text-foreground"
-                >
-                  <X className="size-3.5" />
-                </button>
-              ) : null}
-              <kbd className="shrink-0 rounded border border-white/10 bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
-                ESC
-              </kbd>
-            </div>
-
-            <div
-              ref={listRef}
-              id="fragbasic-search-results"
-              role="listbox"
-              aria-label="Search results"
-              className="max-h-[50vh] overflow-y-auto p-2"
-            >
-              {flatItems.length > 0 ? (
-                groups.map((group) => (
-                  <div key={group.kind} className="mt-1 first:mt-0">
-                    <p className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                      {group.label}
-                    </p>
-                    {group.items.map((item) => {
-                      runningIndex += 1;
-                      const itemIndex = runningIndex;
-                      const isActive = itemIndex === activeIndex;
-                      const Icon = KIND_ICONS[item.kind];
-                      return (
-                        <button
-                          key={item.id}
-                          id={`search-option-${item.id}`}
-                          data-search-index={itemIndex}
-                          type="button"
-                          role="option"
-                          aria-selected={isActive}
-                          onMouseEnter={() => setActiveIndex(itemIndex)}
-                          onClick={() => goTo(item.href)}
+          <div
+            ref={listRef}
+            id="fragbasic-search-results"
+            role="listbox"
+            aria-label="Search results"
+            className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2"
+          >
+            {flatItems.length > 0 ? (
+              groups.map((group) => (
+                <div key={group.kind} className="mt-1 first:mt-0">
+                  <p className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                    {group.label}
+                  </p>
+                  {group.items.map((item) => {
+                    runningIndex += 1;
+                    const itemIndex = runningIndex;
+                    const isActive = itemIndex === activeIndex;
+                    const Icon = KIND_ICONS[item.kind];
+                    return (
+                      <button
+                        key={item.id}
+                        id={`search-option-${item.id}`}
+                        data-search-index={itemIndex}
+                        type="button"
+                        role="option"
+                        aria-selected={isActive}
+                        onMouseEnter={() => setActiveIndex(itemIndex)}
+                        onClick={() => goTo(item.href)}
+                        className={cn(
+                          "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors",
+                          isActive ? "bg-brand/15" : "bg-transparent",
+                        )}
+                      >
+                        <span
                           className={cn(
-                            "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors",
-                            isActive ? "bg-brand/15" : "bg-transparent",
+                            "flex size-8 shrink-0 items-center justify-center rounded-md border border-white/8 bg-white/[0.03]",
+                            isActive ? "text-brand-hover" : "text-muted-foreground",
                           )}
                         >
-                          <span
-                            className={cn(
-                              "flex size-8 shrink-0 items-center justify-center rounded-md border border-white/8 bg-white/[0.03]",
-                              isActive ? "text-brand-hover" : "text-muted-foreground",
-                            )}
-                          >
-                            <Icon className="size-4" />
+                          <Icon className="size-4" />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block truncate text-sm font-medium text-foreground">
+                            <HighlightedTitle
+                              title={item.title}
+                              query={deferredQuery}
+                            />
                           </span>
-                          <span className="min-w-0 flex-1">
-                            <span className="block truncate text-sm font-medium text-foreground">
-                              <HighlightedTitle
-                                title={item.title}
-                                query={deferredQuery}
-                              />
-                            </span>
-                            <span className="mt-0.5 block truncate text-xs text-muted-foreground">
-                              {item.subtitle}
-                            </span>
+                          <span className="mt-0.5 block truncate text-xs text-muted-foreground">
+                            {item.subtitle}
                           </span>
-                          {isActive ? (
-                            <CornerDownLeft className="size-3.5 shrink-0 text-muted-foreground" />
-                          ) : null}
-                        </button>
-                      );
-                    })}
-                  </div>
-                ))
-              ) : hasQuery && indexStatus === "idle" ? (
-                <div className="px-4 py-10 text-center" aria-live="polite">
-                  <p className="text-sm font-medium text-foreground">
-                    Loading catalog…
-                  </p>
-                  <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                    Searching pads, IEMs, skates, and guides.
-                  </p>
+                        </span>
+                        {isActive ? (
+                          <CornerDownLeft className="size-3.5 shrink-0 text-muted-foreground" />
+                        ) : null}
+                      </button>
+                    );
+                  })}
                 </div>
-              ) : hasQuery && indexStatus === "error" ? (
-                <div className="px-4 py-10 text-center">
-                  <p className="text-sm font-medium text-foreground">
-                    Search is unavailable right now.
-                  </p>
-                  <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                    Check your connection and try again.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={retryIndex}
-                    className="mt-4 rounded-md border border-white/12 px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-white/8"
-                  >
-                    Retry
-                  </button>
+              ))
+            ) : hasQuery && indexStatus === "idle" ? (
+              <div className="px-4 py-10 text-center" aria-live="polite">
+                <p className="text-sm font-medium text-foreground">
+                  Loading catalog…
+                </p>
+                <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                  Searching pads, IEMs, skates, and guides.
+                </p>
+              </div>
+            ) : hasQuery && indexStatus === "error" ? (
+              <div className="px-4 py-10 text-center">
+                <p className="text-sm font-medium text-foreground">
+                  Search is unavailable right now.
+                </p>
+                <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                  Check your connection and try again.
+                </p>
+                <button
+                  type="button"
+                  onClick={retryIndex}
+                  className="mt-4 rounded-md border border-white/12 px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-white/8"
+                >
+                  Retry
+                </button>
+              </div>
+            ) : hasQuery ? (
+              <div className="px-4 py-10 text-center">
+                <p className="text-sm font-medium text-foreground">
+                  No results for &ldquo;{deferredQuery.trim()}&rdquo;
+                </p>
+                <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                  Try a brand, product name, or category like glass, control,
+                  or planar.
+                </p>
+              </div>
+            ) : (
+              <div className="p-2">
+                <p className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                  Jump to
+                </p>
+                <div className="grid gap-1 sm:grid-cols-2">
+                  {QUICK_LINKS.map((link) => (
+                    <Link
+                      key={link.href + link.label}
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="group flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-sm text-foreground/85 transition-colors hover:bg-brand/15 hover:text-foreground"
+                    >
+                      {link.label}
+                      <ArrowUpRight className="size-3.5 text-muted-foreground transition-colors group-hover:text-brand-hover" />
+                    </Link>
+                  ))}
                 </div>
-              ) : hasQuery ? (
-                <div className="px-4 py-10 text-center">
-                  <p className="text-sm font-medium text-foreground">
-                    No results for &ldquo;{deferredQuery.trim()}&rdquo;
-                  </p>
-                  <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                    Try a brand, product name, or category like glass, control,
-                    or planar.
-                  </p>
-                </div>
-              ) : (
-                <div className="p-2">
-                  <p className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                    Jump to
-                  </p>
-                  <div className="grid gap-1 sm:grid-cols-2">
-                    {QUICK_LINKS.map((link) => (
-                      <Link
-                        key={link.href + link.label}
-                        href={link.href}
-                        onClick={() => setOpen(false)}
-                        className="group flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-sm text-foreground/85 transition-colors hover:bg-brand/15 hover:text-foreground"
-                      >
-                        {link.label}
-                        <ArrowUpRight className="size-3.5 text-muted-foreground transition-colors group-hover:text-brand-hover" />
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="hidden items-center gap-4 border-t border-white/8 px-4 py-2.5 text-[11px] text-muted-foreground sm:flex">
-              <span className="inline-flex items-center gap-1.5">
-                <kbd className="rounded border border-white/10 bg-white/[0.04] px-1 py-0.5 font-mono text-[10px]">
-                  ↑↓
-                </kbd>
-                navigate
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <kbd className="rounded border border-white/10 bg-white/[0.04] px-1 py-0.5 font-mono text-[10px]">
-                  ↵
-                </kbd>
-                open
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <kbd className="rounded border border-white/10 bg-white/[0.04] px-1 py-0.5 font-mono text-[10px]">
-                  esc
-                </kbd>
-                close
-              </span>
-            </div>
+              </div>
+            )}
           </div>
-        </div>
-      ) : null}
-    </>
+
+          <div className="hidden items-center gap-4 border-t border-white/8 px-4 py-2.5 text-[11px] text-muted-foreground sm:flex">
+            <span className="inline-flex items-center gap-1.5">
+              <kbd className="rounded border border-white/10 bg-white/[0.04] px-1 py-0.5 font-mono text-[10px]">
+                ↑↓
+              </kbd>
+              navigate
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <kbd className="rounded border border-white/10 bg-white/[0.04] px-1 py-0.5 font-mono text-[10px]">
+                ↵
+              </kbd>
+              open
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <kbd className="rounded border border-white/10 bg-white/[0.04] px-1 py-0.5 font-mono text-[10px]">
+                esc
+              </kbd>
+              close
+            </span>
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }

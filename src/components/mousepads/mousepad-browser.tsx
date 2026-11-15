@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import Image from "@/components/optimized-image";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { CatalogQuerySync, replaceCatalogUrl } from "@/components/catalog-query-sync";
 
 import { MetricCell } from "@/components/data-display";
 import { MousepadCard } from "@/components/mousepads/mousepad-card";
@@ -53,25 +54,28 @@ export function MousepadBrowser({
   searchOnly = false,
   latestAddedSlugs = [],
 }: Props) {
-  const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [filters, setFilters] = useState<MousepadFilterState>(() =>
-    getInitialMousepadFilters(searchParams, initialCategory)
+    getInitialMousepadFilters(new URLSearchParams(), initialCategory)
   );
-  const [query, setQuery] = useState(() => searchParams.get("q") ?? "");
+  const [query, setQuery] = useState("");
+
+  const syncQuery = useCallback((params: URLSearchParams) => {
+    setFilters(getInitialMousepadFilters(params, initialCategory));
+    setQuery(params.get("q") ?? "");
+  }, [initialCategory]);
 
   const handleReset = () => {
     setFilters(getDefaultMousepadFilters());
     setQuery("");
-    router.replace(pathname, { scroll: false });
+    replaceCatalogUrl(pathname);
   };
 
   const updateUrl = (nextFilters: MousepadFilterState, nextQuery: string) => {
     const defaults = getDefaultMousepadFilters();
     const params = new URLSearchParams();
 
-    if (nextQuery.trim()) params.set("q", nextQuery.trim());
+    if (nextQuery.trim()) params.set("q", nextQuery);
     if (!searchOnly && nextFilters.brand !== defaults.brand) params.set("brand", nextFilters.brand);
     if (!searchOnly && nextFilters.category !== defaults.category) params.set("category", nextFilters.category);
     if (!searchOnly && nextFilters.surface !== defaults.surface) params.set("surface", nextFilters.surface);
@@ -81,7 +85,7 @@ export function MousepadBrowser({
     if (!searchOnly && nextFilters.sort !== defaults.sort) params.set("sort", nextFilters.sort);
 
     const serialized = params.toString();
-    router.replace(serialized ? `${pathname}?${serialized}` : pathname, { scroll: false });
+    replaceCatalogUrl(serialized ? `${pathname}?${serialized}` : pathname);
   };
 
   const handleFiltersChange = (next: MousepadFilterState) => {
@@ -144,6 +148,7 @@ export function MousepadBrowser({
 
   return (
     <div className="space-y-8">
+      <CatalogQuerySync onChange={syncQuery} />
       <MousepadFilters
         brands={brands}
         categories={categories}
@@ -370,7 +375,7 @@ function TableHeadLabel({
 }
 
 function getInitialMousepadFilters(
-  searchParams: ReturnType<typeof useSearchParams>,
+  searchParams: URLSearchParams,
   initialCategory?: MousepadCategory
 ): MousepadFilterState {
   const defaults = getDefaultMousepadFilters();

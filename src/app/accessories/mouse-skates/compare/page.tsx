@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 import { MouseSkateCompare } from "@/components/accessories/mouse-skates/mouse-skate-compare";
 import { JsonLd } from "@/components/json-ld";
@@ -30,17 +29,8 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-type CompareMouseSkatesPageProps = {
-  searchParams?: Promise<{
-    left?: string;
-  }>;
-};
-
-export default async function CompareMouseSkatesPage({
-  searchParams,
-}: CompareMouseSkatesPageProps) {
+export default async function CompareMouseSkatesPage() {
   const skates = await getPublicMouseSkates();
-  const params = searchParams ? await searchParams : undefined;
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -70,9 +60,7 @@ export default async function CompareMouseSkatesPage({
       </section>
 
       <section className="page-section">
-        <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading skate comparison...</div>}>
-          <MouseSkateCompare skates={skates} initialLeftSlug={params?.left} />
-        </Suspense>
+        <MouseSkateCompare skates={skates} />
       </section>
 
       <section className="page-section border-t border-border">

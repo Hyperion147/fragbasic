@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "@/components/optimized-image";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { CatalogQuerySync, replaceCatalogUrl } from "@/components/catalog-query-sync";
 import {
   Activity,
   ChevronDown,
@@ -46,10 +47,12 @@ type Props = {
 const leftColor = "var(--iem-hover)";
 const rightColor = "rgb(56 189 248)";
 
+const emptySearchParams = new URLSearchParams();
+
 export function IemCompare({ iems }: Props) {
-  const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const [urlParams, setUrlParams] = useState<URLSearchParams | null>(null);
+  const searchParams = urlParams ?? emptySearchParams;
   const requestedLeft = searchParams.get("left");
   const requestedRight = searchParams.get("right");
   const { leftSlug, rightSlug } = getValidComparePair({
@@ -64,18 +67,18 @@ export function IemCompare({ iems }: Props) {
     const params = new URLSearchParams();
     params.set("left", nextLeft);
     params.set("right", nextRight);
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }, [pathname, router]);
+    replaceCatalogUrl(`${pathname}?${params.toString()}`);
+  }, [pathname]);
 
   useEffect(() => {
-    if (!leftSlug || !rightSlug) {
+    if (!urlParams || !leftSlug || !rightSlug) {
       return;
     }
 
     if (requestedLeft !== leftSlug || requestedRight !== rightSlug) {
       replacePair(leftSlug, rightSlug);
     }
-  }, [leftSlug, replacePair, requestedLeft, requestedRight, rightSlug]);
+  }, [leftSlug, replacePair, requestedLeft, requestedRight, rightSlug, urlParams]);
 
   const handleLeftChange = (nextLeft: string) => {
     const nextRight =
@@ -95,6 +98,7 @@ export function IemCompare({ iems }: Props) {
 
   return (
     <div className="space-y-8">
+      <CatalogQuerySync onChange={setUrlParams} />
       <Card className="bg-card/90 p-5">
         <div className="grid gap-4 md:grid-cols-2">
           <IemSelect

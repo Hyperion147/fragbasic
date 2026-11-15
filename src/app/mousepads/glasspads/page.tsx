@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import { JsonLd } from "@/components/json-ld";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
@@ -14,7 +13,7 @@ import {
   buildMetadata,
   seoKeywords,
 } from "@/lib/seo";
-import { getPublicLatestAdded } from "@/server/catalog/latest-added";
+import { getPublicLatestAddedFor } from "@/server/catalog/latest-added";
 import { getPublicGlasspads } from "@/server/catalog/pads";
 
 export const revalidate = 300;
@@ -37,7 +36,7 @@ const glasspadExtraFaqs = glasspadFaqs.slice(3);
 export default async function GlasspadsPage() {
   const [glasspads, latestAdded] = await Promise.all([
     getPublicGlasspads(),
-    getPublicLatestAdded(),
+    getPublicLatestAddedFor("glasspads"),
   ]);
 
   return (
@@ -78,14 +77,12 @@ export default async function GlasspadsPage() {
 
       <section className="page-section">
         <SiteSection>
-          <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading glasspad filters...</div>}>
-            <MousepadBrowser
-              mousepads={glasspads}
-              categories={[]}
-              searchOnly
-              latestAddedSlugs={latestAdded.glasspads}
-            />
-          </Suspense>
+          <MousepadBrowser
+            mousepads={glasspads}
+            categories={[]}
+            searchOnly
+            latestAddedSlugs={latestAdded}
+          />
         </SiteSection>
       </section>
 

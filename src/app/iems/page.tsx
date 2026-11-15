@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 import { JsonLd } from "@/components/json-ld";
 import { IemBrowser } from "@/components/iems/iem-browser";
@@ -9,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { AiFaq } from "@/components/seo/ai-blocks";
 import { PopularSearches } from "@/components/seo/related-links";
 import { getPublicIems } from "@/server/catalog/iems";
-import { getPublicLatestAdded } from "@/server/catalog/latest-added";
+import { getPublicLatestAddedFor } from "@/server/catalog/latest-added";
 import { iemFaqs, iemLinkGroups } from "@/lib/seo-content";
 import {
   buildCollectionJsonLd,
@@ -35,7 +34,7 @@ export const metadata: Metadata = buildMetadata({
 export default async function IemsPage() {
   const [iems, latestAdded] = await Promise.all([
     getPublicIems(),
-    getPublicLatestAdded(),
+    getPublicLatestAddedFor("iems"),
   ]);
 
   return (
@@ -75,9 +74,7 @@ export default async function IemsPage() {
 
       <section id="iems" className="page-section">
         <SiteSection>
-          <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading IEM filters...</div>}>
-            <IemBrowser iems={iems} latestAddedSlugs={latestAdded.iems} />
-          </Suspense>
+          <IemBrowser iems={iems} latestAddedSlugs={latestAdded} />
         </SiteSection>
       </section>
 

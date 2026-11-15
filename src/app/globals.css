@@ -396,3 +396,76 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* Portalled search stays viewport-sized, outside the navbar's backdrop filter. */
+.search-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    overflow: hidden;
+    background: rgb(5 4 12 / 52%);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+}
+
+.search-flames {
+    position: absolute;
+    inset: auto 0 0;
+    height: min(18dvh, 144px);
+    pointer-events: none;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 110%, rgb(124 58 237 / 10%), transparent 72%);
+}
+
+.search-flames-ascii {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: #a879df;
+    font-family: var(--font-roboto-mono), monospace;
+    font-size: 12px;
+    font-weight: 400;
+    white-space: pre;
+    user-select: none;
+    mask-image: linear-gradient(to bottom, transparent, black 40%);
+    opacity: 0.25;
+    animation: search-flame-glow 5s steps(6, end) infinite alternate;
+}
+
+@media (max-width: 767px) {
+    .search-flames {
+        display: none;
+    }
+}
+
+.search-panel {
+    --search-top: clamp(20px, 12dvh, 120px);
+    position: fixed;
+    top: var(--search-top);
+    left: 50%;
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    width: min(640px, calc(100% - 32px));
+    max-height: min(640px, calc(100dvh - var(--search-top) - 24px));
+    overflow: hidden;
+    transform: translateX(-50%);
+    border: 1px solid rgb(192 132 252 / 24%);
+    border-radius: 16px;
+    background: #101014;
+    box-shadow: 0 24px 80px rgb(0 0 0 / 55%), 0 0 48px rgb(124 58 237 / 10%);
+}
+
+@keyframes search-flame-glow {
+    from { opacity: 0.18; }
+    to { opacity: 0.3; }
+}
+
+.search-panel:focus-within {
+    border-color: rgb(192 132 252 / 45%);
+}
+
+/* The panel border indicates input focus without clipping a second outline. */
+.search-panel input:focus-visible {
+    outline: none;
+}

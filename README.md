@@ -71,6 +71,14 @@ Main SEO files:
 - [`src/app/robots.ts`](src/app/robots.ts)
 - [`src/app/manifest.ts`](src/app/manifest.ts)
 
+## Planned Tasks
+
+- [ ] **Setup showcase accounts and personalized profile themes** — start no earlier than **22 November 2026** (after exams and 21 November), once monitors and keyboards have been added.
+  - Let users create an account and upload a photo to showcase their setup.
+  - Offer Light, Dark, and Setup-based theme options as an individual user preference.
+  - Derive a personal profile palette from the uploaded setup photo, applying it to backgrounds, text, and accents; for example, a neon-lit setup could inspire neon accents.
+  - Keep themes scoped to each user's profile and preferences, with readable contrast and manual color adjustments.
+
 ## Local Development
 
 Install dependencies:

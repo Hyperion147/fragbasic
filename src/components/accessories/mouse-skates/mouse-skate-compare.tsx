@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { CatalogQuerySync, replaceCatalogUrl } from "@/components/catalog-query-sync";
 import { ChevronDown } from "lucide-react";
 
 import { MouseSkateDot } from "@/components/accessories/mouse-skates/mouse-skate-dot";
@@ -34,6 +35,8 @@ const comparedRatings = [
 
 type CompareSlot = "left" | "middle" | "right";
 
+const emptySearchParams = new URLSearchParams();
+
 export function MouseSkateCompare({
     skates,
     initialLeftSlug,
@@ -41,15 +44,16 @@ export function MouseSkateCompare({
     skates: MouseSkate[];
     initialLeftSlug?: string;
 }) {
-    const router = useRouter();
     const pathname = usePathname();
-    const searchParams = useSearchParams();
+    const [urlParams, setUrlParams] = useState<URLSearchParams | null>(null);
+    const searchParams = urlParams ?? emptySearchParams;
     const defaultSlugs = useMemo(() => {
         const sorted = [...skates].sort(
             (left, right) => right.ratings.speed - left.ratings.speed,
         );
-        const initialLeft = initialLeftSlug
-            ? skates.find((skate) => skate.slug === initialLeftSlug)
+        const requestedLeft = searchParams.get("left") ?? initialLeftSlug;
+        const initialLeft = requestedLeft
+            ? skates.find((skate) => skate.slug === requestedLeft)
             : undefined;
 
         const first = initialLeft ?? sorted[0];
@@ -60,9 +64,9 @@ export function MouseSkateCompare({
             middle: fallback[0]?.slug ?? "",
             right: fallback[1]?.slug ?? "",
         };
-    }, [initialLeftSlug, skates]);
+    }, [initialLeftSlug, searchParams, skates]);
 
-    const [selected, setSelected] = useState<Record<CompareSlot, string>>(() => {
+    const selected: Record<CompareSlot, string> = (() => {
         const urlSlugs = (searchParams.get("skates") ?? "")
             .split(",")
             .map((slug) => slug.trim())
@@ -74,7 +78,7 @@ export function MouseSkateCompare({
             middle: urlSlugs[1] ?? defaultSlugs.middle,
             right: urlSlugs[2] ?? defaultSlugs.right,
         };
-    });
+    })();
 
     const selectedSkates = (["left", "middle", "right"] as CompareSlot[])
         .map((slot) => {
@@ -92,17 +96,15 @@ export function MouseSkateCompare({
         );
 
     const updateSlot = (slot: CompareSlot, slug: string) => {
-        setSelected((current) => {
-            const next = { ...current, [slot]: slug };
-            const params = new URLSearchParams(searchParams.toString());
-            params.set("skates", [next.left, next.middle, next.right].filter(Boolean).join(","));
-            router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-            return next;
-        });
+        const next = { ...selected, [slot]: slug };
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("skates", [next.left, next.middle, next.right].filter(Boolean).join(","));
+        replaceCatalogUrl(`${pathname}?${params.toString()}`);
     };
 
     return (
         <div className="space-y-6">
+            <CatalogQuerySync onChange={setUrlParams} />
             <div className="grid gap-4 md:grid-cols-3">
                 {(["left", "middle", "right"] as CompareSlot[]).map(
                     (slot, index) => {

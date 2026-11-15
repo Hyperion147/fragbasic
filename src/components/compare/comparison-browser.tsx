@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { CatalogQuerySync, replaceCatalogUrl } from "@/components/catalog-query-sync";
 import { ArrowRight, SlidersHorizontal } from "lucide-react";
 
 import { ComparisonCard } from "@/components/compare/comparison-card";
@@ -31,24 +32,24 @@ type Props = {
 };
 
 export function ComparisonBrowser({ comparisons, tags }: Props) {
-    const router = useRouter();
     const pathname = usePathname();
-    const searchParams = useSearchParams();
-    const [activeTag, setActiveTag] = useState<string>(
-        () => searchParams.get("tag") ?? "All",
-    );
+    const [activeTag, setActiveTag] = useState("All");
+
+    const syncQuery = useCallback((params: URLSearchParams) => {
+        setActiveTag(params.get("tag") ?? "All");
+    }, []);
 
     const updateTag = (tag: string) => {
         setActiveTag(tag);
 
         if (tag === "All") {
-            router.replace(pathname, { scroll: false });
+            replaceCatalogUrl(pathname);
             return;
         }
 
         const params = new URLSearchParams();
         params.set("tag", tag);
-        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+        replaceCatalogUrl(`${pathname}?${params.toString()}`);
     };
 
     const visibleComparisons =
@@ -60,6 +61,7 @@ export function ComparisonBrowser({ comparisons, tags }: Props) {
 
     return (
         <div className="space-y-6">
+            <CatalogQuerySync onChange={syncQuery} />
             <Card className="border-border bg-card/90 p-4 shadow-lg shadow-black/5 sm:p-5">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                     <div className="space-y-3">

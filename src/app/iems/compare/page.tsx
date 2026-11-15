@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 import { IemCompare } from "@/components/iems/iem-compare";
 import { JsonLd } from "@/components/json-ld";
@@ -58,9 +57,7 @@ export default async function IemComparePage() {
 
       <section className="page-section">
         <SiteSection>
-          <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading IEM comparison...</div>}>
-            <IemCompare iems={iems} />
-          </Suspense>
+          <IemCompare iems={iems} />
         </SiteSection>
       </section>
 

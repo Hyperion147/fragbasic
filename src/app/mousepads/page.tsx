@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import { JsonLd } from "@/components/json-ld";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
@@ -18,9 +17,8 @@ import {
   buildMetadata,
   seoKeywords,
 } from "@/lib/seo";
-import { getPublicLatestAdded } from "@/server/catalog/latest-added";
+import { getPublicLatestAddedFor } from "@/server/catalog/latest-added";
 import { getPublicMousepads } from "@/server/catalog/pads";
-import type { MousepadCategory } from "@/types/mousepad";
 
 export const revalidate = 300;
 
@@ -37,25 +35,13 @@ export const metadata: Metadata = buildMetadata({
     ],
 });
 
-type MousepadsPageProps = {
-    searchParams?: Promise<{
-        category?: string;
-    }>;
-};
-
-export default async function MousepadsPage({ searchParams }: MousepadsPageProps) {
+export default async function MousepadsPage() {
     const [mousepads, latestAdded] = await Promise.all([
         getPublicMousepads(),
-        getPublicLatestAdded(),
+        getPublicLatestAddedFor("mousepads"),
     ]);
-    const params = searchParams ? await searchParams : undefined;
     const brands = getMousepadBrandOptions(mousepads);
     const categories = getMousepadCategoryOptions(mousepads);
-    const initialCategory = categories.some(
-        (option) => option.value === params?.category,
-    )
-        ? (params?.category as MousepadCategory)
-        : undefined;
 
     return (
         <main className="min-h-screen bg-background text-foreground">
@@ -97,15 +83,12 @@ export default async function MousepadsPage({ searchParams }: MousepadsPageProps
 
             <section className="page-section">
                 <SiteSection>
-                    <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading mousepad filters...</div>}>
-                        <MousepadBrowser
-                            mousepads={mousepads}
-                            brands={brands}
-                            categories={categories}
-                            initialCategory={initialCategory}
-                            latestAddedSlugs={latestAdded.mousepads}
-                        />
-                    </Suspense>
+                    <MousepadBrowser
+                        mousepads={mousepads}
+                        brands={brands}
+                        categories={categories}
+                        latestAddedSlugs={latestAdded}
+                    />
                 </SiteSection>
             </section>
 

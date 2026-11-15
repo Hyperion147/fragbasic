@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { CatalogQuerySync, replaceCatalogUrl } from "@/components/catalog-query-sync";
 import {
   ArrowLeftRight,
   Gem,
@@ -40,15 +41,20 @@ const allFilterValue = "all";
 type SortKey = "fastest" | "slowest";
 
 export function MouseSkateBrowser({ skates }: { skates: MouseSkate[] }) {
-  const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [query, setQuery] = useState(() => searchParams.get("q") ?? "");
-  const [brand, setBrand] = useState(() => searchParams.get("brand") ?? allFilterValue);
+  const [query, setQuery] = useState("");
+  const [brand, setBrand] = useState(allFilterValue);
   const [material, setMaterial] = useState<typeof allFilterValue | MouseSkateMaterial>(
-    () => (searchParams.get("material") as MouseSkateMaterial | null) ?? allFilterValue
+    allFilterValue
   );
-  const [sort, setSort] = useState<SortKey>(() => (searchParams.get("sort") as SortKey | null) ?? "fastest");
+  const [sort, setSort] = useState<SortKey>("fastest");
+
+  const syncQuery = useCallback((params: URLSearchParams) => {
+    setQuery(params.get("q") ?? "");
+    setBrand(params.get("brand") ?? allFilterValue);
+    setMaterial((params.get("material") as MouseSkateMaterial | null) ?? allFilterValue);
+    setSort((params.get("sort") as SortKey | null) ?? "fastest");
+  }, []);
 
   const brands = useMemo(
     () => Array.from(new Set(skates.map((skate) => skate.brand))).sort(),
@@ -108,7 +114,7 @@ export function MouseSkateBrowser({ skates }: { skates: MouseSkate[] }) {
     setBrand(allFilterValue);
     setMaterial(allFilterValue);
     setSort("fastest");
-    router.replace(pathname, { scroll: false });
+    replaceCatalogUrl(pathname);
   };
 
   const updateUrl = (next: {
@@ -123,13 +129,13 @@ export function MouseSkateBrowser({ skates }: { skates: MouseSkate[] }) {
     const nextSort = next.sort ?? sort;
     const params = new URLSearchParams();
 
-    if (nextQuery.trim()) params.set("q", nextQuery.trim());
+    if (nextQuery.trim()) params.set("q", nextQuery);
     if (nextBrand !== allFilterValue) params.set("brand", nextBrand);
     if (nextMaterial !== allFilterValue) params.set("material", nextMaterial);
     if (nextSort !== "fastest") params.set("sort", nextSort);
 
     const serialized = params.toString();
-    router.replace(serialized ? `${pathname}?${serialized}` : pathname, { scroll: false });
+    replaceCatalogUrl(serialized ? `${pathname}?${serialized}` : pathname);
   };
 
   const updateQuery = (next: string) => {
@@ -154,6 +160,7 @@ export function MouseSkateBrowser({ skates }: { skates: MouseSkate[] }) {
 
   return (
     <div className="space-y-6">
+      <CatalogQuerySync onChange={syncQuery} />
       <Card className="border-border bg-card/90 p-4 shadow-lg shadow-black/5 sm:p-5">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
