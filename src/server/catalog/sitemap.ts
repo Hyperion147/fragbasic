@@ -10,6 +10,20 @@ import * as comparisons from "@/server/comparisons/repo";
 import * as bestPages from "@/server/best-pages/repo";
 import * as guides from "@/server/guides/repo";
 
+const PUBLIC_ROUTES = [
+  "/", "/editorial-policy", "/mousepads", "/mousepads/brand",
+  "/mousepads/glasspads", "/mousepads/guides", "/mousepads/compare",
+  "/mousepads/compare/universal", "/iems", "/iems/compare",
+  "/accessories/mouse-skates", "/accessories/mouse-skates/browse",
+  "/accessories/mouse-skates/compare", "/best",
+] as const;
+
+/** Only public pages belong here; API, CMS, search/filter URLs are excluded. */
+export async function getPublicSitemap(): Promise<MetadataRoute.Sitemap> {
+  const catalog = await getCatalogSitemap();
+  return [...PUBLIC_ROUTES.map((path) => ({ url: getAbsoluteUrl(path) })), ...catalog];
+}
+
 // Use database modification timestamps, rather than build time or an embedded
 // editorial date that may no longer reflect the latest published content.
 export async function getCatalogSitemap(): Promise<MetadataRoute.Sitemap> {
@@ -54,5 +68,13 @@ export async function getCatalogSitemap(): Promise<MetadataRoute.Sitemap> {
       entries.push({ url: getAbsoluteUrl(`${prefix}/${row.slug}`), lastModified: row.updatedAt });
     }
   }
-  return Array.from(new Map(entries.map((entry) => [entry.url, entry])).values());
+  // Preserve the newest real modification date when a URL exists in both catalogs.
+  const unique = new Map<string, MetadataRoute.Sitemap[number]>();
+  for (const entry of entries) {
+    const previous = unique.get(entry.url);
+    if (!previous || new Date(entry.lastModified!).getTime() > new Date(previous.lastModified!).getTime()) {
+      unique.set(entry.url, entry);
+    }
+  }
+  return [...unique.values()];
 }

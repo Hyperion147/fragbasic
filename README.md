@@ -67,7 +67,7 @@ Main SEO files:
 
 - [`src/lib/seo.ts`](src/lib/seo.ts)
 - [`src/components/json-ld.tsx`](src/components/json-ld.tsx)
-- [`src/app/sitemap.ts`](src/app/sitemap.ts)
+- [`src/app/sitemap.xml/route.ts`](src/app/sitemap.xml/route.ts)
 - [`src/app/robots.ts`](src/app/robots.ts)
 - [`src/app/manifest.ts`](src/app/manifest.ts)
 

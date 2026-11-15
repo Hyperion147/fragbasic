@@ -40,6 +40,12 @@ Search Console ownership is confirmed by the user, but it is not authenticated i
 
 ## Repeatable local reports
 
+The sitemap is served by `src/app/sitemap.xml/route.ts` as UTF-8 XML, prerendered at build time and revalidated every five minutes or after CMS writes. It includes published canonical pages, deduplicates URLs, uses database modification dates, and enforces the protocol's 50,000-URL/50-MB limits. Database errors fail generation instead of publishing an incomplete list. No fabricated dates, priorities, or change frequencies are added.
+
+After deploying sitemap changes, verify `/sitemap.xml` returns HTTP 200 and XML on the production domain and the new deployment URL. If production serves a cached 404, compare its deployment ID with a successful request before changing XML again. A successful local build does not prove that Google has processed the deployed sitemap.
+
+References: [Google sitemap guidelines](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap) and [sitemap protocol](https://www.sitemaps.org/protocol.html).
+
 ```sh
 npm run start -- --port 3100
 # In another terminal:

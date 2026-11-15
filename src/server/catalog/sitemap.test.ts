@@ -15,7 +15,7 @@ import { listMouseSkates } from "@/server/accessories/repo";
 import { listComparisons } from "@/server/comparisons/repo";
 import { listBestPages } from "@/server/best-pages/repo";
 import { listGuides } from "@/server/guides/repo";
-import { getCatalogSitemap } from "./sitemap";
+import { getCatalogSitemap, getPublicSitemap } from "./sitemap";
 
 // Only the fields consumed by the sitemap are needed in these database fixtures.
 function rows(loader: (...args: never[]) => unknown, values: unknown[]) {
@@ -29,6 +29,18 @@ beforeEach(() => {
 });
 
 describe("catalog sitemap", () => {
+  it("includes IEMs and public entry points but excludes draft and private URLs", async () => {
+    rows(listIems, [pad, { ...pad, slug: "draft-iem", status: "draft" }]);
+    const urls = (await getPublicSitemap()).map((entry) => entry.url);
+    expect(urls).toEqual(expect.arrayContaining(["https://fragbasic.fun/", "https://fragbasic.fun/iems", "https://fragbasic.fun/iems/test"]));
+    expect(urls.some((url) => /draft-iem|cms67|\/api\/|\?/.test(url))).toBe(false);
+  });
+  it("retains the newest timestamp across duplicate catalog records", async () => {
+    rows(listMousepads, [{ ...pad, updatedAt: new Date("2026-11-01") }]);
+    rows(listGlasspads, [pad]);
+    const entries = await getCatalogSitemap();
+    expect(entries.find((entry) => entry.url.endsWith("/mousepads/test"))?.lastModified).toEqual(new Date("2026-11-01"));
+  });
   it("excludes drafts and preserves database timestamps and images", async () => {
     rows(listMousepads, [pad, { ...pad, slug: "draft", status: "draft" }]);
     const entries = await getCatalogSitemap();
