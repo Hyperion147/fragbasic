@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, Copy, Scale, ShieldCheck, SlidersHorizontal, X } from "lucide-react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { CatalogQuerySync, replaceCatalogUrl } from "@/components/catalog-query-sync";
 import { Button } from "@/components/ui/button";
 
 import { CompareSummaryCards } from "@/components/compare/universal/compare-summary-cards";
@@ -36,9 +36,12 @@ const DEFAULT_SELECTED_SLUGS = [
 const MAX_SELECTED = 3;
 const LAST_COMPARE_STORAGE_KEY = "fragbasic_last_mousepad_compare";
 
+const emptySearchParams = new URLSearchParams();
+
 export function UniversalCompare({ allMousepads }: Props) {
-    const searchParams = useSearchParams();
-    const router = useRouter();
+    const [urlParams, setUrlParams] = useState<URLSearchParams | null>(null);
+    const searchParams = urlParams ?? emptySearchParams;
+
     const padsParam = searchParams.get("pads");
     const hasPadsParam = searchParams.has("pads");
     const didCheckStoredSelection = useRef(false);
@@ -89,16 +92,11 @@ export function UniversalCompare({ allMousepads }: Props) {
         params.set("pads", slugs.join(","));
 
         const nextQuery = params.toString();
-        router.replace(
-            nextQuery ? `?${nextQuery}` : "/mousepads/compare/universal",
-            {
-                scroll: false,
-            },
-        );
-    }, [router, searchParams]);
+        replaceCatalogUrl(nextQuery ? `?${nextQuery}` : "/mousepads/compare/universal");
+    }, [searchParams]);
 
     useEffect(() => {
-        if (hasPadsParam || didCheckStoredSelection.current) {
+        if (!urlParams || hasPadsParam || didCheckStoredSelection.current) {
             return;
         }
 
@@ -125,7 +123,7 @@ export function UniversalCompare({ allMousepads }: Props) {
         replaceUrl(
             DEFAULT_SELECTED_SLUGS.filter((slug) => availableSlugs.has(slug)),
         );
-    }, [availableSlugs, hasPadsParam, replaceUrl]);
+    }, [availableSlugs, hasPadsParam, replaceUrl, urlParams]);
 
     useEffect(() => {
         if (!hasPadsParam) {
@@ -178,6 +176,7 @@ export function UniversalCompare({ allMousepads }: Props) {
 
     return (
         <div className="space-y-4 sm:space-y-6">
+            <CatalogQuerySync onChange={setUrlParams} />
             <Card className="border-border bg-card">
                 <CardHeader className="p-4 sm:p-6">
                     <div className="flex flex-wrap items-center justify-between gap-2">

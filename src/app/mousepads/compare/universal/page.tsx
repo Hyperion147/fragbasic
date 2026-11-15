@@ -1,6 +1,4 @@
-import { connection } from "next/server";
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import { UniversalCompare } from "@/components/compare/universal/universal-compare";
 import { JsonLd } from "@/components/json-ld";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
@@ -28,9 +26,6 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function UniversalComparePage() {
-  // Render the URL-dependent comparison on the server instead of replacing
-  // a small static Suspense fallback after hydration.
-  await connection();
   const allMousepads = await getPublicPads();
 
   return (
@@ -53,9 +48,7 @@ export default async function UniversalComparePage() {
           stopping power, texture, and humidity resistance. Select your pads below
           to see their specs and feel ratings together.
         </p>
-        <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading comparison tools...</div>}>
-          <UniversalCompare allMousepads={allMousepads} />
-        </Suspense>
+        <UniversalCompare allMousepads={allMousepads} />
       </section>
 
       <section className="page-section border-t border-border">

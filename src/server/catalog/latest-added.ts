@@ -4,6 +4,14 @@ import * as mousepadRepo from "@/server/mousepads/repo";
 
 const LATEST_LIMIT = 3;
 
+export function getPublicLatestAddedFor(module: keyof PublicLatestAdded): Promise<string[]> {
+  switch (module) {
+    case "mousepads": return mousepadRepo.listLatestMousepadSlugs(LATEST_LIMIT);
+    case "glasspads": return glasspadRepo.listLatestGlasspadSlugs(LATEST_LIMIT);
+    case "iems": return iemRepo.listLatestIemSlugs(LATEST_LIMIT);
+  }
+}
+
 export type PublicLatestAdded = {
   mousepads: string[];
   glasspads: string[];
@@ -17,9 +25,9 @@ export type PublicLatestAdded = {
  */
 export async function getPublicLatestAdded(): Promise<PublicLatestAdded> {
   const [mousepads, glasspads, iems] = await Promise.all([
-    mousepadRepo.listLatestMousepadSlugs(LATEST_LIMIT),
-    glasspadRepo.listLatestGlasspadSlugs(LATEST_LIMIT),
-    iemRepo.listLatestIemSlugs(LATEST_LIMIT),
+    getPublicLatestAddedFor("mousepads"),
+    getPublicLatestAddedFor("glasspads"),
+    getPublicLatestAddedFor("iems"),
   ]);
 
   return { mousepads, glasspads, iems };

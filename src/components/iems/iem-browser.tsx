@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import Image from "@/components/optimized-image";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { CatalogQuerySync, replaceCatalogUrl } from "@/components/catalog-query-sync";
 import {
   Activity,
   CircleDollarSign,
@@ -67,16 +68,22 @@ export function IemBrowser({
   iems: Iem[];
   latestAddedSlugs?: readonly string[];
 }) {
-  const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [query, setQuery] = useState(() => searchParams.get("q") ?? "");
-  const [brand, setBrand] = useState<BrandFilter>(() => searchParams.get("brand") ?? allFilterValue);
+  const [query, setQuery] = useState("");
+  const [brand, setBrand] = useState<BrandFilter>(allFilterValue);
   const [signature, setSignature] = useState<typeof allFilterValue | IemSoundSignature>(
-    () => (searchParams.get("signature") as IemSoundSignature | null) ?? allFilterValue,
+    allFilterValue,
   );
-  const [price, setPrice] = useState<PriceFilter>(() => (searchParams.get("price") as PriceFilter | null) ?? allFilterValue);
-  const [sort, setSort] = useState<SortKey>(() => (searchParams.get("sort") as SortKey | null) ?? "score");
+  const [price, setPrice] = useState<PriceFilter>(allFilterValue);
+  const [sort, setSort] = useState<SortKey>("score");
+
+  const syncQuery = useCallback((params: URLSearchParams) => {
+    setQuery(params.get("q") ?? "");
+    setBrand(params.get("brand") ?? allFilterValue);
+    setSignature((params.get("signature") as IemSoundSignature | null) ?? allFilterValue);
+    setPrice((params.get("price") as PriceFilter | null) ?? allFilterValue);
+    setSort((params.get("sort") as SortKey | null) ?? "score");
+  }, []);
 
   const signatures = useMemo(
     () => Array.from(new Set(iems.map((iem) => iem.soundSignature))),
@@ -171,7 +178,7 @@ export function IemBrowser({
     setSignature(allFilterValue);
     setPrice(allFilterValue);
     setSort("score");
-    router.replace(pathname, { scroll: false });
+    replaceCatalogUrl(pathname);
   };
 
   const updateUrl = (next: {
@@ -188,14 +195,14 @@ export function IemBrowser({
     const nextSort = next.sort ?? sort;
     const params = new URLSearchParams();
 
-    if (nextQuery.trim()) params.set("q", nextQuery.trim());
+    if (nextQuery.trim()) params.set("q", nextQuery);
     if (nextBrand !== allFilterValue) params.set("brand", nextBrand);
     if (nextSignature !== allFilterValue) params.set("signature", nextSignature);
     if (nextPrice !== allFilterValue) params.set("price", nextPrice);
     if (nextSort !== "score") params.set("sort", nextSort);
 
     const serialized = params.toString();
-    router.replace(serialized ? `${pathname}?${serialized}` : pathname, { scroll: false });
+    replaceCatalogUrl(serialized ? `${pathname}?${serialized}` : pathname);
   };
 
   const updateQuery = (next: string) => {
@@ -225,6 +232,7 @@ export function IemBrowser({
 
   return (
     <div className="space-y-6">
+      <CatalogQuerySync onChange={syncQuery} />
       <Card className="border-border bg-card/90 p-4 shadow-lg shadow-black/5 sm:p-5">
         <div className="grid gap-4 lg:grid-cols-[minmax(220px,0.9fr)_minmax(280px,1fr)_auto] lg:items-end">
           <div className="min-w-0">

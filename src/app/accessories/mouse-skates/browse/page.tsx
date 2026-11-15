@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 import { MouseSkateBrowser } from "@/components/accessories/mouse-skates/mouse-skate-browser";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
@@ -70,9 +69,7 @@ export default async function BrowseMouseSkatesPage() {
             </section>
 
             <section className="page-section">
-                <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading skate filters...</div>}>
-                    <MouseSkateBrowser skates={skates} />
-                </Suspense>
+                <MouseSkateBrowser skates={skates} />
             </section>
         </main>
     );

@@ -35,7 +35,7 @@ export function PopularSearches({
             </h3>
             <ul className="mt-3 space-y-2">
               {group.links.map((link) => (
-                <li key={link.href}>
+                <li key={JSON.stringify([link.href, link.label])}>
                   <Link
                     href={link.href}
                     className="group inline-flex items-start gap-1.5 text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground"

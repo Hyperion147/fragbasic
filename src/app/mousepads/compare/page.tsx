@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import { ComparisonBrowser } from "@/components/compare/comparison-browser";
 import { JsonLd } from "@/components/json-ld";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
@@ -108,14 +107,12 @@ export default async function CompareIndexPage() {
             </section>
 
             <section className="page-section">
-                <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading comparison filters...</div>}>
-                    <ComparisonBrowser
-                        comparisons={comparisons}
-                        tags={getComparisonTagOptions(
-                            comparisons.map((entry) => entry.comparison),
-                        )}
-                    />
-                </Suspense>
+                <ComparisonBrowser
+                    comparisons={comparisons}
+                    tags={getComparisonTagOptions(
+                        comparisons.map((entry) => entry.comparison),
+                    )}
+                />
             </section>
 
             <section className="page-section border-t border-border">
