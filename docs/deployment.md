@@ -4,7 +4,7 @@ The site uses the existing Vercel project serving `fragbasic.fun`. Keep that pro
 
 ## Verify before release
 
-Use Node 24 and install all build dependencies with `npm ci`. Check the deployment environment with `npm run env:check`; it reports configuration status without printing credential values. Next.js loads environment variables itself; the standalone configuration checker uses the same Next environment parser, and database scripts use their explicit `--env-file` option. Then run:
+Use Node 24 and install all build dependencies with `npm ci`. Check the deployment environment with `npm run env:check`; it reports configuration status without printing credential values. Next.js loads environment variables itself; the standalone configuration checker uses the same Next environment parser. Database and image migration scripts load `.env` when present and also work with environment variables supplied directly by CI or hosting. Then run:
 
 ```sh
 npm audit

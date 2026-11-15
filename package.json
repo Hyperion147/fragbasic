@@ -13,9 +13,9 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "db:snapshot": "tsx --env-file=.env src/db/snapshot.ts",
-    "db:check": "tsx --env-file=.env src/db/check.ts",
-    "images:migrate": "tsx --env-file=.env scripts/migrate-images-to-cloudinary.ts",
+    "db:snapshot": "tsx --env-file-if-exists=.env src/db/snapshot.ts",
+    "db:check": "tsx --env-file-if-exists=.env src/db/check.ts",
+    "images:migrate": "tsx --env-file-if-exists=.env scripts/migrate-images-to-cloudinary.ts",
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test",
     "test:e2e:seed": "tsx scripts/seed-e2e.ts",
@@ -76,6 +76,6 @@
     "esbuild": "0.28.2"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22.9.0"
   }
 }
