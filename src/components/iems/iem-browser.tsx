@@ -168,7 +168,8 @@ export function IemBrowser({
         .filter((iem): iem is Iem => Boolean(iem)),
     [iems, latestAddedSlugs],
   );
-  const tableIems = isDefaultBrowse
+  const showFeatured = isDefaultBrowse && latestIems.length > 0 && latestIems.length < filteredIems.length;
+  const tableIems = showFeatured
     ? filteredIems.filter((iem) => !latestAddedSlugSet.has(iem.slug))
     : filteredIems;
 
@@ -324,7 +325,7 @@ export function IemBrowser({
         </div>
       </Card>
 
-      {isDefaultBrowse && latestIems.length > 0 ? (
+      {showFeatured ? (
         <section aria-labelledby="latest-iems-heading">
           <h2 id="latest-iems-heading" className="sr-only">
             Latest IEM review
@@ -339,7 +340,7 @@ export function IemBrowser({
         </section>
       ) : null}
 
-      <div className="data-scroll-container overflow-x-auto bg-card/35 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div role="region" aria-label="IEM specifications" tabIndex={0} className="data-scroll-container overflow-x-auto bg-card/35 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_5%,transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <table className="data-table min-w-[1180px]">
           <thead>
             <tr>
