@@ -72,7 +72,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     return buildMetadata({
         title: `${getIemFullName(iem)} Review & FPS Scores`,
-        description: `${getIemFullName(iem)} review: imaging, clarity, soundstage, comfort, tuning, specs, and price in India. Is it good for VALORANT, CS2, or music?`,
+        description: iem.officialReview.verdict || iem.communitySummary,
         path: `/iems/${iem.slug}`,
         keywords: [
             ...seoKeywords.iems,

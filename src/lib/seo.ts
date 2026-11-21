@@ -680,6 +680,8 @@ export function buildProductJsonLd({
     typeof review.rating === "number" && Number.isFinite(review.rating) &&
     review.rating >= 0 && review.rating <= bestRating;
 
+  if (!hasValidPrice && !hasValidRating) return null;
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -707,15 +709,12 @@ export function buildProductJsonLd({
         url: siteUrl,
       },
       datePublished: review.datePublished,
-      reviewRating:
-        hasValidRating
-          ? {
-              "@type": "Rating",
-              ratingValue: review.rating,
-              bestRating,
-              worstRating: 0,
-            }
-          : undefined,
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: review.rating,
+        bestRating,
+        worstRating: 0,
+      },
       positiveNotes: buildReviewNotes(review.positiveNotes),
       negativeNotes: buildReviewNotes(review.negativeNotes),
     } : undefined,

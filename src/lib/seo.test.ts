@@ -22,20 +22,22 @@ describe("SEO output", () => {
     expect(clampDescription("word ".repeat(100)).length).toBeLessThanOrEqual(160);
   });
   it("does not emit an unrated review or an unknown price", () => {
-    const data = buildProductJsonLd(product);
-    expect(data.review).toBeUndefined();
-    expect(data.offers).toBeUndefined();
+    expect(buildProductJsonLd(product)).toBeNull();
   });
   it.each([0, -1, NaN, Infinity])("does not emit an invalid offer price: %s", (price) => {
-    expect(buildProductJsonLd({ ...product, price }).offers).toBeUndefined();
+    expect(buildProductJsonLd({ ...product, price })).toBeNull();
   });
   it("emits the visible zero-to-ten rating with a team author", () => {
     const data = buildProductJsonLd({ ...product, price: 2000, review: { ...product.review, rating: 0 } });
-    expect(data.review).toMatchObject({ author: { "@type": "Organization" }, reviewRating: { ratingValue: 0, bestRating: 10, worstRating: 0 } });
-    expect(data.offers).toMatchObject({ price: 2000, priceCurrency: "INR" });
+    expect(data?.review).toMatchObject({ author: { "@type": "Organization" }, reviewRating: { ratingValue: 0, bestRating: 10, worstRating: 0 } });
+    expect(data?.offers).toMatchObject({ price: 2000, priceCurrency: "INR" });
   });
   it.each([-1, 11, NaN, Infinity])("does not emit an invalid review rating: %s", (rating) => {
-    expect(buildProductJsonLd({ ...product, review: { ...product.review, rating } }).review).toBeUndefined();
+    expect(buildProductJsonLd({ ...product, price: 2000, review: { ...product.review, rating } })?.review).toBeUndefined();
+  });
+  it("keeps products with either a qualifying offer or a rated review", () => {
+    expect(buildProductJsonLd({ ...product, price: 2000 })).toMatchObject({ offers: { price: 2000 } });
+    expect(buildProductJsonLd({ ...product, review: { ...product.review, rating: 8 } })).toMatchObject({ review: { reviewRating: { ratingValue: 8 } } });
   });
   it("places collection counts on an ItemList", () => {
     const data = buildCollectionJsonLd({ name: "Pads", description: "All pads", path: "/mousepads", itemCount: 5 });

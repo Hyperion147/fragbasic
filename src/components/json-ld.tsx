@@ -1,8 +1,10 @@
 type JsonLdProps = {
-  data: Record<string, unknown>;
+  data: Record<string, unknown> | null;
 };
 
 export function JsonLd({ data }: JsonLdProps) {
+  if (data === null) return null;
+
   return (
     <script
       type="application/ld+json"
