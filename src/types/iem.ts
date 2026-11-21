@@ -136,6 +136,7 @@ export interface Iem {
     label: string;
     type: "official" | "store" | "reddit" | "review" | "personal";
     url?: string;
+    note?: string;
   }>;
   updatedAt: string;
 }

@@ -142,7 +142,8 @@ export function MousepadBrowser({
         .filter((pad): pad is Mousepad => Boolean(pad)),
     [latestAddedSlugs, mousepads],
   );
-  const tableMousepads = isDefaultBrowse
+  const showFeatured = isDefaultBrowse && latestMousepads.length > 0 && latestMousepads.length < filteredMousepads.length;
+  const tableMousepads = showFeatured
     ? filteredMousepads.filter((pad) => !latestAddedSlugSet.has(pad.slug))
     : filteredMousepads;
 
@@ -161,8 +162,8 @@ export function MousepadBrowser({
         onReset={handleReset}
       />
 
-      {isDefaultBrowse && latestMousepads.length > 0 ? (
-        <section aria-labelledby="latest-mousepads-heading">
+      {showFeatured ? (
+        <section aria-label="Latest mousepads">
           <div className="">
             {latestMousepads.map((pad) => (
               <div key={pad.slug}>

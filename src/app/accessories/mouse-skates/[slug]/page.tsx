@@ -60,11 +60,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const fullName = getMouseSkateFullName(skate);
-  const material = formatMouseSkateMaterial(skate.material);
 
   return buildMetadata({
     title: `${fullName} Review & Specs`,
-    description: `${fullName} review: speed, control, stopping, durability, and glasspad fit. See whether these ${material.toLowerCase()} skates suit cloth or glass pads.`,
+    description: skate.communitySummary || skate.notes,
     path: `/accessories/mouse-skates/${skate.slug}`,
     keywords: [
       ...seoKeywords.skates,
@@ -80,7 +79,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `are ${skate.name} good for glass`,
       `${skate.name} for glass mousepad`,
       `${skate.name} vs`,
-      `${material} mouse skates`,
+      `${formatMouseSkateMaterial(skate.material)} mouse skates`,
       `${skate.shape} mouse skates`,
       "mouse skate review",
       "glasspad mouse skates",

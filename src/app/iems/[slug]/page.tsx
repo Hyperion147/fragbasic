@@ -19,11 +19,11 @@ import {
     Radio,
     ScanSearch,
     ShieldCheck,
-    Star,
     Weight,
     XCircle,
 } from "lucide-react";
 
+import { IemStarRating } from "@/components/iems/iem-star-rating";
 import { ClientShareButton } from "@/components/ClientShareButton";
 import { JsonLd } from "@/components/json-ld";
 import { AiDefinition, AiFaq, AiSpecTable } from "@/components/seo/ai-blocks";
@@ -72,7 +72,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     return buildMetadata({
         title: `${getIemFullName(iem)} Review & FPS Scores`,
-        description: `${getIemFullName(iem)} review: imaging, clarity, soundstage, comfort, tuning, specs, and price in India. Is it good for VALORANT, CS2, or music?`,
+        description: iem.officialReview.verdict || iem.communitySummary,
         path: `/iems/${iem.slug}`,
         keywords: [
             ...seoKeywords.iems,
@@ -192,7 +192,7 @@ export default async function IemPage({ params }: Props) {
                         </p>
 
                         <div className="mt-4 flex items-center gap-3">
-                            <StarRating />
+                            <IemStarRating score={iem.ratings.fragbasic} />
                         </div>
 
                         <p className="body-copy mt-4 max-w-2xl">
@@ -336,16 +336,6 @@ function getIemSchemaAvailability(availability: Iem["buying"]["availability"]) {
     }
 
     return undefined;
-}
-
-function StarRating() {
-    return (
-        <div className="flex items-center gap-1 text-iem-hover">
-            {Array.from({ length: 5 }).map((_, index) => (
-                <Star key={index} className="size-4 fill-current" />
-            ))}
-        </div>
-    );
 }
 
 function StorePill({ label, href }: { label: string; href?: string }) {
@@ -527,6 +517,11 @@ function ListBlock({
 }
 
 function RatingBreakdown({ iem }: { iem: Iem }) {
+    const reviews = iem.sources.flatMap((source) => {
+        if (source.type !== "review" && source.type !== "reddit") return [];
+        const url = safeExternalUrl(source.url);
+        return url ? [{ ...source, url }] : [];
+    });
     const ratings = [
         ["Clarity", iem.ratings.clarity],
         ["Soundstage", iem.ratings.soundstage],
@@ -537,7 +532,7 @@ function RatingBreakdown({ iem }: { iem: Iem }) {
     ] as const;
 
     return (
-        <section className="soft-panel p-4">
+        <section id="iem-score-breakdown" className="scroll-mt-24 soft-panel p-4">
             <SectionKicker icon={Activity} label="Score breakdown" />
             <div className="mt-5 space-y-4">
                 {ratings.map(([label, value]) => (
@@ -551,6 +546,21 @@ function RatingBreakdown({ iem }: { iem: Iem }) {
                 </span>{" "}
                 ({formatIemRating(iem.ratings.fragbasic)}/10).
             </p>
+            {reviews.length > 0 && (
+                <div className="mt-6 border-t border-border pt-4">
+                    <h3 className="font-semibold text-foreground">Review evidence</h3>
+                    <ul className="mt-2 space-y-3 text-sm leading-6">
+                        {reviews.map((review) => (
+                            <li key={review.url}>
+                                <a className="font-medium text-iem-hover underline underline-offset-4" href={review.url}>
+                                    {review.label}
+                                </a>
+                                {review.note && <p className="text-muted-foreground">{review.note}</p>}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </section>
     );
 }

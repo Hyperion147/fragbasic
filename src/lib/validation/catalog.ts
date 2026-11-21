@@ -4,7 +4,7 @@ export const slugSchema = z.string().trim().min(1).max(160)
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use a lowercase kebab-case slug.");
 
 export const padSlugSchema = slugSchema.refine(
-  (slug) => !["brand", "compare", "glasspads", "guides"].includes(slug),
+  (slug) => !["brand", "compare", "finder", "glasspads", "guides"].includes(slug),
   "This slug is reserved for a mousepad section.",
 );
 export const accessorySlugSchema = slugSchema.refine(

@@ -1,81 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import type { IemInput } from "@/schemas/iem";
+import { iemFixture } from "../../e2e/fixtures/iem";
 import type { BestPageDataInput } from "@/schemas/best-page";
 import type { ComparisonDataInput } from "@/schemas/comparison";
 import { bestPageWriteSchema } from "@/schemas/best-page";
 import { comparisonWriteSchema } from "@/schemas/comparison";
 import { iemSchema } from "@/schemas/iem";
-
-const iemFixture: IemInput = {
-  id: "test-iem",
-  slug: "test-iem",
-  brand: "Test",
-  name: "IEM",
-  shortName: "IEM",
-  subtitle: "A test in-ear monitor",
-  driverType: "single-dd",
-  soundSignature: "neutral",
-  priceTier: "under-5000",
-  communitySummary: "A compact fixture used to validate the IEM schema.",
-  ratings: {
-    fragbasic: 8,
-    fps: 8,
-    music: 8,
-    value: 8,
-    imaging: 8,
-    clarity: 8,
-    bass: 8,
-    soundstage: 8,
-    comfort: 8,
-    build: 8,
-    ratingConfidence: "estimated",
-  },
-  soundProfile: {
-    label: "Neutral",
-    description: "Balanced across the frequency range.",
-    bass: 3,
-    mids: 3,
-    treble: 3,
-    warmth: 3,
-    brightness: 3,
-  },
-  specs: {
-    driver: "10 mm dynamic",
-    impedance: "16 ohm",
-    sensitivity: "120 dB",
-    frequencyResponse: "20 Hz - 20 kHz",
-    connector: "0.78 mm 2-pin",
-    cableType: "Silver-plated copper",
-    cableTermination: "3.5 mm",
-    shellMaterial: "Resin",
-    nozzleMaterial: "Metal",
-    detachableCable: true,
-    mic: false,
-  },
-  buying: {
-    priceInr: 1999,
-    availability: "in-stock",
-    stores: [],
-  },
-  officialReview: {
-    summary: "A short fixture summary.",
-    verdict: "A short fixture verdict.",
-    testSetup: {
-      source: "Test source",
-      testedGames: ["valorant"],
-      testingDuration: "One week",
-    },
-  },
-  bestFor: ["valorant"],
-  pros: ["Clean tuning"],
-  cons: ["Limited accessories"],
-  avoidIf: ["You need heavy bass"],
-  tags: ["Test"],
-  images: { main: "/iems/test-iem.webp" },
-  sources: [],
-  updatedAt: "2026-01-01",
-};
 
 const comparisonFixture: ComparisonDataInput = {
   slug: "test-pad-a-vs-test-pad-b",

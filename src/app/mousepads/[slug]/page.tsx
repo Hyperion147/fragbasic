@@ -73,7 +73,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return buildMetadata({
     title: `${pad.brand} ${pad.name} Review & Specs`,
-    description: `Review of ${pad.brand} ${pad.name}: feel ratings, specs, humidity resistance, price in India, and whether it suits VALORANT, CS2, or tracking FPS.`,
+    description: pad.communityConsensus.summary,
     path: `/mousepads/${pad.slug}`,
     keywords: [
       ...seoKeywords.mousepads,

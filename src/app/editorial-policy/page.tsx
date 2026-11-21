@@ -24,6 +24,9 @@ export default function EditorialPolicyPage() {
       </section>
       <section><h2>How comparisons and scores work</h2>
         <p>Scores use a relative zero-to-ten scale within this database. Speed, control and stopping power describe different qualities; a higher speed score is not a universal quality score. Surface wear, skates, pressure, humidity, fit, hearing and source equipment can change experience. IEM sound profiles and FPS scores express editorial interpretation unless a cited measurement says otherwise.</p>
+        <p>IEM stars show the FragBasic overall score divided by two. An editorial score of 8.2 out of 10 fills 4.1 of the five stars.</p>
+        <p>In November 2026 we checked each published IEM against firsthand reviews of that model and edition. For reviews with an overall product score, we converted the published scale to ten points and averaged the cited reviewers equally. We gave our previous overall score two-thirds of the weight to preserve its emphasis on FPS use, and the independent overall score one-third. We rounded the result to one decimal place. The product’s score breakdown names the sources and records the inputs.</p>
+        <p>Where the selected review gave listening impressions only, we retained the catalog estimate and added the reviewer’s observations. We assessed the standard Wan’er S.G 2, Jade Dragon and Red Lion editions individually. Game-specific ratings continue to reflect their own evidence.</p>
         <p>Best lists explain a use case and the reasons for each pick. They are not a complete test of every product on the market. Internet sources can establish specifications and reported experience; they cannot establish that FragBasic personally tested a product.</p>
       </section>
       <section><h2>Prices, availability and source checks</h2>

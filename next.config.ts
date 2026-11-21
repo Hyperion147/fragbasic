@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import legacyProductImages from "./src/lib/legacy-product-image-redirects.json";
 
 /**
  * Supabase Storage host derived from the project URL, so staging and
@@ -24,6 +25,7 @@ const nextConfig: NextConfig = {
     // Prerendering opens a database query per page. The catalog runs on a
     // pooled remote Postgres connection, so cap build concurrency to avoid
     // exhausting the pool and timing out page generation.
+    cpus: 2,
     staticGenerationMaxConcurrency: 4,
   },
   images: {
@@ -56,6 +58,12 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Preserve indexed and shared image URLs after retiring the local copies.
+      ...Object.entries(legacyProductImages).map(([source, destination]) => ({
+        source,
+        destination,
+        permanent: true,
+      })),
       {
         source: "/mousepads/brand/esptiger",
         destination: "/mousepads/brand/esports-tiger",

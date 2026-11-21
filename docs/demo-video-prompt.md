@@ -61,7 +61,7 @@ The brand voice is **quiet and technical**. Emulate that. Purple is an accent, n
 | `/` | Beat 2 (hero + method) | Hero headline: "Research gear without the rabbit hole." Sub: "Compare how mousepads, glasspads, IEMs and skates actually differ by feel, use case, price and availability in India." |
 | `/mousepads` | Beat 2 tail / Beat 5 | Catalog grid, filter chips |
 | `/mousepads/compare/universal` | Beat 3 (hero feature) | Build a 3-pad comparison, let the radar render |
-| `/mousepads/artisan-zero-soft` | Beat 4 (product demo) | Real product page; hero imagery is `public/mousepads/artisan/zero-black.png` (RGBA) |
+| `/mousepads/artisan-zero-soft` | Beat 4 (product demo) | Real product page; use the catalog hero image |
 | `/mousepads/glasspads` | Beat 5 | Hard-surface category |
 | `/iems` + `/iems/dunu-titan-x` | Beat 5 | IEM catalog + product |
 | `/best/valorant-mousepads` | Beat 5 | Curated guide |
@@ -69,7 +69,7 @@ The brand voice is **quiet and technical**. Emulate that. Purple is an accent, n
 
 Product slugs that exist and are safe to use: `artisan-zero-soft`, `artisan-hayate-otsu-soft`, `artisan-raiden-soft`, `lgg-saturn-pro-soft`, `lgg-neptune-pro-soft`, `xraypad-aqua-control-pro-mid`, `dunu-titan-x`, `truthear-zero-red`, `simgot-ew200`, `moondrop-chu-ii`.
 
-### Asset inventory (`public/` — 103 files, verified)
+### Asset inventory
 
 Use these exact paths:
 
@@ -79,9 +79,9 @@ Use these exact paths:
 | `public/hero-bg.webp` (1774×887, RGB) | Blurred backdrop at 8–12% opacity behind the hook; crop, do not letterbox |
 | `public/og-image.png` (1903×956, RGBA) | Do not use full-screen (too wide); may appear as a small inset only |
 | `public/teaser.png`, `public/iem-teaser.png`, `public/why-this-exist.png` | Section backdrops / texture layers at low opacity |
-| `public/mousepads/**/*.png` with alpha (e.g. `artisan/zero-black.png` 720×576, `artisan/hayate-otsu-v2-red.png`, `lgg/saturn-black.png`) | Floating product cutouts — the "product demo" |
-| `public/mousepads/**/*.jpg` and `.webp` without alpha | Product cards in a grid montage; mask into rounded cards |
-| `public/iems/*.png` with alpha (`truthear-zero-red.png`, `tangzu-waner-sg-2-red-lion.png`) | IEM cutouts |
+| Published catalog images from the Artisan Zero, Hayate Otsu and LGG Saturn Pro profiles | Floating product cutouts — the "product demo" |
+| Published product images from mousepad profiles | Product cards in a grid montage; mask into rounded cards |
+| Published catalog images from `/iems/truthear-zero-red` and `/iems/tangzu-waner-sg-2-red-lion` | IEM cutouts |
 | `public/brands-logo/*.png` (Artisan, LGG, Pulsar, SteelSeries, Xraypad, Zowie) | Credibility strip at ~14s — grayscale 70%, reveal in colour on beat change |
 | `public/games-icon/valo-icon.png`, `cs2-icon.png`, `apex-icon.png`, `speedometer.png`, `stability.png` | Small context chips in the hook and CTA |
 

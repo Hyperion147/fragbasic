@@ -38,6 +38,7 @@ import Image from "@/components/optimized-image";
 
 const directNavItems = [
     { label: "Mousepads", href: "/mousepads" },
+    { label: "Finder", href: "/mousepads/finder" },
     { label: "GlassPads", href: "/mousepads/glasspads" },
     { label: "Guides", href: "/mousepads/guides" },
     { label: "IEMs", href: "/iems" },
@@ -141,7 +142,7 @@ export function SiteNavbar() {
 
                 <div className="flex items-center gap-2 md:gap-4">
                     <UniversalSearch />
-                    <div className="hidden items-center gap-4 md:flex">
+                    <div className="hidden items-center gap-4 lg:flex">
                         {pathname === "/" ? (
                             <Button size="sm" variant="secondary" asChild>
                                 <Link href="https://forms.gle/5b1QejGptx63eQHw9" target="_blank">
@@ -167,7 +168,7 @@ export function SiteNavbar() {
 
 function DesktopNavigation({ pathname }: { pathname: string }) {
     return (
-        <NavigationMenu className="hidden md:flex">
+        <NavigationMenu className="hidden xl:flex">
             <NavigationMenuList>
                 {directNavItems.map((item) => (
                     <NavigationMenuItem key={item.href}>
@@ -270,6 +271,7 @@ function isActivePath(pathname: string, href: string) {
         return (
             pathname === "/mousepads" ||
             (pathname.startsWith("/mousepads/") &&
+                !pathname.startsWith("/mousepads/finder") &&
                 !pathname.startsWith("/mousepads/glasspads") &&
                 !pathname.startsWith("/mousepads/guides"))
         );
@@ -336,6 +338,7 @@ function MobileNavigation() {
             icon: Grid2x2,
             items: [
                 { label: "All Mousepads", href: "/mousepads" },
+                { label: "Mousepad Finder", href: "/mousepads/finder" },
                 { label: "GlassPads", href: "/mousepads/glasspads" },
                 { label: "Guides", href: "/mousepads/guides" },
                 { label: "Universal Compare", href: "/mousepads/compare/universal" },
@@ -369,7 +372,7 @@ function MobileNavigation() {
     ] as const;
 
     return (
-        <div className="md:hidden">
+        <div className="xl:hidden">
             <Sheet>
                 <SheetTrigger asChild>
                     <Button

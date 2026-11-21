@@ -47,7 +47,7 @@ export function HeroSection() {
                                 asChild
                                 className="h-12 w-full rounded-full bg-white px-6 text-black hover:bg-white/85 sm:w-auto inset-shadow-[-2px_-2px_12px_#0000004c]"
                             >
-                                <Link href="/mousepads/compare/universal">
+                                <Link href="/mousepads/finder">
                                     Find my next pad
                                     <ArrowRight className="size-4" />
                                 </Link>

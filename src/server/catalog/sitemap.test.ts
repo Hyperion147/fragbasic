@@ -32,7 +32,7 @@ describe("catalog sitemap", () => {
   it("includes IEMs and public entry points but excludes draft and private URLs", async () => {
     rows(listIems, [pad, { ...pad, slug: "draft-iem", status: "draft" }]);
     const urls = (await getPublicSitemap()).map((entry) => entry.url);
-    expect(urls).toEqual(expect.arrayContaining(["https://fragbasic.fun/", "https://fragbasic.fun/iems", "https://fragbasic.fun/iems/test"]));
+    expect(urls).toEqual(expect.arrayContaining(["https://fragbasic.fun/", "https://fragbasic.fun/iems", "https://fragbasic.fun/iems/test", "https://fragbasic.fun/mousepads/finder"]));
     expect(urls.some((url) => /draft-iem|cms67|\/api\/|\?/.test(url))).toBe(false);
   });
   it("retains the newest timestamp across duplicate catalog records", async () => {
