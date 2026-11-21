@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Layers3 } from "lucide-react";
+import { ArrowDown } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { FinderForm } from "@/components/finder/finder-form";
 import { FinderResults } from "@/components/finder/finder-results";
@@ -21,19 +22,17 @@ export default async function FinderPage({ searchParams }: PageProps<"/mousepads
   const results = findMousepads(pads, prefs);
 
   return (
-    <main className={styles.page}>
-      <header className={styles.hero}>
-        <div className={styles.inner}>
+    <main className="min-h-screen bg-background text-foreground">
+      <header className="border-b border-border bg-background">
+        <div className="page-hero">
           <SiteBreadcrumbs items={[{ label: "Home", href: "/" }, { label: "Mousepads", href: "/mousepads" }, { label: "Finder" }]} />
-          <h1>Mousepad <span>finder.</span></h1>
-          <p>Dial in your glide, games and budget. Compare the three closest picks for your setup.</p>
-          <div className={styles.heroFoot}>
-            <span><Layers3 size={16} aria-hidden="true" /> {pads.length} pads in the catalog</span>
-            <a href="#matches">View matches</a>
-          </div>
+          <Badge variant="outline">{pads.length} models tracked</Badge>
+          <h1 className="page-title mt-5">Mousepad finder</h1>
+          <p className="mt-3 max-w-2xl text-muted-foreground">Choose how you want your pad to feel. Compare the three closest matches for your games and budget.</p>
+          <a className="mt-2 inline-flex min-h-11 items-center gap-2 text-sm font-medium xl:hidden" href="#matches">View matches <ArrowDown size={16} aria-hidden="true" /></a>
         </div>
       </header>
-      <div className={styles.workspace}>
+      <div className={`page-section ${styles.workspace}`}>
         <FinderForm key={JSON.stringify(prefs)} prefs={prefs} />
         <FinderResults {...results} prefs={prefs} products={pads.map((pad) => ({ slug: pad.slug, name: getMousepadFullName(pad) }))} />
       </div>

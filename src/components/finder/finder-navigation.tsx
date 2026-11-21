@@ -1,5 +1,6 @@
 "use client";
 
+import { RotateCcw } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import styles from "./finder.module.css";
@@ -12,7 +13,7 @@ export function FinderReset() {
         const form = document.getElementById("finder-preferences");
         if (form instanceof HTMLFormElement) form.reset();
       }}>
-      Reset
+      <RotateCcw size={14} aria-hidden="true" /> Reset
     </Link>
   );
 }
