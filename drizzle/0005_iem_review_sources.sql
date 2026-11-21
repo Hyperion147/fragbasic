@@ -29,17 +29,26 @@ WITH reviews (slug, previous_score, source_type, label, url, published_score, sc
          round((2 * previous_score + avg(10 * published_score / scale) OVER (PARTITION BY slug)) / 3, 1) AS overall,
          row_number() OVER (PARTITION BY slug ORDER BY url) AS source_position
   FROM reviews
-), per_product AS (
-  SELECT slug, previous_score, overall,
-         jsonb_agg(jsonb_build_object('type', source_type, 'label', label, 'url', url, 'note',
+), review_notes AS (
+  SELECT slug, previous_score, overall, source_position,
+         jsonb_build_object('type', source_type, 'label', label, 'url', url, 'note',
            note || CASE
              WHEN source_position > 1 THEN ''
              WHEN overall IS NULL THEN format(' FragBasic retained its %s/10 editorial estimate.', previous_score)
              ELSE format(' In November 2026, FragBasic weighted its previous %s/10 and the cited overall review scores two to one, giving %s/10.', previous_score, overall)
            END
-         ) ORDER BY source_position) AS review_sources
+         ) AS source
   FROM calibrated
-  GROUP BY slug, previous_score, overall
+), per_product AS (
+  SELECT first_note.slug, first_note.previous_score, first_note.overall,
+         to_jsonb(ARRAY(
+           SELECT n.source
+           FROM review_notes n
+           WHERE n.slug = first_note.slug
+           ORDER BY n.source_position
+         )) AS review_sources
+  FROM review_notes first_note
+  WHERE first_note.source_position = 1
 )
 UPDATE iems
 SET data = jsonb_set(
