@@ -15,6 +15,7 @@ const MODULE_ROUTES: Record<CatalogModule, RouteConfig> = {
       ...SHARED_PATHS,
       "/mousepads",
       "/mousepads/brand",
+      "/api/account/setup-catalog",
       "/mousepads/finder",
       "/mousepads/glasspads",
       "/mousepads/compare",
@@ -35,6 +36,7 @@ const MODULE_ROUTES: Record<CatalogModule, RouteConfig> = {
       ...SHARED_PATHS,
       "/mousepads",
       "/mousepads/brand",
+      "/api/account/setup-catalog",
       "/mousepads/finder",
       "/mousepads/glasspads",
       "/mousepads/compare",
@@ -51,7 +53,7 @@ const MODULE_ROUTES: Record<CatalogModule, RouteConfig> = {
     ],
   },
   iems: {
-    literals: [...SHARED_PATHS, "/iems", "/iems/compare"],
+    literals: [...SHARED_PATHS, "/api/account/setup-catalog", "/iems", "/iems/compare"],
     dynamic: [{ path: "/iems/[slug]", type: "page" }],
   },
   accessories: {

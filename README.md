@@ -71,6 +71,12 @@ Main SEO files:
 - [`src/app/robots.ts`](src/app/robots.ts)
 - [`src/app/manifest.ts`](src/app/manifest.ts)
 
+## Setup gear catalog
+
+The account setup picker can read `GET /api/account/setup-catalog`. The response groups text-only options by `mouse`, `keyboard`, `monitor`, `mousepad`, and `iem`. Each option has a stable ID for saved setups, a brand, a model name, and a source. Specialist models lead the curated lists. Published mousepad, glasspad, and IEM profiles also appear in their respective lists.
+
+The [setup-only model data](src/features/setup-catalog/models.json) feeds this endpoint. Adding a model here does not create a scored review or a public product page.
+
 ## Planned Tasks
 
 - [ ] **Setup showcase accounts and personalized profile themes** — start no earlier than **22 November 2026** (after exams and 21 November), once monitors and keyboards have been added.
