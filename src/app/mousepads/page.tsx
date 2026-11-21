@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { Crosshair } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { JsonLd } from "@/components/json-ld";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
@@ -77,6 +80,9 @@ export default async function MousepadsPage() {
                             Browse gaming mousepads by feel, surface, and India
                             availability.
                         </h1>
+                        <Button asChild variant="secondary" className="mt-5 min-h-11">
+                            <Link href="/mousepads/finder"><Crosshair aria-hidden="true" /> Find my mousepad</Link>
+                        </Button>
                     </div>
                 </div>
             </section>

@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import legacyMousepadImages from "./src/lib/mousepads/legacy-image-redirects.json";
 
 /**
  * Supabase Storage host derived from the project URL, so staging and
@@ -56,6 +57,12 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Preserve indexed and shared image URLs after retiring the local copies.
+      ...Object.entries(legacyMousepadImages).map(([source, destination]) => ({
+        source,
+        destination,
+        permanent: true,
+      })),
       {
         source: "/mousepads/brand/esptiger",
         destination: "/mousepads/brand/esports-tiger",

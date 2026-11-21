@@ -27,6 +27,7 @@ A catalog listing does not establish personal testing. Use the product evidence/
 
 - [Home](https://fragbasic.fun/)
 - [Mousepad database](https://fragbasic.fun/mousepads)
+- [Mousepad finder](https://fragbasic.fun/mousepads/finder)
 - [Mousepad brands](https://fragbasic.fun/mousepads/brand)
 - [Glasspad database](https://fragbasic.fun/mousepads/glasspads)
 - [Mousepad comparisons](https://fragbasic.fun/mousepads/compare)

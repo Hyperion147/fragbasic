@@ -12,7 +12,7 @@ import * as guides from "@/server/guides/repo";
 
 const PUBLIC_ROUTES = [
   "/", "/editorial-policy", "/mousepads", "/mousepads/brand",
-  "/mousepads/glasspads", "/mousepads/guides", "/mousepads/compare",
+  "/mousepads/finder", "/mousepads/glasspads", "/mousepads/guides", "/mousepads/compare",
   "/mousepads/compare/universal", "/iems", "/iems/compare",
   "/accessories/mouse-skates", "/accessories/mouse-skates/browse",
   "/accessories/mouse-skates/compare", "/best",

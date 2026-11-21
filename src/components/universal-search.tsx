@@ -111,6 +111,7 @@ const QUICK_LINKS = [
   { label: "Browse IEMs", href: "/iems" },
   { label: "Browse skates", href: "/accessories/mouse-skates/browse" },
   { label: "Best guides", href: "/best" },
+  { label: "Mousepad finder", href: "/mousepads/finder" },
   { label: "Universal compare", href: "/mousepads/compare/universal" },
 ] as const;
 
@@ -286,22 +287,25 @@ export function UniversalSearch() {
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-      <button
-        type="button"
-        onClick={openSearch}
-        aria-haspopup="dialog"
-        aria-expanded={open}
-        onPointerEnter={() => void hydrateIndex()}
-        onFocus={() => void hydrateIndex()}
-        aria-label="Search FragBasic"
-        className="hidden h-9 items-center gap-2 rounded-md border border-transparent bg-background/60 px-3 text-sm text-muted-foreground shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_8%,transparent)] transition-colors hover:text-foreground md:flex lg:w-56"
-      >
-        <Search className="size-4 shrink-0" />
-        <span className="flex-1 truncate text-left">Search FragBasic</span>
-        <kbd className="hidden shrink-0 rounded border border-white/10 bg-white/4 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground lg:inline-block">
+      <div className="relative hidden md:block">
+        <button
+          type="button"
+          onClick={openSearch}
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          onPointerEnter={() => void hydrateIndex()}
+          onFocus={() => void hydrateIndex()}
+          aria-label="Search FragBasic"
+          aria-keyshortcuts="Control+K Meta+K"
+          className="hidden h-9 items-center gap-2 rounded-md border border-transparent bg-background/60 px-3 text-sm text-muted-foreground shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_8%,transparent)] transition-colors hover:text-foreground md:flex lg:w-56 lg:pr-12"
+        >
+          <Search className="size-4 shrink-0" />
+          <span className="flex-1 truncate text-left">Search FragBasic</span>
+        </button>
+        <kbd aria-hidden="true" className="pointer-events-none absolute right-2 top-1/2 hidden -translate-y-1/2 rounded border border-white/10 bg-white/4 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground lg:inline-block">
           ⌘K
         </kbd>
-      </button>
+      </div>
 
       <button
         type="button"

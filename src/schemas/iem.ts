@@ -146,6 +146,7 @@ export const iemSourceSchema = z.object({
   label: nonEmpty,
   type: iemSourceTypeSchema,
   url: httpUrlSchema.optional(),
+  note: z.string().trim().optional(),
 });
 
 export const iemImagesSchema = z.object({

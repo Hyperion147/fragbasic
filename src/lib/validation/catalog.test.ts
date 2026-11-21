@@ -5,7 +5,7 @@ describe("catalog boundaries", () => {
   it.each(["../other", "Bad Slug", "pad/foo", "pad?draft=1", "pad#x", "pad--name"])("rejects malformed slugs: %s", (slug) => {
     expect(padSlugSchema.safeParse(slug).success).toBe(false);
   });
-  it.each(["brand", "compare", "glasspads", "guides"])("protects reserved pad routes: %s", (slug) => expect(padSlugSchema.safeParse(slug).success).toBe(false));
+  it.each(["brand", "compare", "finder", "glasspads", "guides"])("protects reserved pad routes: %s", (slug) => expect(padSlugSchema.safeParse(slug).success).toBe(false));
   it("protects other category routes", () => {
     expect(iemSlugSchema.safeParse("compare").success).toBe(false);
     expect(accessorySlugSchema.safeParse("browse").success).toBe(false);
