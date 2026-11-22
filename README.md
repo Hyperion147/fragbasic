@@ -73,7 +73,7 @@ Main SEO files:
 
 ## User accounts
 
-At `/account`, visitors can create an account or sign in using an emailed link, save their private gear selections, and sign out. Gear IDs are saved under `fragbasic_setup` in the signed-in Supabase user's metadata. CMS administrators continue to use the existing admin login.
+At `/account`, visitors can create an account or sign in using an emailed link, maintain a profile, create multiple setups, link catalog gear to each setup, and choose private, unlisted, or public visibility. Public profiles are available at `/profiles/[username]` when both the account and individual setups are published. CMS administrators continue to use the existing admin login.
 
 Configure Supabase Authentication for each deployment:
 
@@ -85,7 +85,9 @@ Configure Supabase Authentication for each deployment:
 
 The account setup picker can read `GET /api/account/setup-catalog`. The response groups text-only options by `mouse`, `keyboard`, `monitor`, `mousepad`, and `iem`. Each option has a stable ID for saved setups, a brand, a model name, and a source. Specialist models lead the curated lists. Published mousepad, glasspad, and IEM profiles also appear in their respective lists.
 
-The setup catalog migrations seed the private PostgreSQL table `fragbasic_accounts.gear_models`, which feeds this endpoint. The initial specialist catalog is in `drizzle/0006_account_setup_catalog.sql`; `drizzle/0007_expand_setup_peripherals.sql` adds the broader sourced catalog. Adding a model here does not create a scored review or a public product page.
+The setup catalog migrations seed `public.gear_models`, which feeds this endpoint and is referenced by normalized setup items. The initial specialist catalog is in `drizzle/0006_account_setup_catalog.sql`; `drizzle/0007_expand_setup_peripherals.sql` adds the broader sourced catalog. Adding a model here does not create a scored review or a public product page.
+
+`drizzle/0008_relational_accounts.sql` introduces the normalized account graph and migrates legacy `fragbasic_setup` metadata. `drizzle/0010_public_accounts_graph.sql` exposes that graph in Supabase's `public` schema as `accounts → setups → setup_items → gear_models`, retains row-level security, and creates account rows for new Supabase Auth users. One user can own multiple setups, while every selected peripheral references one shared catalog record.
 
 ## Planned Tasks
 

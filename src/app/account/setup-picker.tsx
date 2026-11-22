@@ -6,28 +6,21 @@ import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import type { SetupCategory, SetupModel } from "@/features/setup-catalog/catalog";
+import { SETUP_LABELS, SETUP_SEARCH_PLACEHOLDERS } from "@/features/setup-catalog/fields";
 import { normalizeSearchText } from "@/lib/search";
-
-export const setupLabels: Record<SetupCategory, string> = {
-  mouse: "Mouse", keyboard: "Keyboard", monitor: "Monitor", mousepad: "Mousepad", iem: "IEM",
-};
-
-const placeholders: Record<SetupCategory, string> = {
-  mouse: "Search mice", keyboard: "Search keyboards", monitor: "Search monitors", mousepad: "Search mousepads", iem: "Search IEMs",
-};
 
 export function SetupPicker({ category, models, defaultValue }: { category: SetupCategory; models: SetupModel[]; defaultValue?: string }) {
   const [selected, setSelected] = useState(defaultValue ?? "");
   const [open, setOpen] = useState(false);
   const current = models.find((model) => model.id === selected);
-  const label = setupLabels[category];
+  const label = SETUP_LABELS[category];
 
   return <div className="grid gap-2">
     <label id={`${category}-label`} className="text-sm font-medium">{label}</label>
     <input type="hidden" name={category} value={selected} />
     <Button type="button" variant="outline" className="h-auto min-h-12 w-full justify-between px-3 text-left" aria-labelledby={`${category}-label ${category}-value`} onClick={() => setOpen(true)}>
       <span id={`${category}-value`} className="min-w-0">
-        {current ? <><span className="block truncate font-medium">{current.model}</span><span className="block truncate text-xs font-normal text-muted-foreground">{current.brand}</span></> : <span className="font-normal text-muted-foreground">{placeholders[category]}</span>}
+        {current ? <><span className="block truncate font-medium">{current.model}</span><span className="block truncate text-xs font-normal text-muted-foreground">{current.brand}</span></> : <span className="font-normal text-muted-foreground">{SETUP_SEARCH_PLACEHOLDERS[category]}</span>}
       </span>
       <span className="flex shrink-0 items-center gap-1 text-xs text-muted-foreground"><Search aria-hidden="true" className="size-4" /><ChevronRight aria-hidden="true" className="size-4" /></span>
     </Button>
@@ -42,7 +35,7 @@ export function SetupPicker({ category, models, defaultValue }: { category: Setu
           const text = normalizeSearchText([value, ...(keywords ?? [])].join(" "));
           return terms.every((term) => text.includes(term)) ? 1 : 0;
         }}>
-          <CommandInput autoFocus aria-label={`Search ${label.toLowerCase()} models`} placeholder={placeholders[category]} />
+          <CommandInput autoFocus aria-label={`Search ${label.toLowerCase()} models`} placeholder={SETUP_SEARCH_PLACEHOLDERS[category]} />
           <CommandList>
             <CommandItem value={`clear-${category}`} keywords={["none clear remove"]} onSelect={() => { setSelected(""); setOpen(false); }}>
               <span className="flex size-8 items-center justify-center rounded-md bg-muted"><X aria-hidden="true" className="size-4" /></span>
