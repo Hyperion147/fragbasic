@@ -94,7 +94,7 @@ export function SiteFooter() {
             </div>
 
             <svg aria-hidden="true" focusable="false" viewBox="0 0 1000 145" className="w-full select-none border-t border-white/8 px-3 pt-4">
-                <text x="500" y="126" textAnchor="middle" fill="white" opacity="0.035" fontSize="157" fontWeight="600" letterSpacing="-10">FRAGBASIC</text>
+                <text x="500" y="116" textAnchor="middle" fill="white" opacity="0.035" fontSize="157" fontWeight="600" letterSpacing="-10">FRAGBASIC</text>
             </svg>
         </footer>
     );

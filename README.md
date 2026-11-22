@@ -85,9 +85,9 @@ Configure Supabase Authentication for each deployment:
 
 The account setup picker can read `GET /api/account/setup-catalog`. The response groups text-only options by `mouse`, `keyboard`, `monitor`, `mousepad`, and `iem`. Each option has a stable ID for saved setups, a brand, a model name, and a source. Specialist models lead the curated lists. Published mousepad, glasspad, and IEM profiles also appear in their respective lists.
 
-The setup catalog migrations seed `public.gear_models`, which feeds this endpoint and is referenced by normalized setup items. The initial specialist catalog is in `drizzle/0006_account_setup_catalog.sql`; `drizzle/0007_expand_setup_peripherals.sql` adds the broader sourced catalog. Adding a model here does not create a scored review or a public product page.
+The baseline migration seeds `public.gear_models`, which feeds this endpoint and is referenced by normalized setup items. Specialist and broader sourced catalog entries are consolidated in `drizzle/0000_baseline.sql`. Adding a model there does not create a scored review or a public product page.
 
-`drizzle/0008_relational_accounts.sql` introduces the normalized account graph and migrates legacy `fragbasic_setup` metadata. `drizzle/0010_public_accounts_graph.sql` exposes that graph in Supabase's `public` schema as `accounts → setups → setup_items → gear_models`, retains row-level security, and creates account rows for new Supabase Auth users. One user can own multiple setups, while every selected peripheral references one shared catalog record.
+`drizzle/0000_baseline.sql` creates the normalized Supabase graph as `accounts → setups → setup_items → gear_models`, retains row-level security, migrates legacy `fragbasic_setup` metadata, and creates account rows for new Supabase Auth users. One user can own multiple setups, while every selected peripheral references one shared catalog record. Generate one new migration with `npm run db:generate -- --name=<change>` after each future schema change; do not edit the applied baseline.
 
 ## Planned Tasks
 

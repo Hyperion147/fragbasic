@@ -1,4 +1,342 @@
-INSERT INTO "fragbasic_accounts"."gear_models" (id, category, brand, model, source, position) VALUES
+CREATE TYPE "public"."accessory_status" AS ENUM('draft', 'published');
+--> statement-breakpoint
+CREATE TYPE "public"."best_page_status" AS ENUM('draft', 'published');
+--> statement-breakpoint
+CREATE TYPE "public"."comparison_status" AS ENUM('draft', 'published');
+--> statement-breakpoint
+CREATE TYPE "public"."glasspad_status" AS ENUM('draft', 'published');
+--> statement-breakpoint
+CREATE TYPE "public"."guide_status" AS ENUM('draft', 'published');
+--> statement-breakpoint
+CREATE TYPE "public"."iem_status" AS ENUM('draft', 'published');
+--> statement-breakpoint
+CREATE TYPE "public"."mousepad_status" AS ENUM('draft', 'published');
+--> statement-breakpoint
+CREATE TABLE "accounts" (
+	"id" uuid PRIMARY KEY NOT NULL,
+	"username" text,
+	"display_name" text,
+	"bio" text,
+	"avatar_path" text,
+	"visibility" text DEFAULT 'private' NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+ALTER TABLE "accounts" ENABLE ROW LEVEL SECURITY;
+--> statement-breakpoint
+CREATE TABLE "setup_items" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"setup_id" uuid NOT NULL,
+	"gear_model_id" text NOT NULL,
+	"position" text NOT NULL,
+	"notes" text,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+ALTER TABLE "setup_items" ENABLE ROW LEVEL SECURITY;
+--> statement-breakpoint
+CREATE TABLE "setups" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"user_id" uuid NOT NULL,
+	"name" text DEFAULT 'Main setup' NOT NULL,
+	"visibility" text DEFAULT 'private' NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+ALTER TABLE "setups" ENABLE ROW LEVEL SECURITY;
+--> statement-breakpoint
+CREATE TABLE "best_pages" (
+	"id" text PRIMARY KEY NOT NULL,
+	"slug" text NOT NULL,
+	"title" text NOT NULL,
+	"status" "best_page_status" DEFAULT 'published' NOT NULL,
+	"data" jsonb NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "best_pages_slug_unique" UNIQUE("slug")
+);
+--> statement-breakpoint
+CREATE TABLE "comparisons" (
+	"id" text PRIMARY KEY NOT NULL,
+	"slug" text NOT NULL,
+	"title" text NOT NULL,
+	"left_slug" text NOT NULL,
+	"right_slug" text NOT NULL,
+	"status" "comparison_status" DEFAULT 'published' NOT NULL,
+	"data" jsonb NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "comparisons_slug_unique" UNIQUE("slug")
+);
+--> statement-breakpoint
+CREATE TABLE "glasspads" (
+	"id" text PRIMARY KEY NOT NULL,
+	"slug" text NOT NULL,
+	"brand" text NOT NULL,
+	"name" text NOT NULL,
+	"status" "glasspad_status" DEFAULT 'published' NOT NULL,
+	"data" jsonb NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "glasspads_slug_unique" UNIQUE("slug")
+);
+--> statement-breakpoint
+CREATE TABLE "guides" (
+	"id" text PRIMARY KEY NOT NULL,
+	"slug" text NOT NULL,
+	"title" text NOT NULL,
+	"status" "guide_status" DEFAULT 'published' NOT NULL,
+	"data" jsonb NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "guides_slug_unique" UNIQUE("slug")
+);
+--> statement-breakpoint
+CREATE TABLE "iems" (
+	"id" text PRIMARY KEY NOT NULL,
+	"slug" text NOT NULL,
+	"brand" text NOT NULL,
+	"name" text NOT NULL,
+	"status" "iem_status" DEFAULT 'published' NOT NULL,
+	"data" jsonb NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "iems_slug_unique" UNIQUE("slug")
+);
+--> statement-breakpoint
+CREATE TABLE "mouse_skates" (
+	"id" text PRIMARY KEY NOT NULL,
+	"slug" text NOT NULL,
+	"brand" text NOT NULL,
+	"name" text NOT NULL,
+	"status" "accessory_status" DEFAULT 'published' NOT NULL,
+	"data" jsonb NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "mouse_skates_slug_unique" UNIQUE("slug")
+);
+--> statement-breakpoint
+CREATE TABLE "mousepads" (
+	"id" text PRIMARY KEY NOT NULL,
+	"slug" text NOT NULL,
+	"brand" text NOT NULL,
+	"name" text NOT NULL,
+	"status" "mousepad_status" DEFAULT 'published' NOT NULL,
+	"data" jsonb NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "mousepads_slug_unique" UNIQUE("slug")
+);
+--> statement-breakpoint
+CREATE TABLE "gear_models" (
+	"id" text PRIMARY KEY NOT NULL,
+	"category" text NOT NULL,
+	"brand" text NOT NULL,
+	"model" text NOT NULL,
+	"source" text NOT NULL,
+	"position" integer NOT NULL,
+	CONSTRAINT "gear_models_id_category_unique" UNIQUE("id","category")
+);
+--> statement-breakpoint
+ALTER TABLE "gear_models" ENABLE ROW LEVEL SECURITY;
+--> statement-breakpoint
+ALTER TABLE "setup_items" ADD CONSTRAINT "setup_items_setup_id_setups_id_fk" FOREIGN KEY ("setup_id") REFERENCES "public"."setups"("id") ON DELETE cascade ON UPDATE no action;
+--> statement-breakpoint
+ALTER TABLE "setup_items" ADD CONSTRAINT "setup_items_model_category_fk" FOREIGN KEY ("gear_model_id","position") REFERENCES "public"."gear_models"("id","category") ON DELETE restrict ON UPDATE no action;
+--> statement-breakpoint
+ALTER TABLE "setups" ADD CONSTRAINT "setups_user_id_accounts_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."accounts"("id") ON DELETE cascade ON UPDATE no action;
+--> statement-breakpoint
+CREATE UNIQUE INDEX "accounts_username_unique" ON "accounts" USING btree ("username");
+--> statement-breakpoint
+CREATE INDEX "setup_items_setup_id_idx" ON "setup_items" USING btree ("setup_id");
+--> statement-breakpoint
+CREATE INDEX "setup_items_gear_model_id_idx" ON "setup_items" USING btree ("gear_model_id");
+--> statement-breakpoint
+CREATE UNIQUE INDEX "setup_items_setup_position_unique" ON "setup_items" USING btree ("setup_id","position");
+--> statement-breakpoint
+CREATE INDEX "setups_user_id_idx" ON "setups" USING btree ("user_id");
+--> statement-breakpoint
+CREATE UNIQUE INDEX "setups_user_name_unique" ON "setups" USING btree ("user_id","name");
+--> statement-breakpoint
+CREATE POLICY "accounts_select_visible" ON "accounts" AS PERMISSIVE FOR SELECT TO "anon", "authenticated" USING ("accounts"."visibility" = 'public' OR (SELECT auth.uid()) = "accounts"."id");
+--> statement-breakpoint
+CREATE POLICY "accounts_update_own" ON "accounts" AS PERMISSIVE FOR UPDATE TO "authenticated" USING ((SELECT auth.uid()) = "accounts"."id") WITH CHECK ((SELECT auth.uid()) = "accounts"."id");
+--> statement-breakpoint
+CREATE POLICY "setup_items_select_visible" ON "setup_items" AS PERMISSIVE FOR SELECT TO "anon", "authenticated" USING (EXISTS (SELECT 1 FROM "setups" setup WHERE setup.id = "setup_items"."setup_id" AND (setup.visibility = 'public' OR setup.user_id = (SELECT auth.uid()))));
+--> statement-breakpoint
+CREATE POLICY "setup_items_insert_own" ON "setup_items" AS PERMISSIVE FOR INSERT TO "authenticated" WITH CHECK (EXISTS (SELECT 1 FROM "setups" setup WHERE setup.id = "setup_items"."setup_id" AND setup.user_id = (SELECT auth.uid())));
+--> statement-breakpoint
+CREATE POLICY "setup_items_update_own" ON "setup_items" AS PERMISSIVE FOR UPDATE TO "authenticated" USING (EXISTS (SELECT 1 FROM "setups" setup WHERE setup.id = "setup_items"."setup_id" AND setup.user_id = (SELECT auth.uid()))) WITH CHECK (EXISTS (SELECT 1 FROM "setups" setup WHERE setup.id = "setup_items"."setup_id" AND setup.user_id = (SELECT auth.uid())));
+--> statement-breakpoint
+CREATE POLICY "setup_items_delete_own" ON "setup_items" AS PERMISSIVE FOR DELETE TO "authenticated" USING (EXISTS (SELECT 1 FROM "setups" setup WHERE setup.id = "setup_items"."setup_id" AND setup.user_id = (SELECT auth.uid())));
+--> statement-breakpoint
+CREATE POLICY "setups_select_visible" ON "setups" AS PERMISSIVE FOR SELECT TO "anon", "authenticated" USING ("setups"."visibility" = 'public' OR (SELECT auth.uid()) = "setups"."user_id");
+--> statement-breakpoint
+CREATE POLICY "setups_insert_own" ON "setups" AS PERMISSIVE FOR INSERT TO "authenticated" WITH CHECK ((SELECT auth.uid()) = "setups"."user_id");
+--> statement-breakpoint
+CREATE POLICY "setups_update_own" ON "setups" AS PERMISSIVE FOR UPDATE TO "authenticated" USING ((SELECT auth.uid()) = "setups"."user_id") WITH CHECK ((SELECT auth.uid()) = "setups"."user_id");
+--> statement-breakpoint
+CREATE POLICY "setups_delete_own" ON "setups" AS PERMISSIVE FOR DELETE TO "authenticated" USING ((SELECT auth.uid()) = "setups"."user_id");
+--> statement-breakpoint
+CREATE POLICY "gear_models_read" ON "gear_models" AS PERMISSIVE FOR SELECT TO "anon", "authenticated" USING (true);
+--> statement-breakpoint
+INSERT INTO "public"."gear_models" (id, category, brand, model, source, position) VALUES
+  ('mouse:ninjutso-origin-one-x', 'mouse', 'Ninjutso', 'Origin One X', 'https://ninjutso.com/products/origin-one-x-wireless-ultra-light-weight-gaming-mouse', 0),
+  ('mouse:ninjutso-ten', 'mouse', 'Ninjutso', 'Ten', 'https://ninjutso.com/products/ninjutso-ten-wireless-gaming-mouse', 1),
+  ('mouse:ninjutso-sora-v2-8k', 'mouse', 'Ninjutso', 'Sora V2 8K', 'https://ninjutso.com/products/ninjutso-sora-v2', 2),
+  ('mouse:ninjutso-sora-v3', 'mouse', 'Ninjutso', 'Sora V3', 'https://ninjutso.com/products/sora-v3-wireless-ultralight-gaming-mouse', 3),
+  ('mouse:ninjutso-sora-4k-vaxee-collaboration', 'mouse', 'Ninjutso', 'Sora 4K (VAXEE collaboration)', 'https://ninjutso.com/products/vaxee-x-ninjutso-sora-4k', 4),
+  ('mouse:lamzu-inca', 'mouse', 'LAMZU', 'Inca', 'https://lamzu.com/products/lamzu-inca', 5),
+  ('mouse:lamzu-paro', 'mouse', 'LAMZU', 'Paro', 'https://lamzu.com/products/lamzu-paro', 6),
+  ('mouse:lamzu-thorn-v2', 'mouse', 'LAMZU', 'Thorn V2', 'https://lamzu.com/products/lamzu-thorn-v2', 7),
+  ('mouse:lamzu-atlantis-mini-pro', 'mouse', 'LAMZU', 'Atlantis Mini Pro', 'https://lamzu.com/products/lamzu-atlantis-mini-pro-gaming-mouse', 8),
+  ('mouse:lamzu-atlantis-og-v2-pro', 'mouse', 'LAMZU', 'Atlantis OG V2 Pro', 'https://lamzu.com/products/lamzu-atlantis-og-v2-pro-gaming-mouse', 9),
+  ('mouse:lamzu-atlantis-mini-4k', 'mouse', 'LAMZU', 'Atlantis Mini 4K', 'https://lamzu.com/products/lamzu-atlantis-mini-4k-gaming-mouse', 10),
+  ('mouse:lamzu-atlantis-og-v2-4k', 'mouse', 'LAMZU', 'Atlantis OG V2 4K', 'https://lamzu.com/products/lamzu-atlantis-og-v2-4k-gaming-mouse', 11),
+  ('mouse:lamzu-maya-4k', 'mouse', 'LAMZU', 'MAYA 4K', 'https://lamzu.com/products/lamzu-maya-4k', 12),
+  ('mouse:lamzu-maya-x', 'mouse', 'LAMZU', 'MAYA X', 'https://lamzu.com/products/lamzu-maya-x', 13),
+  ('mouse:lamzu-maya-x-v2', 'mouse', 'LAMZU', 'MAYA X V2', 'https://lamzu.com/products/lamzu-maya-x-v2', 14),
+  ('mouse:lamzu-maya-s-v2', 'mouse', 'LAMZU', 'MAYA S V2', 'https://lamzu.com/products/lamzu-maya-s-v2', 15),
+  ('mouse:lamzu-tachi', 'mouse', 'LAMZU', 'Tachi', 'https://lamzu.com/products/lamzu-tachi-gaming-mouse', 16),
+  ('mouse:pulsar-x3-lhd-crazylight-medium', 'mouse', 'Pulsar', 'X3 LHD CrazyLight Medium', 'https://pulsar.gg/products/x3-lhd-crazylight-medium-gaming-mouse', 17),
+  ('mouse:pulsar-xlite-v4-mini', 'mouse', 'Pulsar', 'Xlite v4 Mini', 'https://pulsar.gg/products/xlite-v4-mini-gaming-mouse', 18),
+  ('mouse:pulsar-xlite-v4-large', 'mouse', 'Pulsar', 'Xlite v4 Large', 'https://pulsar.gg/products/xlite-v4-large-gaming-mouse', 19),
+  ('mouse:pulsar-x2h-v3-mini', 'mouse', 'Pulsar', 'X2H v3 Mini', 'https://pulsar.gg/products/x2h-v3-mini-gaming-mouse', 20),
+  ('mouse:pulsar-x2h-v3-medium', 'mouse', 'Pulsar', 'X2H v3 Medium', 'https://pulsar.gg/products/x2h-v3-gaming-mouse', 21),
+  ('mouse:pulsar-x3-mini', 'mouse', 'Pulsar', 'X3 Mini', 'https://pulsar.gg/products/x3-rhd-mini-gaming-mouse', 22),
+  ('mouse:pulsar-es-fs-1', 'mouse', 'Pulsar', 'eS FS-1', 'https://pulsar.gg/products/pulsar-es-fs-1', 23),
+  ('mouse:pulsar-feinmann-f01', 'mouse', 'Pulsar', 'Feinmann F01', 'https://pulsar.gg/products/feinmann-f01-gaming-mouse1', 24),
+  ('mouse:endgame-gear-op1-8k-v2', 'mouse', 'Endgame Gear', 'OP1 8k v2', 'https://endgamegear.com/products/op1-8k-v2-wired-gaming-mouse', 25),
+  ('mouse:endgame-gear-op1we', 'mouse', 'Endgame Gear', 'OP1we', 'https://endgamegear.com/products/op1we-gaming-mouse', 26),
+  ('mouse:endgame-gear-op1w-4k-v2', 'mouse', 'Endgame Gear', 'OP1w 4k v2', 'https://endgamegear.com/products/op1w-4k-v2-wireless-gaming-mouse', 27),
+  ('mouse:endgame-gear-xm2-8k-v2', 'mouse', 'Endgame Gear', 'XM2 8k v2', 'https://endgamegear.com/products/xm2-8k-gaming-mouse-copy', 28),
+  ('mouse:endgame-gear-xm2w-4k-v2', 'mouse', 'Endgame Gear', 'XM2w 4k v2', 'https://endgamegear.com/products/xm2w-4k-v2-wireless-gaming-mouse', 29),
+  ('mouse:endgame-gear-xm2we', 'mouse', 'Endgame Gear', 'XM2we', 'https://endgamegear.com/products/xm2we-wireless-gaming-mouse', 30),
+  ('mouse:logitech-g-pro-x-superlight-2', 'mouse', 'Logitech G', 'PRO X SUPERLIGHT 2', 'https://www.logitechg.com/en-us/shop/p/pro-x2-superlight-wireless-mouse.910-006628', 31),
+  ('mouse:razer-deathadder-v3-pro', 'mouse', 'Razer', 'DeathAdder V3 Pro', 'https://www.razer.com/gaming-mice/razer-deathadder-v3-pro/RZ01-04630300-R3WL', 32),
+  ('keyboard:meletrix-zoom65-v3', 'keyboard', 'Meletrix', 'Zoom65 V3', 'https://meletrix.com/products/zoom65-v3-custom-keyboard', 0),
+  ('keyboard:meletrix-zoom64', 'keyboard', 'Meletrix', 'Zoom64', 'https://meletrix.com/products/zoom64-mechanical-keyboard-pre-built-version', 1),
+  ('keyboard:meletrix-zoom75-tiga', 'keyboard', 'Meletrix', 'Zoom75 TIGA', 'https://meletrix.com/products/zoom75-tiga-black', 2),
+  ('keyboard:meletrix-zoom-tkl-dyna', 'keyboard', 'Meletrix', 'Zoom TKL DYNA', 'https://meletrix.com/products/zoomtkl-dyna-sky-blue', 3),
+  ('keyboard:meletrix-zoom75-essential-edition', 'keyboard', 'Meletrix', 'Zoom75 Essential Edition', 'https://meletrix.com/products/zoom75-essential-edition-orange', 4),
+  ('keyboard:meletrix-zoom75-he', 'keyboard', 'Meletrix', 'Zoom75 HE', 'https://meletrix.com/products/boog75-x-zoom75-prebuilt', 5),
+  ('keyboard:qwertykeys-neo65', 'keyboard', 'Qwertykeys', 'Neo65', 'https://www.qwertykeys.com/products/neo65-1', 6),
+  ('keyboard:qwertykeys-neo80-cu', 'keyboard', 'Qwertykeys', 'Neo80 Cu', 'https://www.qwertykeys.com/products/neo80-cu-custom-mechanical-keyboard', 7),
+  ('keyboard:qwertykeys-neo65-core-plus', 'keyboard', 'Qwertykeys', 'Neo65 Core Plus', 'https://www.qwertykeys.com/products/neo65-core-plus-custom-mechanical-keyboard', 8),
+  ('keyboard:qwertykeys-neo65-sonic-he-plus', 'keyboard', 'Qwertykeys', 'Neo65 Sonic HE+', 'https://www.qwertykeys.com/products/neo65-sonic-he-hall-effect-custom-keyboard', 9),
+  ('keyboard:qwertykeys-neo60-cu', 'keyboard', 'Qwertykeys', 'Neo60 Cu', 'https://www.qwertykeys.com/products/neo60-cu-custom-mechanical-keyboard-1', 10),
+  ('keyboard:qwertykeys-neo65-cu', 'keyboard', 'Qwertykeys', 'Neo65 Cu', 'https://www.qwertykeys.com/products/neo65-cu-custom-mechanical-keyboard', 11),
+  ('keyboard:qwertykeys-neo98', 'keyboard', 'Qwertykeys', 'Neo98', 'https://www.qwertykeys.com/products/neo98-custom-mechanical-keyboard', 12),
+  ('keyboard:qwertykeys-neo75', 'keyboard', 'Qwertykeys', 'Neo75', 'https://www.qwertykeys.com/products/neo75-custom-mechanical-keyboard', 13),
+  ('keyboard:endgame-gear-kb65he-8k', 'keyboard', 'Endgame Gear', 'KB65HE 8k', 'https://endgamegear.com/products/kb65he-8k-hall-effect-gaming-keyboard-ansi-us', 14),
+  ('keyboard:endgame-gear-kb65he', 'keyboard', 'Endgame Gear', 'KB65HE', 'https://endgamegear.com/products/kb65he-hall-effect-gaming-keyboard-ansi-us', 15),
+  ('keyboard:hhkb-professional-classic', 'keyboard', 'HHKB', 'Professional Classic', 'https://hhkeyboard.us/hhkb/pro-classic/', 16),
+  ('keyboard:lamzu-atlantis-pro', 'keyboard', 'LAMZU', 'Atlantis Pro', 'https://lamzu.com/products/atlantisprokeyboard', 17),
+  ('keyboard:keychron-q13-max', 'keyboard', 'Keychron', 'Q13 Max', 'https://keychron.com/products/keychron-q13-max-alice-layout-qmk-wireless-custom-mechanical-keyboard', 18),
+  ('keyboard:keychron-q14-max', 'keyboard', 'Keychron', 'Q14 Max', 'https://keychron.com/products/keychron-q14-max-alice-layout-qmk-wireless-custom-mechanical-keyboard', 19),
+  ('keyboard:keychron-v8-max', 'keyboard', 'Keychron', 'V8 Max', 'https://keychron.com/products/keychron-v8-max-alice-layout-qmk-custom-mechanical-keyboard', 20),
+  ('keyboard:keychron-k15-max', 'keyboard', 'Keychron', 'K15 Max', 'https://keychron.com/products/keychron-k15-max-alice-layout-qmk-wireless-custom-mechanical-keyboard', 21),
+  ('keyboard:keychron-k8-max', 'keyboard', 'Keychron', 'K8 Max', 'https://keychron.com/products/keychron-k8-max-qmk-wireless-mechanical-keyboard', 22),
+  ('keyboard:keychron-k2-max', 'keyboard', 'Keychron', 'K2 Max', 'https://keychron.com/products/keychron-k2-max-qmk-wireless-mechanical-keyboard', 23),
+  ('keyboard:keychron-k3-max', 'keyboard', 'Keychron', 'K3 Max', 'https://keychron.com/products/keychron-k3-max-qmk-via-wireless-custom-mechanical-keyboard', 24),
+  ('keyboard:keychron-k4-max', 'keyboard', 'Keychron', 'K4 Max', 'https://keychron.com/products/keychron-k4-max-qmk-wireless-mechanical-keyboard', 25),
+  ('keyboard:keychron-k10-max', 'keyboard', 'Keychron', 'K10 Max', 'https://keychron.com/products/keychron-k10-max-qmk-wireless-mechanical-keyboard', 26),
+  ('keyboard:keychron-k10-pro', 'keyboard', 'Keychron', 'K10 Pro', 'https://keychron.com/products/keychron-k10-pro-qmk-via-wireless-mechanical-keyboard', 27),
+  ('keyboard:keychron-v6-8k', 'keyboard', 'Keychron', 'V6 8K', 'https://keychron.com/products/keychron-v6-8k-qmk-wired-custom-mechanical-keyboard', 28),
+  ('keyboard:keychron-v1-8k', 'keyboard', 'Keychron', 'V1 8K', 'https://keychron.com/products/keychron-v1-8k-qmk-wired-custom-mechanical-keyboard', 29),
+  ('keyboard:keychron-c1-pro-8k', 'keyboard', 'Keychron', 'C1 Pro 8K', 'https://keychron.com/products/keychron-c1-pro-8k-qmk-wired-mechanical-keyboard', 30),
+  ('keyboard:keychron-c2-pro-8k', 'keyboard', 'Keychron', 'C2 Pro 8K', 'https://keychron.com/products/keychron-c2-pro-8k-qmk-via-wired-mechanical-keyboard', 31),
+  ('keyboard:lemokey-x2', 'keyboard', 'Lemokey', 'X2', 'https://keychron.com/products/lemokey-x2-qmk-wired-mechanical-keyboard', 32),
+  ('keyboard:lemokey-x5', 'keyboard', 'Lemokey', 'X5', 'https://keychron.com/products/lemokey-x5-qmk-via-wired-mechanical-keyboard', 33),
+  ('keyboard:wooting-80he', 'keyboard', 'Wooting', '80HE', 'https://wooting.io/post/wooting-80he-vs-80he-and-what-actually-changed', 34),
+  ('keyboard:pulsar-pcmk-tkl-ansi', 'keyboard', 'Pulsar', 'PCMK TKL (ANSI)', 'https://pulsar.gg/products/pcmk-ansi-tkl', 35),
+  ('monitor:eizo-flexscan-ev2740x', 'monitor', 'EIZO', 'FlexScan EV2740X', 'https://www.eizo.com/products/flexscan/ev2740x/', 0),
+  ('monitor:eizo-flexscan-ev3240x', 'monitor', 'EIZO', 'FlexScan EV3240X', 'https://www.eizo.com/products/flexscan/ev3240x/', 1),
+  ('monitor:eizo-flexscan-ev2720s', 'monitor', 'EIZO', 'FlexScan EV2720S', 'https://www.eizo.eu/flexscan/ev2720s', 2),
+  ('monitor:innocn-40c1u', 'monitor', 'INNOCN', '40C1U', 'https://innocn.com/products/innocn-40-inch-computer-monitor-40c1u', 3),
+  ('monitor:innocn-27c1u-d', 'monitor', 'INNOCN', '27C1U-D', 'https://innocn.com/products/innocn-27-computer-monitor-4k-27c1u-d', 4),
+  ('monitor:innocn-34c1u', 'monitor', 'INNOCN', '34C1U', 'https://innocn.com/products/innocn-34-5k2k-120hz-21-9-ultrawide-professional-monitor-34c1u', 5),
+  ('monitor:innocn-25m2s', 'monitor', 'INNOCN', '25M2S', 'https://innocn.com/products/innocn-25-inch-computer-monitor-25m2s', 6),
+  ('monitor:innocn-32m2v-2026', 'monitor', 'INNOCN', '32M2V (2026)', 'https://innocn.com/products/innocn-32-inch-4k-miniled-gaming-monitor-32m2v-2026', 7),
+  ('monitor:innocn-34c1r', 'monitor', 'INNOCN', '34C1R', 'https://innocn.com/products/innocn-34-inch-wqhd-ultrawide-monitor-34c1r', 8),
+  ('monitor:innocn-ga27m1q', 'monitor', 'INNOCN', 'GA27M1Q', 'https://innocn.com/products/innocn-ga27m1q-27-qd-oled-500hz-1440p-gaming-monitor', 9),
+  ('monitor:innocn-ga27w1q', 'monitor', 'INNOCN', 'GA27W1Q', 'https://innocn.com/products/innocn-ga27w1q-27-qd-oled-4k-240hz-gaming-monitor', 10),
+  ('monitor:innocn-ga27t1m', 'monitor', 'INNOCN', 'GA27T1M', 'https://innocn.com/products/innocn-ga27t1m-27inch-320hz-qhd-mini-led-gaming-monitor', 11),
+  ('monitor:innocn-ga27s1q', 'monitor', 'INNOCN', 'GA27S1Q', 'https://innocn.com/products/innocn-27-inch-280hz-qd-oled-gaming-monitor-ga27s1q', 12),
+  ('monitor:innocn-49q1s', 'monitor', 'INNOCN', '49Q1S', 'https://innocn.com/products/innocn-oled-curved-gaming-monitor-49q1s', 13),
+  ('monitor:innocn-49c1s', 'monitor', 'INNOCN', '49C1S', 'https://innocn.com/products/innocn-49-inch-computer-monitor-49c1s', 14),
+  ('monitor:innocn-49c1r', 'monitor', 'INNOCN', '49C1R', 'https://innocn.com/products/innocn-49-ultrawide-curved-computer-monitor-49c1r', 15),
+  ('monitor:innocn-40c1r', 'monitor', 'INNOCN', '40C1R', 'https://innocn.com/products/innocn-40c1r-40-ultrawide-21-9-qhd-144hz-gaming-monitor', 16),
+  ('monitor:innocn-49q1r', 'monitor', 'INNOCN', '49Q1R', 'https://innocn.com/products/innocn-ultrawide-curved-gaming-monitor-49q1r', 17),
+  ('monitor:innocn-cb27u1', 'monitor', 'INNOCN', 'CB27U1', 'https://innocn.com/products/innocn-27-4k-120hz-ips-hdr500-professional-monitor-cb27u1', 18),
+  ('monitor:innocn-cb32u1', 'monitor', 'INNOCN', 'CB32U1', 'https://innocn.com/products/innocn-32-4k-160hz-ips-usb-c-90w-gaming-monitor-cb32u1', 19),
+  ('monitor:benq-rd280u', 'monitor', 'BenQ', 'RD280U', 'https://esupportdownload.benq.com/esupport/WORK%20%26%20ENTERTAINMENT%20DISPLAY/UserManual/RD280U/RD280U_QG_G_251017174913.pdf', 20),
+  ('monitor:viewsonic-xg2431', 'monitor', 'ViewSonic', 'XG2431', 'https://www.viewsonic.com/global/products/sheet/XG2431', 21),
+  ('monitor:dell-ultrasharp-u2723qe', 'monitor', 'Dell', 'UltraSharp U2723QE', 'https://www.dell.com/en-us/shop/dell-ultrasharp-27-4k-usb-c-hub-monitor-u2723qe/apd/210-bdpf/', 22),
+  ('monitor:aoc-q27g3xmn', 'monitor', 'AOC', 'Q27G3XMN', 'https://www.aoc.com/us/gaming/monitors/q27g3xmn', 23),
+  ('monitor:zowie-xl2566k', 'monitor', 'ZOWIE', 'XL2566K', 'https://zowie.benq.com/en-us/support/faq/product/application/zowiemonitor-faq-kn-00021.html', 24),
+  ('monitor:zowie-xl2546k', 'monitor', 'ZOWIE', 'XL2546K', 'https://zowie.benq.com/en-us/support/faq/product/application/zowiemonitor-faq-kn-00021.html', 25),
+  ('mousepad:quaoar-gaming-gears-perseus-premium-v2', 'mousepad', 'QUAOAR GAMING GEARS', 'Perseus Premium V2', 'https://lethal.gg/products/quaoar-perseus-premium-v2-gaming-mousepad', 0),
+  ('mousepad:tenta-x-shinrai', 'mousepad', 'Tenta-X', 'Shinrai', 'https://lethal.gg/products/shinrai-edgeless-control-mousepad', 1),
+  ('mousepad:tenta-x-jinsoku', 'mousepad', 'Tenta-X', 'Jinsoku', 'https://lethal.gg/products/jinsoku-edgeless-speed-mousepad', 2),
+  ('mousepad:mopamopa-yingo', 'mousepad', 'MOPAMOPA', 'Yingo', 'https://lethal.gg/products/pre-order-yingo-glass-mousepad', 3),
+  ('mousepad:rivermuse-zhi', 'mousepad', 'Rivermuse', 'Zhi', 'https://lethal.gg/products/pre-order-zhi-glass-mousepad', 4),
+  ('mousepad:tekkusai-kohaku', 'mousepad', 'Tekkusai', 'Kohaku', 'https://lethal.gg/products/kohaku-glass-mousepad', 5),
+  ('mousepad:growtharts-kaede', 'mousepad', 'GrowthArts', 'Kaede', 'https://lethal.gg/products/kaede-glass-mousepad', 6),
+  ('mousepad:solstice-amaterasu', 'mousepad', 'Solstice', 'Amaterasu', 'https://lethal.gg/products/amaterasu-glass-mousepad', 7),
+  ('mousepad:kanami-nana', 'mousepad', 'Kanami', 'Nana', 'https://lethal.gg/products/pre-order-nana-cloth-mousepad-copy', 8),
+  ('mousepad:kanami-katta', 'mousepad', 'Kanami', 'Kattā', 'https://lethal.gg/products/pre-order-katta-cloth-mousepad', 9),
+  ('mousepad:fluxaim-the-hope-kira', 'mousepad', 'FluxAim', 'The Hope – KIRA', 'https://lethal.gg/products/pre-order-the-hope-kira-glass-mousepad', 10),
+  ('mousepad:musashi-wind', 'mousepad', 'Musashi', 'Wind', 'https://lethal.gg/products/pre-order-wind-glass-gaming-mousepad', 11),
+  ('mousepad:1337gear-miu', 'mousepad', '1337GEAR', 'MIU', 'https://lethal.gg/products/miu-glass-mousepad', 12),
+  ('mousepad:atk-gear-sky-xsoft', 'mousepad', 'ATK Gear', 'SKY XSoft', 'https://lethal.gg/products/sky-xsoft-esport-mouse-pad', 13),
+  ('mousepad:atk-gear-99g-air-xsoft', 'mousepad', 'ATK Gear', '99G Air XSoft', 'https://lethal.gg/products/99g-air-xsoft-esport-mouse-pad', 14),
+  ('mousepad:atk-gear-x83-xsoft', 'mousepad', 'ATK Gear', 'X83 XSoft', 'https://lethal.gg/products/x83-xsoft-esport-mouse-pad', 15),
+  ('mousepad:pulsar-es-pd170', 'mousepad', 'Pulsar', 'eS PD170', 'https://lethal.gg/products/es-pd170-gaming-mousepad', 16),
+  ('mousepad:pulsar-meiy-glass-mousepad-2', 'mousepad', 'Pulsar', 'Meiy Glass MousePad 2', 'https://lethal.gg/products/pre-order-meiy-glass-mousepad-2', 17),
+  ('mousepad:ninjutso-npc-control', 'mousepad', 'Ninjutso', 'NPC Control', 'https://ninjutso.com/products/ninjutso-npc-control-mousepad', 18),
+  ('mousepad:lamzu-energon-pro', 'mousepad', 'LAMZU', 'Energon Pro', 'https://lamzu.com/products/lamzu-energon-pro-mouse-pad', 19),
+  ('mousepad:lamzu-energon', 'mousepad', 'LAMZU', 'Energon', 'https://lamzu.com/products/lamzu-energon-mouse-pad', 20),
+  ('mousepad:lamzu-maya-cloth', 'mousepad', 'LAMZU', 'MAYA Cloth', 'https://lamzu.com/products/lamzu-maya-mouse-pad', 21),
+  ('mousepad:lamzu-maya-glass', 'mousepad', 'LAMZU', 'MAYA Glass', 'https://lamzu.com/products/lamzu-maya-glass-mousepad', 22),
+  ('mousepad:endgame-gear-em-c', 'mousepad', 'Endgame Gear', 'EM-C', 'https://endgamegear.com/products/em-c-gaming-mousepad-1', 23),
+  ('mousepad:endgame-gear-em-b', 'mousepad', 'Endgame Gear', 'EM-B', 'https://endgamegear.com/products/em-b-gaming-mousepad', 24),
+  ('mousepad:endgame-gear-mpc450', 'mousepad', 'Endgame Gear', 'MPC450', 'https://endgamegear.com/products/mpc450-cordura%C2%AE-gaming-mousepad', 25),
+  ('mousepad:endgame-gear-mpc890', 'mousepad', 'Endgame Gear', 'MPC890', 'https://endgamegear.com/products/mpc890-cordura%C2%AE-gaming-mousepad', 26),
+  ('mousepad:endgame-gear-mpc1200', 'mousepad', 'Endgame Gear', 'MPC1200', 'https://endgamegear.com/products/mpc1200-cordura%C2%AE-gaming-mousepad', 27),
+  ('iem:letshuoer-s08', 'iem', 'LETSHUOER', 'S08', 'https://letshuoer.net/products/letshuoer-s08-fourth-generation-in-ear-monitor-earphone-for-audiophiles-musicians-studio', 0),
+  ('iem:letshuoer-s12', 'iem', 'LETSHUOER', 'S12', 'https://letshuoer.net/products/s12-hifi-earphones-planar-iems', 1),
+  ('iem:letshuoer-s12-pro', 'iem', 'LETSHUOER', 'S12 Pro', 'https://letshuoer.net/products/letshuoer-s12-pro-magnetic-planar-earphones-hi-fi-planar-in-ear-monitors-for-audiopiles-and-music-lovers', 2),
+  ('iem:letshuoer-s12-ultra', 'iem', 'LETSHUOER', 'S12 Ultra', 'https://letshuoer.net/products/letshuoer-s12-ultra', 3),
+  ('iem:letshuoer-cadenza4', 'iem', 'LETSHUOER', 'Cadenza4', 'https://letshuoer.net/products/letshuoer-cadenza4-wired-iem-hifi-earphones-in-ear-monitor', 4),
+  ('iem:letshuoer-cadenza-12', 'iem', 'LETSHUOER', 'Cadenza 12', 'https://letshuoer.net/products/letshuoer-cadenza-flagship-12-hybrid-drivers-in-ear-headphones', 5),
+  ('iem:letshuoer-ember', 'iem', 'LETSHUOER', 'Ember', 'https://letshuoer.net/products/letshuoer-ember-14-8mm-large-flagship-planar-magnetic-hi-fi-in-ear-monitors', 6),
+  ('iem:tangzu-xuan-nv', 'iem', 'TANGZU', 'Xuan Nv', 'https://tangzu.net/products/tangzu-xuan-nv-in-ear-hifi-earphones', 7),
+  ('iem:tangzu-xuanwu-gate', 'iem', 'TANGZU', 'XuanWu Gate', 'https://tangzu.net/products/tangzu-nezha-6-ba-1-est-in-ear-monitors-multi-drive-wired-earphones-iem-0-78mm-3-5-4-4mm-cable-hybrid-driver-headest', 8),
+  ('iem:tangzu-nezha', 'iem', 'TANGZU', 'Nezha', 'https://tangzu.net/products/tangzu-nezha-hifi-earphones-6ba-1ptz-in-ear-monitors-iem-headest', 9),
+  ('iem:tangzu-fudu-verse-1', 'iem', 'TANGZU', 'Fudu Verse 1', 'https://tangzu.net/products/tangzu-fudu-verse-1-hifi-in-ear-headphones', 10),
+  ('iem:tangzu-princess-changle', 'iem', 'TANGZU', 'Princess Changle', 'https://tangzu.net/products/tangzu-princess-changle-hifi-in-ear-earphone', 11),
+  ('iem:tangzu-shangguan-wan-er-studio-edition', 'iem', 'TANGZU', 'Shangguan Wan’er Studio Edition', 'https://tangzu.net/products/tangzu-shangguan-waner-studio-edition-single-dynamic-driver-in-ear-hifi-earphones', 12),
+  ('iem:final-a4000', 'iem', 'final', 'A4000', 'https://final-inc.com/products/a4000-jp', 13),
+  ('iem:final-a3000', 'iem', 'final', 'A3000', 'https://final-inc.com/products/a3000-jp', 14),
+  ('iem:final-a5000', 'iem', 'final', 'A5000', 'https://final-inc.com/products/a5000-jp', 15),
+  ('iem:final-a6000', 'iem', 'final', 'A6000', 'https://final-inc.com/products/a6000', 16),
+  ('iem:final-a8000', 'iem', 'final', 'A8000', 'https://final-inc.com/products/a8000-jp', 17),
+  ('iem:final-b3', 'iem', 'final', 'B3', 'https://final-inc.com/products/b3-jp', 18),
+  ('iem:final-b2', 'iem', 'final', 'B2', 'https://final-inc.com/products/b2-jp', 19),
+  ('iem:final-b1', 'iem', 'final', 'B1', 'https://final-inc.com/products/b1-jp', 20),
+  ('iem:final-e4000', 'iem', 'final', 'E4000', 'https://final-inc.com/products/e4000-jp', 21),
+  ('iem:final-e5000', 'iem', 'final', 'E5000', 'https://final-inc.com/products/e5000-jp', 22),
+  ('iem:final-vr3000-for-gaming', 'iem', 'final', 'VR3000 for Gaming', 'https://final-inc.com/products/vr3000-jp', 23),
+  ('iem:final-vr2000-for-gaming', 'iem', 'final', 'VR2000 for Gaming', 'https://final-inc.com/products/vr2000-jp', 24),
+  ('iem:final-vr500-for-gaming', 'iem', 'final', 'VR500 for Gaming', 'https://final-inc.com/products/vr500-jp', 25)
+ON CONFLICT (id) DO NOTHING;
+
+--> statement-breakpoint
+INSERT INTO "public"."gear_models" (id, category, brand, model, source, position) VALUES
   ('mouse:pulsar-x2-crazylight', 'mouse', 'Pulsar', 'X2 CrazyLight', 'https://ausmodshop.com/products/pulsar-x2-crazylight-wireless-gaming-mouse', 133),
   ('mouse:pulsar-x2-crazylight-2-medium', 'mouse', 'Pulsar', 'X2 CrazyLight 2 Medium', 'https://ausmodshop.com/products/pulsar-x2-crazylight-2-medium-wireless-gaming-mouse', 134),
   ('mouse:pulsar-x2-crazylight-2-mini', 'mouse', 'Pulsar', 'X2 CrazyLight 2 Mini', 'https://ausmodshop.com/products/pulsar-x2-crazylight-2-mini-wireless-gaming-mouse', 135),
@@ -1165,10 +1503,85 @@ INSERT INTO "fragbasic_accounts"."gear_models" (id, category, brand, model, sour
   ('iem:kz-zsx', 'iem', 'KZ', 'ZSX', 'https://www.linsoul.com/products/kz-zsx-iem', 469)
 ON CONFLICT (id) DO UPDATE SET brand = excluded.brand, model = excluded.model, source = excluded.source, position = excluded.position;
 
-UPDATE "fragbasic_accounts"."gear_models"
+UPDATE "public"."gear_models"
 SET brand = 'Keychron', model = regexp_replace(model, '^Keychron[[:space:]]+', '', 'i')
 WHERE source LIKE 'https://www.keychron.com/products/%';
 
-UPDATE "fragbasic_accounts"."gear_models"
+UPDATE "public"."gear_models"
 SET brand = 'YUNZII', model = regexp_replace(model, '^YUNZII[[:space:]]+', '', 'i')
 WHERE source LIKE 'https://www.yunzii.com/products/%';
+--> statement-breakpoint
+ALTER TABLE "public"."accounts"
+  ADD CONSTRAINT "accounts_id_auth_users_id_fk" FOREIGN KEY ("id") REFERENCES "auth"."users"("id") ON DELETE CASCADE,
+  ADD CONSTRAINT "accounts_visibility_check" CHECK (visibility IN ('private', 'public'));
+--> statement-breakpoint
+ALTER TABLE "public"."setups"
+  ADD CONSTRAINT "setups_name_length_check" CHECK (char_length(name) BETWEEN 1 AND 60),
+  ADD CONSTRAINT "setups_visibility_check" CHECK (visibility IN ('private', 'unlisted', 'public'));
+--> statement-breakpoint
+ALTER TABLE "public"."setup_items"
+  ADD CONSTRAINT "setup_items_position_check" CHECK (position IN ('mouse', 'keyboard', 'monitor', 'mousepad', 'iem'));
+--> statement-breakpoint
+CREATE OR REPLACE FUNCTION "public"."create_account_for_auth_user"()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = ''
+AS $$
+BEGIN
+  INSERT INTO "public"."accounts" (id, display_name)
+  VALUES (NEW.id, NULLIF(NEW.raw_user_meta_data ->> 'display_name', ''))
+  ON CONFLICT (id) DO NOTHING;
+
+  INSERT INTO "public"."setups" (user_id, name)
+  VALUES (NEW.id, 'Main setup')
+  ON CONFLICT (user_id, name) DO NOTHING;
+
+  RETURN NEW;
+END;
+$$;
+--> statement-breakpoint
+CREATE TRIGGER "create_fragbasic_account"
+AFTER INSERT ON "auth"."users"
+FOR EACH ROW EXECUTE FUNCTION "public"."create_account_for_auth_user"();
+--> statement-breakpoint
+INSERT INTO "public"."accounts" (id, display_name)
+SELECT id, NULLIF(raw_user_meta_data ->> 'display_name', '')
+FROM "auth"."users"
+ON CONFLICT (id) DO NOTHING;
+--> statement-breakpoint
+INSERT INTO "public"."setups" (user_id, name)
+SELECT id, 'Main setup' FROM "public"."accounts"
+ON CONFLICT (user_id, name) DO NOTHING;
+--> statement-breakpoint
+INSERT INTO "public"."gear_models" (id, category, brand, model, source, position)
+SELECT 'mousepad:review:' || id, 'mousepad', brand, name, '/mousepads/' || slug, 10000
+FROM "public"."mousepads" WHERE status = 'published'
+ON CONFLICT (id) DO NOTHING;
+--> statement-breakpoint
+INSERT INTO "public"."gear_models" (id, category, brand, model, source, position)
+SELECT 'mousepad:review:' || id, 'mousepad', brand, name, '/mousepads/' || slug, 10000
+FROM "public"."glasspads" WHERE status = 'published'
+ON CONFLICT (id) DO NOTHING;
+--> statement-breakpoint
+INSERT INTO "public"."gear_models" (id, category, brand, model, source, position)
+SELECT 'iem:review:' || id, 'iem', brand, name, '/iems/' || slug, 10000
+FROM "public"."iems" WHERE status = 'published'
+ON CONFLICT (id) DO NOTHING;
+--> statement-breakpoint
+INSERT INTO "public"."setup_items" (setup_id, gear_model_id, position)
+SELECT setup.id, selection.value, selection.key
+FROM "auth"."users" auth_user
+JOIN "public"."setups" setup ON setup.user_id = auth_user.id AND setup.name = 'Main setup'
+CROSS JOIN LATERAL jsonb_each_text(COALESCE(auth_user.raw_user_meta_data -> 'fragbasic_setup', '{}'::jsonb)) selection
+JOIN "public"."gear_models" gear ON gear.id = selection.value AND gear.category = selection.key
+ON CONFLICT (setup_id, position) DO NOTHING;
+--> statement-breakpoint
+UPDATE "auth"."users"
+SET raw_user_meta_data = raw_user_meta_data - 'fragbasic_setup'
+WHERE raw_user_meta_data ? 'fragbasic_setup';
+--> statement-breakpoint
+GRANT SELECT ON "public"."accounts", "public"."setups", "public"."setup_items", "public"."gear_models" TO anon;
+GRANT SELECT, UPDATE ON "public"."accounts" TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON "public"."setups", "public"."setup_items" TO authenticated;
+GRANT SELECT ON "public"."gear_models" TO authenticated;

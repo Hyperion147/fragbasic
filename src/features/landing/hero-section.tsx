@@ -13,7 +13,6 @@ export function HeroSection() {
                     alt=""
                     fill
                     sizes="100vw"
-                    priority
                     className="object-cover object-[90%_center]"
                 />
             </div>

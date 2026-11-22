@@ -3,9 +3,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
     ArrowRight,
+    BookOpen,
     ChevronRight,
     Crosshair,
     Gauge,
+    Gem,
     Grid2x2,
     Menu,
     Shield,
@@ -38,10 +40,9 @@ import Image from "@/components/optimized-image";
 
 const directNavItems = [
     { label: "Mousepads", href: "/mousepads" },
-    { label: "Finder", href: "/mousepads/finder" },
-    { label: "GlassPads", href: "/mousepads/glasspads" },
-    { label: "Guides", href: "/mousepads/guides" },
+    { label: "Glasspads", href: "/mousepads/glasspads" },
     { label: "IEMs", href: "/iems" },
+    { label: "Guides", href: "/mousepads/guides" },
 ];
 
 const bestMenuLinks: Array<{
@@ -143,14 +144,12 @@ export function SiteNavbar() {
                 <div className="flex items-center gap-2 md:gap-4">
                     <UniversalSearch />
                     <div className="hidden items-center gap-4 lg:flex">
-                        {pathname === "/" ? (
-                            <Button size="sm" variant="secondary" asChild>
-                                <Link href="https://forms.gle/5b1QejGptx63eQHw9" target="_blank">
-                                    <Sparkles className="size-4" />
-                                    Submit a Review
-                                </Link>
-                            </Button>
-                        ) : null}
+                        <Button size="sm" variant="secondary" asChild>
+                            <Link href="/mousepads/finder">
+                                <Target className="size-4" />
+                                Finder
+                            </Link>
+                        </Button>
                         <Button size="sm" asChild>
                             <Link href={compareHref}>
                                 <Gauge className="size-4" />
@@ -339,9 +338,14 @@ function MobileNavigation() {
             items: [
                 { label: "All Mousepads", href: "/mousepads" },
                 { label: "Mousepad Finder", href: "/mousepads/finder" },
-                { label: "GlassPads", href: "/mousepads/glasspads" },
-                { label: "Guides", href: "/mousepads/guides" },
                 { label: "Universal Compare", href: "/mousepads/compare/universal" },
+            ],
+        },
+        {
+            title: "Glasspads",
+            icon: Gem,
+            items: [
+                { label: "Browse Glasspads", href: "/mousepads/glasspads" },
             ],
         },
         {
@@ -350,6 +354,13 @@ function MobileNavigation() {
             items: [
                 { label: "Browse IEMs", href: "/iems" },
                 { label: "Compare IEMs", href: "/iems/compare" },
+            ],
+        },
+        {
+            title: "Guides",
+            icon: BookOpen,
+            items: [
+                { label: "Mousepad Guides", href: "/mousepads/guides" },
             ],
         },
         {
@@ -428,11 +439,11 @@ function MobileNavigation() {
 
                             <SheetClose asChild>
                                 <Link
-                                    href="/mousepads"
+                                    href="/mousepads/finder"
                                     className="inline-flex min-h-18 flex-col justify-between rounded-lg soft-panel p-3 text-sm font-semibold leading-5 text-foreground"
                                 >
-                                    <Grid2x2 className="size-4 text-muted-foreground" />
-                                    <span className="mt-3 leading-tight">Browse Products</span>
+                                    <Target className="size-4 text-muted-foreground" />
+                                    <span className="mt-3 leading-tight">Mousepad Finder</span>
                                 </Link>
                             </SheetClose>
                         </div>
