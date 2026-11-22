@@ -4,7 +4,7 @@ import type { IemInput } from "@/schemas/iem";
 import type { ComparisonDataInput } from "@/schemas/comparison";
 import type { BestPageDataInput } from "@/schemas/best-page";
 import type { GuideDataInput } from "@/schemas/guide";
-import { jsonb, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { integer, jsonb, pgEnum, pgSchema, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const mousepadStatusEnum = pgEnum("mousepad_status", [
     "draft",
@@ -121,3 +121,14 @@ export type BestPageRow = typeof bestPages.$inferSelect;
 export type NewBestPageRow = typeof bestPages.$inferInsert;
 export type GuideRow = typeof guides.$inferSelect;
 export type NewGuideRow = typeof guides.$inferInsert;
+
+// Setup options are read through the account catalog, outside the public Data API.
+export const accountsSchema = pgSchema("fragbasic_accounts");
+export const setupGearModels = accountsSchema.table("gear_models", {
+    id: text("id").primaryKey(),
+    category: text("category", { enum: ["mouse", "keyboard", "monitor", "mousepad", "iem"] }).notNull(),
+    brand: text("brand").notNull(),
+    model: text("model").notNull(),
+    source: text("source").notNull(),
+    position: integer("position").notNull(),
+});

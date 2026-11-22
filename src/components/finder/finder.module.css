@@ -52,7 +52,7 @@ label:has(:checked) > .on { display: block; }
 .workspace summary::-webkit-details-marker { display: none; }
 .workspace details[open] > summary svg { transform: rotate(180deg); }
 .extraFields { gap: .75rem; padding: .5rem 0 1rem; }
-.result, .empty { background: var(--card); border: 1px solid var(--border); }
+.result, .empty { border: 1px solid var(--border); }
 .empty a, .method a, .notes a { text-decoration: underline; text-underline-offset: .2em; }
 .compare { display: inline-flex; gap: .5rem; align-items: center; justify-content: center; min-height: 2.75rem; padding: .5rem .85rem; background: var(--secondary); color: var(--secondary-foreground); border-radius: .375rem; font-size: .875rem; font-weight: 500; }
 @media (min-width: 42rem) and (max-width: 79.99rem) {
@@ -69,8 +69,8 @@ label:has(:checked) > .on { display: block; }
 .resultsHeading p, .productMeta, .reason, .notes p, .method p, .empty p { color: var(--muted-foreground); }
 .resultsHeading p { font-size: .9rem; margin-top: .25rem; }
 .list { display: grid; gap: .8rem; list-style: none; }
-.result { display: grid; grid-template-columns: clamp(8rem, 13vw, 12rem) minmax(0, 1fr); overflow: clip; }
-.result:first-child { border-color: var(--input); }
+.result { display: grid; grid-template-columns: clamp(8rem, 13vw, 12rem) minmax(0, 1fr); gap: 0; padding: 0; overflow: clip; }
+.list > li:first-child .result { border-color: var(--input); }
 .product { position: relative; min-height: 8rem; background: var(--background); border-right: 1px solid var(--border); }
 .productImage { object-fit: contain; padding: .8rem; }
 .rank {
@@ -83,10 +83,7 @@ label:has(:checked) > .on { display: block; }
 .result h3 { margin: .3rem 0; font-size: clamp(1.2rem, 2vw, 1.55rem); line-height: 1.25; }
 .result h3 a:hover { text-decoration: underline; text-underline-offset: .15em; }
 .reason, .method p, .notes p, .empty p { font-size: 1rem; line-height: 1.55; }
-.metrics { display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; margin-block: .7rem .4rem; }
-.metrics div { display: inline-flex; align-items: baseline; gap: .4rem; }
-.metrics dt, .metrics small { color: var(--muted-foreground); font-size: .8rem; }
-.metrics dd { font-weight: 600; font-size: .95rem; font-variant-numeric: tabular-nums; }
+.metrics { display: flex; flex-wrap: wrap; gap: .75rem 1.2rem; margin-block: .85rem .5rem; }
 .notes, .method { border-top: 1px solid var(--border); }
 .notes summary, .method summary { justify-content: flex-start; color: var(--foreground); font-size: .875rem; }
 .notes p + p, .method p + p { margin-top: .55rem; }

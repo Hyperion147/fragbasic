@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { ChevronDown, Scale, SearchX } from "lucide-react";
 import Image from "@/components/optimized-image";
+import { MetricCell } from "@/components/data-display";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { formatConfidenceLabel } from "@/lib/mousepads/calibration";
 import { formatValue } from "@/lib/utils/format";
 import { feels, type FinderMatch, type FinderPreferences } from "@/lib/mousepads/finder";
@@ -14,7 +17,7 @@ function ResultCard({ match, rank }: { match: FinderMatch; rank: number }) {
   const { pad, feel, reasons, tradeoff } = match;
   const url = `/mousepads/${pad.slug}`;
   return (
-    <li className={styles.result}>
+    <Card className={styles.result}>
       <div className={styles.product}>
         <Image alt="" src={pad.images.main} fill sizes="(max-width: 550px) 100vw, 180px" className={styles.productImage} />
         <span className={styles.rank} aria-hidden="true">{String(rank).padStart(2, "0")}</span>
@@ -27,10 +30,10 @@ function ResultCard({ match, rank }: { match: FinderMatch; rank: number }) {
         <h3><Link href={url}>{pad.name}<span className="sr-only"> by {pad.brand}, product profile</span></Link></h3>
         <p className={styles.reason}>{reasons.join(" ")}</p>
         <div className={styles.actions}>
-          <dl className={styles.metrics}>
-            <div><dt>Glide</dt><dd>{feel.speed.toFixed(1)}<small>/10</small></dd></div>
-            <div><dt>Stop</dt><dd>{feel.stoppingPower.toFixed(1)}<small>/10</small></dd></div>
-          </dl>
+          <div className={styles.metrics} aria-label="Feel ratings">
+            <MetricCell label="Glide" value={feel.speed} />
+            <MetricCell label="Stopping power" value={feel.stoppingPower} tone="alt" />
+          </div>
           <SavePad slug={pad.slug} name={pad.name} />
         </div>
         <details className={styles.notes}>
@@ -40,7 +43,7 @@ function ResultCard({ match, rank }: { match: FinderMatch; rank: number }) {
           <Link href={url}>Read the full profile</Link>
         </details>
       </div>
-    </li>
+    </Card>
   );
 }
 
@@ -56,14 +59,12 @@ export function FinderResults({ matches, count, prefs, products }: {
           <MatchesHeading criteria={JSON.stringify(prefs)} />
           <p>{count ? `${feels[prefs.feel]} glide · Showing ${matches.length} of ${count} eligible pads` : "0 eligible pads"}</p>
         </div>
-        {matches.length > 1 && <Link href={`/mousepads/compare/universal?${compare}`} className={styles.compare}>
-          <Scale size={17} aria-hidden="true" /> Compare these {matches.length}
-        </Link>}
+        {matches.length > 1 && <Button asChild variant="secondary"><Link href={`/mousepads/compare/universal?${compare}`}><Scale size={17} aria-hidden="true" /> Compare these {matches.length}</Link></Button>}
       </div>
       <FinderShortlist products={products}>
         {matches.length > 0 ? (
           <ol className={styles.list} aria-label="Mousepads ranked by fit">
-            {matches.map((match, index) => <ResultCard key={match.pad.slug} match={match} rank={index + 1} />)}
+            {matches.map((match, index) => <li key={match.pad.slug}><ResultCard match={match} rank={index + 1} /></li>)}
           </ol>
         ) : (
           <div className={styles.empty}>

@@ -1,6 +1,4 @@
-import models from "./models.json";
-
-export type SetupCategory = keyof typeof models;
+export type SetupCategory = "mouse" | "keyboard" | "monitor" | "mousepad" | "iem";
 export type SetupModel = { id: string; brand: string; model: string; source: string };
 type PublishedModel = { id: string; slug: string; brand: string; name: string };
 
@@ -10,8 +8,8 @@ function modelKey(brand: string, model: string) {
   ).join(":");
 }
 
-function withPublishedModels(category: "mousepad" | "iem", published: PublishedModel[]) {
-  const items: SetupModel[] = [...models[category]];
+function withPublishedModels(category: "mousepad" | "iem", curated: SetupModel[], published: PublishedModel[]) {
+  const items = [...curated];
   const seen = new Set(items.map((item) => modelKey(item.brand, item.model)));
   for (const row of published) {
     const key = modelKey(row.brand, row.name);
@@ -29,12 +27,20 @@ function withPublishedModels(category: "mousepad" | "iem", published: PublishedM
 }
 
 /** The curated order is for discovery in the setup picker, independent of review scores. */
-export function buildSetupCatalog(pads: PublishedModel[], iems: PublishedModel[]) {
+export function buildSetupCatalog(
+  rows: (SetupModel & { category: SetupCategory })[],
+  pads: PublishedModel[],
+  iems: PublishedModel[],
+) {
+  const models: Record<SetupCategory, SetupModel[]> = { mouse: [], keyboard: [], monitor: [], mousepad: [], iem: [] };
+  for (const { category, id, brand, model, source } of rows) {
+    models[category].push({ id, brand, model, source });
+  }
   return {
     mouse: models.mouse,
     keyboard: models.keyboard,
     monitor: models.monitor,
-    mousepad: withPublishedModels("mousepad", pads),
-    iem: withPublishedModels("iem", iems),
+    mousepad: withPublishedModels("mousepad", models.mousepad, pads),
+    iem: withPublishedModels("iem", models.iem, iems),
   } satisfies Record<SetupCategory, SetupModel[]>;
 }

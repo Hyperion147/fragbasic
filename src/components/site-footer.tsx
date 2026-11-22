@@ -39,6 +39,7 @@ const footerGroups = [
     {
         title: "Community",
         links: [
+            { label: "My account", href: "/account" },
             {
                 label: "Submit a review",
                 href: "https://forms.gle/5b1QejGptx63eQHw9",

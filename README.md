@@ -71,11 +71,21 @@ Main SEO files:
 - [`src/app/robots.ts`](src/app/robots.ts)
 - [`src/app/manifest.ts`](src/app/manifest.ts)
 
+## User accounts
+
+At `/account`, visitors can create an account or sign in using an emailed link, save their private gear selections, and sign out. Gear IDs are saved under `fragbasic_setup` in the signed-in Supabase user's metadata. CMS administrators continue to use the existing admin login.
+
+Configure Supabase Authentication for each deployment:
+
+1. Set `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` (the `sb_publishable_…` key under Settings → API Keys). Set `ACCOUNT_SITE_URL` to the origin where visitors open the account page, or use the existing `AUTH_URL`.
+2. In Authentication → URL Configuration, set the production Site URL and allow `https://fragbasic.fun/account/confirm`. For local testing allow `http://localhost:3000/account/confirm`.
+3. Enable Email sign-in and new user signups. Use `{{ .ConfirmationURL }}` in the confirmation and magic-link email templates. Enable a verified custom SMTP sender for public users. Open the emailed link in the same browser that requested it.
+
 ## Setup gear catalog
 
 The account setup picker can read `GET /api/account/setup-catalog`. The response groups text-only options by `mouse`, `keyboard`, `monitor`, `mousepad`, and `iem`. Each option has a stable ID for saved setups, a brand, a model name, and a source. Specialist models lead the curated lists. Published mousepad, glasspad, and IEM profiles also appear in their respective lists.
 
-The [setup-only model data](src/features/setup-catalog/models.json) feeds this endpoint. Adding a model here does not create a scored review or a public product page.
+The setup catalog migrations seed the private PostgreSQL table `fragbasic_accounts.gear_models`, which feeds this endpoint. The initial specialist catalog is in `drizzle/0006_account_setup_catalog.sql`; `drizzle/0007_expand_setup_peripherals.sql` adds the broader sourced catalog. Adding a model here does not create a scored review or a public product page.
 
 ## Planned Tasks
 
