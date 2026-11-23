@@ -2,7 +2,7 @@ import Form from "next/form";
 import { Check, ChevronDown, Circle, CircleDot, Crosshair, Gauge, IndianRupee, Plus, SlidersHorizontal, Waves } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
+import { Card, CardAction, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { feels, games, sensitivities, surfaces, textures, type FinderPreferences } from "@/lib/mousepads/finder";
 import { FinderReset } from "./finder-navigation";
 import styles from "./finder.module.css";
@@ -31,10 +31,11 @@ export function FinderForm({ prefs }: { prefs: FinderPreferences }) {
   return (
     <section aria-labelledby="preferences" className="min-w-0">
       <Card className="gap-0 py-0">
-        <div className={styles.panelHeading}>
-          <h2 id="preferences" tabIndex={-1}><SlidersHorizontal size={19} aria-hidden="true" /> Your preferences</h2>
-          <FinderReset />
-        </div>
+        <CardHeader className="border-b py-3">
+          <CardTitle id="preferences" tabIndex={-1} className="flex items-center gap-2 text-lg"><SlidersHorizontal size={19} aria-hidden="true" /> Your preferences</CardTitle>
+          <CardDescription>Tell us how you aim and what you play.</CardDescription>
+          <CardAction><FinderReset /></CardAction>
+        </CardHeader>
         <Form id="finder-preferences" action="/mousepads/finder#matches" className={styles.form}>
           <fieldset>
             <legend>Glide preference</legend>

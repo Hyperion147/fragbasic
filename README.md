@@ -71,6 +71,24 @@ Main SEO files:
 - [`src/app/robots.ts`](src/app/robots.ts)
 - [`src/app/manifest.ts`](src/app/manifest.ts)
 
+## User accounts
+
+At `/account`, visitors can create an account or sign in using an emailed link, maintain a profile, create multiple setups, link catalog gear to each setup, and choose private, unlisted, or public visibility. Public profiles are available at `/profiles/[username]` when both the account and individual setups are published. CMS administrators continue to use the existing admin login.
+
+Configure Supabase Authentication for each deployment:
+
+1. Set `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` (the `sb_publishable_…` key under Settings → API Keys). Set `ACCOUNT_SITE_URL` to the origin where visitors open the account page, or use the existing `AUTH_URL`.
+2. In Authentication → URL Configuration, set the production Site URL and allow `https://fragbasic.fun/account/confirm`. For local testing allow `http://localhost:3000/account/confirm`.
+3. Enable Email sign-in and new user signups. Use `{{ .ConfirmationURL }}` in the confirmation and magic-link email templates. Enable a verified custom SMTP sender for public users. Open the emailed link in the same browser that requested it.
+
+## Setup gear catalog
+
+The account setup picker can read `GET /api/account/setup-catalog`. The response groups text-only options by `mouse`, `keyboard`, `monitor`, `mousepad`, and `iem`. Each option has a stable ID for saved setups, a brand, a model name, and a source. Specialist models lead the curated lists. Published mousepad, glasspad, and IEM profiles also appear in their respective lists.
+
+The baseline migration seeds `public.gear_models`, which feeds this endpoint and is referenced by normalized setup items. Specialist and broader sourced catalog entries are consolidated in `drizzle/0000_baseline.sql`. Adding a model there does not create a scored review or a public product page.
+
+`drizzle/0000_baseline.sql` creates the normalized Supabase graph as `accounts → setups → setup_items → gear_models`, retains row-level security, migrates legacy `fragbasic_setup` metadata, and creates account rows for new Supabase Auth users. One user can own multiple setups, while every selected peripheral references one shared catalog record. Generate one new migration with `npm run db:generate -- --name=<change>` after each future schema change; do not edit the applied baseline.
+
 ## Planned Tasks
 
 - [ ] **Setup showcase accounts and personalized profile themes** — start no earlier than **22 November 2026** (after exams and 21 November), once monitors and keyboards have been added.
